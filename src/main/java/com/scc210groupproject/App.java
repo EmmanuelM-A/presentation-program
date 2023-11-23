@@ -1,13 +1,10 @@
 package com.scc210groupproject;
 
-/**
- * Hello world!
- *
- */
+import com.scc210groupproject.applicationWIndow.ApplicationWindow;
+
 public class App 
 {
-    public static void main( String[] args )
-    {
-        System.out.println( "Hi!" );
+    public static void main( String[] args ) {
+        new ApplicationWindow();
     }
 }
