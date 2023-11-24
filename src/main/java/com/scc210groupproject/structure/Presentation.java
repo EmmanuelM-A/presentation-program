@@ -82,9 +82,13 @@ public class Presentation implements Serializable {
 
     /**
      * Remove Slide from presentation
+     * Must have more than 1 slide to not throw error
      * @param slide item to be removed
      */
     public void removeSlide(Slide slide) {
+        if (slides.size() <= 1) {
+            throw new IllegalArgumentException("Cannot remove final slide");
+        }
         slides.remove(slide);
         slide.destroy();
     }
