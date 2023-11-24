@@ -1,6 +1,6 @@
 package com.scc210groupproject;
 
-import com.scc210groupproject.applicationWIndow.ApplicationWindow;
+import com.scc210groupproject.applicationWindow.ApplicationWindow;
 
 public class App 
 {
