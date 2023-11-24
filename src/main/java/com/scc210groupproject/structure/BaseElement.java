@@ -86,37 +86,6 @@ public abstract class BaseElement implements Serializable {
     }
 
     /**
-     * Called when created
-     * Called when reloaded from file
-     * Use this to create the component field and other setup tasks
-     * @see Slide#generate() for the most simplistic implementation
-     * Typically you would also want to add the component to the parent's component
-     * Something like this:
-     * if (parent != null)
-     *     parent.component.add(component);
-     */
-    public abstract void generate();
-
-    /**
-     * Support elements to update for any reason (reposition, animation, etc.)
-     * Parent's component has dimensions in pixel cord
-     * If another Element is a child of an Element
-     * then call update on the child Element(s)
-     * This is a basic implementation (used by Slide), in your actual implementation
-     * you might want to set the position of the childElements before updating them
-     * @see Slide
-     * @see JComponent#getSize()
-     */
-    public void update() {
-        component.setLocation(position[0], position[1]);
-        component.setSize(dimension[0], dimension[1]);
-
-        for (BaseElement element : children) {
-            element.update();
-        }
-    }
-
-    /**
      * Get the pixel position of the element
      * @return array of 2 elements representing first the X and second the Y axis
      */
@@ -198,16 +167,20 @@ public abstract class BaseElement implements Serializable {
     }
 
     /**
+     * Set parent
+     * @param element BaseElement to set as parent
+     */
+    public void setParent(BaseElement element) {
+        parent = element;
+    }
+
+    /**
      * Return parent element (if any)
      * @return BaseElement, use instanceof and casting to get expected type, null if none
      */
-    public BaseElement getParent() { return parent; }
-
-    /**
-     * Return child elements (if any)
-     * @return ArrayList of BaseElement, use instanceof and casting to get expected type, maybe empty
-     */
-    public ArrayList<BaseElement> getChildren() { return  children; }
+    public BaseElement getParent() {
+        return parent;
+    }
 
     /**
      * Check if a position is within the bounds of this element
@@ -223,7 +196,6 @@ public abstract class BaseElement implements Serializable {
             return this;
         }
 
-
         for (BaseElement element : children) {
             BaseElement result = element.withinBoundOfHierarchy(evaluatePosition);
             if (result != null) {
@@ -235,11 +207,31 @@ public abstract class BaseElement implements Serializable {
     }
 
     /**
+     * Called when created
+     * Called when reloaded from file
+     * Use this to create the component field and other setup tasks
+     * @see Slide#generate() for the most simplistic implementation
+     * Typically you would also want to add the component to the parent's component
+     * Something like this:
+     * if (parent != null)
+     *     parent.component.add(component);
+     */
+    public abstract void generate();
+
+    /**
      * Clean up anything when the element is destroyed (call recursively to child elements)
      */
-    public void destroy() {
-        for (BaseElement element : children) {
-            element.destroy();
-        }
-    }
+    public abstract void destroy();
+
+    /**
+     * Support elements to update for any reason (reposition, animation, etc.)
+     * Parent's component has dimensions in pixel cord
+     * If another Element is a child of an Element
+     * then call update on the child Element(s)
+     * This is a basic implementation (used by Slide), in your actual implementation
+     * you might want to set the position of the childElements before updating them
+     * @see Slide
+     * @see JComponent#getSize()
+     */
+    public abstract void update();
 }

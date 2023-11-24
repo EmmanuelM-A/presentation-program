@@ -1,35 +1,31 @@
 package com.scc210groupproject.structure;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * @author wonge1
- * Uses the implementation of the BaseElement class
- * Serializable as result of inheriting BaseElement
+ * Use this as a template for elements
  */
-public class Slide extends BaseElement {
-    private Presentation specialParent;
-
+public class TemplateElement extends BaseElement {
     /**
      * Create a Slide at specified pixel position and dimension on a slide
      * @param parent must not be null, Presentation the slide is part of
      * @param initialPosition position to create element, must be an array of 2 elements
      * @param initialDimension dimension of the element, must be an array of 2 elements
      */
-    public Slide(Presentation parent, int[] initialPosition, int[] initialDimension) {
+    public TemplateElement(BaseElement parent, int[] initialPosition, int[] initialDimension) {
         super(initialPosition, initialDimension);
         component = new JPanel();
         update();
 
-        specialParent = parent;
-        specialParent.getContainer().add(component);
+        this.parent = parent;
+        parent.component.add(component);
     }
 
     /**
      * Prohibit constructor with 0 arguments
      */
-    private Slide() {}
+    private TemplateElement() {}
 
     /**
      * Called when reloaded from file
@@ -37,13 +33,12 @@ public class Slide extends BaseElement {
      */
     @Override
     public void generate() {
-        component = new JPanel();
-        update();
-
-        specialParent.getContainer().add(component);
+        component = new JPanel(); //can be any JComponent
+        parent.component.add(component); //add to parent's component
+        update(); //apply the position and dimension to the component
 
         for (BaseElement element : children) {
-            element.generate();
+            element.generate(); //recursive call generate on child element
         }
     }
 
@@ -66,7 +61,7 @@ public class Slide extends BaseElement {
             element.destroy();
         }
 
-        specialParent.getContainer().remove(component);
-        specialParent.getContainer().validate();
+        parent.component.remove(component);
+        parent.component.validate();
     }
 }
