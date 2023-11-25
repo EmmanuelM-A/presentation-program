@@ -3,7 +3,9 @@ package com.scc210groupproject.toolBarOptions;
 import javax.swing.*;
 
 public enum ToolBarOptions {
-    NEW("NEW FILE", "file-circle-plus-solid.png");
+    NEW("NEW_FILE", "new-document.png"),
+    OPEN("OPEN_FILE", "folder.png"),
+    SAVE("SAVE_FILE", "diskette.png");
 
     private final String title;
     private final ImageIcon icon;

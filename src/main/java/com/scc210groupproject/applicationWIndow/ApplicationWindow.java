@@ -39,8 +39,8 @@ public class ApplicationWindow extends JFrame {
 
         JToolBar toolBar = new JToolBar();
         JButton newBtn = new JButton(ToolBarOptions.NEW.getIcon());
-        JButton openBtn = new JButton("OPEN");
-        JButton saveBtn = new JButton("SAVE");
+        JButton openBtn = new JButton(ToolBarOptions.OPEN.getIcon());
+        JButton saveBtn = new JButton(ToolBarOptions.SAVE.getIcon());
         //JButton btn = new JButton("");
 
         toolBar.add(newBtn);
