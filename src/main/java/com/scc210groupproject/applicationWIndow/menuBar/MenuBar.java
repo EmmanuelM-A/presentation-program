@@ -1,2 +1,5 @@
-package com.scc210groupproject.applicationWIndow.menuBar;public class MenuBar {
+package com.scc210groupproject.applicationWIndow.menuBar;
+
+public class MenuBar {
+
 }

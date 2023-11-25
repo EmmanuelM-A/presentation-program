@@ -1,15 +1,27 @@
-package com.scc210groupproject.applicationWindow;
+package com.scc210groupproject.applicationWIndow;
 
 
-import com.scc210groupproject.toolBarOptions.CreateToolBarOption;
-import com.scc210groupproject.toolBarOptions.ToolBarOptions;
+import com.scc210groupproject.applicationWIndow.toolBarOptions.ToolBarOptions;
+import com.scc210groupproject.applicationWIndow.toolBars.FileToolBar;
+import com.scc210groupproject.applicationWIndow.toolBars.HomeToolBar;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 public class ApplicationWindow extends JFrame {
-    final private Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+    private final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+    private JTabbedPane menuBarTabs;
+    private JButton newBtn, openBtn, saveBtn, btn1, btn2, btn3;
+
+    private JPanel contextMenu, mainDisplay, slideManager;
+
+    private FileToolBar fileToolBar;
+
+    private HomeToolBar homeToolBar;
+
     public ApplicationWindow() {
         setTitle("Presentation Program");
         setSize((int)size.getWidth(), (int)size.getHeight());
@@ -19,36 +31,33 @@ public class ApplicationWindow extends JFrame {
         setResizable(true);
         setLayout(new BorderLayout());
 
-        JMenuBar menuBar = new JMenuBar();
+        this.menuBarTabs = new JTabbedPane();
 
-        JMenu fileMenu = new JMenu("File");
-        JMenu homeMenu = new JMenu("Home");
-        JMenu insertMenu = new JMenu("Insert");
-        JMenu shareMenu = new JMenu("Share");
-        JMenu viewMenu = new JMenu("View");
-        JMenu aboutMenu = new JMenu("About");
+        this.fileToolBar = new FileToolBar();
+        this.homeToolBar = new HomeToolBar();
 
-        menuBar.add(fileMenu);
-        menuBar.add(homeMenu);
-        menuBar.add(insertMenu);
-        menuBar.add(shareMenu);
-        menuBar.add(viewMenu);
-        menuBar.add(aboutMenu);
+        this.menuBarTabs.addTab("File", this.fileToolBar);
+        this.menuBarTabs.addTab("Home", this.homeToolBar);
 
-        this.setJMenuBar(menuBar);
+        this.contextMenu = new JPanel();
+        this.contextMenu.setBackground(Color.BLUE);
+        this.contextMenu.setPreferredSize(new Dimension(300, 100));
 
-        JToolBar toolBar = new JToolBar();
-        JButton newBtn = new JButton(ToolBarOptions.NEW.getIcon());
-        JButton openBtn = new JButton(ToolBarOptions.OPEN.getIcon());
-        JButton saveBtn = new JButton(ToolBarOptions.SAVE.getIcon());
-        //JButton btn = new JButton("");
+        this.mainDisplay = new JPanel();
+        this.mainDisplay.setBackground(Color.RED);
+        this.mainDisplay.setPreferredSize(new Dimension(100, 100));
 
-        toolBar.add(newBtn);
-        toolBar.add(openBtn);
-        toolBar.add(saveBtn);
+        this.slideManager = new JPanel();
+        this.slideManager.setBackground(Color.ORANGE);
+        this.slideManager.setPreferredSize(new Dimension(100, 200));
 
-        this.getContentPane().add(toolBar, BorderLayout.NORTH);
+        getContentPane().add(menuBarTabs, BorderLayout.NORTH);
+        getContentPane().add(contextMenu, BorderLayout.WEST);
+        getContentPane().add(mainDisplay, BorderLayout.CENTER);
+        getContentPane().add(slideManager, BorderLayout.SOUTH);
 
         setVisible(true);
+
     }
+
 }

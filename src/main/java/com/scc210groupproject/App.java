@@ -1,8 +1,8 @@
 package com.scc210groupproject;
 
-import com.scc210groupproject.applicationWindow.ApplicationWindow;
+import com.scc210groupproject.applicationWIndow.ApplicationWindow;
 
-public class App 
+public class App
 {
     public static void main( String[] args ) {
         new ApplicationWindow();
