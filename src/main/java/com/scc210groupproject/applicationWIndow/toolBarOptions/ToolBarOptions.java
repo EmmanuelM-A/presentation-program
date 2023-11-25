@@ -11,7 +11,7 @@ public enum ToolBarOptions {
     private final ImageIcon icon;
     private ToolBarOptions(String title, String filename) {
         this.title = title;
-        this.icon = CreateToolBarOption.getIcon(filename);
+        this.icon = getIconFromFile(filename);
     }
 
     public String getTitle() {
@@ -19,5 +19,14 @@ public enum ToolBarOptions {
     }
     public ImageIcon getIcon() {
         return this.icon;
+    }
+
+    private ImageIcon getIconFromFile(String file) {
+        String filePath = "src/main/resources/images/" + file;
+        try {
+            return new ImageIcon(filePath);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

@@ -4,6 +4,7 @@ package com.scc210groupproject.applicationWIndow;
 import com.scc210groupproject.applicationWIndow.toolBarOptions.ToolBarOptions;
 import com.scc210groupproject.applicationWIndow.toolBars.FileToolBar;
 import com.scc210groupproject.applicationWIndow.toolBars.HomeToolBar;
+import com.scc210groupproject.applicationWIndow.toolBars.MenuBarTabs;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,14 +14,8 @@ import java.awt.event.ActionListener;
 
 public class ApplicationWindow extends JFrame {
     private final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-    private JTabbedPane menuBarTabs;
-    private JButton newBtn, openBtn, saveBtn, btn1, btn2, btn3;
-
+    private MenuBarTabs menuBarTabs;
     private JPanel contextMenu, mainDisplay, slideManager;
-
-    private FileToolBar fileToolBar;
-
-    private HomeToolBar homeToolBar;
 
     public ApplicationWindow() {
         setTitle("Presentation Program");
@@ -31,13 +26,7 @@ public class ApplicationWindow extends JFrame {
         setResizable(true);
         setLayout(new BorderLayout());
 
-        this.menuBarTabs = new JTabbedPane();
-
-        this.fileToolBar = new FileToolBar();
-        this.homeToolBar = new HomeToolBar();
-
-        this.menuBarTabs.addTab("File", this.fileToolBar);
-        this.menuBarTabs.addTab("Home", this.homeToolBar);
+        this.menuBarTabs = new MenuBarTabs();
 
         this.contextMenu = new JPanel();
         this.contextMenu.setBackground(Color.BLUE);

@@ -3,11 +3,8 @@ package com.scc210groupproject.applicationWIndow.toolBars;
 import com.scc210groupproject.applicationWIndow.toolBarOptions.ToolBarOptions;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class FileToolBar extends JToolBar {
-    private Boolean isDisplayed = true;
     private final JButton newBtn, openBtn, saveBtn;
 
     public FileToolBar() {
@@ -34,12 +31,5 @@ public class FileToolBar extends JToolBar {
         saveBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         saveBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
         this.add(saveBtn);
-    }
-
-    public Boolean getIsDisplayed() {
-        return this.isDisplayed;
-    }
-    public void setIsDisplayed(Boolean displayed) {
-        this.isDisplayed = displayed;
     }
 }

@@ -1,13 +1,11 @@
 package com.scc210groupproject.applicationWIndow.toolBars;
 
-import com.scc210groupproject.applicationWIndow.toolBarOptions.ToolBarOptions;
-
 import javax.swing.*;
 
-public class HomeToolBar extends JToolBar {
+public class InsertToolBar extends JToolBar {
     private final JButton btn1, btn2, btn3;
 
-    public HomeToolBar() {
+    public InsertToolBar() {
         btn1 = new JButton("BUTTON 1");
         btn2 = new JButton("BUTTON 2");
         btn3 = new JButton("BUTTON 3");
