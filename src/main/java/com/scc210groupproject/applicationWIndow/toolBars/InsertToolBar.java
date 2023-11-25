@@ -1,33 +1,35 @@
 package com.scc210groupproject.applicationWIndow.toolBars;
 
+import com.scc210groupproject.applicationWIndow.toolBarOptions.ToolBarOptions;
+
 import javax.swing.*;
 
 public class InsertToolBar extends JToolBar {
-    private final JButton btn1, btn2, btn3;
+    private final JButton addTextBtn, addImageBtn, addVideoBtn;
 
     public InsertToolBar() {
-        btn1 = new JButton("BUTTON 1");
-        btn2 = new JButton("BUTTON 2");
-        btn3 = new JButton("BUTTON 3");
+        addTextBtn = new JButton(ToolBarOptions.ADD_TEXT.getIcon());
+        addImageBtn = new JButton(ToolBarOptions.ADD_IMAGE.getIcon());
+        addVideoBtn = new JButton(ToolBarOptions.ADD_VIDEO.getIcon());
 
         this.setRollover(true);
 
-        btn1.setText("Btn1");
-        btn1.setFocusable(false);
-        btn1.setHorizontalTextPosition(SwingConstants.CENTER);
-        btn1.setVerticalTextPosition(SwingConstants.BOTTOM);
-        this.add(btn1);
+        addTextBtn.setText(ToolBarOptions.ADD_TEXT.getTitle());
+        addTextBtn.setFocusable(false);
+        addTextBtn.setHorizontalTextPosition(SwingConstants.CENTER);
+        addTextBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
+        this.add(addTextBtn);
 
-        btn2.setText("Btn2");
-        btn2.setFocusable(false);
-        btn2.setHorizontalTextPosition(SwingConstants.CENTER);
-        btn2.setVerticalTextPosition(SwingConstants.BOTTOM);
-        this.add(btn2);
+        addImageBtn.setText(ToolBarOptions.ADD_IMAGE.getTitle());
+        addImageBtn.setFocusable(false);
+        addImageBtn.setHorizontalTextPosition(SwingConstants.CENTER);
+        addImageBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
+        this.add(addImageBtn);
 
-        btn3.setText("Btn3");
-        btn3.setFocusable(false);
-        btn3.setHorizontalTextPosition(SwingConstants.CENTER);
-        btn3.setVerticalTextPosition(SwingConstants.BOTTOM);
-        this.add(btn3);
+        addVideoBtn.setText(ToolBarOptions.ADD_VIDEO.getTitle());
+        addVideoBtn.setFocusable(false);
+        addVideoBtn.setHorizontalTextPosition(SwingConstants.CENTER);
+        addVideoBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
+        this.add(addVideoBtn);
     }
 }

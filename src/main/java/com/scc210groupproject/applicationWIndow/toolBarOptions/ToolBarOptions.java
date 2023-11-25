@@ -3,9 +3,16 @@ package com.scc210groupproject.applicationWIndow.toolBarOptions;
 import javax.swing.*;
 
 public enum ToolBarOptions {
-    NEW("NEW_FILE", "new-document.png"),
-    OPEN("OPEN_FILE", "folder.png"),
-    SAVE("SAVE_FILE", "diskette.png");
+    NEW("NEW FILE", "new-document.png"),
+    OPEN("OPEN FILE", "folder.png"),
+    SAVE("SAVE FILE", "diskette.png"),
+    ADD_TEXT("TEXT", "add-text.png"),
+    ADD_IMAGE("IMAGE", "add-image.png"),
+    ADD_VIDEO("VIDEO", "add-video.png"),
+    EXPORT("EXPORT", "export.png"),
+    IMPORT("IMPORT", "import.png"),
+    SHARE("SHARE", "share.png"),
+    PRESENT("PRESENT", "projector-screen.png");
 
     private final String title;
     private final ImageIcon icon;
