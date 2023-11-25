@@ -1,2 +1,21 @@
-package com.scc210groupproject.toolBarOptions;public enum ToolBarOptions {
+package com.scc210groupproject.toolBarOptions;
+
+import javax.swing.*;
+
+public enum ToolBarOptions {
+    NEW("NEW FILE", "file-circle-plus-solid.png");
+
+    private final String title;
+    private final ImageIcon icon;
+    private ToolBarOptions(String title, String filename) {
+        this.title = title;
+        this.icon = CreateToolBarOption.getIcon(filename);
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+    public ImageIcon getIcon() {
+        return this.icon;
+    }
 }

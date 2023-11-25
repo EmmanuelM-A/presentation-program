@@ -1,6 +1,9 @@
 package com.scc210groupproject.applicationWindow;
 
 
+import com.scc210groupproject.toolBarOptions.CreateToolBarOption;
+import com.scc210groupproject.toolBarOptions.ToolBarOptions;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,7 +12,7 @@ public class ApplicationWindow extends JFrame {
     final private Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
     public ApplicationWindow() {
         setTitle("Presentation Program");
-        //setSize((int)size.getWidth(), (int)size.getHeight());
+        setSize((int)size.getWidth(), (int)size.getHeight());
         setMinimumSize(new Dimension(1000, 700));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -35,7 +38,7 @@ public class ApplicationWindow extends JFrame {
         this.setJMenuBar(menuBar);
 
         JToolBar toolBar = new JToolBar();
-        JButton newBtn = new JButton("NEW");
+        JButton newBtn = new JButton(ToolBarOptions.NEW.getIcon());
         JButton openBtn = new JButton("OPEN");
         JButton saveBtn = new JButton("SAVE");
         //JButton btn = new JButton("");
