@@ -1,4 +1,4 @@
-package com.scc210groupproject.toolBarOptions;
+package com.scc210groupproject.applicationWIndow.toolBarOptions;
 
 import javax.swing.*;
 import java.awt.*;
