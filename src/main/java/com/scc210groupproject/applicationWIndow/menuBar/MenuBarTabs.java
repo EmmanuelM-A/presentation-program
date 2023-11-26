@@ -1,15 +1,16 @@
-package com.scc210groupproject.applicationWIndow.toolBars;
+package com.scc210groupproject.applicationWIndow.menuBar;
+
+import com.scc210groupproject.applicationWIndow.toolBars.*;
 
 import javax.swing.*;
 
 public class MenuBarTabs extends JTabbedPane {
-    private FileToolBar fileToolBar;
-
-    private HomeToolBar homeToolBar;
-    private InsertToolBar insertToolBar;
-    private ViewToolBar viewToolBar;
-    private ShareToolBar shareToolBar;
-    private AboutToolBar aboutToolBar;
+    private final FileToolBar fileToolBar;
+    private final HomeToolBar homeToolBar;
+    private final InsertToolBar insertToolBar;
+    private final ViewToolBar viewToolBar;
+    private final ShareToolBar shareToolBar;
+    private final AboutToolBar aboutToolBar;
 
     public MenuBarTabs() {
         this.fileToolBar = new FileToolBar();
