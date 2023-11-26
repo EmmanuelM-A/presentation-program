@@ -4,8 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainDisplayPanel extends JPanel {
-    public MainDisplayPanel(int width, int height) {
-        this.setBackground(Color.RED);
+    private MainDisplay mainDisplay;
+    public MainDisplayPanel(int width, int height, Color colour) {
+        mainDisplay = new MainDisplay();
+
+        this.setBackground(colour);
         this.setPreferredSize(new Dimension(width, height));
+        this.setLayout(new BorderLayout());
+
+        //this.add(this.mainDisplay, BorderLayout.CENTER);
     }
 }
