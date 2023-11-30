@@ -32,6 +32,23 @@ public class ApplicationWindow extends JFrame {
         setResizable(true);
         setLayout(new BorderLayout(40, 20));
 
+        ////
+        //this.setUndecorated(true);
+
+        JPanel button_panel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JButton button_1=new JButton("+");
+        JButton button_2=new JButton("?");
+        JButton button_3=new JButton("-");
+        JButton button_4=new JButton("system tray");
+
+        button_panel.add(button_1);
+        button_panel.add(button_2);
+        button_panel.add(button_3);
+        button_panel.add(button_4);
+
+        this.getContentPane().add(button_panel,BorderLayout.NORTH);
+        /////////
+
         this.getContentPane().setBackground(backgroundColour);
 
         this.menuBarTabs = new MenuBarTabs(menuBarTabsColour);
