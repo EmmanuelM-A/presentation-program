@@ -13,7 +13,8 @@ public class MenuBarTabs extends JTabbedPane {
     private final ShareToolBar shareToolBar;
     private final AboutToolBar aboutToolBar;
 
-    public MenuBarTabs(Color colour) {
+    public MenuBarTabs(int width, int height, Color colour) {
+        this.setPreferredSize(new Dimension(width, height));
         this.setBackground(colour);
         this.setFocusable(false);
 

@@ -2,6 +2,7 @@ package com.scc210groupproject.applicationWIndow;
 
 import com.scc210groupproject.applicationWIndow.contextMenu.ContextMenuPanel;
 import com.scc210groupproject.applicationWIndow.mainDisplay.MainDisplayPanel;
+import com.scc210groupproject.applicationWIndow.menuBar.MenuBarPanel;
 import com.scc210groupproject.applicationWIndow.menuBar.MenuBarTabs;
 import com.scc210groupproject.applicationWIndow.slideManager.SlideManagerPanel;
 
@@ -12,6 +13,7 @@ public class ApplicationWindow extends JFrame
 {
     private final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
     private MenuBarTabs menuBarTabs;
+    private MenuBarPanel menuBarPanel;
     private ContextMenuPanel contextMenuPanel;
     private MainDisplayPanel mainDisplayPanel;
     private SlideManagerPanel slideManagerPanel;
@@ -19,10 +21,15 @@ public class ApplicationWindow extends JFrame
 
     // Colour Scheme
     private final Color backgroundColour = new Color(211, 211, 211);
+<<<<<<< HEAD
     private final Color menuBarTabsColour = Color.WHITE;
+=======
+
+>>>>>>> d4d0405 (Made a menuBarPanel where I have added the menuBarTabs and TopBar (contains save, redo, undo buttons) to the panel)
     private final Color mainDisplayColour = new Color(255,255, 255);
 
     public ApplicationWindow() {
+<<<<<<< HEAD
         setTitle("Presentation Program");
         setSize((int)size.getWidth(), (int)size.getHeight());
         setMinimumSize(new Dimension(1000, 700));
@@ -44,27 +51,43 @@ public class ApplicationWindow extends JFrame
 
         this.getContentPane().add(button_panel,BorderLayout.NORTH);
 
+=======
+        this.setTitle("Presentation Program");
+        this.setSize((int)size.getWidth(), (int)size.getHeight());
+        this.setMinimumSize(new Dimension(1000, 700));
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setResizable(true);
+        this.setLayout(new BorderLayout(40, 20));
+>>>>>>> d4d0405 (Made a menuBarPanel where I have added the menuBarTabs and TopBar (contains save, redo, undo buttons) to the panel)
         this.getContentPane().setBackground(backgroundColour);
 
-        this.menuBarTabs = new MenuBarTabs(menuBarTabsColour);
+        this.menuBarPanel = new MenuBarPanel(100, 120, backgroundColour);
         
         this.contextMenuPanel = new ContextMenuPanel(300, 100, Color.BLUE);
 
         this.mainDisplayPanel = new MainDisplayPanel(100, 100, mainDisplayColour);
+<<<<<<< HEAD
 
         this.slideManagerPanel = new SlideManagerPanel(100, 300, Color.YELLOW, mainDisplayPanel.getCurrentPresentation());
+=======
+        
+        this.slideManagerPanel = new SlideManagerPanel(100, 180, Color.YELLOW);
+>>>>>>> d4d0405 (Made a menuBarPanel where I have added the menuBarTabs and TopBar (contains save, redo, undo buttons) to the panel)
 
         this.emptySpace = new JPanel();
         this.emptySpace.setBackground(backgroundColour);
         this.emptySpace.setPreferredSize(new Dimension(100, 100));
 
-        this.add(menuBarTabs, BorderLayout.NORTH);
+        /*  The positioning of each panel on the window
+        * */
+        this.add(menuBarPanel, BorderLayout.NORTH);
         this.add(contextMenuPanel, BorderLayout.WEST);
         this.add(mainDisplayPanel, BorderLayout.CENTER);
         this.add(slideManagerPanel, BorderLayout.SOUTH);
         this.add(emptySpace, BorderLayout.EAST);
 
-        setVisible(true);
+        this.setVisible(true);
 
     }
 }
