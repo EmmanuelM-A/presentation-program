@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import com.scc210groupproject.structure.*;
 
-public class SlideManagerPanel extends JPanel {
+public class SlideManagerPanel extends JScrollPane {
 
     private Presentation currentPresentation;
 

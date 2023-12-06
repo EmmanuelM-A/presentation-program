@@ -31,5 +31,8 @@ public class FileToolBar extends JToolBar {
         saveBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         saveBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
         this.add(saveBtn);
+
+        this.setName("File");
+        this.setFloatable(false);
     }
 }

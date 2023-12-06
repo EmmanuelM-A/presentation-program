@@ -31,5 +31,8 @@ public class ShareToolBar extends JToolBar {
         shareBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         shareBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
         this.add(shareBtn);
+
+        this.setName("Share");
+        this.setFloatable(false);
     }
 }

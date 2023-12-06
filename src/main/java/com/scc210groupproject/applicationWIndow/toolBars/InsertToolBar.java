@@ -31,5 +31,8 @@ public class InsertToolBar extends JToolBar {
         addVideoBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         addVideoBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
         this.add(addVideoBtn);
+
+        this.setName("Insert");
+        this.setFloatable(false);
     }
 }
