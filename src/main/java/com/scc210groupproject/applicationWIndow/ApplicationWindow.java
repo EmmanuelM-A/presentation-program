@@ -1,6 +1,5 @@
 package com.scc210groupproject.applicationWIndow;
 
-
 import com.scc210groupproject.applicationWIndow.contextMenu.ContextMenuPanel;
 import com.scc210groupproject.applicationWIndow.mainDisplay.MainDisplayPanel;
 import com.scc210groupproject.applicationWIndow.menuBar.MenuBarTabs;
@@ -9,8 +8,8 @@ import com.scc210groupproject.applicationWIndow.slideManager.SlideManagerPanel;
 import javax.swing.*;
 import java.awt.*;
 
-
-public class ApplicationWindow extends JFrame {
+public class ApplicationWindow extends JFrame
+{
     private final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
     private MenuBarTabs menuBarTabs;
     private ContextMenuPanel contextMenuPanel;
@@ -21,8 +20,8 @@ public class ApplicationWindow extends JFrame {
     // Colour Scheme
     private final Color backgroundColour = new Color(211, 211, 211);
     private final Color menuBarTabsColour = Color.WHITE;
-
     private final Color mainDisplayColour = new Color(255,255, 255);
+
     public ApplicationWindow() {
         setTitle("Presentation Program");
         setSize((int)size.getWidth(), (int)size.getHeight());
@@ -31,9 +30,6 @@ public class ApplicationWindow extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(true);
         setLayout(new BorderLayout(40, 20));
-
-        ////
-        //this.setUndecorated(true);
 
         JPanel button_panel=new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton button_1=new JButton("+");
@@ -47,7 +43,6 @@ public class ApplicationWindow extends JFrame {
         button_panel.add(button_4);
 
         this.getContentPane().add(button_panel,BorderLayout.NORTH);
-        /////////
 
         this.getContentPane().setBackground(backgroundColour);
 
@@ -56,8 +51,8 @@ public class ApplicationWindow extends JFrame {
         this.contextMenuPanel = new ContextMenuPanel(300, 100, Color.BLUE);
 
         this.mainDisplayPanel = new MainDisplayPanel(100, 100, mainDisplayColour);
-        
-        this.slideManagerPanel = new SlideManagerPanel(100, 200, Color.YELLOW);
+
+        this.slideManagerPanel = new SlideManagerPanel(100, 300, Color.YELLOW, mainDisplayPanel.getCurrentPresentation());
 
         this.emptySpace = new JPanel();
         this.emptySpace.setBackground(backgroundColour);
@@ -72,5 +67,4 @@ public class ApplicationWindow extends JFrame {
         setVisible(true);
 
     }
-
 }

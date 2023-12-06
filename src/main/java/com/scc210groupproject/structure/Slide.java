@@ -2,6 +2,7 @@ package com.scc210groupproject.structure;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * @author wonge1
@@ -68,5 +69,14 @@ public class Slide extends BaseElement {
 
         specialParent.getContainer().remove(component);
         specialParent.getContainer().validate();
+    }
+
+    public Graphics2D createPreview()
+    {
+        BufferedImage image = new BufferedImage(component.getWidth(), component.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D graphics = image.createGraphics();
+        component.paint(graphics);
+
+        return(graphics);
     }
 }
