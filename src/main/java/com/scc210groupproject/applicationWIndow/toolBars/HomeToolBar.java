@@ -31,5 +31,8 @@ public class HomeToolBar extends JToolBar {
         btn3.setHorizontalTextPosition(SwingConstants.CENTER);
         btn3.setVerticalTextPosition(SwingConstants.BOTTOM);
         this.add(btn3);
+
+        this.setName("Home");
+        this.setFloatable(false);
     }
 }

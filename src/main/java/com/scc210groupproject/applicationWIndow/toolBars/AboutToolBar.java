@@ -29,5 +29,8 @@ public class AboutToolBar extends JToolBar {
         btn3.setHorizontalTextPosition(SwingConstants.CENTER);
         btn3.setVerticalTextPosition(SwingConstants.BOTTOM);
         this.add(btn3);
+    
+        this.setName("About");
+        this.setFloatable(false);
     }
 }

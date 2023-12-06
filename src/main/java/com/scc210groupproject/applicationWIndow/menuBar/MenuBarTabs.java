@@ -31,11 +31,11 @@ public class MenuBarTabs extends JTabbedPane {
         this.shareToolBar.setBackground(Color.WHITE);
         this.aboutToolBar.setBackground(Color.WHITE);
 
-        this.addTab("File", this.fileToolBar);
-        this.addTab("Home", this.homeToolBar);
-        this.addTab("Insert", this.insertToolBar);
-        this.addTab("View", this.viewToolBar);
-        this.addTab("Share", this.shareToolBar);
-        this.addTab("About", this.aboutToolBar);
+        super.add(this.fileToolBar);
+        super.add(this.homeToolBar);
+        super.add(this.insertToolBar);
+        super.add(this.viewToolBar);
+        super.add(this.shareToolBar);
+        super.add(this.aboutToolBar);
     }
 }
