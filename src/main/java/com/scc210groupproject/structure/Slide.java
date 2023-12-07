@@ -52,6 +52,8 @@ public class Slide extends BaseElement {
     public void update() {
         component.setLocation(position[0], position[1]);
         component.setSize(dimension[0], dimension[1]);
+        component.setPreferredSize(new Dimension(dimension[0], dimension[1]));
+        component.revalidate();
 
         for (BaseElement element : children) {
             element.update();

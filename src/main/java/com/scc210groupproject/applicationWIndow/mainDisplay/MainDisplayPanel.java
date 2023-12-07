@@ -6,6 +6,8 @@ import com.scc210groupproject.structure.*;
 
 public class MainDisplayPanel extends JPanel {
 
+    public static MainDisplayPanel instance;
+
     private Presentation currentPresentation;
 
     public MainDisplayPanel(int width, int height, Color colour)
@@ -15,6 +17,8 @@ public class MainDisplayPanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.currentPresentation = null;
         createNewPresentation();
+
+        instance = this;
     }
 
     public void createNewPresentation()
@@ -27,6 +31,7 @@ public class MainDisplayPanel extends JPanel {
     {
         this.removeAll();
         this.add(currentPresentation.getContainer());
+        this.revalidate();
     }  
 
     public Presentation getCurrentPresentation()

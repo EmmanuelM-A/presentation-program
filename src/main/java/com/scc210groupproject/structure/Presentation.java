@@ -70,12 +70,14 @@ public class Presentation implements Serializable {
      */
     public Slide newSlide() {
 
+        
         int[] position = new int[] { totalLength() + padding, 0 };
         Slide slide = new Slide(this, position, defaultSize);
-
         slides.add(slide);
+
         container.setSize(totalLength(), maxHeight());
-        container.validate();
+        container.setPreferredSize(new Dimension(totalLength(), maxHeight()));
+        container.revalidate();
 
         return slide;
     }
@@ -118,9 +120,11 @@ public class Presentation implements Serializable {
      */
     public Presentation() {
         slides = new ArrayList<>();
-        padding = 0;
+        padding = 10;
         defaultSize = new int[]{500, 500};
         container = new JPanel();
+        container.setLayout(null);
+        container.setBackground(Color.GRAY);
 
         newSlide();
     }
