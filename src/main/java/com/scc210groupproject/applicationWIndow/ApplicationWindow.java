@@ -12,7 +12,6 @@ import java.awt.*;
 public class ApplicationWindow extends JFrame
 {
     private final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-    private MenuBarTabs menuBarTabs;
     private MenuBarPanel menuBarPanel;
     private ContextMenuPanel contextMenuPanel;
     private MainDisplayPanel mainDisplayPanel;
@@ -64,7 +63,7 @@ public class ApplicationWindow extends JFrame
 
         this.menuBarPanel = new MenuBarPanel(100, 120, backgroundColour);
         
-        this.contextMenuPanel = new ContextMenuPanel(300, 100, Color.BLUE);
+        this.contextMenuPanel = new ContextMenuPanel(300, 100, Color.WHITE);
 
         this.mainDisplayPanel = new MainDisplayPanel(100, 100, mainDisplayColour);
 <<<<<<< HEAD

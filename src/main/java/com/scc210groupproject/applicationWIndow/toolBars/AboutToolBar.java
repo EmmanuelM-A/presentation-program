@@ -1,29 +1,41 @@
 package com.scc210groupproject.applicationWIndow.toolBars;
 
+import com.scc210groupproject.applicationWIndow.toolBarOptions.ToolBarOptions;
+
 import javax.swing.*;
 
 public class AboutToolBar extends JToolBar {
-    private final JButton btn1, btn2, btn3;
-
+    private JButton license, shortcuts, help;
     public AboutToolBar() {
-        btn1 = new JButton("BUTTON 1");
-        btn2 = new JButton("BUTTON 2");
-        btn3 = new JButton("BUTTON 3");
-
         this.setRollover(true);
 
-        btn1.setText("Btn1");
-        btn1.setFocusable(false);
-        btn1.setHorizontalTextPosition(SwingConstants.CENTER);
-        btn1.setVerticalTextPosition(SwingConstants.BOTTOM);
-        this.add(btn1);
+        license = new JButton(ToolBarOptions.LICENSE.getIcon());
+        license.setText(ToolBarOptions.LICENSE.getTitle());
+        license.setFocusable(false);
+        license.setHorizontalTextPosition(SwingConstants.CENTER);
+        license.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        btn2.setText("Btn2");
-        btn2.setFocusable(false);
-        btn2.setHorizontalTextPosition(SwingConstants.CENTER);
-        btn2.setVerticalTextPosition(SwingConstants.BOTTOM);
-        this.add(btn2);
+        shortcuts = new JButton(ToolBarOptions.SHORTCUTS.getIcon());
+        shortcuts.setText(ToolBarOptions.SHORTCUTS.getTitle());
+        shortcuts.setFocusable(false);
+        shortcuts.setHorizontalTextPosition(SwingConstants.CENTER);
+        shortcuts.setVerticalTextPosition(SwingConstants.BOTTOM);
 
+        help = new JButton(ToolBarOptions.HELP.getIcon());
+        help.setText(ToolBarOptions.HELP.getTitle());
+        help.setFocusable(false);
+        help.setHorizontalTextPosition(SwingConstants.CENTER);
+        help.setVerticalTextPosition(SwingConstants.BOTTOM);
+
+        this.add(license);
+        this.addSeparator();
+
+        this.add(shortcuts);
+        this.addSeparator();
+
+        this.add(help);
+
+<<<<<<< HEAD
         btn3.setText("Btn3");
         btn3.setFocusable(false);
         btn3.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -32,5 +44,7 @@ public class AboutToolBar extends JToolBar {
     
         this.setName("About");
         this.setFloatable(false);
+=======
+>>>>>>> 157d6c4 (Added more buttons to each toolbar)
     }
 }
