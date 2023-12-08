@@ -48,6 +48,7 @@ public abstract class BaseElement implements Serializable
     public final void add(BaseElement child)
     {
         children.add(child);
+        child.parent = this;
 
         processNewElement(child);
     }
@@ -55,6 +56,7 @@ public abstract class BaseElement implements Serializable
     {
         prepareRemoveElement(child);
 
+        child.parent = null;
         children.remove(child);
     }
 }

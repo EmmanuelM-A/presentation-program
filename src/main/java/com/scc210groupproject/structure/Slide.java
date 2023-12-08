@@ -3,10 +3,12 @@ package com.scc210groupproject.structure;
 import javax.swing.JPanel;
 
 import java.awt.Point;
+import java.awt.geom.AffineTransform;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics2D;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import java.io.IOException;
@@ -75,10 +77,18 @@ public class Slide extends BaseElement
      */
     public BufferedImage createPreview(Dimension size)
     {
-        BufferedImage image = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_RGB);
-        Graphics2D graphics = image.createGraphics();
+        BufferedImage original = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D graphics = original.createGraphics();
         panel.paint(graphics);
+        panel.paintComponents(graphics);
 
-        return image;
+
+        BufferedImage scaled = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_RGB);
+        AffineTransform transform = new AffineTransform();
+        transform.scale((double)size.width / (double)panel.getWidth(), (double)size.height / (double)panel.getHeight());
+        AffineTransformOp operation = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
+
+        scaled = operation.filter(original, scaled);
+        return scaled;
     }
 }
