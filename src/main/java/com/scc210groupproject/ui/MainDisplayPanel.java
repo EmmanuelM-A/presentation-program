@@ -39,9 +39,7 @@ public class MainDisplayPanel extends JPanel implements ICreateSlideListener {
 
         scaledPanel.removeAll();
         scaledPanel.add(component);
-        scaledPanel.validate();
-
-        scaledPanel.setContentSize(component.getSize());
+        scaledPanel.repaint();
     }
 
     @Override
