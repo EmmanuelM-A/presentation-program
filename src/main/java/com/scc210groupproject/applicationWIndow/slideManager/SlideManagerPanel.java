@@ -8,7 +8,7 @@ public class SlideManagerPanel extends JPanel {
 
     private Presentation currentPresentation;
     private JScrollPane slideScroll;
-    private JPanel slideView;
+    private JLabel slideView;
 
     public SlideManagerPanel(int width, int height, Color colour, Presentation presentation) {
         this.setBackground(colour);
@@ -17,7 +17,7 @@ public class SlideManagerPanel extends JPanel {
 
         this.currentPresentation = presentation;
 
-        slideView = new JPanel();
+        slideView = new JLabel();
         slideScroll = new JScrollPane(slideView);
         slideScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         this.add(slideScroll);
@@ -28,7 +28,7 @@ public class SlideManagerPanel extends JPanel {
     {
         for (Slide slide : currentPresentation.getSlides())
         {
-            slideView.paintComponents(slide.createPreview());
+            slideView.setIcon(new ImageIcon(slide.createPreview(slide.asComp().getSize())));
             slideView.revalidate();
         }
     } 

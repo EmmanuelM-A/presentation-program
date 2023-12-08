@@ -14,7 +14,7 @@ public class MainDisplayPanel extends JPanel {
     {
         this.setBackground(colour);
         this.setPreferredSize(new Dimension(width, height));
-        this.setLayout(new BorderLayout());
+        this.setLayout(new GridBagLayout());
         this.currentPresentation = null;
         createNewPresentation();
 
@@ -23,14 +23,19 @@ public class MainDisplayPanel extends JPanel {
 
     public void createNewPresentation()
     {
-        //currentPresentation = new Presentation();
+        currentPresentation = Presentation.getOrCreate();
         insertIntoDisplay();
     }
 
     private void insertIntoDisplay()
     {
         this.removeAll();
-        //this.add(currentPresentation.getContainer());
+        JPanel panel = (JPanel)currentPresentation.getSlideAtIndex(0).asComp();
+        panel.setPreferredSize(panel.getSize());
+        panel.setMinimumSize(panel.getSize());
+        panel.setMaximumSize(panel.getSize());
+
+        this.add(panel);
         this.revalidate();
     }  
 
