@@ -4,7 +4,7 @@ import javax.swing.*;
 
 /**
  * @author wonge1
- * Use this as a template for elements
+ * Use this as a reference (dont extend from this) for elements
  */
 public class TemplateElement extends BaseElement {
     /**

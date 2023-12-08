@@ -1,12 +1,13 @@
 package com.scc210groupproject;
 
 import com.scc210groupproject.applicationWIndow.ApplicationWindow;
-import com.scc210groupproject.structure.Presentation;
-import com.scc210groupproject.structure.Slide;
+import com.scc210groupproject.ui.ApplicationFrame;
 
 public class App
 {
-    public static void main( String[] args ) {
-        new ApplicationWindow();
+    public static void main( String[] args )
+    {
+        //new ApplicationWindow();
+        new ApplicationFrame();
     }
 }

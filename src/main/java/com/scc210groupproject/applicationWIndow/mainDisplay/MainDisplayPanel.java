@@ -23,14 +23,14 @@ public class MainDisplayPanel extends JPanel {
 
     public void createNewPresentation()
     {
-        currentPresentation = new Presentation();
+        //currentPresentation = new Presentation();
         insertIntoDisplay();
     }
 
     private void insertIntoDisplay()
     {
         this.removeAll();
-        this.add(currentPresentation.getContainer());
+        //this.add(currentPresentation.getContainer());
         this.revalidate();
     }  
 

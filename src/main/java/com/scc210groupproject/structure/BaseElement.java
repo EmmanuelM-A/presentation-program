@@ -183,6 +183,12 @@ public abstract class BaseElement implements Serializable {
     }
 
     /**
+     * Return component
+     * @return Component this has
+     */
+    public JComponent getComponent() { return component; }
+
+    /**
      * Check if a position is within the bounds of this element
      * @param evaluatePosition array of 2 elements representing first the X and second the Y axis
      * @return first BaseElement in the hierarchy (downwards) which it is in the bounds of

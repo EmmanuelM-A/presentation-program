@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
  * Serializable as result of inheriting BaseElement
  */
 public class Slide extends BaseElement {
-    private Presentation specialParent;
 
     /**
      * Create a Slide at specified pixel position and dimension on a slide
@@ -18,13 +17,11 @@ public class Slide extends BaseElement {
      * @param initialPosition position to create element, must be an array of 2 elements
      * @param initialDimension dimension of the element, must be an array of 2 elements
      */
-    public Slide(Presentation parent, int[] initialPosition, int[] initialDimension) {
-        super(initialPosition, initialDimension);
+    public Slide(Presentation parent, int[] initialDimension) {
+        super(new int[]{0, 0}, initialDimension);
         component = new JPanel();
+        component.setBackground(Color.green);
         update();
-
-        specialParent = parent;
-        specialParent.getContainer().add(component);
     }
 
     /**
@@ -41,13 +38,14 @@ public class Slide extends BaseElement {
         component = new JPanel();
         update();
 
-        specialParent.getContainer().add(component);
-
         for (BaseElement element : children) {
             element.generate();
         }
     }
 
+    /**
+     * Update size of self and sub element
+     */
     @Override
     public void update() {
         component.setLocation(position[0], position[1]);
@@ -68,11 +66,12 @@ public class Slide extends BaseElement {
         for (BaseElement element : children) {
             element.destroy();
         }
-
-        specialParent.getContainer().remove(component);
-        specialParent.getContainer().validate();
     }
 
+    /**
+     * Create an image of the Slide
+     * @return Graphic2D of Slide
+     */
     public Graphics2D createPreview()
     {
         BufferedImage image = new BufferedImage(component.getWidth(), component.getHeight(), BufferedImage.TYPE_INT_RGB);

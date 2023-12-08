@@ -1,7 +1,8 @@
 package com.scc210groupproject.structure;
 
-import javax.swing.*;
-import java.awt.*;
+import com.scc210groupproject.structure.eventListeners.ICreateSlideListener;
+import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -12,14 +13,71 @@ import java.util.ArrayList;
 public class Presentation implements Serializable {
 
     /**
+     * Only one current presentation being edited
+     */
+    public static transient Presentation current;
+
+    /**
+     * Return the current presentation (create a new one if not available)
+     * @return current presentation
+     */
+    public static Presentation getOrCreate()
+    {
+        if (current == null)
+            current = new Presentation();
+
+        return current;
+    }
+
+    /**
+     * Disregard existing current presentation, create a new one and set that as current
+     * @return newly created current presentation
+     */
+    public static Presentation createNewAsCurrent()
+    {
+        current = new Presentation();
+
+        return current;
+    }
+
+    /**
+     * Holds all ICreateSlideListener
+     */
+    private static ArrayList<ICreateSlideListener> createSlideListeners = new ArrayList<>();
+
+    /**
+     * Add a listner for when a new slide appears
+     * @param listener listener to add
+     */
+    public static void addCreateSlideListener(ICreateSlideListener listener) { createSlideListeners.add(listener); }
+
+    /**
+     * Remove a listener for when a new slide appears
+     * @param listener listener to remove
+     */
+    public static void removeCreateSlideListener(ICreateSlideListener listener) { createSlideListeners.remove(listener); }
+
+    /**
+     * Holds all IDiscardSlideListener
+     */
+    private static ArrayList<IDiscardSlideListener> discardSlideListeners = new ArrayList<>();
+
+    /**
+     * Add a listner for when a slide is removed from presentation
+     * @param listener listener to add
+     */
+    public static void addDiscardSlideListener(IDiscardSlideListener listener) { discardSlideListeners.add(listener); }
+    
+    /**
+     * Remove a listener for when a slide is removed from presentation
+     * @param listener listener to remove
+     */
+    public static void removeDiscardSlideListener(IDiscardSlideListener listener) { discardSlideListeners.remove(listener); }
+
+    /**
      * Slides the presentation contains
      */
     private ArrayList<Slide> slides;
-
-    /**
-     * Padding between Slides
-     */
-    private int padding;
 
     /**
      * Default size, array of length 2 (x for pixel width, y for pixel height)
@@ -27,57 +85,28 @@ public class Presentation implements Serializable {
     private int[] defaultSize;
 
     /**
-     * JPanel of the Presentation (Slides will be added to this)
+     * Construct a presentation of one slide
      */
-    private transient JPanel container;
+    private Presentation()
+    {
+        slides = new ArrayList<>();
 
-    /**
-     * Calculate the total length of the presentation by slides and padding
-     * @return total length in pixels
-     */
-    private int totalLength() {
-        int sum = 0;
+        defaultSize = new int[]{500, 500};
 
-        for (Slide slide : slides) {
-            sum += slide.getDimension()[0];
-        }
-
-        sum += padding * (slides.size() - 1);
-
-        return sum;
-    }
-
-    /**
-     * Calculate the max height of the presentation by the tallest slide
-     * @return max height in pixels
-     */
-    private int maxHeight() {
-        int max = 0;
-
-        for (Slide slide : slides) {
-            int height = slide.getDimension()[1];
-            if (height > max) {
-                max = height;
-            }
-        }
-
-        return max;
+        newSlide();
     }
 
     /**
      * Create a new slide in this presentation
      * @return created Slide
      */
-    public Slide newSlide() {
-
-        
-        int[] position = new int[] { totalLength() + padding, 0 };
-        Slide slide = new Slide(this, position, defaultSize);
+    public Slide newSlide()
+    {
+        Slide slide = new Slide(this, defaultSize);
         slides.add(slide);
 
-        container.setSize(totalLength(), maxHeight());
-        container.setPreferredSize(new Dimension(totalLength(), maxHeight()));
-        container.revalidate();
+        for (ICreateSlideListener listener : createSlideListeners)
+            listener.onCreateSlide(slides.size() - 1, slide);
 
         return slide;
     }
@@ -87,12 +116,17 @@ public class Presentation implements Serializable {
      * Must have more than 1 slide to not throw error
      * @param slide item to be removed
      */
-    public void removeSlide(Slide slide) {
-        if (slides.size() <= 1) {
+    public void removeSlide(Slide slide)
+    {
+        if (slides.size() <= 1)
             throw new IllegalArgumentException("Cannot remove final slide");
-        }
+        
+        int index = slides.indexOf(slide);
+
         slides.remove(slide);
-        slide.destroy();
+
+        for (IDiscardSlideListener listener : discardSlideListeners)
+            listener.onDiscardSlide(index, slide);
     }
 
     /**
@@ -102,36 +136,19 @@ public class Presentation implements Serializable {
     public ArrayList<Slide> getSlides() { return slides; }
 
     /**
+     * Get slide at index in the presentation
+     * @param i index of slide
+     * @return slide at index
+     */
+    public Slide getSlideAtIndex(int i) { return slides.get(i); }
+
+    /**
      * Generate presentation after deserializing
      * @see BaseElement#generate() for the why
      */
-    public void generate() {
-        container = new JPanel();
-
-        for (Slide slide : slides) {
+    public void generate()
+    {
+        for (Slide slide : slides)
             slide.generate();
-        }
-
-        container.setSize(totalLength(), maxHeight());
     }
-
-    /**
-     * Construct a presentation of one slide
-     */
-    public Presentation() {
-        slides = new ArrayList<>();
-        padding = 10;
-        defaultSize = new int[]{500, 500};
-        container = new JPanel();
-        container.setLayout(null);
-        container.setBackground(Color.GRAY);
-
-        newSlide();
-    }
-
-    /**
-     * Return the container for all slides
-     * @return container
-     */
-    public Container getContainer() { return container; }
 }
