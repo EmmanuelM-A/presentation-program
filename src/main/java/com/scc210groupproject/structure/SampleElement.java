@@ -2,12 +2,10 @@ package com.scc210groupproject.structure;
 
 import javax.swing.JPanel;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.Dimension;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,12 +13,11 @@ import java.io.ObjectOutputStream;
 
 /**
  * @author wonge1
- * Uses the implementation of the BaseElement class
- * Serializable as result of inheriting BaseElement
+ * Use this as a reference (dont extend from this) for elements
  */
-public class Slide extends BaseElement
+public class SampleElement extends BaseElement
 {
-    private transient JPanel panel  = new JPanel();
+    private transient JPanel panel = new JPanel();
 
     @Override
     public Component asComp() { return panel; }
@@ -56,7 +53,7 @@ public class Slide extends BaseElement
         
         panel.setBackground(new Color(in.readInt()));
     }
-
+    
     @Override
     protected void processNewElement(BaseElement element) {
         panel.add(element.asComp());
@@ -69,16 +66,4 @@ public class Slide extends BaseElement
         panel.validate();
     }
 
-    /**
-     * Create an image of the Slide
-     * @return Graphic2D of Slide
-     */
-    public BufferedImage createPreview(Dimension size)
-    {
-        BufferedImage image = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_RGB);
-        Graphics2D graphics = image.createGraphics();
-        panel.paint(graphics);
-
-        return image;
-    }
 }

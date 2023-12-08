@@ -1,10 +1,17 @@
 package com.scc210groupproject.structure;
 
+import com.scc210groupproject.structure.eventListeners.IChangePresentationListener;
 import com.scc210groupproject.structure.eventListeners.ICreateSlideListener;
 import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author wonge1
@@ -15,7 +22,25 @@ public class Presentation implements Serializable {
     /**
      * Only one current presentation being edited
      */
-    public static transient Presentation current;
+    private static Presentation current = null;
+    public static Presentation get() { return current; }
+    public static void set(Presentation presentation)
+    {
+        Presentation last = current;
+
+        current = presentation;
+
+        {
+            for (IChangePresentationListener listener : changePresentationListeners)
+                listener.onChangePresentation(current, last);
+        }
+
+        for (int i = 0; i < current.slides.size(); i++)
+        {
+            for (ICreateSlideListener listener : createSlideListeners)
+                listener.onCreateSlide(i, current.slides.get(i));
+        }
+    }
 
     /**
      * Return the current presentation (create a new one if not available)
@@ -24,7 +49,7 @@ public class Presentation implements Serializable {
     public static Presentation getOrCreate()
     {
         if (current == null)
-            current = new Presentation();
+            set(new Presentation());
 
         return current;
     }
@@ -35,54 +60,44 @@ public class Presentation implements Serializable {
      */
     public static Presentation createNewAsCurrent()
     {
-        current = new Presentation();
+        set(new Presentation());
 
         return current;
     }
 
     /**
-     * Holds all ICreateSlideListener
+     * Listner for when the current presentation is changed
      */
-    private static ArrayList<ICreateSlideListener> createSlideListeners = new ArrayList<>();
+    private static List<IChangePresentationListener> changePresentationListeners = new ArrayList<>();
+    public static void addChangePresentationListener(IChangePresentationListener listener) { changePresentationListeners.add(listener); }
+    public static void removeChangePresentationListener(IChangePresentationListener listener) { changePresentationListeners.remove(listener); }
 
     /**
-     * Add a listner for when a new slide appears
-     * @param listener listener to add
+     * Listner for when a new slide appears
      */
+    private static List<ICreateSlideListener> createSlideListeners = new ArrayList<>();
     public static void addCreateSlideListener(ICreateSlideListener listener) { createSlideListeners.add(listener); }
-
-    /**
-     * Remove a listener for when a new slide appears
-     * @param listener listener to remove
-     */
     public static void removeCreateSlideListener(ICreateSlideListener listener) { createSlideListeners.remove(listener); }
 
     /**
-     * Holds all IDiscardSlideListener
+     * Listner for when a slide is removed from presentation
      */
-    private static ArrayList<IDiscardSlideListener> discardSlideListeners = new ArrayList<>();
-
-    /**
-     * Add a listner for when a slide is removed from presentation
-     * @param listener listener to add
-     */
+    private static List<IDiscardSlideListener> discardSlideListeners = new ArrayList<>();
     public static void addDiscardSlideListener(IDiscardSlideListener listener) { discardSlideListeners.add(listener); }
-    
-    /**
-     * Remove a listener for when a slide is removed from presentation
-     * @param listener listener to remove
-     */
     public static void removeDiscardSlideListener(IDiscardSlideListener listener) { discardSlideListeners.remove(listener); }
 
     /**
      * Slides the presentation contains
      */
-    private ArrayList<Slide> slides;
+    private List<Slide> slides = new ArrayList<>();
+    public List<Slide> getSlides() { return slides; }
+    public Slide getSlideAtIndex(int i) { return slides.get(i); }
+    public int getSlideCount() { return slides.size(); }
 
     /**
      * Default size, array of length 2 (x for pixel width, y for pixel height)
      */
-    private int[] defaultSize;
+    private static Dimension defaultSize = new Dimension(500, 500);
 
     /**
      * Construct a presentation of one slide
@@ -91,9 +106,7 @@ public class Presentation implements Serializable {
     {
         slides = new ArrayList<>();
 
-        defaultSize = new int[]{500, 500};
-
-        newSlide();
+        newSlide(false);
     }
 
     /**
@@ -102,11 +115,25 @@ public class Presentation implements Serializable {
      */
     public Slide newSlide()
     {
-        Slide slide = new Slide(this, defaultSize);
+        return newSlide(true);
+    }
+    private Slide newSlide(boolean notify)
+    {
+        Slide slide = new Slide();
+        slide.asComp().setBackground(new Color((float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1));
+        slide.asComp().setSize(defaultSize);
+
+        SampleElement sampleElement = new SampleElement();
+        sampleElement.asComp().setBackground(Color.BLACK);
+        slide.add(sampleElement);
+
         slides.add(slide);
 
-        for (ICreateSlideListener listener : createSlideListeners)
-            listener.onCreateSlide(slides.size() - 1, slide);
+        if (notify)
+        {
+            for (ICreateSlideListener listener : createSlideListeners)
+                listener.onCreateSlide(slides.size() - 1, slide);
+        }
 
         return slide;
     }
@@ -129,26 +156,13 @@ public class Presentation implements Serializable {
             listener.onDiscardSlide(index, slide);
     }
 
-    /**
-     * Get all slides in the presentation
-     * @return list of all slides
-     */
-    public ArrayList<Slide> getSlides() { return slides; }
-
-    /**
-     * Get slide at index in the presentation
-     * @param i index of slide
-     * @return slide at index
-     */
-    public Slide getSlideAtIndex(int i) { return slides.get(i); }
-
-    /**
-     * Generate presentation after deserializing
-     * @see BaseElement#generate() for the why
-     */
-    public void generate()
+    private void writeObject(ObjectOutputStream out) throws IOException
     {
-        for (Slide slide : slides)
-            slide.generate();
+        out.writeObject(slides);
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
+    {
+        slides = (ArrayList)in.readObject();
     }
 }

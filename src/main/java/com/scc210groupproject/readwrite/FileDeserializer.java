@@ -17,13 +17,13 @@ public class FileDeserializer {
      * @throws IOException thrown if FileInputStream and/or ObjectOutputStream failed to start
      * @throws ClassNotFoundException thrown if ObjectOutputStream cannot find Presentation object in the file
      */
-    public static Presentation ReadFromPath(String path) throws IOException, ClassNotFoundException {
+    public static void ReadFromPath(String path) throws IOException, ClassNotFoundException {
         Presentation result;
         try (FileInputStream fileStream = new FileInputStream(path)) {
             result = Deserialize(fileStream);
         }
 
-        return result;
+        Presentation.set(result);
     }
 
     /**

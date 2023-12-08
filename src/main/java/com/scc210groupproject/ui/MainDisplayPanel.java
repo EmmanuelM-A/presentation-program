@@ -5,9 +5,10 @@ import javax.swing.*;
 import java.awt.*;
 
 import com.scc210groupproject.structure.*;
-import com.scc210groupproject.structure.eventListeners.ICreateSlideListener;
+import com.scc210groupproject.structure.eventListeners.IChangePresentationListener;
+import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;
 
-public class MainDisplayPanel extends JPanel implements ICreateSlideListener {
+public class MainDisplayPanel extends JPanel implements IChangePresentationListener, IDiscardSlideListener {
 
     public static MainDisplayPanel instance;
 
@@ -23,27 +24,34 @@ public class MainDisplayPanel extends JPanel implements ICreateSlideListener {
         scaledPanel = new ScaledPanel();
         super.add(scaledPanel);
 
-        Presentation.addCreateSlideListener(this);
+        Presentation.addChangePresentationListener(this);
+        Presentation.addDiscardSlideListener(this);
 
         instance = this;
     }
 
     public void showSlideAtIndex(int i)
     {
-        showSlideAtIndex(Presentation.current.getSlideAtIndex(i));
+        showSlide(Presentation.get().getSlideAtIndex(i));
     }
 
-    public void showSlideAtIndex(Slide slide)
+    public void showSlide(Slide slide)
     {
-        JComponent component = slide.getComponent();
-
         scaledPanel.removeAll();
-        scaledPanel.add(component);
+        scaledPanel.add(slide.asComp());
         scaledPanel.repaint();
+        scaledPanel.validate();
     }
 
     @Override
-    public void onCreateSlide(int index, Slide slide) {
-        showSlideAtIndex(slide);
+    public void onChangePresentation(Presentation current, Presentation discarded)
+    {
+        showSlideAtIndex(0);
+    }
+
+    @Override
+    public void onDiscardSlide(int index, Slide slide)
+    {
+        showSlideAtIndex(index >= Presentation.get().getSlideCount() ? index - 1 : index);
     }
 }

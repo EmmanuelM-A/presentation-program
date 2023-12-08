@@ -19,9 +19,14 @@ public class FileSerializer {
      * @throws FileNotFoundException thrown if path is a directory (or any other reason by)
      * @see FileOutputStream
      */
-    public static void WriteToPath(String path, Presentation presentation) throws IOException, FileNotFoundException {
+    public static void WriteToPath(String path) throws IOException {
+
+        Presentation current = Presentation.get();
+        if (current == null)
+            return;
+        
         try (FileOutputStream fileStream = new FileOutputStream(path)) {
-            Serialize(fileStream, presentation);
+            Serialize(fileStream, current);
         } //automatically closes stream
     }
 
