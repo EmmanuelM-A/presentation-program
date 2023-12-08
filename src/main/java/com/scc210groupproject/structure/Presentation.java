@@ -89,7 +89,7 @@ public class Presentation implements Serializable {
     /**
      * Slides the presentation contains
      */
-    private List<Slide> slides = new ArrayList<>();
+    private transient List<Slide> slides = new ArrayList<>();
     public List<Slide> getSlides() { return slides; }
     public Slide getSlideAtIndex(int i) { return slides.get(i); }
     public int getSlideCount() { return slides.size(); }
