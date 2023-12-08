@@ -52,6 +52,7 @@ public class MainDisplayPanel extends JPanel implements IChangePresentationListe
     @Override
     public void onDiscardSlide(int index, Slide slide)
     {
-        showSlideAtIndex(index >= Presentation.get().getSlideCount() ? index - 1 : index);
+        if (slide.asComp() == scaledPanel.getComponent(0))
+            showSlideAtIndex(index >= Presentation.get().getSlideCount() ? index - 1 : index);
     }
 }
