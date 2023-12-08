@@ -31,11 +31,12 @@ public abstract class BaseElement implements Serializable
         
         out.writeObject(children);
     }
+    @SuppressWarnings("unchecked") // I have made sure only ArraytList<BaseElement> is serialized
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
     {
         readSelf(in);
         
-        children = (ArrayList)in.readObject();
+        children = (ArrayList<BaseElement>)in.readObject();
 
         for (BaseElement element : children)
             processNewElement(element);

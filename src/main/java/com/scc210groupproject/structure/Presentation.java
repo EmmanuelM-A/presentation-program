@@ -164,8 +164,9 @@ public class Presentation implements Serializable {
         out.writeObject(slides);
     }
 
+    @SuppressWarnings("unchecked") // I have made sure only ArraytList<Slide> is serialized
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
     {
-        slides = (ArrayList)in.readObject();
+        slides = (ArrayList<Slide>)in.readObject();
     }
 }
