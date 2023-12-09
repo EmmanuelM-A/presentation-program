@@ -7,6 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TextContextMenu extends JPanel {
+public class TextContextMenu extends JPopupMenu {
 
 }

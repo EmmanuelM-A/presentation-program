@@ -3,8 +3,10 @@ package com.scc210groupproject.applicationWIndow.toolBars;
 import com.scc210groupproject.applicationWIndow.toolBarOptions.ToolBarOptions;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class InsertToolBar extends JToolBar {
+public class InsertToolBar extends JToolBar implements ActionListener {
     private JButton addText, addImage, addVideo, newSlide, addDiagram, addShape, addAudio, help;
 
     public InsertToolBar() {
@@ -15,6 +17,7 @@ public class InsertToolBar extends JToolBar {
         addText.setFocusable(false);
         addText.setHorizontalTextPosition(SwingConstants.CENTER);
         addText.setVerticalTextPosition(SwingConstants.BOTTOM);
+        addText.addActionListener(this);
 
         addImage = new JButton(ToolBarOptions.ADD_IMAGE.getIcon());
         addImage.setText(ToolBarOptions.ADD_IMAGE.getTitle());
@@ -82,5 +85,11 @@ public class InsertToolBar extends JToolBar {
         this.setFloatable(false);
 =======
 >>>>>>> 157d6c4 (Added more buttons to each toolbar)
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == addText) {
+            System.out.println("ADD_TEXT CLICKED!");
+        }
     }
 }
