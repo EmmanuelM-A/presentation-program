@@ -14,8 +14,19 @@ public class ApplicationWindow extends JFrame
  * This class creates the JFrame and adds the components onto the frame.
  */
 public class ApplicationWindow extends JFrame {
+<<<<<<< HEAD
 >>>>>>> 04267b6 (Changed the layout of the files inside application window. Also added a slide manager (NOT COMPLETE).)
+=======
+    /**
+     * Gets the dimensions of the screen the program is run on. Allows for the program dimensions
+     * to be set to the size of the screen no matter the computer.
+     * */
+>>>>>>> 09e0396 (Added a bunch of comments to all my files explaining what things do)
     private final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+
+    /**
+     * Application Window Components
+     * */
     private TitleBar customTitleBar;
     private MenuBarTabs menuBarTabs;
     private ContextMenuPanel contextMenuPanel;
@@ -77,7 +88,7 @@ public class ApplicationWindow extends JFrame {
         this.getContentPane().setBackground(new Color(211, 211, 211));
 >>>>>>> 04267b6 (Changed the layout of the files inside application window. Also added a slide manager (NOT COMPLETE).)
 
-        //this.customTitleBar = new TitleBar(this);
+        //this.customTitleBar = new TitleBar(this); // Instantiates the class and adds a custom title bar to the frame
 
         this.menuBarTabs = new MenuBarTabs(100, 100, Color.WHITE);
         
@@ -96,19 +107,22 @@ public class ApplicationWindow extends JFrame {
         this.mainDisplay = new MainDisplay(100, 100, new Color(255,255, 255));
         
 <<<<<<< HEAD
+<<<<<<< HEAD
         this.slideManagerPanel = new SlideManagerPanel(this, mainDisplay);
 >>>>>>> 04267b6 (Changed the layout of the files inside application window. Also added a slide manager (NOT COMPLETE).)
 =======
         this.slideManagerPanel = new SlideManager(this); // Instantiates the object and adds the slide manger to the frame
 >>>>>>> 76b45dd (Slides can now be added and traversed but there a quite few issue not fixed yet)
+=======
+        this.slideManagerPanel = new SlideManager(this); // Instantiates the class and adds the slide manger to the frame
+>>>>>>> 09e0396 (Added a bunch of comments to all my files explaining what things do)
 
-        /*  The positioning of each panel/section/element on the window
-        */
+        /**
+         * The adds and positions each panel/section/element/component onto the window
+         * */
         this.add(menuBarTabs, BorderLayout.NORTH);
         this.add(contextMenuPanel, BorderLayout.WEST);
         //this.add(mainDisplay, BorderLayout.CENTER);
-        //this.add(slideManagerPanel, BorderLayout.SOUTH);
-
 
         this.setVisible(true);
 

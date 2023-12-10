@@ -4,6 +4,12 @@ import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
 
 import javax.swing.*;
 
+/**
+ * This class extends JToolBar and contains all the buttons that will be displayed on the
+ * ViewToolBar
+ *
+ * @author madukaag
+ * */
 public class ViewToolBar extends JToolBar {
     private JButton present, presentAt, help;
     //private JTextField presentAt;

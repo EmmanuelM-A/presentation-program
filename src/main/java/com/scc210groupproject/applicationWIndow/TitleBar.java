@@ -4,6 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * This class creates a custom title bar with additional buttons included in the title bar as well as
+ * the three standard buttons. It also allows for normal window actions like window repositioning or resizing.
+ *
+ * @author madukaag
+ *
+ * */
 public class TitleBar {
     /**
      * Gets the location of the mouse - Important for moving the window frame.
@@ -93,6 +100,8 @@ public class TitleBar {
         titleBarPanel.add(title, BorderLayout.CENTER);
 
         compCoords = null;
+
+        // Handles the movement of the application window
         titleBarPanel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -112,6 +121,8 @@ public class TitleBar {
             public void mouseExited(MouseEvent e) {
             }
         });
+
+        // Handles the movement of the application window
         titleBarPanel.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {

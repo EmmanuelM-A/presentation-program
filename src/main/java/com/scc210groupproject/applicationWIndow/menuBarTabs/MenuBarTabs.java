@@ -5,6 +5,12 @@ import com.scc210groupproject.applicationWIndow.menuBarTabs.toolBars.*;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This class contains the menu toolbar where all the different tabs and their corresponding toolbars
+ * are added, displayed and positioned.
+ *
+ * @author madukaag 
+ * */
 public class MenuBarTabs extends JTabbedPane {
     private final FileToolBar fileToolBar;
     private final HomeToolBar homeToolBar;

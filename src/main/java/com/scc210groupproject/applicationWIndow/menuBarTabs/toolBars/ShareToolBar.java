@@ -4,6 +4,12 @@ import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
 
 import javax.swing.*;
 
+/**
+ * This class extends JToolBar and contains all the buttons that will be displayed on the
+ * ShareToolBar
+ *
+ * @author madukaag
+ * */
 public class ShareToolBar extends JToolBar {
     private JButton export, importFile, share, format, help;
 

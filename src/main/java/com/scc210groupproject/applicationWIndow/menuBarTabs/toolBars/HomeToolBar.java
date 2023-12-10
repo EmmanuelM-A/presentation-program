@@ -18,6 +18,7 @@ import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
 import javax.swing.*;
 >>>>>>> 04267b6 (Changed the layout of the files inside application window. Also added a slide manager (NOT COMPLETE).):src/main/java/com/scc210groupproject/applicationWIndow/menuBar/toolBars/HomeToolBar.java
 
+<<<<<<< HEAD
 =======
 >>>>>>> 105cca1 (Added some buttons to the home toolBar)
 import javax.swing.*;
@@ -28,6 +29,14 @@ import java.awt.event.*;
 public class HomeToolBar extends JToolBar implements ActionListener {
     private final JButton newSlideButton, btn2, btn3;
 =======
+=======
+/**
+ * This class extends JToolBar and contains all the buttons that will be displayed on the
+ * HomeToolBar
+ *
+ * @author madukaag
+ * */
+>>>>>>> 09e0396 (Added a bunch of comments to all my files explaining what things do)
 public class HomeToolBar extends JToolBar {
     private JButton newSlide, newFile, openFile, saveFile, clipboard, select, paste, settings, spellChecker, help;
 <<<<<<< HEAD

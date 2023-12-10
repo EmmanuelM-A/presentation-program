@@ -4,6 +4,12 @@ import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
 
 import javax.swing.*;
 
+/**
+ * This class extends JToolBar and contains all the buttons that will be displayed on the
+ * FileToolBar
+ *
+ * @author madukaag
+ * */
 public class FileToolBar extends JToolBar {
     private JButton newFile, openFile, saveFile, saveAs, export, print, help;
 

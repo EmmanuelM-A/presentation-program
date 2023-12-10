@@ -6,6 +6,12 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class extends JToolBar and contains all the buttons that will be displayed on the
+ * InsertToolBar
+ *
+ * @author madukaag
+ * */
 public class InsertToolBar extends JToolBar implements ActionListener {
     private JButton addText, addImage, addVideo, newSlide, addDiagram, addShape, addAudio, help;
 

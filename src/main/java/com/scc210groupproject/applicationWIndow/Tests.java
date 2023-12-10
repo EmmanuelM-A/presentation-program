@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 /**
  * This class is used to test new features and components. NO CLASSES IMPORT THIS CLASS
+ *
+ * @author madukaag
  * */
 public class Tests {
     static Point compCoords;

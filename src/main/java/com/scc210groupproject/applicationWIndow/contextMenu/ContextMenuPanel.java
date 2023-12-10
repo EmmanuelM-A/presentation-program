@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * This class is the where the context menus will be added - STILL IN PROGRESS
+ *
+ * @author madukaag
+ * */
 public class ContextMenuPanel extends JPanel {
     JButton a, b, c, d, e, f, g, h;
     JLabel text = new JLabel("TEXT HERE");

@@ -4,6 +4,12 @@ import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
 
 import javax.swing.*;
 
+/**
+ * This class extends JToolBar and contains all the buttons that will be displayed on the
+ * AboutToolBar
+ *
+ * @author madukaag
+ * */
 public class AboutToolBar extends JToolBar {
     private JButton license, shortcuts, help;
     public AboutToolBar() {

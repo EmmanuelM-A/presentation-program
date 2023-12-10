@@ -4,8 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * This class is the main display where the slides will be viewed and altered.
+ * This class is the main display where the slides will be added, viewed and altered.
  *
+ * @author madukaag
  * */
 public class MainDisplay extends JPanel {
     public MainDisplay(int width, int height, Color colour) {
