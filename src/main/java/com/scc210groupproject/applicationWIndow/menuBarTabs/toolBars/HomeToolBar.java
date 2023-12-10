@@ -1,4 +1,4 @@
-package com.scc210groupproject.applicationWIndow.menuBar.toolBars;
+package com.scc210groupproject.applicationWIndow.menuBarTabs.toolBars;
 
 <<<<<<< HEAD:src/main/java/com/scc210groupproject/applicationWIndow/toolBars/HomeToolBar.java
 <<<<<<< HEAD

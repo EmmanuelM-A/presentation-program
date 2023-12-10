@@ -1,4 +1,4 @@
-package com.scc210groupproject.applicationWIndow.menuBar.toolBars;
+package com.scc210groupproject.applicationWIndow.menuBarTabs.toolBars;
 
 import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
 

@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+/**
+ * This class is used to test new features and components. NO CLASSES IMPORT THIS CLASS
+ * */
 public class Tests {
     static Point compCoords;
     static JFrame frame = new JFrame();

@@ -1,9 +1,7 @@
 package com.scc210groupproject.applicationWIndow;
 
 import com.scc210groupproject.applicationWIndow.contextMenu.ContextMenuPanel;
-import com.scc210groupproject.applicationWIndow.mainDisplay.MainDisplay;
-import com.scc210groupproject.applicationWIndow.menuBar.MenuBarTabs;
-import com.scc210groupproject.applicationWIndow.slideManager.SlideManagerPanel;
+import com.scc210groupproject.applicationWIndow.menuBarTabs.MenuBarTabs;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +11,7 @@ public class ApplicationWindow extends JFrame
 {
 =======
 /**
- * This class creates the JFrame and adds the components onto the frame
+ * This class creates the JFrame and adds the components onto the frame.
  */
 public class ApplicationWindow extends JFrame {
 >>>>>>> 04267b6 (Changed the layout of the files inside application window. Also added a slide manager (NOT COMPLETE).)
@@ -22,6 +20,7 @@ public class ApplicationWindow extends JFrame {
     private MenuBarTabs menuBarTabs;
     private ContextMenuPanel contextMenuPanel;
     private MainDisplay mainDisplay;
+<<<<<<< HEAD
     private SlideManagerPanel slideManagerPanel;
 <<<<<<< HEAD
     private JPanel emptySpace;
@@ -37,6 +36,9 @@ public class ApplicationWindow extends JFrame {
 
 =======
 >>>>>>> 04267b6 (Changed the layout of the files inside application window. Also added a slide manager (NOT COMPLETE).)
+=======
+    private SlideManager slideManagerPanel;
+>>>>>>> 76b45dd (Slides can now be added and traversed but there a quite few issue not fixed yet)
     public ApplicationWindow() {
 <<<<<<< HEAD
         setTitle("Presentation Program");
@@ -93,16 +95,20 @@ public class ApplicationWindow extends JFrame {
 =======
         this.mainDisplay = new MainDisplay(100, 100, new Color(255,255, 255));
         
+<<<<<<< HEAD
         this.slideManagerPanel = new SlideManagerPanel(this, mainDisplay);
 >>>>>>> 04267b6 (Changed the layout of the files inside application window. Also added a slide manager (NOT COMPLETE).)
+=======
+        this.slideManagerPanel = new SlideManager(this); // Instantiates the object and adds the slide manger to the frame
+>>>>>>> 76b45dd (Slides can now be added and traversed but there a quite few issue not fixed yet)
 
         /*  The positioning of each panel/section/element on the window
         */
         this.add(menuBarTabs, BorderLayout.NORTH);
         this.add(contextMenuPanel, BorderLayout.WEST);
-        this.add(mainDisplay, BorderLayout.CENTER);
+        //this.add(mainDisplay, BorderLayout.CENTER);
         //this.add(slideManagerPanel, BorderLayout.SOUTH);
-        //this.add(emptySpace, BorderLayout.EAST);
+
 
         this.setVisible(true);
 
