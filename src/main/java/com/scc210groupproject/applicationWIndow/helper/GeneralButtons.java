@@ -1,8 +1,8 @@
-package com.scc210groupproject.applicationWIndow.toolBarOptions;
+package com.scc210groupproject.applicationWIndow.helper;
 
 import javax.swing.*;
 
-public enum ToolBarOptions {
+public enum GeneralButtons {
     NEW("NEW FILE", "new-document.png"),
     OPEN("OPEN FILE", "folder.png"),
     SAVE("SAVE FILE", "diskette.png"),
@@ -37,7 +37,7 @@ public enum ToolBarOptions {
 
     private final String title;
     private final ImageIcon icon;
-    private ToolBarOptions(String title, String filename) {
+    private GeneralButtons(String title, String filename) {
         this.title = title;
         this.icon = getIconFromFile(filename);
     }

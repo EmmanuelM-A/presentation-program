@@ -1,6 +1,6 @@
 package com.scc210groupproject.applicationWIndow.menuBar;
 
-import com.scc210groupproject.applicationWIndow.toolBars.*;
+import com.scc210groupproject.applicationWIndow.menuBar.toolBars.*;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,6 +1,6 @@
-package com.scc210groupproject.applicationWIndow.toolBars;
+package com.scc210groupproject.applicationWIndow.menuBar.toolBars;
 
-import com.scc210groupproject.applicationWIndow.toolBarOptions.ToolBarOptions;
+import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
 
 import javax.swing.*;
 
@@ -9,20 +9,20 @@ public class AboutToolBar extends JToolBar {
     public AboutToolBar() {
         this.setRollover(true);
 
-        license = new JButton(ToolBarOptions.LICENSE.getIcon());
-        license.setText(ToolBarOptions.LICENSE.getTitle());
+        license = new JButton(GeneralButtons.LICENSE.getIcon());
+        license.setText(GeneralButtons.LICENSE.getTitle());
         license.setFocusable(false);
         license.setHorizontalTextPosition(SwingConstants.CENTER);
         license.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        shortcuts = new JButton(ToolBarOptions.SHORTCUTS.getIcon());
-        shortcuts.setText(ToolBarOptions.SHORTCUTS.getTitle());
+        shortcuts = new JButton(GeneralButtons.SHORTCUTS.getIcon());
+        shortcuts.setText(GeneralButtons.SHORTCUTS.getTitle());
         shortcuts.setFocusable(false);
         shortcuts.setHorizontalTextPosition(SwingConstants.CENTER);
         shortcuts.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        help = new JButton(ToolBarOptions.HELP.getIcon());
-        help.setText(ToolBarOptions.HELP.getTitle());
+        help = new JButton(GeneralButtons.HELP.getIcon());
+        help.setText(GeneralButtons.HELP.getTitle());
         help.setFocusable(false);
         help.setHorizontalTextPosition(SwingConstants.CENTER);
         help.setVerticalTextPosition(SwingConstants.BOTTOM);

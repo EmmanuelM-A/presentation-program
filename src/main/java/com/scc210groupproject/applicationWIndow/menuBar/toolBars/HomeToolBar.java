@@ -1,5 +1,6 @@
-package com.scc210groupproject.applicationWIndow.toolBars;
+package com.scc210groupproject.applicationWIndow.menuBar.toolBars;
 
+<<<<<<< HEAD:src/main/java/com/scc210groupproject/applicationWIndow/toolBars/HomeToolBar.java
 <<<<<<< HEAD
 <<<<<<< HEAD
 import com.scc210groupproject.applicationWIndow.mainDisplay.MainDisplayPanel;
@@ -11,6 +12,11 @@ import com.scc210groupproject.applicationWIndow.toolBarOptions.ToolBarOptions;
 import javax.swing.*;
 import javax.tools.Tool;
 >>>>>>> 157d6c4 (Added more buttons to each toolbar)
+=======
+import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
+
+import javax.swing.*;
+>>>>>>> 04267b6 (Changed the layout of the files inside application window. Also added a slide manager (NOT COMPLETE).):src/main/java/com/scc210groupproject/applicationWIndow/menuBar/toolBars/HomeToolBar.java
 
 =======
 >>>>>>> 105cca1 (Added some buttons to the home toolBar)
@@ -84,62 +90,62 @@ public class HomeToolBar extends JToolBar {
 >>>>>>> 157d6c4 (Added more buttons to each toolbar)
         this.setRollover(true);
 
-        newSlide = new JButton(ToolBarOptions.NEW_SLIDE.getIcon());
-        newSlide.setText(ToolBarOptions.NEW_SLIDE.getTitle());
+        newSlide = new JButton(GeneralButtons.NEW_SLIDE.getIcon());
+        newSlide.setText(GeneralButtons.NEW_SLIDE.getTitle());
         newSlide.setFocusable(false);
         newSlide.setHorizontalTextPosition(SwingConstants.CENTER);
         newSlide.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        newFile = new JButton(ToolBarOptions.NEW.getIcon());
-        newFile.setText(ToolBarOptions.NEW.getTitle());
+        newFile = new JButton(GeneralButtons.NEW.getIcon());
+        newFile.setText(GeneralButtons.NEW.getTitle());
         newFile.setFocusable(false);
         newFile.setHorizontalTextPosition(SwingConstants.CENTER);
         newFile.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        openFile = new JButton(ToolBarOptions.OPEN.getIcon());
-        openFile.setText(ToolBarOptions.OPEN.getTitle());
+        openFile = new JButton(GeneralButtons.OPEN.getIcon());
+        openFile.setText(GeneralButtons.OPEN.getTitle());
         openFile.setFocusable(false);
         openFile.setHorizontalTextPosition(SwingConstants.CENTER);
         openFile.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        saveFile = new JButton(ToolBarOptions.SAVE.getIcon());
-        saveFile.setText(ToolBarOptions.SAVE.getTitle());
+        saveFile = new JButton(GeneralButtons.SAVE.getIcon());
+        saveFile.setText(GeneralButtons.SAVE.getTitle());
         saveFile.setFocusable(false);
         saveFile.setHorizontalTextPosition(SwingConstants.CENTER);
         saveFile.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        clipboard = new JButton(ToolBarOptions.CLIPBOARD.getIcon());
-        clipboard.setText(ToolBarOptions.CLIPBOARD.getTitle());
+        clipboard = new JButton(GeneralButtons.CLIPBOARD.getIcon());
+        clipboard.setText(GeneralButtons.CLIPBOARD.getTitle());
         clipboard.setFocusable(false);
         clipboard.setHorizontalTextPosition(SwingConstants.CENTER);
         clipboard.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        select = new JButton(ToolBarOptions.SELECT.getIcon());
-        select.setText(ToolBarOptions.SELECT.getTitle());
+        select = new JButton(GeneralButtons.SELECT.getIcon());
+        select.setText(GeneralButtons.SELECT.getTitle());
         select.setFocusable(false);
         select.setHorizontalTextPosition(SwingConstants.CENTER);
         select.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        paste = new JButton(ToolBarOptions.PASTE.getIcon());
-        paste.setText(ToolBarOptions.PASTE.getTitle());
+        paste = new JButton(GeneralButtons.PASTE.getIcon());
+        paste.setText(GeneralButtons.PASTE.getTitle());
         paste.setFocusable(false);
         paste.setHorizontalTextPosition(SwingConstants.CENTER);
         paste.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        settings = new JButton(ToolBarOptions.SETTINGS.getIcon());
-        settings.setText(ToolBarOptions.SETTINGS.getTitle());
+        settings = new JButton(GeneralButtons.SETTINGS.getIcon());
+        settings.setText(GeneralButtons.SETTINGS.getTitle());
         settings.setFocusable(false);
         settings.setHorizontalTextPosition(SwingConstants.CENTER);
         settings.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        spellChecker = new JButton(ToolBarOptions.SPELL_CHECKER.getIcon());
-        spellChecker.setText(ToolBarOptions.SPELL_CHECKER.getTitle());
+        spellChecker = new JButton(GeneralButtons.SPELL_CHECKER.getIcon());
+        spellChecker.setText(GeneralButtons.SPELL_CHECKER.getTitle());
         spellChecker.setFocusable(false);
         spellChecker.setHorizontalTextPosition(SwingConstants.CENTER);
         spellChecker.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        help = new JButton(ToolBarOptions.HELP.getIcon());
-        help.setText(ToolBarOptions.HELP.getTitle());
+        help = new JButton(GeneralButtons.HELP.getIcon());
+        help.setText(GeneralButtons.HELP.getTitle());
         help.setFocusable(false);
         help.setHorizontalTextPosition(SwingConstants.CENTER);
         help.setVerticalTextPosition(SwingConstants.BOTTOM);

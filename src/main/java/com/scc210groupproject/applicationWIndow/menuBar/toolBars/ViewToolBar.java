@@ -1,6 +1,6 @@
-package com.scc210groupproject.applicationWIndow.toolBars;
+package com.scc210groupproject.applicationWIndow.menuBar.toolBars;
 
-import com.scc210groupproject.applicationWIndow.toolBarOptions.ToolBarOptions;
+import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
 
 import javax.swing.*;
 
@@ -12,14 +12,14 @@ public class ViewToolBar extends JToolBar {
     public ViewToolBar() {
         this.setRollover(true);
 
-        present = new JButton(ToolBarOptions.PRESENT.getIcon());
-        present.setText(ToolBarOptions.PRESENT.getTitle());
+        present = new JButton(GeneralButtons.PRESENT.getIcon());
+        present.setText(GeneralButtons.PRESENT.getTitle());
         present.setFocusable(false);
         present.setHorizontalTextPosition(SwingConstants.CENTER);
         present.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        presentAt = new JButton(ToolBarOptions.PRESENT_AT.getIcon());
-        presentAt.setText(ToolBarOptions.PRESENT_AT.getTitle());
+        presentAt = new JButton(GeneralButtons.PRESENT_AT.getIcon());
+        presentAt.setText(GeneralButtons.PRESENT_AT.getTitle());
         presentAt.setFocusable(false);
         presentAt.setHorizontalTextPosition(SwingConstants.CENTER);
         presentAt.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -32,8 +32,8 @@ public class ViewToolBar extends JToolBar {
         transistions.setSize(50, 100);
         transistions.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        help = new JButton(ToolBarOptions.HELP.getIcon());
-        help.setText(ToolBarOptions.HELP.getTitle());
+        help = new JButton(GeneralButtons.HELP.getIcon());
+        help.setText(GeneralButtons.HELP.getTitle());
         help.setFocusable(false);
         help.setHorizontalTextPosition(SwingConstants.CENTER);
         help.setVerticalTextPosition(SwingConstants.BOTTOM);

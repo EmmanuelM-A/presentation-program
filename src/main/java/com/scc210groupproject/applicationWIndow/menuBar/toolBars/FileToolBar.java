@@ -1,9 +1,8 @@
-package com.scc210groupproject.applicationWIndow.toolBars;
+package com.scc210groupproject.applicationWIndow.menuBar.toolBars;
 
-import com.scc210groupproject.applicationWIndow.toolBarOptions.ToolBarOptions;
+import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
 
 import javax.swing.*;
-import javax.tools.Tool;
 
 public class FileToolBar extends JToolBar {
     private JButton newFile, openFile, saveFile, saveAs, export, print, help;
@@ -11,44 +10,44 @@ public class FileToolBar extends JToolBar {
     public FileToolBar() {
         this.setRollover(true);
 
-        newFile = new JButton(ToolBarOptions.NEW.getIcon());
-        newFile.setText(ToolBarOptions.NEW.getTitle());
+        newFile = new JButton(GeneralButtons.NEW.getIcon());
+        newFile.setText(GeneralButtons.NEW.getTitle());
         newFile.setFocusable(false);
         newFile.setHorizontalTextPosition(SwingConstants.CENTER);
         newFile.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        openFile = new JButton(ToolBarOptions.OPEN.getIcon());
-        openFile.setText(ToolBarOptions.OPEN.getTitle());
+        openFile = new JButton(GeneralButtons.OPEN.getIcon());
+        openFile.setText(GeneralButtons.OPEN.getTitle());
         openFile.setFocusable(false);
         openFile.setHorizontalTextPosition(SwingConstants.CENTER);
         openFile.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        saveFile = new JButton(ToolBarOptions.SAVE.getIcon());
-        saveFile.setText(ToolBarOptions.SAVE.getTitle());
+        saveFile = new JButton(GeneralButtons.SAVE.getIcon());
+        saveFile.setText(GeneralButtons.SAVE.getTitle());
         saveFile.setFocusable(false);
         saveFile.setHorizontalTextPosition(SwingConstants.CENTER);
         saveFile.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        saveAs = new JButton(ToolBarOptions.SAVE_AS.getIcon());
-        saveAs.setText(ToolBarOptions.SAVE_AS.getTitle());
+        saveAs = new JButton(GeneralButtons.SAVE_AS.getIcon());
+        saveAs.setText(GeneralButtons.SAVE_AS.getTitle());
         saveAs.setFocusable(false);
         saveAs.setHorizontalTextPosition(SwingConstants.CENTER);
         saveAs.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        export = new JButton(ToolBarOptions.EXPORT.getIcon());
-        export.setText(ToolBarOptions.EXPORT.getTitle());
+        export = new JButton(GeneralButtons.EXPORT.getIcon());
+        export.setText(GeneralButtons.EXPORT.getTitle());
         export.setFocusable(false);
         export.setHorizontalTextPosition(SwingConstants.CENTER);
         export.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        print = new JButton(ToolBarOptions.PRINT.getIcon());
-        print.setText(ToolBarOptions.PRINT.getTitle());
+        print = new JButton(GeneralButtons.PRINT.getIcon());
+        print.setText(GeneralButtons.PRINT.getTitle());
         print.setFocusable(false);
         print.setHorizontalTextPosition(SwingConstants.CENTER);
         print.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        help = new JButton(ToolBarOptions.HELP.getIcon());
-        help.setText(ToolBarOptions.HELP.getTitle());
+        help = new JButton(GeneralButtons.HELP.getIcon());
+        help.setText(GeneralButtons.HELP.getTitle());
         help.setFocusable(false);
         help.setHorizontalTextPosition(SwingConstants.CENTER);
         help.setVerticalTextPosition(SwingConstants.BOTTOM);

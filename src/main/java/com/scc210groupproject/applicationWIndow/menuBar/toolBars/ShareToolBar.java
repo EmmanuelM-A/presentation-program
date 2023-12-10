@@ -1,6 +1,6 @@
-package com.scc210groupproject.applicationWIndow.toolBars;
+package com.scc210groupproject.applicationWIndow.menuBar.toolBars;
 
-import com.scc210groupproject.applicationWIndow.toolBarOptions.ToolBarOptions;
+import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
 
 import javax.swing.*;
 
@@ -10,18 +10,19 @@ public class ShareToolBar extends JToolBar {
     public ShareToolBar() {
         this.setRollover(true);
 
-        export = new JButton(ToolBarOptions.EXPORT.getIcon());
-        export.setText(ToolBarOptions.EXPORT.getTitle());
+        export = new JButton(GeneralButtons.EXPORT.getIcon());
+        export.setText(GeneralButtons.EXPORT.getTitle());
         export.setFocusable(false);
         export.setHorizontalTextPosition(SwingConstants.CENTER);
         export.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        importFile = new JButton(ToolBarOptions.IMPORT.getIcon());
-        importFile.setText(ToolBarOptions.IMPORT.getTitle());
+        importFile = new JButton(GeneralButtons.IMPORT.getIcon());
+        importFile.setText(GeneralButtons.IMPORT.getTitle());
         importFile.setFocusable(false);
         importFile.setHorizontalTextPosition(SwingConstants.CENTER);
         importFile.setVerticalTextPosition(SwingConstants.BOTTOM);
 
+<<<<<<< HEAD:src/main/java/com/scc210groupproject/applicationWIndow/toolBars/ShareToolBar.java
 <<<<<<< HEAD
         shareBtn.setText(ToolBarOptions.SHARE.getTitle());
         shareBtn.setFocusable(false);
@@ -34,18 +35,22 @@ public class ShareToolBar extends JToolBar {
 =======
         share = new JButton(ToolBarOptions.SHARE.getIcon());
         share.setText(ToolBarOptions.SHARE.getTitle());
+=======
+        share = new JButton(GeneralButtons.SHARE.getIcon());
+        share.setText(GeneralButtons.SHARE.getTitle());
+>>>>>>> 04267b6 (Changed the layout of the files inside application window. Also added a slide manager (NOT COMPLETE).):src/main/java/com/scc210groupproject/applicationWIndow/menuBar/toolBars/ShareToolBar.java
         share.setFocusable(false);
         share.setHorizontalTextPosition(SwingConstants.CENTER);
         share.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        format = new JButton(ToolBarOptions.FORMAT.getIcon());
-        format.setText(ToolBarOptions.FORMAT.getTitle());
+        format = new JButton(GeneralButtons.FORMAT.getIcon());
+        format.setText(GeneralButtons.FORMAT.getTitle());
         format.setFocusable(false);
         format.setHorizontalTextPosition(SwingConstants.CENTER);
         format.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        help = new JButton(ToolBarOptions.HELP.getIcon());
-        help.setText(ToolBarOptions.HELP.getTitle());
+        help = new JButton(GeneralButtons.HELP.getIcon());
+        help.setText(GeneralButtons.HELP.getTitle());
         help.setFocusable(false);
         help.setHorizontalTextPosition(SwingConstants.CENTER);
         help.setVerticalTextPosition(SwingConstants.BOTTOM);

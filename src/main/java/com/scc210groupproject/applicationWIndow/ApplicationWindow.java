@@ -1,21 +1,29 @@
 package com.scc210groupproject.applicationWIndow;
 
 import com.scc210groupproject.applicationWIndow.contextMenu.ContextMenuPanel;
-import com.scc210groupproject.applicationWIndow.mainDisplay.MainDisplayPanel;
-import com.scc210groupproject.applicationWIndow.menuBar.MenuBarPanel;
+import com.scc210groupproject.applicationWIndow.mainDisplay.MainDisplay;
 import com.scc210groupproject.applicationWIndow.menuBar.MenuBarTabs;
 import com.scc210groupproject.applicationWIndow.slideManager.SlideManagerPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
+<<<<<<< HEAD
 public class ApplicationWindow extends JFrame
 {
+=======
+/**
+ * This class creates the JFrame and adds the components onto the frame
+ */
+public class ApplicationWindow extends JFrame {
+>>>>>>> 04267b6 (Changed the layout of the files inside application window. Also added a slide manager (NOT COMPLETE).)
     private final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-    private MenuBarPanel menuBarPanel;
+    private TitleBar customTitleBar;
+    private MenuBarTabs menuBarTabs;
     private ContextMenuPanel contextMenuPanel;
-    private MainDisplayPanel mainDisplayPanel;
+    private MainDisplay mainDisplay;
     private SlideManagerPanel slideManagerPanel;
+<<<<<<< HEAD
     private JPanel emptySpace;
 
     // Colour Scheme
@@ -27,6 +35,8 @@ public class ApplicationWindow extends JFrame
 >>>>>>> d4d0405 (Made a menuBarPanel where I have added the menuBarTabs and TopBar (contains save, redo, undo buttons) to the panel)
     private final Color mainDisplayColour = new Color(255,255, 255);
 
+=======
+>>>>>>> 04267b6 (Changed the layout of the files inside application window. Also added a slide manager (NOT COMPLETE).)
     public ApplicationWindow() {
 <<<<<<< HEAD
         setTitle("Presentation Program");
@@ -52,19 +62,26 @@ public class ApplicationWindow extends JFrame
 
 =======
         this.setTitle("Presentation Program");
-        this.setSize((int)size.getWidth(), (int)size.getHeight());
+        //this.setSize((int)size.getWidth(), (int)size.getHeight());
         this.setMinimumSize(new Dimension(1000, 700));
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(true);
         this.setLayout(new BorderLayout(40, 20));
+<<<<<<< HEAD
 >>>>>>> d4d0405 (Made a menuBarPanel where I have added the menuBarTabs and TopBar (contains save, redo, undo buttons) to the panel)
         this.getContentPane().setBackground(backgroundColour);
+=======
+        this.getContentPane().setBackground(new Color(211, 211, 211));
+>>>>>>> 04267b6 (Changed the layout of the files inside application window. Also added a slide manager (NOT COMPLETE).)
 
-        this.menuBarPanel = new MenuBarPanel(100, 120, backgroundColour);
+        //this.customTitleBar = new TitleBar(this);
+
+        this.menuBarTabs = new MenuBarTabs(100, 100, Color.WHITE);
         
         this.contextMenuPanel = new ContextMenuPanel(300, 100, Color.WHITE);
 
+<<<<<<< HEAD
         this.mainDisplayPanel = new MainDisplayPanel(100, 100, mainDisplayColour);
 <<<<<<< HEAD
 
@@ -73,18 +90,19 @@ public class ApplicationWindow extends JFrame
         
         this.slideManagerPanel = new SlideManagerPanel(100, 180, Color.YELLOW);
 >>>>>>> d4d0405 (Made a menuBarPanel where I have added the menuBarTabs and TopBar (contains save, redo, undo buttons) to the panel)
+=======
+        this.mainDisplay = new MainDisplay(100, 100, new Color(255,255, 255));
+        
+        this.slideManagerPanel = new SlideManagerPanel(this, mainDisplay);
+>>>>>>> 04267b6 (Changed the layout of the files inside application window. Also added a slide manager (NOT COMPLETE).)
 
-        this.emptySpace = new JPanel();
-        this.emptySpace.setBackground(backgroundColour);
-        this.emptySpace.setPreferredSize(new Dimension(100, 100));
-
-        /*  The positioning of each panel on the window
-        * */
-        this.add(menuBarPanel, BorderLayout.NORTH);
+        /*  The positioning of each panel/section/element on the window
+        */
+        this.add(menuBarTabs, BorderLayout.NORTH);
         this.add(contextMenuPanel, BorderLayout.WEST);
-        this.add(mainDisplayPanel, BorderLayout.CENTER);
-        this.add(slideManagerPanel, BorderLayout.SOUTH);
-        this.add(emptySpace, BorderLayout.EAST);
+        this.add(mainDisplay, BorderLayout.CENTER);
+        //this.add(slideManagerPanel, BorderLayout.SOUTH);
+        //this.add(emptySpace, BorderLayout.EAST);
 
         this.setVisible(true);
 

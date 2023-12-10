@@ -3,26 +3,27 @@ package com.scc210groupproject.applicationWIndow;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
-public class Tests {
+public class TitleBar {
+    /**
+     * Gets the location of the mouse - Important for moving the window frame.
+     */
     static Point compCoords;
-    static JFrame frame = new JFrame();
-    public Tests() {
-        frame.setTitle("Testing whats and what not!");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setMinimumSize(new Dimension(1000, 700));
-        //frame.setUndecorated(true);
-        //frame.setLayout(new BorderLayout());
-        //createTitleBar();
-
-        createPresentationSlider();
-
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+    public TitleBar(JFrame frame) {
+        createTitleBar(frame);
     }
 
-    private static void createTitleBar() {
+    /**
+     * Creates a custom title bar with the three standard buttons along with a save, undo
+     * and redo button (No functionality yet onclick yet).
+     *
+     * @param frame The frame the title bar should be added to
+     */
+    private static void createTitleBar(final JFrame frame) {
+        /**
+         * Removes the default title bar to make way for the custom title bar
+         */
+        frame.setUndecorated(true);
         // Create custom title bar panel
         JPanel titleBarPanel = new JPanel(new BorderLayout());
         titleBarPanel.setPreferredSize(new Dimension(1000, 35));
@@ -126,40 +127,5 @@ public class Tests {
 
         // Add the custom title bar to the frame
         frame.add(titleBarPanel, BorderLayout.NORTH);
-    }
-
-    private static void createPresentationSlider() {
-        JPanel slide = new JPanel();
-        //List<JPanel> slides = new ArrayList<>();
-        int currentSlideIndex = 0;
-
-        JPanel presentationSliderPanel = new JPanel(new BorderLayout());
-        presentationSliderPanel.setPreferredSize(new Dimension(1000, 180));
-        presentationSliderPanel.setBackground(Color.YELLOW);
-
-        JButton prevSlide = new JButton("<");
-        prevSlide.setPreferredSize(new Dimension(30, 160));
-
-        JButton nextSlide = new JButton(">");
-        nextSlide.setPreferredSize(new Dimension(30, 160));
-
-        JPanel mainView = new JPanel();
-        mainView.setPreferredSize(new Dimension(1000, 160));
-        mainView.setBackground(Color.green);
-
-        JPanel bottom = new JPanel();
-        bottom.setPreferredSize(new Dimension(1000, 20));
-        bottom.setBackground(Color.blue);
-
-        presentationSliderPanel.add(prevSlide, BorderLayout.WEST);
-        presentationSliderPanel.add(nextSlide, BorderLayout.EAST);
-        presentationSliderPanel.add(mainView, BorderLayout.CENTER);
-        presentationSliderPanel.add(bottom, BorderLayout.SOUTH);
-
-        frame.add(presentationSliderPanel, BorderLayout.SOUTH);
-    }
-
-    public static void main( String[] args ) {
-        new Tests();
     }
 }

@@ -1,4 +1,4 @@
-package com.scc210groupproject.applicationWIndow;
+package com.scc210groupproject.applicationWIndow.helper;
 
 import java.awt.*;
 public enum ColourScheme {
