@@ -56,16 +56,7 @@ public class ViewToolBar extends JToolBar {
 
         this.add(help);
 
-<<<<<<< HEAD
-        btn3.setText("Btn3");
-        btn3.setFocusable(false);
-        btn3.setHorizontalTextPosition(SwingConstants.CENTER);
-        btn3.setVerticalTextPosition(SwingConstants.BOTTOM);
-        this.add(btn3);
-
         this.setName("View");
         this.setFloatable(false);
-=======
->>>>>>> 157d6c4 (Added more buttons to each toolbar)
     }
 }

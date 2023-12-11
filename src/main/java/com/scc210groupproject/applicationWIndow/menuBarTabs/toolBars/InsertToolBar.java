@@ -80,17 +80,9 @@ public class InsertToolBar extends JToolBar implements ActionListener {
 
         this.add(help);
 
-<<<<<<< HEAD
-        addVideoBtn.setText(ToolBarOptions.ADD_VIDEO.getTitle());
-        addVideoBtn.setFocusable(false);
-        addVideoBtn.setHorizontalTextPosition(SwingConstants.CENTER);
-        addVideoBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
-        this.add(addVideoBtn);
-
         this.setName("Insert");
         this.setFloatable(false);
-=======
->>>>>>> 157d6c4 (Added more buttons to each toolbar)
+
     }
     @Override
     public void actionPerformed(ActionEvent e) {

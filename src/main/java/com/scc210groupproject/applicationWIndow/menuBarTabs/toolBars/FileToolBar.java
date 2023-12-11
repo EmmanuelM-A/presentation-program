@@ -69,17 +69,7 @@ public class FileToolBar extends JToolBar {
 
         this.add(help);
 
-
-<<<<<<< HEAD
-        saveBtn.setText("SAVE");
-        saveBtn.setFocusable(false);
-        saveBtn.setHorizontalTextPosition(SwingConstants.CENTER);
-        saveBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
-        this.add(saveBtn);
-
         this.setName("File");
         this.setFloatable(false);
-=======
->>>>>>> 157d6c4 (Added more buttons to each toolbar)
     }
 }

@@ -7,7 +7,7 @@ import javax.swing.*;
  * The primary aim of this enum is to store buttons that will be use in more than one place and where is function is not changed
  * (but a new function can always be assigned).
  *
- * At some point the actions performed onClicks, drags etc. will be added in.
+ * At some point the actions performed onClicks, drags etc. will be added in, or you can add them yourself.
  *
  * @author madukaag
  * */

@@ -28,23 +28,10 @@ public class ShareToolBar extends JToolBar {
         importFile.setHorizontalTextPosition(SwingConstants.CENTER);
         importFile.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-<<<<<<< HEAD:src/main/java/com/scc210groupproject/applicationWIndow/toolBars/ShareToolBar.java
-<<<<<<< HEAD
-        shareBtn.setText(ToolBarOptions.SHARE.getTitle());
-        shareBtn.setFocusable(false);
-        shareBtn.setHorizontalTextPosition(SwingConstants.CENTER);
-        shareBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
-        this.add(shareBtn);
-
-        this.setName("Share");
-        this.setFloatable(false);
-=======
-        share = new JButton(ToolBarOptions.SHARE.getIcon());
-        share.setText(ToolBarOptions.SHARE.getTitle());
-=======
         share = new JButton(GeneralButtons.SHARE.getIcon());
         share.setText(GeneralButtons.SHARE.getTitle());
->>>>>>> 04267b6 (Changed the layout of the files inside application window. Also added a slide manager (NOT COMPLETE).):src/main/java/com/scc210groupproject/applicationWIndow/menuBar/toolBars/ShareToolBar.java
+        share = new JButton(GeneralButtons.SHARE.getIcon());
+        share.setText(GeneralButtons.SHARE.getTitle());
         share.setFocusable(false);
         share.setHorizontalTextPosition(SwingConstants.CENTER);
         share.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -70,6 +57,9 @@ public class ShareToolBar extends JToolBar {
         this.addSeparator();
 
         this.add(help);
->>>>>>> 157d6c4 (Added more buttons to each toolbar)
+
+        this.setName("Share");
+        this.setFloatable(false);
+
     }
 }

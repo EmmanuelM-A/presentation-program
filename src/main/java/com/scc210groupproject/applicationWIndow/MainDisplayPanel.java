@@ -1,4 +1,4 @@
-package com.scc210groupproject.applicationWIndow.mainDisplay;
+package com.scc210groupproject.applicationWIndow;
 
 import javax.swing.*;
 import java.awt.*;
