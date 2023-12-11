@@ -125,15 +125,17 @@ public class SlideManager {
          * */
         if(currentSlideIndex > 1) {
             JPanel currentSlide = getCurrentSlide();
+            //JPanel currentSlide = slides.get(currentSlideIndex - 1);
             currentSlideIndex--;
             JPanel prevSlide = getPrevSlide(currentSlide);
+            //JPanel prevSlide = slides.get(currentSlideIndex);
 
             if(prevSlide != null) {
                 applicationFrame.remove(currentSlide);
                 applicationFrame.add(prevSlide, BorderLayout.CENTER);
                 applicationFrame.revalidate();
                 applicationFrame.repaint();
-                System.out.println("Previous Slide!");
+                System.out.println("Previous Slide - On Slide " + currentSlideIndex + "!");
             } else {
                 System.out.println("PROBLEM!");
             }
@@ -161,7 +163,7 @@ public class SlideManager {
                 applicationFrame.add(nextSlide, BorderLayout.CENTER);
                 applicationFrame.revalidate();
                 applicationFrame.repaint();
-                System.out.println("Next Slide!");
+                System.out.println("Next Slide - On Slide " + currentSlideIndex + "!");
             } else {
                 System.out.println("PROBLEM!");
             }
@@ -211,22 +213,30 @@ public class SlideManager {
 
         // Add the slide onto the end of slide linked list (slider)
         slides.add(newSlide);
+        System.out.println("New Slide - " + (slides.size()) + "!");
 
         // Change the main display to the new slide added
-        if(currentSlideIndex == 1) { // There is only one slide currently being displayed - the first slide
+        /*if(currentSlideIndex == 1) { // There is only one slide currently being displayed - the first slide
+            // Remove first slide
             applicationFrame.remove(firstSlide);
+            // Add new slide
             applicationFrame.add(newSlide, BorderLayout.CENTER);
+            // Repaint frame
             applicationFrame.revalidate();
             applicationFrame.repaint();
 
             System.out.println("New Slide - " + (slides.size()) + "!");
-        } else if (currentSlideIndex > 1) {
-            //JPanel currentSlide = getCurrentSlide();
-            JPanel currentSlide = slides.get(currentSlideIndex); // PROBLEM SOMEWHERE HERE
+        } else if (currentSlideIndex > 1) { // There is more than one slide present
+            // Get current slide
+            JPanel currentSlide = getCurrentSlide();
+            //JPanel currentSlide = slides.get(currentSlideIndex); // PROBLEM SOMEWHERE HERE
 
-            if(currentSlide != null) {
+            if(currentSlide != null) { // Check if slide exists
+                // Remove current slide displayed
                 applicationFrame.remove(currentSlide);
+                // Add new slide
                 applicationFrame.add(newSlide, BorderLayout.CENTER);
+                // Repaint frame
                 applicationFrame.revalidate();
                 applicationFrame.repaint();
 
@@ -235,8 +245,10 @@ public class SlideManager {
                 System.out.println("PROBLEM IN ADD_SLIDE");
             }
 
-        }
-        currentSlideIndex++;
+        }*/
+
+        // Increment slide index to current slide added
+        //currentSlideIndex++;
         /*
          * Create a new slide
          * Assign the slide with a slide number (label)
@@ -252,8 +264,7 @@ public class SlideManager {
     private JPanel getPrevSlide(JPanel slide) {
         int indexOfSelectedSlide = slides.indexOf(slide);
         int indexOfPrevSlide = indexOfSelectedSlide - 1;
-
-        if(indexOfPrevSlide > 0) {
+        if(indexOfPrevSlide >= 0) {
             return slides.get(indexOfPrevSlide);
         } else {
             return null;
@@ -279,8 +290,8 @@ public class SlideManager {
      * Returns the current slide being displayed
      * */
     private JPanel getCurrentSlide() {
-        if(currentSlideIndex > 0 && currentSlideIndex < slides.size()) {
-            return slides.get(currentSlideIndex);
+        if(currentSlideIndex >= 1 && currentSlideIndex <= slides.size()) {
+            return slides.get(currentSlideIndex - 1); // I'M NOT SURE WHY THIS WORKS
         } else {
             return null;
         }
