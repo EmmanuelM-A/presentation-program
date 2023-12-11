@@ -28,7 +28,7 @@ public class SlideManager {
 
         addFirstSlide();
 
-        /**
+        /*
          * The JPanel that contains the components that make up the presentation slider:
          * previous slide button, next slide button, main view (the actual presentation slider) and
          * the bottom section which will hold a bunch of buttons.
@@ -37,7 +37,7 @@ public class SlideManager {
         presentationSliderPanel.setPreferredSize(new Dimension(1000, 180));
         presentationSliderPanel.setBackground(Color.YELLOW);
 
-        /**
+        /*
          * Previous slide button
          * */
         JButton prevSlide = new JButton("<");
@@ -49,7 +49,7 @@ public class SlideManager {
             }
         });
 
-        /**
+        /*
          * Next slide button
          * */
         JButton nextSlide = new JButton(">");
@@ -61,14 +61,14 @@ public class SlideManager {
             }
         });
 
-        /**
+        /*
          * This is where the actual presentation slider will go
          * */
         JPanel mainView = new JPanel();
         mainView.setPreferredSize(new Dimension(1000, 160));
         mainView.setBackground(Color.green);
 
-        /**
+        /*
          * Bottom Section of the presentation slider where buttons such as newSlide, deleteSlide,
          * etc. will be placed. As well as a number of slides display.
          * */
@@ -85,7 +85,7 @@ public class SlideManager {
         });
         bottomSection.add(addNewSlide);
 
-        /**
+        /*
          * Adds each section/button onto the display
          * */
         presentationSliderPanel.add(prevSlide, BorderLayout.WEST);
@@ -93,7 +93,7 @@ public class SlideManager {
         presentationSliderPanel.add(mainView, BorderLayout.CENTER);
         presentationSliderPanel.add(bottomSection, BorderLayout.SOUTH);
 
-        /**
+        /*
          * Adds the presentationSlider (SlideManager directly onto the application frame window)
          * */
         frame.add(presentationSliderPanel, BorderLayout.SOUTH);
@@ -118,7 +118,7 @@ public class SlideManager {
      * Displays the previous slide in the presentation slider given that there is at least one slide
      * */
     private void showPrevSlide() {
-        /**
+        /*
          * Get the previous slide if there is one
          * Remove the current slide from the display
          * Set the previous slide to the display
@@ -146,7 +146,7 @@ public class SlideManager {
      * Displays the next slide in the presentation slider given that it has not reached the last slide
      * */
     private void showNextSlide() {
-        /**
+        /*
         * Get the next slide if there is one
         * Remove the current slide from the display
         * Set the next slide to the display
