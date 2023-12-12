@@ -18,12 +18,16 @@ import java.util.LinkedList;
 public class SlideManager {
     private JPanel slide = new JPanel(); // Represent slides
     private LinkedList<JPanel> slides; // Where slides are stored in order
+    private LinkedList<JButton> buttons; // This list represents the slides on the presentation slider - Can change name
     private int currentSlide; // The current slide on
-    private int currentSlideIndex; // The index of the slide in slides linked list
+    private int currentSlideIndex; // The current index of the slide
     private JPanel firstSlide; // This slide is always present on load
+    private JScrollPane presentationSlider; // The alternate display where all slides can be displayed, selected and scrolled through
+    private JPanel sliderPanel;
     private JFrame applicationFrame; // The application window
     public SlideManager(final JFrame frame) {
         this.slides = new LinkedList<>();
+        this.buttons = new LinkedList<>();
         this.currentSlide = 1; // The current slide being displayed
         this.currentSlideIndex = 0; // The index of the current slide being displayed
         this.applicationFrame = frame;
@@ -59,16 +63,19 @@ public class SlideManager {
         nextSlide.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                showNextSlide2();
+                showNextSlide();
             }
         });
 
         /*
          * This is where the actual presentation slider will go
          * */
-        JPanel mainView = new JPanel();
-        mainView.setPreferredSize(new Dimension(1000, 160));
-        mainView.setBackground(Color.green);
+        this.sliderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        this.sliderPanel.setBackground(Color.green);
+
+        this.presentationSlider = new JScrollPane(sliderPanel);
+        this.presentationSlider.setPreferredSize(new Dimension(1000, 160));
+        this.presentationSlider.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         /*
          * Bottom Section of the presentation slider where buttons such as newSlide, deleteSlide,
@@ -82,7 +89,9 @@ public class SlideManager {
         addNewSlide.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+
                 addNewSlide();
+                addSlideToPresentationSlider();
             }
         });
         bottomSection.add(addNewSlide);
@@ -92,11 +101,11 @@ public class SlideManager {
          * */
         presentationSliderPanel.add(prevSlide, BorderLayout.WEST);
         presentationSliderPanel.add(nextSlide, BorderLayout.EAST);
-        presentationSliderPanel.add(mainView, BorderLayout.CENTER);
+        presentationSliderPanel.add(this.presentationSlider, BorderLayout.CENTER);
         presentationSliderPanel.add(bottomSection, BorderLayout.SOUTH);
 
         /*
-         * Adds the presentationSlider (SlideManager directly onto the application frame window)
+         * Adds the presentationSlider (An instance of SlideManager class) directly onto the application frame window
          * */
         frame.add(presentationSliderPanel, BorderLayout.SOUTH);
     }
@@ -150,7 +159,7 @@ public class SlideManager {
     /**
      * Displays the next slide in the presentation slider given that it has not reached the last slide
      * */
-    private void showNextSlide2() {
+    private void showNextSlide() {
         /*
          * Get the next slide if there is one
          * Remove the current slide from the display
@@ -182,8 +191,9 @@ public class SlideManager {
     /**
      * Displays the selected slide on the main display
      * @param slide The slide to display
+     * @param display The display the slide will be added to
      * */
-    private void showSlide(JPanel slide) {
+    private void showSlide(JPanel slide, JFrame display) {
         /*
         * Get the selected slide
         * Get the current slide displayed
@@ -281,7 +291,7 @@ public class SlideManager {
         int indexOfNextSlide = indexOfSelectedSlide + 1;
 
         if(indexOfNextSlide <= slides.size()) {
-            return slides.get(indexOfNextSlide); // I'M NOT SURE WHY THIS WORKS
+            return slides.get(indexOfNextSlide);
         } else {
             return null;
         }
@@ -299,6 +309,28 @@ public class SlideManager {
     }
 
     /**
+     * Adds the new slide (represented as buttons) to the presentation slider
+     * */
+    private void addSlideToPresentationSlider() {
+        /*
+        * Create a slide (button)
+        * Assign the button a no number
+        * Add to presentation slider
+        * */
+        String slideNum = String.valueOf(buttons.size());
+
+        JButton newSlide = new JButton("Slide " + slideNum);
+
+        buttons.add(newSlide);
+
+        this.sliderPanel.add(newSlide);
+
+        this.sliderPanel.revalidate();
+        //this.sliderPanel.repaint();
+
+    }
+
+    /**
      * Add a slide after the selected slide
      * @param selectedSlide The selected slide
      * */
@@ -311,10 +343,18 @@ public class SlideManager {
     private void addSlideBefore(JPanel selectedSlide) {}
 
     /**
-     * Returns the selected slide
+     * Gets the selected slide
+     * @return JPanel
      * */
     private JPanel getSelectedSlide() {
         return null;
+    }
+
+    /**
+     * Displays the selected slide to the main display
+     * */
+    private void displaySelectedSlide(JPanel selectedSlide) {
+
     }
 
 
