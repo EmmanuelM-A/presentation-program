@@ -1,7 +1,5 @@
 package com.scc210groupproject.applicationWIndow;
 
-import com.scc210groupproject.structure.Slide;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -33,23 +31,21 @@ import java.util.LinkedList;
  * @author madukaag
  * */
 public class SlideManager {
-    private JPanel slide = new JPanel(); // Represent slides
-    private LinkedList<JPanel> slides; // Where slides are stored in order
-    private LinkedList<JButton> presentationSliderSlides; // This list represents the slides on the presentation slider
+    private final LinkedList<JPanel> slides; // Where slides are stored in order
+    private final LinkedList<JButton> presentationSliderSlides; // This list represents the slides on the presentation slider
     private int currentSlide; // The current slide on
     private int currentSlideIndex; // The current index of the slide
     private JPanel firstSlide; // This slide is always present on load
-    private JScrollPane presentationSlider; // The alternate display where all slides can be displayed, selected and scrolled through
-    private JPanel sliderPanel; // The panel slides will be added to (added to presentation slider)
-    private JFrame applicationFrame; // The application window
+    private final JPanel sliderPanel; // The panel slides will be added to (added to presentation slider)
+    private final JFrame applicationFrame; // The application window
     public SlideManager(final JFrame frame) {
         this.slides = new LinkedList<>();
         this.presentationSliderSlides = new LinkedList<>();
         this.currentSlide = 1; // The current slide being displayed
-        this.currentSlideIndex = this.currentSlide - 1; // The index of the current slide being displayed
+        this.currentSlideIndex = 0; // The index of the current slide being displayed
         this.applicationFrame = frame;
         this.sliderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        this.presentationSlider = new JScrollPane(sliderPanel);
+        JScrollPane presentationSlider = new JScrollPane(sliderPanel); // The alternate display where all slides can be displayed, selected and scrolled through
 
         addFirstSlide();
 
@@ -89,9 +85,9 @@ public class SlideManager {
         /*
          * This is where the actual presentation slider will go
          * */
-        this.sliderPanel.setBackground(Color.green);
-        this.presentationSlider.setPreferredSize(new Dimension(1000, 160));
-        this.presentationSlider.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        this.sliderPanel.setBackground(Color.lightGray);
+        presentationSlider.setPreferredSize(new Dimension(1000, 160));
+        presentationSlider.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         /*
          * Bottom Section of the presentation slider where buttons such as newSlide, deleteSlide,
@@ -99,7 +95,7 @@ public class SlideManager {
          * */
         JPanel bottomSection = new JPanel(new FlowLayout(FlowLayout.LEFT));
         bottomSection.setPreferredSize(new Dimension(1000, 35));
-        bottomSection.setBackground(Color.blue);
+        bottomSection.setBackground(Color.lightGray);
 
         JButton addNewSlide = new JButton("New Slide");
         addNewSlide.addActionListener(new ActionListener() {
@@ -115,14 +111,29 @@ public class SlideManager {
                 addNewSlide(this.displayNewSlides);
             }
         });
+
+
+        JButton deleteSlide = new JButton("Delete Slide");
+        JButton present = new JButton("Present");
+        JButton presentAt = new JButton("Present From");
+        JLabel noSlides = new JLabel();
+
+
+        /*
+        * Add buttons to bottom sections
+        * */
         bottomSection.add(addNewSlide);
+        bottomSection.add(deleteSlide);
+        bottomSection.add(present);
+        bottomSection.add(presentAt);
+        bottomSection.add(noSlides);
 
         /*
          * Adds each section/button onto the display
          * */
         presentationSliderPanel.add(prevSlide, BorderLayout.WEST);
         presentationSliderPanel.add(nextSlide, BorderLayout.EAST);
-        presentationSliderPanel.add(this.presentationSlider, BorderLayout.CENTER);
+        presentationSliderPanel.add(presentationSlider, BorderLayout.CENTER);
         presentationSliderPanel.add(bottomSection, BorderLayout.SOUTH);
 
         /*
@@ -259,7 +270,7 @@ public class SlideManager {
         this.sliderPanel.revalidate();
 
         // The code below changes the main display to the new slide added
-        if(displayNewSlides == true) {
+        if(displayNewSlides) {
             // There is only one slide currently being displayed - the first slide
             if(slides.size() == 1) {
                 // Display slide
@@ -342,6 +353,7 @@ public class SlideManager {
 
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                highlightSelectedSlide(newPSSlide);
                 displaySelectedSlide(slideNo);
             }
         });
@@ -367,8 +379,24 @@ public class SlideManager {
      * @return JPanel
      * */
     private JPanel getSelectedSlide(Integer slideNo) {
-        JPanel selectedSlide = slides.get(slideNo - 1);
-        return selectedSlide;
+        return slides.get(slideNo - 1);
+    }
+
+    /**
+     * Highlights the slide (PS Slide)
+     * @param PSSlide The PS Slide that was selected
+     * */
+    private void highlightSelectedSlide(JButton PSSlide) {
+        /*
+        * Get selected slide
+        * Highlight ONLY that selected slide
+        * use boolean isSelected for slides
+        * onClick of slide set isSelected true and every other slide false
+        * from slides array filter out clicked slide and set isSelected slide to true
+        * other slides set false
+        * apply action to the isSelected slide like display, highlight slide
+        * */
+        PSSlide.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
     }
 
     /**
