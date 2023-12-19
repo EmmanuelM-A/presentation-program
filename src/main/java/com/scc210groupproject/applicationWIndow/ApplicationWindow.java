@@ -36,7 +36,7 @@ public class ApplicationWindow extends JFrame {
 
         //this.customTitleBar = new TitleBar(this); // Instantiates the class and adds a custom title bar to the frame
 
-        this.menuBarTabs = new MenuBarTabs(100, 100, Color.WHITE);
+        this.menuBarTabs = new MenuBarTabs(this, 100, 100, Color.WHITE);
 
         this.contextMenuPanel = new ContextMenuPanel(300, 100, Color.WHITE);
 

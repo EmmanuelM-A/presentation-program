@@ -1,5 +1,6 @@
 package com.scc210groupproject.applicationWIndow.menuBarTabs.toolBars;
 
+import com.scc210groupproject.applicationWIndow.contextMenu.TextContextMenu;
 import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
 
 import javax.swing.*;
@@ -15,7 +16,10 @@ import java.awt.event.ActionListener;
 public class InsertToolBar extends JToolBar implements ActionListener {
     private JButton addText, addImage, addVideo, newSlide, addDiagram, addShape, addAudio, help;
 
-    public InsertToolBar() {
+    private JFrame uiFrame;
+
+    public InsertToolBar(JFrame frame) {
+        this.uiFrame = frame;
         this.setRollover(true);
 
         addText = new JButton(GeneralButtons.ADD_TEXT.getIcon());
@@ -88,6 +92,7 @@ public class InsertToolBar extends JToolBar implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == addText) {
             System.out.println("ADD_TEXT CLICKED!");
+            new TextContextMenu(this.uiFrame, 100, 100);
         }
     }
 }

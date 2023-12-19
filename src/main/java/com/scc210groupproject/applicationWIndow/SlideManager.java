@@ -8,17 +8,17 @@ import java.util.LinkedList;
 
 /*
  * NEXT STEPS:
- * - REFACTOR CODE TO BE PRECISE AND SHORT
+ * - REFACTOR CODE TO BE PRECISE AND SHORT *
  * - MAKE FUNCTIONS TO REDUCE SECTIONS WITH A LOT OF REPEATED CODE (DISPLAY SLIDE METHOD!) v/
  * - ADD GETTERS AND SETTERS v/
  * - COMMENT AND EXPLAIN CODE IN DEPTH v/
  * - DELETE UNNECESSARY v/
  * - PRINT STATEMENTS AND COMMENTS v/
  * - CLEAN UP FUNCTIONS (DISPLAY SELECTED SLIDE!) v/
- * - CHANGE JPANEL TO THE SLIDE CLASS
+ * - CHANGE JPANEL TO THE SLIDE CLASS *
  * - SORT OUT LAYOUT OF CLASS v/
- * - FIGURE OUT HOW TO ADD SLIDE IMAGE AS SLIDE BUTTON ICON
- * - ADD THE REST OF BUTTONS FOR SLIDE PRESENTER.
+ * - FIGURE OUT HOW TO ADD SLIDE IMAGE AS SLIDE BUTTON ICON *
+ * - ADD THE REST OF BUTTONS FOR SLIDE PRESENTER. v/ (Will add zoom in and out buttons later)
  * */
 
 /**
@@ -137,7 +137,7 @@ public class SlideManager {
         presentationSliderPanel.add(bottomSection, BorderLayout.SOUTH);
 
         /*
-         * Adds the presentationSlider (An instance of SlideManager class) directly onto the application frame window
+         * Adds the presentationSlider directly onto the application frame window
          * */
         frame.add(presentationSliderPanel, BorderLayout.SOUTH);
     }

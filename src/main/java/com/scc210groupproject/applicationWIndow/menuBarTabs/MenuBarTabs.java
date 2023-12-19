@@ -1,9 +1,12 @@
 package com.scc210groupproject.applicationWIndow.menuBarTabs;
 
+import com.scc210groupproject.applicationWIndow.contextMenu.TextContextMenu;
 import com.scc210groupproject.applicationWIndow.menuBarTabs.toolBars.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * This class contains the menu toolbar where all the different tabs and their corresponding toolbars
@@ -19,23 +22,27 @@ public class MenuBarTabs extends JTabbedPane {
     private final ShareToolBar shareToolBar;
     private final AboutToolBar aboutToolBar;
 
-    public MenuBarTabs(int width, int height, Color colour) {
+    public MenuBarTabs(JFrame frame, int width, int height, Color colour) {
         this.setPreferredSize(new Dimension(width, height));
         this.setBackground(colour);
         this.setFocusable(false);
 
         this.fileToolBar = new FileToolBar();
-        this.homeToolBar = new HomeToolBar();
-        this.insertToolBar = new InsertToolBar();
-        this.viewToolBar = new ViewToolBar();
-        this.shareToolBar = new ShareToolBar();
-        this.aboutToolBar = new AboutToolBar();
-
         this.fileToolBar.setBackground(Color.WHITE);
+
+        this.homeToolBar = new HomeToolBar();
         this.homeToolBar.setBackground(Color.WHITE);
+
+        this.insertToolBar = new InsertToolBar(frame);
         this.insertToolBar.setBackground(Color.WHITE);
+
+        this.viewToolBar = new ViewToolBar();
         this.viewToolBar.setBackground(Color.WHITE);
+
+        this.shareToolBar = new ShareToolBar();
         this.shareToolBar.setBackground(Color.WHITE);
+
+        this.aboutToolBar = new AboutToolBar();
         this.aboutToolBar.setBackground(Color.WHITE);
 
         super.add(this.fileToolBar);
