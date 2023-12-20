@@ -22,7 +22,27 @@ import java.io.ObjectOutputStream;
  */
 public class Slide extends BaseElement
 {
-    private transient JPanel panel  = new JPanel();
+    private transient JPanel panel;
+
+    public Slide(Dimension dimension)
+    {
+        this();
+
+        setDiemension(dimension);
+    }
+
+    private Slide()
+    {
+        panel = new JPanel();
+    }
+
+    public void setDiemension(Dimension dimension)
+    {
+        panel.setSize(dimension);
+        panel.setPreferredSize(dimension);
+        panel.setMinimumSize(dimension);
+        panel.setMaximumSize(dimension);
+    }
 
     @Override
     public Component asComp() { return panel; }
@@ -51,14 +71,11 @@ public class Slide extends BaseElement
             in.readInt(),
             in.readInt()));
 
-        Dimension d = new Dimension(
+        Dimension dimension = new Dimension(
             in.readInt(),
             in.readInt());
 
-        panel.setSize(d);
-        panel.setPreferredSize(d);
-        panel.setMinimumSize(d);
-        panel.setMaximumSize(d);
+        setDiemension(dimension);
 
         panel.setBackground(new Color(in.readInt()));
     }

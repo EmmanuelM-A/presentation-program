@@ -119,11 +119,7 @@ public class Presentation implements Serializable {
     }
     private Slide newSlide(boolean notify)
     {
-        Slide slide = new Slide();
-        slide.asComp().setSize(defaultSize);
-        slide.asComp().setPreferredSize(defaultSize);
-        slide.asComp().setMinimumSize(defaultSize);
-        slide.asComp().setMaximumSize(defaultSize);
+        Slide slide = new Slide(defaultSize);
 
 // line for demo/testing
         slide.asComp().setBackground(new Color((float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1));
