@@ -122,10 +122,10 @@ public class Presentation implements Serializable {
         Slide slide = new Slide(defaultSize);
 
 // line for demo/testing
-        slide.asComp().setBackground(new Color((float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1));
+        slide.setBackground(new Color((float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1));
 
         SampleElement sampleElement = new SampleElement();
-        sampleElement.asComp().setBackground(Color.GREEN);
+        sampleElement.setBackground(Color.GREEN);
         slide.add(sampleElement);
 // end of demo/testing code
 

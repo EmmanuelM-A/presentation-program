@@ -19,6 +19,11 @@ public class SampleElement extends BaseElement
 {
     private transient JPanel panel = new JPanel();
 
+    public void setBackground(Color color)
+    {
+        panel.setBackground(color);
+    }
+
     @Override
     public Component asComp() { return panel; }
 
@@ -28,7 +33,7 @@ public class SampleElement extends BaseElement
         Point p = panel.getLocation();
         out.writeInt(p.x);
         out.writeInt(p.y);
-        
+
         Dimension d = panel.getSize();
         out.writeInt(d.width);
         out.writeInt(d.height);
@@ -50,10 +55,10 @@ public class SampleElement extends BaseElement
         panel.setSize(new Dimension(
             in.readInt(),
             in.readInt()));
-        
+
         panel.setBackground(new Color(in.readInt()));
     }
-    
+
     @Override
     protected void processNewElement(BaseElement element) {
         panel.add(element.asComp());

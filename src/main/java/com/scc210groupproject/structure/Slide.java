@@ -44,6 +44,11 @@ public class Slide extends BaseElement
         panel.setMaximumSize(dimension);
     }
 
+    public void setBackground(Color color)
+    {
+        panel.setBackground(color);
+    }
+
     @Override
     public Component asComp() { return panel; }
 
