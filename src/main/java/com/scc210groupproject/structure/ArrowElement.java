@@ -175,6 +175,7 @@ public class ArrowElement extends BaseElement
     public class ArrowPanel extends JPanel
     {
         private Polygon triangle;
+        private AffineTransform transform;
 
         protected Point pointA = new Point();
         protected Point pointB = new Point();
@@ -202,7 +203,10 @@ public class ArrowElement extends BaseElement
             triangle.addPoint(-1, 0);
             triangle.addPoint(1, 0);
 
+            transform = new AffineTransform();
+
             super.setLayout(null);
+            super.setOpaque(false);
         }
 
         private void reposition()
@@ -242,7 +246,7 @@ public class ArrowElement extends BaseElement
             double yOffset = yLocalB - yLocalA;
 
             double length = Math.sqrt(xOffset * xOffset + yOffset * yOffset);
-            double radian = Math.atan2(xOffset, yOffset);
+            double radian = Math.atan2(yOffset, xOffset) - Math.PI / 2.0;
 
             double xNormal = xOffset / length;
             double yNormal = yOffset / length;
@@ -267,24 +271,26 @@ public class ArrowElement extends BaseElement
 
             if (arrowOnA)
             {
-                AffineTransform transformA = new AffineTransform();
-                transformA.scale(arrowWidthA / 2.0, arrowLengthA);
-                transformA.translate(xA, yA);
-                transformA.rotate(radian + Math.PI);
-                Shape arrowA = transformA.createTransformedShape(triangle);
+                transform.setToScale(arrowWidthA / 2.0, arrowLengthA);
+                Shape scaled = transform.createTransformedShape(triangle);
+                transform.setToRotation(radian + Math.PI);
+                Shape rotated = transform.createTransformedShape(scaled);
+                transform.setToTranslation(xA, yA);
+                Shape arrow = transform.createTransformedShape(rotated);
 
-                g2d.fill(arrowA);
+                g2d.fill(arrow);
             }
 
             if (arrowOnB)
-                {
-                AffineTransform transformB = new AffineTransform();
-                transformB.scale(arrowWidthB / 2.0, arrowLengthB);
-                transformB.translate(xB, yB);
-                transformB.rotate(radian);
-                Shape arrowB = transformB.createTransformedShape(triangle);
+            {
+                transform.setToScale(arrowWidthB / 2.0, arrowLengthB);
+                Shape scaled = transform.createTransformedShape(triangle);
+                transform.setToRotation(radian);
+                Shape rotated = transform.createTransformedShape(scaled);
+                transform.setToTranslation(xB, yB);
+                Shape arrow = transform.createTransformedShape(rotated);
 
-                g2d.fill(arrowB);
+                g2d.fill(arrow);
             }
 
             {

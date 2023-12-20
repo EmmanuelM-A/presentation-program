@@ -6,6 +6,7 @@ import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -127,6 +128,13 @@ public class Presentation implements Serializable {
         SampleElement sampleElement = new SampleElement();
         sampleElement.setBackground(Color.GREEN);
         slide.add(sampleElement);
+
+        ArrowElement arrowElement = new ArrowElement(new Point(20, 20), new Point(100, 200));
+        arrowElement.setArrow(ArrowElement.Side.A, true, 20, 20);
+        arrowElement.setArrow(ArrowElement.Side.B, true, 30, 30);
+        arrowElement.setColor(Color.GREEN);
+        arrowElement.setLine(false, 5, 5);
+        slide.add(arrowElement);
 // end of demo/testing code
 
         slides.add(slide);
