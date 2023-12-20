@@ -121,10 +121,13 @@ public class Presentation implements Serializable {
     {
         Slide slide = new Slide();
         slide.asComp().setSize(defaultSize);
+        slide.asComp().setPreferredSize(defaultSize);
+        slide.asComp().setMinimumSize(defaultSize);
+        slide.asComp().setMaximumSize(defaultSize);
 
 // line for demo/testing
         slide.asComp().setBackground(new Color((float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1));
-        
+
         SampleElement sampleElement = new SampleElement();
         sampleElement.asComp().setBackground(Color.GREEN);
         slide.add(sampleElement);
@@ -150,7 +153,7 @@ public class Presentation implements Serializable {
     {
         if (slides.size() <= 1)
             throw new IllegalArgumentException("Cannot remove final slide");
-        
+
         int index = slides.indexOf(slide);
 
         slides.remove(slide);

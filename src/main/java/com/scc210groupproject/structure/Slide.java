@@ -33,7 +33,7 @@ public class Slide extends BaseElement
         Point p = panel.getLocation();
         out.writeInt(p.x);
         out.writeInt(p.y);
-        
+
         Dimension d = panel.getSize();
         out.writeInt(d.width);
         out.writeInt(d.height);
@@ -51,11 +51,15 @@ public class Slide extends BaseElement
             in.readInt(),
             in.readInt()));
 
-
-        panel.setSize(new Dimension(
+        Dimension d = new Dimension(
             in.readInt(),
-            in.readInt()));
-        
+            in.readInt());
+
+        panel.setSize(d);
+        panel.setPreferredSize(d);
+        panel.setMinimumSize(d);
+        panel.setMaximumSize(d);
+
         panel.setBackground(new Color(in.readInt()));
     }
 
