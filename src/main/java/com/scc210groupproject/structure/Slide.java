@@ -34,6 +34,7 @@ public class Slide extends BaseElement
     private Slide()
     {
         panel = new JPanel();
+        panel.setLayout(null);
     }
 
     public void setDiemension(Dimension dimension)
