@@ -20,7 +20,7 @@ import java.io.ObjectOutputStream;
 
 /**
  * @author wonge1
- * Use this as a reference (dont extend from this) for elements
+ * Element to draw arrow with varying size and style
  */
 public class ArrowElement extends BaseElement
 {
