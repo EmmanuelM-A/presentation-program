@@ -1,5 +1,6 @@
 package com.scc210groupproject.applicationWIndow.menuBarTabs;
 
+import com.scc210groupproject.applicationWIndow.contextMenu.ContextMenuPanel;
 import com.scc210groupproject.applicationWIndow.contextMenu.TextContextMenu;
 import com.scc210groupproject.applicationWIndow.menuBarTabs.toolBars.*;
 
@@ -22,7 +23,7 @@ public class MenuBarTabs extends JTabbedPane {
     private final ShareToolBar shareToolBar;
     private final AboutToolBar aboutToolBar;
 
-    public MenuBarTabs(JFrame frame, int width, int height, Color colour) {
+    public MenuBarTabs(JFrame frame, ContextMenuPanel contextMenuPanel, int width, int height, Color colour) {
         this.setPreferredSize(new Dimension(width, height));
         this.setBackground(colour);
         this.setFocusable(false);
@@ -33,7 +34,7 @@ public class MenuBarTabs extends JTabbedPane {
         this.homeToolBar = new HomeToolBar();
         this.homeToolBar.setBackground(Color.WHITE);
 
-        this.insertToolBar = new InsertToolBar(frame);
+        this.insertToolBar = new InsertToolBar(frame, contextMenuPanel);
         this.insertToolBar.setBackground(Color.WHITE);
 
         this.viewToolBar = new ViewToolBar();

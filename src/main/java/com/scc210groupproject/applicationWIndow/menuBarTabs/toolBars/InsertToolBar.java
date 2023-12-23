@@ -1,6 +1,6 @@
 package com.scc210groupproject.applicationWIndow.menuBarTabs.toolBars;
 
-import com.scc210groupproject.applicationWIndow.contextMenu.TextContextMenu;
+import com.scc210groupproject.applicationWIndow.contextMenu.*;
 import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
 
 import javax.swing.*;
@@ -17,8 +17,10 @@ public class InsertToolBar extends JToolBar implements ActionListener {
     private JButton addText, addImage, addVideo, newSlide, addDiagram, addShape, addAudio, help;
 
     private JFrame uiFrame;
+    private ContextMenuPanel contextMenuPanel;
 
-    public InsertToolBar(JFrame frame) {
+    public InsertToolBar(JFrame frame, ContextMenuPanel c) {
+        this.contextMenuPanel = c;
         this.uiFrame = frame;
         this.setRollover(true);
 
@@ -34,6 +36,7 @@ public class InsertToolBar extends JToolBar implements ActionListener {
         addImage.setFocusable(false);
         addImage.setHorizontalTextPosition(SwingConstants.CENTER);
         addImage.setVerticalTextPosition(SwingConstants.BOTTOM);
+        addImage.addActionListener(this);
 
         addVideo = new JButton(GeneralButtons.ADD_VIDEO.getIcon());
         addVideo.setText(GeneralButtons.ADD_VIDEO.getTitle());
@@ -90,9 +93,16 @@ public class InsertToolBar extends JToolBar implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == addText) {
+        if(e.getSource() == this.addText) {
             System.out.println("ADD_TEXT CLICKED!");
-            new TextContextMenu(this.uiFrame, 100, 100);
+            new TextContextMenu(this.uiFrame, 0, 157);
+            //new DataStructureContextMenu(this.uiFrame, 0, 157);
+            //new ChartContextMenu(this.uiFrame, 0, 157);
+        } else if (e.getSource() == this.addImage) {
+            //new ImageContextMenu(this.uiFrame, 0, 157);
+            new CodeContextMenu(this.uiFrame, 0, 157);
+            //new TableContextMenu(this.uiFrame, 0, 157);
+            System.out.println("ADD_IMAGE CLICKED!");
         }
     }
 }
