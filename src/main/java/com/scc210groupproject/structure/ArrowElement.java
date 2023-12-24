@@ -2,6 +2,9 @@ package com.scc210groupproject.structure;
 
 import javax.swing.JPanel;
 
+import com.scc210groupproject.structure.optionalAnchors.IAnchorListener;
+import com.scc210groupproject.structure.optionalAnchors.AnchorReference;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,14 +25,15 @@ import java.io.ObjectOutputStream;
  * @author wonge1
  * Element to draw arrow with varying size and style
  */
-public class ArrowElement extends BaseElement
-{
+public class ArrowElement extends BaseElement implements IAnchorListener {
     public static enum Side { A, B }
 
     private transient ArrowPanel panel;
 
-    public ArrowElement(Point start, Point end)
-    {
+    private transient AnchorReference anchorA;
+    private transient AnchorReference anchorB;
+
+    public ArrowElement(Point start, Point end) {
         this();
 
         panel.pointA = start;
@@ -37,16 +41,11 @@ public class ArrowElement extends BaseElement
         panel.reposition();
     }
 
-    private ArrowElement()
-    {
+    private ArrowElement() {
         panel = new ArrowPanel();
     }
 
-    @Override
-    public Component asComp() { return panel; }
-
-    public void setPoint(Side side, Point newPoisition)
-    {
+    public void setPoint(Side side, Point newPoisition) {
         switch (side) {
             case A:
                 panel.pointA = newPoisition;
@@ -60,8 +59,7 @@ public class ArrowElement extends BaseElement
         panel.reposition();
     }
 
-    public void toggleArrow(Side side, boolean enabled)
-    {
+    public void toggleArrow(Side side, boolean enabled) {
         switch (side) {
             case A:
                 panel.arrowOnA = enabled;
@@ -73,8 +71,7 @@ public class ArrowElement extends BaseElement
         }
     }
 
-    public void setArrow(Side side, boolean enabled, double arrowWidth, double arrowLength)
-    {
+    public void setArrow(Side side, boolean enabled, double arrowWidth, double arrowLength) {
         toggleArrow(side, enabled);
 
         switch (side) {
@@ -92,8 +89,7 @@ public class ArrowElement extends BaseElement
         panel.reposition();
     }
 
-    public void setLine(boolean isSolid, float width, float dotLength)
-    {
+    public void setLine(boolean isSolid, float width, float dotLength) {
         panel.lineSolid = isSolid;
         panel.lineWidth = width;
         panel.lineDashLength = dotLength;
@@ -101,19 +97,50 @@ public class ArrowElement extends BaseElement
         panel.reposition();
     }
 
-    public void setColor(Color color)
-    {
+    public void setColor(Color color) {
         panel.color = color;
     }
 
-    @Override
-    public void writeSelf(ObjectOutputStream out) throws IOException
-    {
-        out.writeDouble(panel.pointA.getX());
-        out.writeDouble(panel.pointA.getY());
+    public void setAnchor(Side side, AnchorReference newAnchor) {
+        switch (side) {
+            case A:
+                if (anchorA != null)
+                    anchorA.removeListener(this);
+                anchorA = newAnchor;
+                if (anchorA != null) {
+                    panel.pointA = anchorA.getCoordInSlide();
+                    panel.reposition();
+                    anchorA.addListener(this);
+                }
+                break;
 
-        out.writeDouble(panel.pointB.getX());
-        out.writeDouble(panel.pointB.getY());
+            case B:
+                if (anchorB != null)
+                    anchorB.removeListener(this);
+                anchorB = newAnchor;
+                if (anchorB != null) {
+                    panel.pointB = anchorB.getCoordInSlide();
+                    panel.reposition();
+                    anchorB.addListener(this);
+                }
+                break;
+        }
+    }
+
+    @Override
+    public Component asComp() { return panel; }
+
+    @Override
+    public void writeSelf(ObjectOutputStream out) throws IOException {
+
+        out.writeObject(anchorA);
+        out.writeObject(anchorB);
+
+        out.writeInt(panel.pointA.x);
+        out.writeInt(panel.pointA.y);
+
+        out.writeInt(panel.pointB.x);
+        out.writeInt(panel.pointB.y);
 
         out.writeBoolean(panel.arrowOnA);
         out.writeDouble(panel.arrowWidthA);
@@ -131,16 +158,18 @@ public class ArrowElement extends BaseElement
     }
 
     @Override
-    public void readSelf(ObjectInputStream in) throws IOException, ClassNotFoundException
-    {
+    public void readSelf(ObjectInputStream in) throws IOException, ClassNotFoundException {
         panel = new ArrowPanel();
 
+        anchorA = (AnchorReference)in.readObject();
+        anchorB = (AnchorReference)in.readObject();
+
         Point pointA = new Point();
-        pointA.setLocation(in.readDouble(), in.readDouble());
+        pointA.setLocation(in.readInt(), in.readInt());
         panel.pointA = pointA;
 
         Point pointB = new Point();
-        pointB.setLocation(in.readDouble(), in.readDouble());
+        pointB.setLocation(in.readInt(), in.readInt());
         panel.pointB = pointB;
 
         panel.arrowOnA = in.readBoolean();
@@ -172,8 +201,23 @@ public class ArrowElement extends BaseElement
         panel.validate();
     }
 
-    public class ArrowPanel extends JPanel
-    {
+    @Override
+    public void onAnchorMoved(AnchorReference anchor) {
+        if (anchor == anchorA)
+            setPoint(Side.A, anchor.getCoordInSlide());
+        else if (anchor == anchorB)
+            setPoint(Side.B, anchor.getCoordInSlide());
+    }
+
+    @Override
+    public void onAnchorDeleted(AnchorReference anchor) {
+        if (anchor == anchorA)
+            anchorA = null;
+        else if (anchor == anchorB)
+            anchorB = null;
+    }
+
+    public class ArrowPanel extends JPanel {
         private Polygon triangle;
         private AffineTransform transform;
 
@@ -194,8 +238,7 @@ public class ArrowElement extends BaseElement
 
         protected Color color = Color.BLACK;
 
-        private ArrowPanel()
-        {
+        private ArrowPanel() {
             super();
 
             triangle = new Polygon();
@@ -209,8 +252,7 @@ public class ArrowElement extends BaseElement
             super.setOpaque(false);
         }
 
-        private void reposition()
-        {
+        private void reposition() {
             double offset = Math.max(Math.max(arrowWidthA / 2.0, arrowWidthB / 2.0), (double)lineWidth);
 
             Point anchor = new Point();
@@ -236,11 +278,11 @@ public class ArrowElement extends BaseElement
 
             Point anchor = super.getLocation();
 
-            double xLocalA = pointA.getX() - anchor.getX();
-            double xLocalB = pointB.getX() - anchor.getX();
+            double xLocalA = pointA.x - anchor.x;
+            double xLocalB = pointB.x - anchor.x;
 
-            double yLocalA = pointA.getY() - anchor.getY();
-            double yLocalB = pointB.getY() - anchor.getY();
+            double yLocalA = pointA.y - anchor.y;
+            double yLocalB = pointB.y - anchor.y;
 
             double xOffset = xLocalB - xLocalA;
             double yOffset = yLocalB - yLocalA;
@@ -306,4 +348,5 @@ public class ArrowElement extends BaseElement
             g2d.dispose();
         }
     }
+
 }

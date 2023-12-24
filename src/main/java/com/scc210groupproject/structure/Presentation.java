@@ -126,7 +126,9 @@ public class Presentation implements Serializable {
         slide.setBackground(new Color((float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1));
 
         SampleElement sampleElement = new SampleElement();
-        sampleElement.setBackground(Color.GREEN);
+        sampleElement.setBackground(Color.RED);
+        sampleElement.setLocation(new Point(250, 250));
+        sampleElement.setSize(new Dimension(100, 50));
         slide.add(sampleElement);
 
         ArrowElement arrowElement = new ArrowElement(new Point(20, 20), new Point(100, 200));
@@ -134,7 +136,19 @@ public class Presentation implements Serializable {
         arrowElement.setArrow(ArrowElement.Side.B, true, 30, 30);
         arrowElement.setColor(Color.GREEN);
         arrowElement.setLine(false, 5, 5);
+        arrowElement.setAnchor(ArrowElement.Side.A, sampleElement.getAnchors().get(1));
         slide.add(arrowElement);
+
+        SampleElement sampleElement2 = new SampleElement();
+        sampleElement2.setBackground(Color.BLUE);
+        sampleElement2.setLocation(new Point(100, 50));
+        sampleElement2.setSize(new Dimension(50, 200));
+        arrowElement.setAnchor(ArrowElement.Side.B, sampleElement2.getAnchors().get(1));
+        slide.add(sampleElement2);
+
+        sampleElement.setLocation(new Point(400, 400));
+        sampleElement2.setSize(new Dimension(20, 10));
+        arrowElement.setAnchor(ArrowElement.Side.A, sampleElement.getAnchors().get(3));
 // end of demo/testing code
 
         slides.add(slide);
