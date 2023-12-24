@@ -1,5 +1,6 @@
 package com.scc210groupproject.ui;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -56,9 +57,18 @@ public class SelectorPane extends JScrollPane implements IChangePresentationList
     {
         JButton button = new JButton();
         button.setLayout(null);
+        button.setBorder(null);
+
         double ratio = (double)slide.asComp().getWidth() / (double)slide.asComp().getHeight();
-        BufferedImage preview = slide.createPreview(new Dimension((int)(super.getHeight() * ratio), super.getHeight()));
+        int height = super.getHeight() - super.getHorizontalScrollBar().getHeight();
+        Dimension dimension = new Dimension((int)(height * ratio), height);
+
+        BufferedImage preview = slide.createPreview(dimension);
         button.setIcon(new ImageIcon(preview));
+        button.setSize(dimension);
+        button.setPreferredSize(dimension);
+        button.setMinimumSize(dimension);
+        button.setMaximumSize(dimension);
 
         GoToSlideAction action = new GoToSlideAction(index);
         button.addActionListener(action);

@@ -49,10 +49,18 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
         switch (side) {
             case A:
                 panel.pointA = newPoisition;
+                if (anchorA != null) {
+                    anchorA.removeListener(this);
+                    anchorA = null;
+                }
                 break;
 
             case B:
                 panel.pointB = newPoisition;
+                if (anchorB != null) {
+                    anchorB.removeListener(this);
+                    anchorB = null;
+                }
                 break;
         }
 
@@ -204,9 +212,11 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
     @Override
     public void onAnchorMoved(AnchorReference anchor) {
         if (anchor == anchorA)
-            setPoint(Side.A, anchor.getCoordInSlide());
+            panel.pointA = anchor.getCoordInSlide();
         else if (anchor == anchorB)
-            setPoint(Side.B, anchor.getCoordInSlide());
+            panel.pointB = anchor.getCoordInSlide();
+
+        panel.reposition();
     }
 
     @Override
