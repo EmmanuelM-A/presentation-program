@@ -28,7 +28,7 @@ public class ScaledPanel extends JPanel
             return;
 
         Component content = super.getComponent(0);
-        
+
         Dimension contentSize = content.getSize();
         Dimension containerSize = super.getSize();
 
@@ -37,9 +37,9 @@ public class ScaledPanel extends JPanel
         double maxRatio = Math.max(ratioX, ratioY);
 
         double scale = 1.0 / maxRatio;
-        
+
         content.setLocation(
-            (int)((containerSize.getWidth() - contentSize.getWidth() * scale) * 0.5 / scale), 
+            (int)((containerSize.getWidth() - contentSize.getWidth() * scale) * 0.5 / scale),
             (int)((containerSize.getHeight() - contentSize.getHeight() * scale) * 0.5 / scale));
 
         AffineTransform transform = new AffineTransform();

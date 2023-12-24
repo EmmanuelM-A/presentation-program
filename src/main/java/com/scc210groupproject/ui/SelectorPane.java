@@ -2,10 +2,12 @@ package com.scc210groupproject.ui;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import com.scc210groupproject.action.GoToSlideAction;
 import com.scc210groupproject.structure.Presentation;
 import com.scc210groupproject.structure.Slide;
 import com.scc210groupproject.structure.eventListeners.IChangePresentationListener;
@@ -13,13 +15,16 @@ import com.scc210groupproject.structure.eventListeners.ICreateSlideListener;
 import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;
 
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class SelectorPane extends JScrollPane implements IChangePresentationListener, ICreateSlideListener, IDiscardSlideListener
 {
     public static SelectorPane instance;
 
     private JPanel client = new JPanel();
+    private ArrayList<GoToSlideAction> actions = new ArrayList<>();
 
     public SelectorPane()
     {
@@ -41,29 +46,41 @@ public class SelectorPane extends JScrollPane implements IChangePresentationList
     public void onDiscardSlide(int index, Slide slide)
     {
         client.remove(index);
+        actions.remove(index);
+        for (int i = index; i < actions.size(); i++)
+            actions.get(i).index -= 1;
 
         super.validate();
     }
 
     @Override
-    public void onCreateSlide(int index, Slide slide) 
+    public void onCreateSlide(int index, Slide slide)
     {
-        JLabel label = new JLabel();
+        JButton button = new JButton();
+        button.setLayout(null);
         double ratio = (double)slide.asComp().getWidth() / (double)slide.asComp().getHeight();
         BufferedImage preview = slide.createPreview(new Dimension((int)(super.getHeight() * ratio), super.getHeight()));
-        label.setIcon(new ImageIcon(preview));
+        button.setIcon(new ImageIcon(preview));
+
+        GoToSlideAction action = new GoToSlideAction(index);
+        button.addActionListener(action);
 
         if (index >= client.getComponentCount())
         {
-            for (int i = client.getComponentCount(); i < index; i++)
-                client.add(new JLabel());
+            for (int i = client.getComponentCount(); i < index; i++) {
+                client.add(new JButton());
+                actions.add(new GoToSlideAction(-1));
+            }
 
-            client.add(label, index);
+            client.add(button, index);
+            actions.add(index, action);
         }
         else
         {
             client.remove(index);
-            client.add(label, index);
+            client.add(button, index);
+
+            actions.set(index, action);
         }
 
         super.validate();

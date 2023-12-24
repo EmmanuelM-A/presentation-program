@@ -5,37 +5,40 @@ import javax.swing.*;
 public enum ResourceReference {
 
     NEW_FILE(
-        "NEW\nFILE", 
+        "NEW\nFILE",
         "new-document.png"),
     OPEN_FILE(
-        "OPEN\nFILE", 
+        "OPEN\nFILE",
         "folder.png"),
     SAVE_FILE(
-        "SAVE\nFILE", 
+        "SAVE\nFILE",
         "diskette.png"),
     CREATE_SLIDE(
         "NEW\nSLIDE",
         "create-slide.png"),
     ADD_TEXT(
-        "TEXT", 
+        "TEXT",
         "add-text.png"),
     ADD_IMAGE(
-        "IMAGE", 
+        "IMAGE",
         "add-image.png"),
     ADD_VIDEO(
-        "VIDEO", 
+        "VIDEO",
         "add-video.png"),
+    ADD_BOX(
+        "BOX",
+        "projector-screen.png"),
     EXPORT(
-        "EXPORT", 
+        "EXPORT",
         "export.png"),
     IMPORT(
-        "IMPORT", 
+        "IMPORT",
         "import.png"),
     SHARE(
-        "SHARE", 
+        "SHARE",
         "share.png"),
     PRESENT(
-        "PRESENT", 
+        "PRESENT",
         "projector-screen.png");
 
     private static final String imageFolderPath = "src/main/resources/images/";

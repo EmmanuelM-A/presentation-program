@@ -13,6 +13,7 @@ public class MainDisplayPanel extends JPanel implements IChangePresentationListe
     public static MainDisplayPanel instance;
 
     private ScaledPanel scaledPanel;
+    private int currentIndex;
 
     public MainDisplayPanel()
     {
@@ -24,6 +25,8 @@ public class MainDisplayPanel extends JPanel implements IChangePresentationListe
         scaledPanel = new ScaledPanel();
         super.add(scaledPanel);
 
+        currentIndex = 0;
+
         Presentation.addChangePresentationListener(this);
         Presentation.addDiscardSlideListener(this);
 
@@ -32,10 +35,11 @@ public class MainDisplayPanel extends JPanel implements IChangePresentationListe
 
     public void showSlideAtIndex(int i)
     {
+        currentIndex = i;
         showSlide(Presentation.get().getSlideAtIndex(i));
     }
 
-    public void showSlide(Slide slide)
+    private void showSlide(Slide slide)
     {
         scaledPanel.removeAll();
         scaledPanel.add(slide.asComp());
@@ -44,15 +48,17 @@ public class MainDisplayPanel extends JPanel implements IChangePresentationListe
     }
 
     @Override
-    public void onChangePresentation(Presentation current, Presentation discarded)
-    {
+    public void onChangePresentation(Presentation current, Presentation discarded) {
         showSlideAtIndex(0);
     }
 
     @Override
-    public void onDiscardSlide(int index, Slide slide)
-    {
+    public void onDiscardSlide(int index, Slide slide) {
         if (slide.asComp() == scaledPanel.getComponent(0))
             showSlideAtIndex(index >= Presentation.get().getSlideCount() ? index - 1 : index);
+    }
+
+    public int getDisplayedIndex() {
+        return currentIndex;
     }
 }
