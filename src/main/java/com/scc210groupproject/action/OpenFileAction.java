@@ -13,11 +13,11 @@ public class OpenFileAction implements ActionListener {
     {
         //temporary file path, should have a menu to select the path instead
         try {
-            FileDeserializer.ReadFromPath("./file");
+            FileDeserializer.readFromPath("./file");
         }
         catch (IOException | ClassNotFoundException e) {
             return;
         }
     }
-    
+
 }

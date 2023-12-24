@@ -17,10 +17,10 @@ public class FileDeserializer {
      * @throws IOException thrown if FileInputStream and/or ObjectOutputStream failed to start
      * @throws ClassNotFoundException thrown if ObjectOutputStream cannot find Presentation object in the file
      */
-    public static void ReadFromPath(String path) throws IOException, ClassNotFoundException {
+    public static void readFromPath(String path) throws IOException, ClassNotFoundException {
         Presentation result;
         try (FileInputStream fileStream = new FileInputStream(path)) {
-            result = Deserialize(fileStream);
+            result = deserialize(fileStream);
         }
 
         Presentation.set(result);
@@ -33,7 +33,7 @@ public class FileDeserializer {
      * @throws IOException thrown if ObjectOutputStream failed to start
      * @throws ClassNotFoundException thrown if ObjectOutputStream cannot find Presentation object in the file
      */
-    public static Presentation Deserialize(FileInputStream fileStream) throws IOException, ClassNotFoundException {
+    public static Presentation deserialize(FileInputStream fileStream) throws IOException, ClassNotFoundException {
         Presentation result;
         try (ObjectInputStream objectStream = new ObjectInputStream(fileStream)) {
             result = (Presentation)objectStream.readObject();

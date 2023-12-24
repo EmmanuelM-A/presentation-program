@@ -13,11 +13,11 @@ public class SaveFileAction implements ActionListener {
     {
         //temporary file path, should have a menu to select the path instead
         try {
-            FileSerializer.WriteToPath("./file");
+            FileSerializer.writeToPath("./file");
         }
         catch (IOException e) {
             return;
         }
     }
-    
+
 }
