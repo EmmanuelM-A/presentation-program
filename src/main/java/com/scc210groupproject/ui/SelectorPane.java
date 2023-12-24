@@ -1,6 +1,5 @@
 package com.scc210groupproject.ui;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,12 +12,13 @@ import com.scc210groupproject.structure.Slide;
 import com.scc210groupproject.structure.eventListeners.IChangePresentationListener;
 import com.scc210groupproject.structure.eventListeners.ICreateSlideListener;
 import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;
+import com.scc210groupproject.structure.eventListeners.IUpdateSlideListener;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class SelectorPane extends JScrollPane implements IChangePresentationListener, ICreateSlideListener, IDiscardSlideListener
+public class SelectorPane extends JScrollPane implements IChangePresentationListener, ICreateSlideListener, IUpdateSlideListener, IDiscardSlideListener
 {
     public static SelectorPane instance;
 
@@ -35,6 +35,7 @@ public class SelectorPane extends JScrollPane implements IChangePresentationList
         super.setViewportView(client);
 
         Presentation.addCreateSlideListener(this);
+        Presentation.addUpdateSlideListener(this);
         Presentation.addDiscardSlideListener(this);
         Presentation.addChangePresentationListener(this);
 
@@ -95,9 +96,21 @@ public class SelectorPane extends JScrollPane implements IChangePresentationList
     }
 
     @Override
+    public void onUpdateSlide(int index, Slide slide) {
+        double ratio = (double)slide.asComp().getWidth() / (double)slide.asComp().getHeight();
+        int height = super.getHeight() - super.getHorizontalScrollBar().getHeight();
+        Dimension dimension = new Dimension((int)(height * ratio), height);
+
+        BufferedImage preview = slide.createPreview(dimension);
+        ((JButton)client.getComponent(index)).setIcon(new ImageIcon(preview));
+
+    }
+
+    @Override
     public void onChangePresentation(Presentation current, Presentation discarded) {
         client.removeAll();
 
         super.validate();
     }
+
 }

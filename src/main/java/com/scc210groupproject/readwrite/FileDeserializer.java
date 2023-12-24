@@ -1,6 +1,9 @@
 package com.scc210groupproject.readwrite;
 
+import com.scc210groupproject.structure.BaseElement;
 import com.scc210groupproject.structure.Presentation;
+import com.scc210groupproject.structure.optionalAnchors.AnchorManager;
+import com.scc210groupproject.structure.optionalAnchors.AnchorReference;
 
 import java.io.*;
 
@@ -34,6 +37,8 @@ public class FileDeserializer {
      * @throws ClassNotFoundException thrown if ObjectOutputStream cannot find Presentation object in the file
      */
     public static Presentation deserialize(FileInputStream fileStream) throws IOException, ClassNotFoundException {
+        //ObjectInputFilter.Config.createFilter("com.")
+
         Presentation result;
         try (ObjectInputStream objectStream = new ObjectInputStream(fileStream)) {
             result = (Presentation)objectStream.readObject();

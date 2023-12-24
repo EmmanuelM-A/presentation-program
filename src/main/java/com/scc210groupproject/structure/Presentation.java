@@ -1,8 +1,10 @@
 package com.scc210groupproject.structure;
 
+import com.scc210groupproject.structure.Slide.IUpdateListener;
 import com.scc210groupproject.structure.eventListeners.IChangePresentationListener;
 import com.scc210groupproject.structure.eventListeners.ICreateSlideListener;
 import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;
+import com.scc210groupproject.structure.eventListeners.IUpdateSlideListener;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,7 +20,7 @@ import java.util.List;
  * @author wonge1
  * Class to hold an entire presentation
  */
-public class Presentation implements Serializable {
+public class Presentation implements Serializable, IUpdateListener {
 
     /**
      * Only one current presentation being edited
@@ -79,6 +81,13 @@ public class Presentation implements Serializable {
     private static List<ICreateSlideListener> createSlideListeners = new ArrayList<>();
     public static void addCreateSlideListener(ICreateSlideListener listener) { createSlideListeners.add(listener); }
     public static void removeCreateSlideListener(ICreateSlideListener listener) { createSlideListeners.remove(listener); }
+
+    /**
+     * Listner for when a slide is changed
+     */
+    private static List<IUpdateSlideListener> updateSlideListeners = new ArrayList<>();
+    public static void addUpdateSlideListener(IUpdateSlideListener listener) { updateSlideListeners.add(listener); }
+    public static void removeUpdateSlideListener(IUpdateSlideListener listener) { updateSlideListeners.remove(listener); }
 
     /**
      * Listner for when a slide is removed from presentation
@@ -152,6 +161,7 @@ public class Presentation implements Serializable {
 // end of demo/testing code
 
         slides.add(slide);
+        slide.addUpdateListener(this);
 
         if (notify)
         {
@@ -174,6 +184,7 @@ public class Presentation implements Serializable {
 
         int index = slides.indexOf(slide);
 
+        slide.removeUpdateListener(this);
         slides.remove(slide);
 
         for (IDiscardSlideListener listener : discardSlideListeners)
@@ -182,12 +193,26 @@ public class Presentation implements Serializable {
 
     private void writeObject(ObjectOutputStream out) throws IOException
     {
-        out.writeObject(slides);
+        out.writeInt(slides.size());
+        for (Slide slide : slides)
+            out.writeObject(slide);
     }
 
-    @SuppressWarnings("unchecked") // I have made sure only ArraytList<Slide> is serialized
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
     {
-        slides = (ArrayList<Slide>)in.readObject();
+        int size = in.readInt();
+        slides = new ArrayList<Slide>(size);
+        for (int i = 0; i < size; i++) {
+            Slide slide = (Slide)in.readObject();
+            slides.add(slide);
+            slide.addUpdateListener(this);
+        }
+    }
+    @Override
+    public void onUpdate(Slide slide) {
+
+        int index = slides.indexOf(slide);
+        for (IUpdateSlideListener listener : updateSlideListeners)
+            listener.onUpdateSlide(index, slide);
     }
 }

@@ -227,26 +227,26 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
             anchorB = null;
     }
 
-    public class ArrowPanel extends JPanel {
-        private Polygon triangle;
-        private AffineTransform transform;
+    public static class ArrowPanel extends JPanel {
+        private transient Polygon triangle;
+        private transient AffineTransform transform;
 
-        protected Point pointA = new Point();
-        protected Point pointB = new Point();
+        protected transient Point pointA = new Point();
+        protected transient Point pointB = new Point();
 
-        protected boolean arrowOnA = true;
-        protected double arrowWidthA = 10.0;
-        protected double arrowLengthA = 10.0;
+        protected transient boolean arrowOnA = true;
+        protected transient double arrowWidthA = 10.0;
+        protected transient double arrowLengthA = 10.0;
 
-        protected boolean arrowOnB = true;
-        protected double arrowWidthB = 10.0;
-        protected double arrowLengthB = 10.0;
+        protected transient boolean arrowOnB = true;
+        protected transient double arrowWidthB = 10.0;
+        protected transient double arrowLengthB = 10.0;
 
-        protected boolean lineSolid = false;
-        protected float lineDashLength = 10.0f;
-        protected float lineWidth = 5f;
+        protected transient boolean lineSolid = false;
+        protected transient float lineDashLength = 10.0f;
+        protected transient float lineWidth = 5f;
 
-        protected Color color = Color.BLACK;
+        protected transient Color color = Color.BLACK;
 
         private ArrowPanel() {
             super();

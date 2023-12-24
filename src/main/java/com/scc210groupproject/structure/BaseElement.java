@@ -23,23 +23,28 @@ public abstract class BaseElement implements Serializable
     protected abstract void writeSelf(ObjectOutputStream out) throws IOException;
     protected abstract void readSelf(ObjectInputStream in) throws IOException, ClassNotFoundException;
 
-    protected BaseElement parent = null;
-    protected List<BaseElement> children = new ArrayList<>();
+    protected transient BaseElement parent = null;
+    protected transient List<BaseElement> children = new ArrayList<>();
     private void writeObject(ObjectOutputStream out) throws IOException
     {
         writeSelf(out);
-        
-        out.writeObject(children);
+
+        out.writeInt(children.size());
+        for (BaseElement child : children)
+            out.writeObject(child);
     }
-    @SuppressWarnings("unchecked") // I have made sure only ArraytList<BaseElement> is serialized
+
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
     {
         readSelf(in);
-        
-        children = (ArrayList<BaseElement>)in.readObject();
 
-        for (BaseElement element : children)
+        int size = in.readInt();
+        children = new ArrayList<BaseElement>(size);
+        for (int i = 0; i < size; i++) {
+            BaseElement element = (BaseElement)in.readObject();
+            children.add(element);
             processNewElement(element);
+        }
     }
 
     public abstract Component asComp();
@@ -52,6 +57,8 @@ public abstract class BaseElement implements Serializable
         child.parent = this;
 
         processNewElement(child);
+
+        notifyUpdate();
     }
     public final void remove(BaseElement child)
     {
@@ -59,5 +66,12 @@ public abstract class BaseElement implements Serializable
 
         child.parent = null;
         children.remove(child);
+
+        notifyUpdate();
+    }
+
+    protected void notifyUpdate() {
+        if (parent != null)
+            parent.notifyUpdate();
     }
 }

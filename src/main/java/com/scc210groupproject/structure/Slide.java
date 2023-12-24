@@ -2,6 +2,8 @@ package com.scc210groupproject.structure;
 
 import javax.swing.JPanel;
 
+import com.scc210groupproject.structure.optionalAnchors.AnchorReference;
+
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.Dimension;
@@ -15,6 +17,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author wonge1
@@ -66,6 +70,10 @@ public class Slide extends BaseElement
         out.writeInt(d.height);
 
         out.writeInt(panel.getBackground().getRGB());
+
+        out.writeInt(updateListeners.size());
+        for (IUpdateListener listener : updateListeners)
+            out.writeObject(listener);
     }
 
     @Override
@@ -85,6 +93,12 @@ public class Slide extends BaseElement
         setDiemension(dimension);
 
         panel.setBackground(new Color(in.readInt()));
+
+        int size = in.readInt();
+        updateListeners = new ArrayList<IUpdateListener>(size);
+        for (int i = 0; i < size; i++) {
+            updateListeners.add((IUpdateListener)in.readObject());
+        }
     }
 
     @Override
@@ -136,5 +150,22 @@ public class Slide extends BaseElement
 
         scaled = operation.filter(original, scaled);
         return scaled;
+    }
+
+    /**
+     * Listner for when a slide is changed
+     */
+    private transient List<IUpdateListener> updateListeners = new ArrayList<>();
+    public void addUpdateListener(IUpdateListener listener) { updateListeners.add(listener); }
+    public void removeUpdateListener(IUpdateListener listener) { updateListeners.remove(listener); }
+
+    @Override
+    protected void notifyUpdate() {
+        for (IUpdateListener listener : updateListeners)
+            listener.onUpdate(this);
+    }
+
+    public interface IUpdateListener {
+        public void onUpdate(Slide slide);
     }
 }

@@ -55,14 +55,23 @@ public class AnchorReference implements Serializable {
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.writeDouble(location.x);
         out.writeDouble(location.y);
+
         out.writeObject(manager);
-        out.writeObject(listeners);
+
+        out.writeInt(listeners.size());
+        for (IAnchorListener listener : listeners)
+            out.writeObject(listener);
     }
 
-    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         location = new Point2D.Double(in.readDouble(), in.readDouble());
+
         manager = (AnchorManager)in.readObject();
-        listeners = (ArrayList<IAnchorListener>)in.readObject();
+
+        int size = in.readInt();
+        listeners = new ArrayList<IAnchorListener>(size);
+        for (int i = 0; i < size; i++) {
+            listeners.add((IAnchorListener)in.readObject());
+        }
     }
 }

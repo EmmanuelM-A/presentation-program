@@ -13,8 +13,8 @@ import com.scc210groupproject.structure.BaseElement;
 
 public class AnchorManager implements Serializable {
 
-    protected BaseElement element;
-    protected ArrayList<AnchorReference> anchors;
+    protected transient BaseElement element;
+    protected transient ArrayList<AnchorReference> anchors;
 
     public AnchorManager(BaseElement ownerElement, Point2D.Double... relativeSpaceAnchors) {
         if (!(ownerElement instanceof IAnchorProvider))
@@ -54,12 +54,19 @@ public class AnchorManager implements Serializable {
 
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.writeObject(element);
-        out.writeObject(anchors);
+
+        out.writeInt(anchors.size());
+        for (AnchorReference anchor : anchors)
+            out.writeObject(anchor);
     }
 
-    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         element = (BaseElement)in.readObject();
-        anchors = (ArrayList<AnchorReference>)in.readObject();
+
+        int size = in.readInt();
+        anchors = new ArrayList<AnchorReference>(size);
+        for (int i = 0; i < size; i++) {
+            anchors.add((AnchorReference)in.readObject());
+        }
     }
 }
