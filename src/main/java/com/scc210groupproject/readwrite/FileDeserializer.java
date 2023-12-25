@@ -9,6 +9,7 @@ import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.zip.GZIPInputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -28,7 +29,12 @@ public class FileDeserializer {
     public static void readFromPath(String path) throws IOException, ClassNotFoundException {
         Presentation result;
         try (FileInputStream fileStream = new FileInputStream(path)) {
-            result = deserialize(fileStream);
+            if (path.endsWith(".compressed"))
+                try (GZIPInputStream compressedStream = new GZIPInputStream(fileStream)) {
+                    result = deserialize(compressedStream);
+                }
+            else
+                result = deserialize(fileStream);
         }
 
         Presentation.set(result);
@@ -36,15 +42,16 @@ public class FileDeserializer {
 
     /**
      * Read a presentation to a FileOutputStream
-     * @param fileStream stream to write to
+     * @param inputStream stream to write to
      * @return presentation read
      * @throws IOException thrown if ObjectOutputStream failed to start
      * @throws ClassNotFoundException thrown if ObjectOutputStream cannot find Presentation object in the file
      */
-    public static Presentation deserialize(FileInputStream fileStream) throws IOException {
-        Reader reader = new Reader(fileStream);
+    public static Presentation deserialize(InputStream inputStream) throws IOException {
+        Reader reader = new Reader(inputStream);
         return (Presentation)reader.loadHierarchy();
     }
+
 
     public static class Reader {
 
@@ -62,6 +69,10 @@ public class FileDeserializer {
         }
         private Reader() {
             resolvedObjects = new HashMap<>();
+        }
+
+        public boolean hasField(String name) {
+            return current.has(name);
         }
 
         public int readInt(String name) throws IOException {

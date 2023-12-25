@@ -7,11 +7,17 @@ public enum ResourceReference {
     NEW_FILE(
         "NEW\nFILE",
         "new-document.png"),
-    OPEN_FILE(
-        "OPEN\nFILE",
+    OPEN_PLAIN(
+        "OPEN\nPLAIN",
         "folder.png"),
-    SAVE_FILE(
-        "SAVE\nFILE",
+    OPEN_COMPRESS(
+        "OPEN\nZIP",
+        "folder.png"),
+    SAVE_PLAIN(
+        "SAVE\nPLAIN",
+        "diskette.png"),
+    SAVE_COMPRESS(
+        "SAVE\nZIP",
         "diskette.png"),
     CREATE_SLIDE(
         "NEW\nSLIDE",

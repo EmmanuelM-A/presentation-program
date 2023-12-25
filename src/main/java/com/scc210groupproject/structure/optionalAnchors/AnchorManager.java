@@ -13,8 +13,8 @@ import com.scc210groupproject.structure.BaseElement;
 
 public class AnchorManager implements IJsonSerializable {
 
-    protected transient BaseElement element;
-    protected transient List<AnchorReference> anchors;
+    protected BaseElement element;
+    protected List<AnchorReference> anchors;
 
     public AnchorManager(BaseElement ownerElement, Point2D.Double... relativeSpaceAnchors) {
         if (!(ownerElement instanceof IAnchorProvider))

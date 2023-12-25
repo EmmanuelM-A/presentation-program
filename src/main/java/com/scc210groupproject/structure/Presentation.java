@@ -100,7 +100,7 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
     /**
      * Slides the presentation contains
      */
-    private transient List<Slide> slides = new LinkedList<>();
+    private List<Slide> slides = new LinkedList<>();
     public List<Slide> getSlides() { return slides; }
     public Slide getSlideAtIndex(int i) { return slides.get(i); }
     public int getSlideCount() { return slides.size(); }

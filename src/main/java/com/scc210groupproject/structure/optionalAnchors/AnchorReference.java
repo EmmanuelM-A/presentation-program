@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
@@ -14,13 +15,13 @@ import com.scc210groupproject.readwrite.IJsonSerializable;
 import com.scc210groupproject.structure.CoordinateUtils;
 
 public class AnchorReference implements IJsonSerializable {
-    private transient Point2D.Double location;
-    private transient List<IAnchorListener> listeners;
+    private Point2D.Double location;
+    private List<IAnchorListener> listeners;
 
-    private transient AnchorManager manager;
+    private AnchorManager manager;
 
     protected AnchorReference(Point2D.Double location, AnchorManager manager) {
-        listeners = new ArrayList<>();
+        listeners = new LinkedList<>();
         this.location = location;
         this.manager = manager;
     }
@@ -84,7 +85,8 @@ public class AnchorReference implements IJsonSerializable {
         writer.writeDouble("y", location.y);
 
         writer.writeObject("manager", manager);
-        writer.writeObjectList("listeners", listeners);
+        if (listeners.size() > 0)
+            writer.writeObjectList("listeners", listeners);
     }
 
     @Override
@@ -95,6 +97,8 @@ public class AnchorReference implements IJsonSerializable {
             reader.readDouble("y"));
 
         manager = (AnchorManager)reader.readObject("manager");
-        listeners = (List<IAnchorListener>)reader.readObjectList("listeners");
+        listeners = reader.hasField("listeners") ?
+            (List<IAnchorListener>)reader.readObjectList("listeners") :
+            new LinkedList<>();
     }
 }
