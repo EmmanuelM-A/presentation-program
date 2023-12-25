@@ -2,7 +2,8 @@ package com.scc210groupproject.structure;
 
 import javax.swing.JPanel;
 
-import com.scc210groupproject.structure.optionalAnchors.AnchorReference;
+import com.scc210groupproject.readwrite.FileDeserializer.Reader;
+import com.scc210groupproject.readwrite.FileSerializer.Writer;
 
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
@@ -15,8 +16,6 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,29 +28,25 @@ public class Slide extends BaseElement
 {
     private transient JPanel panel;
 
-    public Slide(Dimension dimension)
-    {
+    public Slide(Dimension dimension) {
         this();
 
         setDiemension(dimension);
     }
 
-    private Slide()
-    {
+    private Slide() {
         panel = new JPanel();
         panel.setLayout(null);
     }
 
-    public void setDiemension(Dimension dimension)
-    {
+    public void setDiemension(Dimension dimension) {
         panel.setSize(dimension);
         panel.setPreferredSize(dimension);
         panel.setMinimumSize(dimension);
         panel.setMaximumSize(dimension);
     }
 
-    public void setBackground(Color color)
-    {
+    public void setBackground(Color color) {
         panel.setBackground(color);
     }
 
@@ -59,47 +54,42 @@ public class Slide extends BaseElement
     public Component asComp() { return panel; }
 
     @Override
-    public void writeSelf(ObjectOutputStream out) throws IOException
-    {
+    public void writeSelf(Writer write) throws IOException {
         Point p = panel.getLocation();
-        out.writeInt(p.x);
-        out.writeInt(p.y);
+        write.writeInt("x", p.x);
+        write.writeInt("y", p.y);
 
         Dimension d = panel.getSize();
-        out.writeInt(d.width);
-        out.writeInt(d.height);
+        write.writeInt("width", d.width);
+        write.writeInt("height", d.height);
 
-        out.writeInt(panel.getBackground().getRGB());
+        write.writeInt("background", panel.getBackground().getRGB());
 
-        out.writeInt(updateListeners.size());
-        for (IUpdateListener listener : updateListeners)
-            out.writeObject(listener);
+        write.writeObjectList("listeners", updateListeners);
     }
 
     @Override
-    public void readSelf(ObjectInputStream in) throws IOException, ClassNotFoundException
-    {
+    @SuppressWarnings("unchecked")
+    public void readSelf(Reader reader) throws IOException {
         panel = new JPanel();
         panel.setLayout(null);
 
         panel.setLocation(new Point(
-            in.readInt(),
-            in.readInt()));
+            reader.readInt("x"),
+            reader.readInt("y")));
 
         Dimension dimension = new Dimension(
-            in.readInt(),
-            in.readInt());
+            reader.readInt("width"),
+            reader.readInt("height"));
 
         setDiemension(dimension);
 
-        panel.setBackground(new Color(in.readInt()));
+        panel.setBackground(new Color(reader.readInt("background")));
 
-        int size = in.readInt();
-        updateListeners = new ArrayList<IUpdateListener>(size);
-        for (int i = 0; i < size; i++) {
-            updateListeners.add((IUpdateListener)in.readObject());
-        }
+        updateListeners = (List<IUpdateListener>)reader.readObjectList("listeners");
     }
+
+    public static Slide createEmpty() { return new Slide(); }
 
     @Override
     protected void processNewElement(BaseElement element) {
@@ -135,8 +125,7 @@ public class Slide extends BaseElement
      * Create an image of the Slide
      * @return Graphic2D of Slide
      */
-    public BufferedImage createPreview(Dimension size)
-    {
+    public BufferedImage createPreview(Dimension size) {
         BufferedImage original = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = original.createGraphics();
         panel.paint(graphics);

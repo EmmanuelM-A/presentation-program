@@ -2,19 +2,19 @@ package com.scc210groupproject.structure.optionalAnchors;
 
 import java.awt.geom.Point2D;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.scc210groupproject.readwrite.FileDeserializer.Reader;
+import com.scc210groupproject.readwrite.FileSerializer.Writer;
+import com.scc210groupproject.readwrite.IJsonSerializable;
 import com.scc210groupproject.structure.BaseElement;
 
-public class AnchorManager implements Serializable {
+public class AnchorManager implements IJsonSerializable {
 
     protected transient BaseElement element;
-    protected transient ArrayList<AnchorReference> anchors;
+    protected transient List<AnchorReference> anchors;
 
     public AnchorManager(BaseElement ownerElement, Point2D.Double... relativeSpaceAnchors) {
         if (!(ownerElement instanceof IAnchorProvider))
@@ -26,6 +26,8 @@ public class AnchorManager implements Serializable {
         for (int i = 0; i < relativeSpaceAnchors.length; i++)
             anchors.add(new AnchorReference(relativeSpaceAnchors[i], this));
     }
+
+    private AnchorManager() {}
 
     public void onChangeSize() {
         for (AnchorReference anchor : anchors)
@@ -52,21 +54,18 @@ public class AnchorManager implements Serializable {
         return Collections.unmodifiableList(anchors);
     }
 
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.writeObject(element);
+    public static AnchorManager createEmpty() { return new AnchorManager(); }
 
-        out.writeInt(anchors.size());
-        for (AnchorReference anchor : anchors)
-            out.writeObject(anchor);
+    @Override
+    public void writeValue(Writer writer) throws IOException {
+        writer.writeObject("element", element);
+        writer.writeObjectList("anchors", anchors);
     }
 
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        element = (BaseElement)in.readObject();
-
-        int size = in.readInt();
-        anchors = new ArrayList<AnchorReference>(size);
-        for (int i = 0; i < size; i++) {
-            anchors.add((AnchorReference)in.readObject());
-        }
+    @Override
+    @SuppressWarnings("unchecked")
+    public void readValue(Reader reader) throws IOException {
+        element = (BaseElement)reader.readObject("element");
+        anchors = (List<AnchorReference>)reader.readObjectList("anchors");
     }
 }

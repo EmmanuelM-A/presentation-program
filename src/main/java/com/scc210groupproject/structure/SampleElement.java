@@ -2,6 +2,8 @@ package com.scc210groupproject.structure;
 
 import javax.swing.JPanel;
 
+import com.scc210groupproject.readwrite.FileDeserializer.Reader;
+import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.structure.optionalAnchors.AnchorManager;
 import com.scc210groupproject.structure.optionalAnchors.IAnchorProvider;
 
@@ -12,8 +14,6 @@ import java.awt.Dimension;
 import java.awt.Component;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 /**
  * @author wonge1
@@ -48,41 +48,43 @@ public class SampleElement extends BaseElement implements IAnchorProvider {
     @Override
     public Component asComp() { return panel; }
 
+    public static SampleElement createEmpty() { return new SampleElement(); }
+
     @Override
-    public void writeSelf(ObjectOutputStream out) throws IOException {
-        out.writeObject(manager);
+    public void writeSelf(Writer writer) throws IOException {
+        writer.writeObject("manager", manager);
 
         Point p = panel.getLocation();
-        out.writeDouble(p.getX());
-        out.writeDouble(p.getY());
+        writer.writeInt("x", p.x);
+        writer.writeInt("y", p.y);
 
         Dimension d = panel.getSize();
-        out.writeDouble(d.getWidth());
-        out.writeDouble(d.getHeight());
+        writer.writeInt("width", d.width);
+        writer.writeInt("height", d.height);
 
-        out.writeInt(panel.getBackground().getRGB());
+        writer.writeInt("background", panel.getBackground().getRGB());
     }
 
     @Override
-    public void readSelf(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    public void readSelf(Reader reader) throws IOException {
         panel = new JPanel();
         panel.setLayout(null);
 
-        manager = (AnchorManager)in.readObject();
+        manager = (AnchorManager)reader.readObject("manager");
 
         Point p = new Point();
         p.setLocation(
-            in.readDouble(),
-            in.readDouble());
+            reader.readDouble("x"),
+            reader.readDouble("y"));
         panel.setLocation(p);
 
         Dimension d = new Dimension();
         d.setSize(
-            in.readDouble(),
-            in.readDouble());
+            reader.readDouble("width"),
+            reader.readDouble("height"));
         panel.setSize(d);
 
-        panel.setBackground(new Color(in.readInt()));
+        panel.setBackground(new Color(reader.readInt("background")));
     }
 
     @Override

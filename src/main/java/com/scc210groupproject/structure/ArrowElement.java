@@ -3,6 +3,8 @@ package com.scc210groupproject.structure;
 import javax.swing.JPanel;
 
 import com.scc210groupproject.structure.optionalAnchors.IAnchorListener;
+import com.scc210groupproject.readwrite.FileDeserializer.Reader;
+import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.structure.optionalAnchors.AnchorReference;
 
 import java.awt.BasicStroke;
@@ -18,8 +20,6 @@ import java.awt.geom.Line2D;
 import java.awt.Component;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 /**
  * @author wonge1
@@ -34,16 +34,13 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
     private transient AnchorReference anchorB;
 
     public ArrowElement(Point start, Point end) {
-        this();
-
+        panel = new ArrowPanel();
         panel.pointA = start;
         panel.pointB = end;
         panel.reposition();
     }
 
-    private ArrowElement() {
-        panel = new ArrowPanel();
-    }
+    private ArrowElement() {}
 
     public void setPoint(Side side, Point newPoisition) {
         switch (side) {
@@ -138,61 +135,63 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
     @Override
     public Component asComp() { return panel; }
 
+    public static ArrowElement createEmpty() { return new ArrowElement(); }
+
     @Override
-    public void writeSelf(ObjectOutputStream out) throws IOException {
+    public void writeSelf(Writer writer) throws IOException {
 
-        out.writeObject(anchorA);
-        out.writeObject(anchorB);
+        writer.writeObject("anchor A", anchorA);
+        writer.writeObject("anchor B", anchorB);
 
-        out.writeInt(panel.pointA.x);
-        out.writeInt(panel.pointA.y);
+        writer.writeInt("point A X", panel.pointA.x);
+        writer.writeInt("point A Y", panel.pointA.y);
 
-        out.writeInt(panel.pointB.x);
-        out.writeInt(panel.pointB.y);
+        writer.writeInt("point B X", panel.pointB.x);
+        writer.writeInt("point B Y", panel.pointB.y);
 
-        out.writeBoolean(panel.arrowOnA);
-        out.writeDouble(panel.arrowWidthA);
-        out.writeDouble(panel.arrowLengthA);
+        writer.writeBoolean("arrow on A", panel.arrowOnA);
+        writer.writeDouble("arrow Width A", panel.arrowWidthA);
+        writer.writeDouble("arrow Length A", panel.arrowLengthA);
 
-        out.writeBoolean(panel.arrowOnB);
-        out.writeDouble(panel.arrowWidthB);
-        out.writeDouble(panel.arrowLengthB);
+        writer.writeBoolean("arrow on B", panel.arrowOnB);
+        writer.writeDouble("arrow Width B", panel.arrowWidthB);
+        writer.writeDouble("arrow Length B", panel.arrowLengthB);
 
-        out.writeBoolean(panel.lineSolid);
-        out.writeFloat(panel.lineDashLength);
-        out.writeFloat(panel.lineWidth);
+        writer.writeBoolean("line Solid", panel.lineSolid);
+        writer.writeFloat("line Dash Length", panel.lineDashLength);
+        writer.writeFloat("line Width", panel.lineWidth);
 
-        out.writeInt(panel.color.getRGB());
+        writer.writeInt("color", panel.color.getRGB());
     }
 
     @Override
-    public void readSelf(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    public void readSelf(Reader reader) throws IOException {
         panel = new ArrowPanel();
 
-        anchorA = (AnchorReference)in.readObject();
-        anchorB = (AnchorReference)in.readObject();
+        anchorA = (AnchorReference)reader.readObject("anchor A");
+        anchorB = (AnchorReference)reader.readObject("anchor B");
 
         Point pointA = new Point();
-        pointA.setLocation(in.readInt(), in.readInt());
+        pointA.setLocation(reader.readInt("point A X"), reader.readInt("point A Y"));
         panel.pointA = pointA;
 
         Point pointB = new Point();
-        pointB.setLocation(in.readInt(), in.readInt());
+        pointB.setLocation(reader.readInt("point B X"), reader.readInt("point B Y"));
         panel.pointB = pointB;
 
-        panel.arrowOnA = in.readBoolean();
-        panel.arrowWidthA = in.readDouble();
-        panel.arrowLengthA = in.readDouble();
+        panel.arrowOnA = reader.readBoolean("arrow on A");
+        panel.arrowWidthA = reader.readDouble("arrow Width A");
+        panel.arrowLengthA = reader.readDouble("arrow Length A");
 
-        panel.arrowOnB = in.readBoolean();
-        panel.arrowWidthB = in.readDouble();
-        panel.arrowLengthB = in.readDouble();
+        panel.arrowOnB = reader.readBoolean("arrow on B");
+        panel.arrowWidthB = reader.readDouble("arrow Width B");
+        panel.arrowLengthB = reader.readDouble("arrow Length B");
 
-        panel.lineSolid = in.readBoolean();
-        panel.lineDashLength = in.readFloat();
-        panel.lineWidth = in.readFloat();
+        panel.lineSolid = reader.readBoolean("line Solid");
+        panel.lineDashLength = reader.readFloat("line Dash Length");
+        panel.lineWidth = reader.readFloat("line Width");
 
-        panel.color = new Color(in.readInt());
+        panel.color = new Color(reader.readInt("color"));
 
         panel.reposition();
     }
