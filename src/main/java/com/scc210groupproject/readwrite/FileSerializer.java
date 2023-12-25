@@ -9,6 +9,7 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * @author wonge1
@@ -32,19 +33,24 @@ public class FileSerializer {
             return;
 
         try (FileOutputStream fileStream = new FileOutputStream(path)) {
-            serialize(fileStream, current);
+            if (path.endsWith(".compressed"))
+                try (GZIPOutputStream compressedStream = new GZIPOutputStream(fileStream)) {
+                    serialize(compressedStream, current);
+                } //automatically closes stream
+            else
+                serialize(fileStream, current);
         } //automatically closes stream
     }
 
     /**
      * Write a presentation to a FileOutputStream
-     * @param fileStream stream to write to
+     * @param outputStream stream to write to
      * @param presentation presentation to write
      * @throws IOException thrown if ObjectOutputStream failed to start
      */
-    public static void serialize(FileOutputStream fileStream, Presentation presentation) throws IOException {
-        Writer writer = new Writer(fileStream);
-        writer.beginWith(presentation);
+    public static void serialize(OutputStream outputStream, Presentation presentation) throws IOException {
+        Writer writer = new Writer(outputStream);
+        writer.writeFrom(presentation);
     }
 
     public static class Writer {
@@ -125,7 +131,7 @@ public class FileSerializer {
             generator.writeStringField(name, index.toString());
         }
 
-        public void beginWith(IJsonSerializable firstItem) throws IOException {
+        public void writeFrom(IJsonSerializable firstItem) throws IOException {
             generator.writeStartObject();
             updateObjectLists(firstItem);
             iterate();

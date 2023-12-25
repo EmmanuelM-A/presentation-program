@@ -28,10 +28,10 @@ import java.io.IOException;
 public class ArrowElement extends BaseElement implements IAnchorListener {
     public static enum Side { A, B }
 
-    private transient ArrowPanel panel;
+    private ArrowPanel panel;
 
-    private transient AnchorReference anchorA;
-    private transient AnchorReference anchorB;
+    private AnchorReference anchorA;
+    private AnchorReference anchorB;
 
     public ArrowElement(Point start, Point end) {
         panel = new ArrowPanel();

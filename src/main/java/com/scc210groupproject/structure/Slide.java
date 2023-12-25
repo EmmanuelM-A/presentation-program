@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class Slide extends BaseElement
 {
-    private transient JPanel panel;
+    private JPanel panel;
 
     public Slide(Dimension dimension) {
         this();

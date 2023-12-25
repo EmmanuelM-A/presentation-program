@@ -4,18 +4,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import com.scc210groupproject.readwrite.FileDeserializer;
+import com.scc210groupproject.readwrite.FileSerializer;
 
-public class OpenFileAction implements ActionListener {
+public class SaveCompressAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent _)
     {
         //temporary file path, should have a menu to select the path instead
         try {
-            FileDeserializer.readFromPath("./file");
+            FileSerializer.writeToPath("./file.compressed");
         }
-        catch (IOException | ClassNotFoundException e) {
+        catch (IOException e) {
             return;
         }
     }

@@ -21,9 +21,9 @@ import java.io.IOException;
  */
 public class SampleElement extends BaseElement implements IAnchorProvider {
 
-    private transient JPanel panel = new JPanel();
+    private JPanel panel = new JPanel();
 
-    private transient AnchorManager manager = new AnchorManager(
+    private AnchorManager manager = new AnchorManager(
         this,
         new Point2D.Double(0.0, 0.5),
         new Point2D.Double(0.5, 1.0),

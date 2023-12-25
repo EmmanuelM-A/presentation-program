@@ -24,8 +24,8 @@ public abstract class BaseElement implements IJsonSerializable
     protected abstract void writeSelf(Writer writer) throws IOException;
     protected abstract void readSelf(Reader reader) throws IOException;
 
-    protected transient BaseElement parent = null;
-    protected transient List<BaseElement> children = new ArrayList<>();
+    protected BaseElement parent = null;
+    protected List<BaseElement> children = new ArrayList<>();
 
     @Override
     public void writeValue(Writer writer) throws IOException {
