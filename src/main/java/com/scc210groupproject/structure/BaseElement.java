@@ -2,11 +2,12 @@ package com.scc210groupproject.structure;
 
 import java.awt.Component;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.scc210groupproject.readwrite.FileDeserializer.Reader;
+import com.scc210groupproject.readwrite.FileSerializer.Writer;
+import com.scc210groupproject.readwrite.IJsonSerializable;
 
 /**
  * @author wonge1
@@ -18,33 +19,29 @@ import java.util.List;
  * Mark them as transient
  * @see BaseElement#component
  */
-public abstract class BaseElement implements Serializable
+public abstract class BaseElement implements IJsonSerializable
 {
-    protected abstract void writeSelf(ObjectOutputStream out) throws IOException;
-    protected abstract void readSelf(ObjectInputStream in) throws IOException, ClassNotFoundException;
+    protected abstract void writeSelf(Writer writer) throws IOException;
+    protected abstract void readSelf(Reader reader) throws IOException;
 
     protected transient BaseElement parent = null;
     protected transient List<BaseElement> children = new ArrayList<>();
-    private void writeObject(ObjectOutputStream out) throws IOException
-    {
-        writeSelf(out);
 
-        out.writeInt(children.size());
-        for (BaseElement child : children)
-            out.writeObject(child);
+    @Override
+    public void writeValue(Writer writer) throws IOException {
+        writeSelf(writer);
+        writer.writeObject("parent", parent);
+        writer.writeObjectList("children", children);
     }
 
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
-    {
-        readSelf(in);
-
-        int size = in.readInt();
-        children = new ArrayList<BaseElement>(size);
-        for (int i = 0; i < size; i++) {
-            BaseElement element = (BaseElement)in.readObject();
-            children.add(element);
+    @Override
+    @SuppressWarnings("unchecked")
+    public void readValue(Reader reader) throws IOException {
+        readSelf(reader);
+        parent = (BaseElement)reader.readObject("parent");
+        children = (List<BaseElement>)reader.readObjectList("children");
+        for (BaseElement element : children)
             processNewElement(element);
-        }
     }
 
     public abstract Component asComp();

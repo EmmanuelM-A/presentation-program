@@ -1,8 +1,14 @@
 package com.scc210groupproject.readwrite;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.scc210groupproject.structure.Presentation;
 
 import java.io.*;
+import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author wonge1
@@ -37,9 +43,109 @@ public class FileSerializer {
      * @throws IOException thrown if ObjectOutputStream failed to start
      */
     public static void serialize(FileOutputStream fileStream, Presentation presentation) throws IOException {
-        try (ObjectOutputStream objectStream = new ObjectOutputStream(fileStream)) {
-            objectStream.writeObject(presentation);
-            objectStream.flush();
-        } //automatically closes stream
+        Writer writer = new Writer(fileStream);
+        writer.beginWith(presentation);
+    }
+
+    public static class Writer {
+
+        private JsonGenerator generator;
+
+        // not constraint by int max but will return wrong value for size() if beyond max
+        private HashMap<IJsonSerializable, BigInteger> writtenObjects;
+        private BigInteger availableIndex;
+
+        private LinkedList<IJsonSerializable> queuedObjects;
+
+        public Writer(OutputStream stream) throws IOException {
+            this();
+            generator = new JsonFactory().createGenerator(stream);
+            generator.useDefaultPrettyPrinter();
+        }
+        private Writer() {
+            writtenObjects = new HashMap<>();
+            availableIndex = BigInteger.ZERO;
+            queuedObjects = new LinkedList<>();
+        }
+
+        public void writeInt(String name, int value) throws IOException {
+            generator.writeNumberField(name, value);
+        }
+
+        public void writeFloat(String name, float value) throws IOException {
+            generator.writeNumberField(name, value);
+        }
+
+        public void writeDouble(String name, double value) throws IOException {
+            generator.writeNumberField(name, value);
+        }
+
+        public void writeBoolean(String name, boolean value) throws IOException {
+            generator.writeBooleanField(name, value);
+        }
+
+        private BigInteger updateObjectLists(IJsonSerializable object) {
+
+            if (object == null)
+                return new BigInteger("-1");
+
+            BigInteger index = writtenObjects.get(object);
+
+            if (index == null) {
+                index = availableIndex;
+                writtenObjects.put(object, index);
+                queuedObjects.add(object);
+                availableIndex = availableIndex.add(BigInteger.ONE);
+            }
+
+            return index;
+        }
+
+        public <T> void writeObjectList(String name, List<T> values) throws IOException {
+            generator.writeObjectFieldStart(name);
+
+            generator.writeStringField("type", values.getClass().getName());
+
+            generator.writeArrayFieldStart("values");
+            for (Object value : values) {
+                if (!IJsonSerializable.class.isAssignableFrom(value.getClass()))
+                    throw new IllegalArgumentException("trying to serialize values that does not implement IJsonSerializable");
+
+                IJsonSerializable element = (IJsonSerializable)value;
+                BigInteger index = updateObjectLists(element);
+                generator.writeString(index.toString());
+            }
+            generator.writeEndArray();
+
+            generator.writeEndObject();
+        }
+
+        public <T extends IJsonSerializable> void writeObject(String name, T object) throws IOException {
+            BigInteger index = updateObjectLists(object);
+            generator.writeStringField(name, index.toString());
+        }
+
+        public void beginWith(IJsonSerializable firstItem) throws IOException {
+            generator.writeStartObject();
+            updateObjectLists(firstItem);
+            iterate();
+        }
+
+        private void iterate() throws IOException {
+
+            IJsonSerializable next = queuedObjects.poll();
+            if (next == null) {
+                generator.writeEndObject();
+                generator.flush();
+                return;
+            }
+
+            generator.writeObjectFieldStart(writtenObjects.get(next).toString());
+            generator.writeStringField("type", next.getClass().getName());
+            next.writeValue(this);
+            generator.writeEndObject();
+
+            iterate();
+        }
     }
 }

@@ -1,5 +1,8 @@
 package com.scc210groupproject.structure;
 
+import com.scc210groupproject.readwrite.FileDeserializer.Reader;
+import com.scc210groupproject.readwrite.FileSerializer.Writer;
+import com.scc210groupproject.readwrite.IJsonSerializable;
 import com.scc210groupproject.structure.Slide.IUpdateListener;
 import com.scc210groupproject.structure.eventListeners.IChangePresentationListener;
 import com.scc210groupproject.structure.eventListeners.ICreateSlideListener;
@@ -10,17 +13,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * @author wonge1
  * Class to hold an entire presentation
  */
-public class Presentation implements Serializable, IUpdateListener {
+public class Presentation implements IJsonSerializable, IUpdateListener {
 
     /**
      * Only one current presentation being edited
@@ -99,7 +100,7 @@ public class Presentation implements Serializable, IUpdateListener {
     /**
      * Slides the presentation contains
      */
-    private transient List<Slide> slides = new ArrayList<>();
+    private transient List<Slide> slides = new LinkedList<>();
     public List<Slide> getSlides() { return slides; }
     public Slide getSlideAtIndex(int i) { return slides.get(i); }
     public int getSlideCount() { return slides.size(); }
@@ -114,7 +115,7 @@ public class Presentation implements Serializable, IUpdateListener {
      */
     private Presentation()
     {
-        slides = new ArrayList<>();
+        slides = new LinkedList<>();
 
         newSlide(false);
     }
@@ -191,28 +192,23 @@ public class Presentation implements Serializable, IUpdateListener {
             listener.onDiscardSlide(index, slide);
     }
 
-    private void writeObject(ObjectOutputStream out) throws IOException
-    {
-        out.writeInt(slides.size());
-        for (Slide slide : slides)
-            out.writeObject(slide);
-    }
-
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
-    {
-        int size = in.readInt();
-        slides = new ArrayList<Slide>(size);
-        for (int i = 0; i < size; i++) {
-            Slide slide = (Slide)in.readObject();
-            slides.add(slide);
-            slide.addUpdateListener(this);
-        }
-    }
     @Override
     public void onUpdate(Slide slide) {
 
         int index = slides.indexOf(slide);
         for (IUpdateSlideListener listener : updateSlideListeners)
             listener.onUpdateSlide(index, slide);
+    }
+
+    public static Presentation createEmpty() { return new Presentation(); }
+
+    @Override
+    public void writeValue(Writer writer) throws IOException {
+        writer.writeObjectList("slides", slides);
+    }
+    @Override
+    @SuppressWarnings("unchecked")
+    public void readValue(Reader reader) throws IOException {
+        slides = (List<Slide>)reader.readObjectList("slides");
     }
 }
