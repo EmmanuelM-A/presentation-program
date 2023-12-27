@@ -14,7 +14,8 @@ public class MainDisplayPanel extends JPanel {
     {
         this.setBackground(colour);
         this.setPreferredSize(new Dimension(width, height));
-        this.setLayout(new GridBagLayout());
+        //this.setLayout(new GridBagLayout());
+        this.setLayout(new BorderLayout());
         this.currentPresentation = null;
         createNewPresentation();
 
@@ -31,9 +32,10 @@ public class MainDisplayPanel extends JPanel {
     {
         this.removeAll();
         JPanel panel = (JPanel)currentPresentation.getSlideAtIndex(0).asComp();
-        panel.setPreferredSize(panel.getSize());
+        panel.setBackground(Color.ORANGE);
+        /*panel.setPreferredSize(panel.getSize());
         panel.setMinimumSize(panel.getSize());
-        panel.setMaximumSize(panel.getSize());
+        panel.setMaximumSize(panel.getSize());*/
 
         this.add(panel);
         this.revalidate();

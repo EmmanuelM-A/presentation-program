@@ -44,7 +44,7 @@ public class ApplicationWindow extends JFrame {
 
         this.mainDisplayPanel = new MainDisplayPanel(100, 100, Color.WHITE);
 
-        this.slideManager2 = new SlideManager2(this, this.mainDisplayPanel);
+        this.slideManager2 = new SlideManager2(this, this.mainDisplayPanel); // Instantiates the class and adds the slide manager (presentation slider) to the screen
 
         /*
          * The adds and positions each panel/section/element/component onto the window

@@ -161,7 +161,7 @@ public class SlideManager {
         firstSlide.add(slideNo);
 
         applicationFrame.add(firstSlide, BorderLayout.CENTER);
-        System.out.println("New Slide - " + (slides.size()) + "!");
+        System.out.println("New SlideF - " + (slides.size()) + "!");
     }
 
     /**
