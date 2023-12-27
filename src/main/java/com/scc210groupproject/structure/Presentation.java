@@ -130,7 +130,12 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
     }
     private Slide newSlide(boolean notify)
     {
+//<<<<<<< HEAD
         Slide slide = new Slide(defaultSize);
+//=======
+        Slide slide = new Slide();
+        //slide.asComp().setSize(defaultSize);
+//>>>>>>> e21cd65 (Layout of slide manager using Slide, Presentation and MainDisplayPanel)
 
 // line for demo/testing
         slide.setBackground(new Color((float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1));

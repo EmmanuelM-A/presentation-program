@@ -16,7 +16,5 @@ public class MainDisplay extends JPanel {
 
         JPanel panel = new JPanel();
         panel.setBackground(Color.blue);
-
-        //this.add(new JPanel(panel, BorderLayout);
     }
 }
