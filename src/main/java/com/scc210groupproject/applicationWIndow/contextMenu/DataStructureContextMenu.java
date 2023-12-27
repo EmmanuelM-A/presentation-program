@@ -1,2 +1,4 @@
-package com.scc210groupproject.applicationWIndow.contextMenu;public class DataStructureContextMenu {
+package com.scc210groupproject.applicationWIndow.contextMenu;
+
+public class DataStructureContextMenu {
 }

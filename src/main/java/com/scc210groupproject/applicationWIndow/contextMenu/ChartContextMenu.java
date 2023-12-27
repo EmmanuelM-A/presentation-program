@@ -1,2 +1,4 @@
-package com.scc210groupproject.applicationWIndow.contextMenu;public class ChartContextMenu {
+package com.scc210groupproject.applicationWIndow.contextMenu;
+
+public class ChartContextMenu {
 }
