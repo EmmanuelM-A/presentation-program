@@ -10,8 +10,9 @@ import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.readwrite.IJsonSerializable;
 import com.scc210groupproject.structure.BaseElement;
+import com.scc210groupproject.structure.liveness.IDestroyListener;
 
-public class AnchorManager implements IJsonSerializable {
+public class AnchorManager implements IJsonSerializable, IDestroyListener {
 
     protected BaseElement element;
     protected List<AnchorReference> anchors;
@@ -21,6 +22,7 @@ public class AnchorManager implements IJsonSerializable {
             throw new IllegalArgumentException("ownerElement must implement IAnchorProvider");
 
         element = ownerElement;
+        element.addDestroyListener(this);
 
         anchors = new ArrayList<AnchorReference>(relativeSpaceAnchors.length);
         for (int i = 0; i < relativeSpaceAnchors.length; i++)
@@ -67,5 +69,14 @@ public class AnchorManager implements IJsonSerializable {
     public void readValue(Reader reader) throws IOException {
         element = (BaseElement)reader.readObject("element");
         anchors = (List<AnchorReference>)reader.readObjectList("anchors");
+    }
+
+    @Override
+    public void onDestroy(Object object) {
+        for (AnchorReference anchor : anchors)
+            anchor.onAnchorDeleted();
+
+        element = null;
+        anchors = null;
     }
 }

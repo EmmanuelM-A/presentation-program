@@ -22,6 +22,9 @@ public enum ResourceReference {
     CREATE_SLIDE(
         "NEW\nSLIDE",
         "create-slide.png"),
+    DELETE_SLIDE(
+        "DELETE\nSLIDE",
+        "projector-screen.png"),
     ADD_TEXT(
         "TEXT",
         "add-text.png"),
@@ -33,6 +36,9 @@ public enum ResourceReference {
         "add-video.png"),
     ADD_BOX(
         "BOX",
+        "projector-screen.png"),
+    DELETE_FIRST(
+        "DELETE\nFIRST",
         "projector-screen.png"),
     EXPORT(
         "EXPORT",
