@@ -2,8 +2,6 @@ package com.scc210groupproject.structure;
 
 import java.awt.Component;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;

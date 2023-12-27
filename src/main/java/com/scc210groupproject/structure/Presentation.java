@@ -4,7 +4,6 @@ import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.readwrite.IJsonSerializable;
 import com.scc210groupproject.structure.liveness.IUpdateListener;
-import com.scc210groupproject.structure.liveness.IUpdateProvider;
 import com.scc210groupproject.structure.eventListeners.IChangePresentationListener;
 import com.scc210groupproject.structure.eventListeners.ICreateSlideListener;
 import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;
