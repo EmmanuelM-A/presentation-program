@@ -100,7 +100,7 @@ public class SampleElement extends BaseElement implements IAnchorProvider {
     }
 
     @Override
-    public AnchorManager getManager() {
+    public AnchorManager getAnchorManager() {
         return manager;
     }
 }

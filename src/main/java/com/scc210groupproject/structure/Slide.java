@@ -16,8 +16,6 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author wonge1
@@ -64,12 +62,9 @@ public class Slide extends BaseElement
         write.writeInt("height", d.height);
 
         write.writeInt("background", panel.getBackground().getRGB());
-
-        write.writeObjectList("listeners", updateListeners);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void readSelf(Reader reader) throws IOException {
         panel = new JPanel();
         panel.setLayout(null);
@@ -85,8 +80,6 @@ public class Slide extends BaseElement
         setDiemension(dimension);
 
         panel.setBackground(new Color(reader.readInt("background")));
-
-        updateListeners = (List<IUpdateListener>)reader.readObjectList("listeners");
     }
 
     public static Slide createEmpty() { return new Slide(); }
@@ -139,22 +132,5 @@ public class Slide extends BaseElement
 
         scaled = operation.filter(original, scaled);
         return scaled;
-    }
-
-    /**
-     * Listner for when a slide is changed
-     */
-    private transient List<IUpdateListener> updateListeners = new ArrayList<>();
-    public void addUpdateListener(IUpdateListener listener) { updateListeners.add(listener); }
-    public void removeUpdateListener(IUpdateListener listener) { updateListeners.remove(listener); }
-
-    @Override
-    protected void notifyUpdate() {
-        for (IUpdateListener listener : updateListeners)
-            listener.onUpdate(this);
-    }
-
-    public interface IUpdateListener {
-        public void onUpdate(Slide slide);
     }
 }

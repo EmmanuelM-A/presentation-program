@@ -107,19 +107,26 @@ public class FileSerializer {
             return index;
         }
 
-        public <T> void writeObjectList(String name, List<T> values) throws IOException {
+        public <T> void writeObjectList(String name, List<T> values) throws IOException { writeObjectList(name, values, false); }
+        public <T> void writeObjectList(String name, List<T> values, boolean ignoreNonSerializable) throws IOException {
             generator.writeObjectFieldStart(name);
 
             generator.writeStringField("type", values.getClass().getName());
 
             generator.writeArrayFieldStart("values");
             for (Object value : values) {
-                if (!IJsonSerializable.class.isAssignableFrom(value.getClass()))
-                    throw new IllegalArgumentException("trying to serialize values that does not implement IJsonSerializable");
+                if (IJsonSerializable.class.isAssignableFrom(value.getClass())) {
+                    IJsonSerializable element = (IJsonSerializable)value;
+                    BigInteger index = updateObjectLists(element);
+                    generator.writeString(index.toString());
 
-                IJsonSerializable element = (IJsonSerializable)value;
-                BigInteger index = updateObjectLists(element);
-                generator.writeString(index.toString());
+                    continue;
+                }
+
+                if (ignoreNonSerializable)
+                    continue;
+
+                throw new IllegalArgumentException("trying to serialize values that does not implement IJsonSerializable");
             }
             generator.writeEndArray();
 

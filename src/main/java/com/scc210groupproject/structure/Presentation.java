@@ -3,7 +3,8 @@ package com.scc210groupproject.structure;
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.readwrite.IJsonSerializable;
-import com.scc210groupproject.structure.Slide.IUpdateListener;
+import com.scc210groupproject.structure.liveness.IUpdateListener;
+import com.scc210groupproject.structure.liveness.IUpdateProvider;
 import com.scc210groupproject.structure.eventListeners.IChangePresentationListener;
 import com.scc210groupproject.structure.eventListeners.ICreateSlideListener;
 import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;
@@ -188,16 +189,20 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
         slide.removeUpdateListener(this);
         slides.remove(slide);
 
+        slide.destroy();
+
         for (IDiscardSlideListener listener : discardSlideListeners)
             listener.onDiscardSlide(index, slide);
     }
 
     @Override
-    public void onUpdate(Slide slide) {
-
-        int index = slides.indexOf(slide);
-        for (IUpdateSlideListener listener : updateSlideListeners)
-            listener.onUpdateSlide(index, slide);
+    public void onUpdate(Object object) {
+        if (object instanceof Slide) {
+            Slide slide = (Slide)object;
+            int index = slides.indexOf(slide);
+            for (IUpdateSlideListener listener : updateSlideListeners)
+                listener.onUpdateSlide(index, slide);
+        }
     }
 
     public static Presentation createEmpty() { return new Presentation(); }
