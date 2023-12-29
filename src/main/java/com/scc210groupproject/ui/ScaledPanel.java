@@ -1,16 +1,21 @@
 package com.scc210groupproject.ui;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
+import java.awt.Point;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import com.scc210groupproject.structure.Slide;
+
 public class ScaledPanel extends JPanel
 {
+    private BufferedImage image;
+    private Point offset;
+
     public ScaledPanel()
     {
         super();
@@ -24,27 +29,34 @@ public class ScaledPanel extends JPanel
     {
         super.paintComponent(g);
 
-        if (super.getComponentCount() < 1)
+        if (image == null)
             return;
 
-        Component content = super.getComponent(0);
+        ((Graphics2D)g).drawImage(image, offset.x, offset.y, null);
+    }
 
-        Dimension contentSize = content.getSize();
-        Dimension containerSize = super.getSize();
+    public void renderSlide(Slide slide) {
+        if (slide == null)
+            return;
 
-        double ratioX = contentSize.getWidth() / containerSize.getWidth();
-        double ratioY = contentSize.getHeight() / containerSize.getHeight();
-        double maxRatio = Math.max(ratioX, ratioY);
+        double slideRatio = (double)slide.asComp().getWidth() / (double)slide.asComp().getHeight();
+        double diplayRatio = super.getWidth() / super.getHeight();
 
-        double scale = 1.0 / maxRatio;
+        Dimension dimension = slideRatio > diplayRatio ?
+            new Dimension(super.getWidth(), (int)((double)super.getWidth() / slideRatio)) :
+            new Dimension((int)((double)super.getHeight() * slideRatio), super.getHeight());
 
-        content.setLocation(
-            (int)((containerSize.getWidth() - contentSize.getWidth() * scale) * 0.5 / scale),
-            (int)((containerSize.getHeight() - contentSize.getHeight() * scale) * 0.5 / scale));
+        image = slide.createPreview(dimension);
+        offset = new Point(
+            (super.getWidth() - dimension.width) / 2,
+            (super.getHeight() - dimension.height) / 2);
 
-        AffineTransform transform = new AffineTransform();
-        transform.scale(scale, scale);
+        super.repaint();
+    }
 
-        ((Graphics2D)g).transform(transform);
+    public void clearRender() {
+        image = null;
+
+        super.repaint();
     }
 }

@@ -13,7 +13,7 @@ public class DeleteSlideAction implements ActionListener {
     public void actionPerformed(ActionEvent _)
     {
         Presentation presentation = Presentation.getOrCreate();
-        Slide slide = presentation.getSlideAtIndex(MainDisplayPanel.instance.getDisplayedIndex());
+        Slide slide = MainDisplayPanel.instance.getDisplayedSlide();
         presentation.removeSlide(slide);
     }
 

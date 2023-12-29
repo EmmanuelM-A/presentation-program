@@ -108,7 +108,7 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
     /**
      * Default size, array of length 2 (x for pixel width, y for pixel height)
      */
-    private static Dimension defaultSize = new Dimension(500, 500);
+    private static Dimension defaultSize = new Dimension(1600, 900);
 
     /**
      * Construct a presentation of one slide
