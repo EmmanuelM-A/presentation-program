@@ -130,9 +130,13 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
     }
     private Slide newSlide(boolean notify)
     {
-        Slide slide = new Slide(defaultSize);
 
-// line for demo/testing
+        //Slide slide = new Slide(defaultSize);
+
+        Slide slide = new Slide();
+        //slide.asComp().setSize(defaultSize);
+
+
         slide.setBackground(new Color((float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1));
 
         SampleElement sampleElement = new SampleElement();
@@ -159,6 +163,12 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
         sampleElement.setLocation(new Point(400, 400));
         sampleElement2.setSize(new Dimension(20, 10));
         arrowElement.setAnchor(ArrowElement.Side.A, sampleElement.getAnchors().get(3));
+//=======
+        /*slide.asComp().setBackground(new Color((float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1));
+        
+        SampleElement sampleElement = new SampleElement();
+        sampleElement.asComp().setBackground(Color.GREEN);
+        slide.add(sampleElement);*/
 // end of demo/testing code
 
         slides.add(slide);

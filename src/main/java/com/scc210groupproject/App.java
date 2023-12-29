@@ -6,6 +6,7 @@ import com.scc210groupproject.applicationWIndow.ApplicationWindow;
 /**
  * This where the program is run
  * */
+
 public class App {
     public static void main( String[] args )
     {
