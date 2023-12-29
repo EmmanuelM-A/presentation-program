@@ -21,10 +21,8 @@ public class ApplicationWindow extends JFrame {
     private TitleBar customTitleBar;
     private MenuBarTabs menuBarTabs;
     private ContextMenuPanel contextMenuPanel;
-    //private MainDisplay mainDisplay;
     private MainDisplayPanel mainDisplayPanel;
     private SlideManager slideManager;
-    private SlideManager2 slideManager2;
 
     public ApplicationWindow() {
         this.setTitle("Presentation Program");
@@ -44,7 +42,7 @@ public class ApplicationWindow extends JFrame {
 
         this.mainDisplayPanel = new MainDisplayPanel(100, 100, Color.WHITE);
 
-        this.slideManager2 = new SlideManager2(this, this.mainDisplayPanel); // Instantiates the class and adds the slide manager (presentation slider) to the screen
+        this.slideManager = new SlideManager(this, this.mainDisplayPanel);
 
         /*
          * The adds and positions each panel/section/element/component onto the window
@@ -52,6 +50,7 @@ public class ApplicationWindow extends JFrame {
         this.add(menuBarTabs, BorderLayout.NORTH);
         this.add(contextMenuPanel, BorderLayout.WEST);
         this.add(mainDisplayPanel, BorderLayout.CENTER);
+        this.slideManager.createPresentationSlider(this);
 
         this.setVisible(true);
 

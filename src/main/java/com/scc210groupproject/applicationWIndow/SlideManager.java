@@ -1,91 +1,114 @@
 package com.scc210groupproject.applicationWIndow;
 
+import com.scc210groupproject.structure.*;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.LinkedList;
 
-/*
- * NEXT STEPS:
- * - REFACTOR CODE TO BE PRECISE AND SHORT *
- * - MAKE FUNCTIONS TO REDUCE SECTIONS WITH A LOT OF REPEATED CODE (DISPLAY SLIDE METHOD!) v/
- * - ADD GETTERS AND SETTERS v/
- * - COMMENT AND EXPLAIN CODE IN DEPTH v/
- * - DELETE UNNECESSARY v/
- * - PRINT STATEMENTS AND COMMENTS v/
- * - CLEAN UP FUNCTIONS (DISPLAY SELECTED SLIDE!) v/
- * - CHANGE JPANEL TO THE SLIDE CLASS *
- * - SORT OUT LAYOUT OF CLASS v/
- * - FIGURE OUT HOW TO ADD SLIDE IMAGE AS SLIDE BUTTON ICON *
- * - ADD THE REST OF BUTTONS FOR SLIDE PRESENTER. v/ (Will add zoom in and out buttons later)
- * */
+public class SlideManager implements ActionListener {
+    // The current presentation being viewed by the program
+    private final Presentation presentation;
 
-/**
- * This class handles the displaying and transversing of slides on the main display and on the presentation slider.
- * IMPORTANT NOTES:
- * - FOR NOW THE SLIDES ARE REPRESENTED AS JPANELS RATHER THAN INSTANCES OF THE SLIDE CLASS WILL CHANGE WHEN FUNCTIONALITY IS COMPLETE.
- * - SLIDES ARE ADDED DIRECTLY TO THE APPLICATION FRAME CAN BE CHANGED LATER TO BE ADDED TO MAIN DISPLAY.
- * - ON LOAD OF THE PROGRAM THERE IS ONE SLIDE PRESENT SLIDE 1
- *
- * @author madukaag
- * */
-public class SlideManager {
-    private final LinkedList<JPanel> slides; // Where slides are stored in order
-    private final LinkedList<JButton> presentationSliderSlides; // This list represents the slides on the presentation slider
-    private int currentSlide; // The current slide on
-    private int currentSlideIndex; // The current index of the slide
-    private JPanel firstSlide; // This slide is always present on load
-    private final JPanel sliderPanel; // The panel slides will be added to (added to presentation slider)
-    private final JFrame applicationFrame; // The application window
-    public SlideManager(final JFrame frame) {
-        this.slides = new LinkedList<>();
-        this.presentationSliderSlides = new LinkedList<>();
-        this.currentSlide = 1; // The current slide being displayed
-        this.currentSlideIndex = 0; // The index of the current slide being displayed
-        this.applicationFrame = frame;
-        this.sliderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JScrollPane presentationSlider = new JScrollPane(sliderPanel); // The alternate display where all slides can be displayed, selected and scrolled through
+    // This list represents the slides on the slide view slider
+    private final LinkedList<JButton> slidesViewer = new LinkedList<>();;
 
-        addFirstSlide();
+    // Determines if a new slide added should be displayed or not
+    private boolean displayNewSlide;
 
-        /*
-         * The JPanel that contains the components that make up the presentation slider:
-         * previous slide button, next slide button, main view (the actual presentation slider) and
-         * the bottom section which will hold a bunch of buttons.
-         * */
+    // The current slide being displayed (starts from one)
+    private int currentSlide;
+
+    // The current index of the slide being displayed (starts from zero)
+    private int currentSlideIndex;
+
+    // This JPanel will be slide viewer for all the slides in the presentation
+    private final JPanel viewSliderPanel;
+
+    // The actual presentation slider
+    private final JScrollPane presentationSlider;
+
+    private JButton prevSlide, nextSlide, addNewSlide, deleteSlide, present, presentAt;
+
+    private JLabel noSlides;
+
+    // The main display panel
+    private final MainDisplayPanel mainDisplay;
+
+    /**
+     * Constructor for the SlideManager
+     * @param frame The ui frame
+     * @param mainDisplay The main display panel of the ui frame
+     */
+    public SlideManager(final JFrame frame, MainDisplayPanel mainDisplay) {
+        // Get the current presentation
+        this.presentation = mainDisplay.getCurrentPresentation();
+
+        // Default Setting - new slides added should be displayed on the main display panel
+        this.displayNewSlide = true;
+
+        // The current slide being displayed
+        this.currentSlide = 1;
+
+        // The index of the current slide being displayed
+        this.currentSlideIndex = 0;
+
+        // This contains the alternate display/viewer where all slides will be displayed and can be selected or scrolled through
+        this.viewSliderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        this.presentationSlider = new JScrollPane(this.viewSliderPanel);
+
+        // The main display panel where slides will be added viewed and edited
+        this.mainDisplay = mainDisplay;
+
+        displayFirstSlide();
+    }
+
+    /**
+     * Returns the value of the displayNewSlide variable
+     * @return Boolean
+     */
+    public Boolean getDisplayNewSlides() {
+        return this.displayNewSlide;
+    }
+
+    /**
+     * Set to true to display new slides added. Set the variable to false to not display new
+     * slides added.
+     * @param yesOrNo Either true or false
+     * */
+    public void setDisplayNewSlides(Boolean yesOrNo) {
+        this.displayNewSlide = yesOrNo;
+    }
+
+    /**
+     * The JPanel that contains the components that make up the presentation slider:
+     * previous slide button, next slide button, main view (the actual presentation slider) and
+     * the bottom section which will hold a bunch of buttons.
+     * @param uiFrame The frame that the slide manager will be added to
+     */
+    public void createPresentationSlider(JFrame uiFrame) {
         JPanel presentationSliderPanel = new JPanel(new BorderLayout());
         presentationSliderPanel.setPreferredSize(new Dimension(1000, 180));
-        presentationSliderPanel.setBackground(Color.YELLOW);
 
         /*
          * Previous slide button
          * */
-        JButton prevSlide = new JButton("<");
-        prevSlide.setPreferredSize(new Dimension(50, 160));
-        prevSlide.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                showPrevSlide();
-            }
-        });
+        this.prevSlide = new JButton("<");
+        this.prevSlide.setPreferredSize(new Dimension(50, 160));
+        this.prevSlide.addActionListener(this);
 
         /*
          * Next slide button
          * */
-        JButton nextSlide = new JButton(">");
-        nextSlide.setPreferredSize(new Dimension(50, 160));
-        nextSlide.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                showNextSlide();
-            }
-        });
+        this.nextSlide = new JButton(">");
+        this.nextSlide.setPreferredSize(new Dimension(50, 160));
+        this.nextSlide.addActionListener(this);
 
         /*
          * This is where the actual presentation slider will go
          * */
-        this.sliderPanel.setBackground(Color.lightGray);
+        this.viewSliderPanel.setBackground(Color.lightGray);
         presentationSlider.setPreferredSize(new Dimension(1000, 160));
         presentationSlider.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
@@ -97,36 +120,22 @@ public class SlideManager {
         bottomSection.setPreferredSize(new Dimension(1000, 35));
         bottomSection.setBackground(Color.lightGray);
 
-        JButton addNewSlide = new JButton("New Slide");
-        addNewSlide.addActionListener(new ActionListener() {
-            public void setDisplayNewSlides(Boolean displayNewSlides) {
-                this.displayNewSlides = displayNewSlides;
-            }
-            
-            private Boolean displayNewSlides = true; // Determines if a new slide added should be displayed or not
+        this.addNewSlide = new JButton("New Slide");
+        this.addNewSlide.addActionListener(this);
 
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-
-                addNewSlide(this.displayNewSlides);
-            }
-        });
-
-
-        JButton deleteSlide = new JButton("Delete Slide");
-        JButton present = new JButton("Present");
-        JButton presentAt = new JButton("Present From");
-        JLabel noSlides = new JLabel();
-
+        this.deleteSlide = new JButton("Delete Slide");
+        this.present = new JButton("Present");
+        this.presentAt = new JButton("Present From");
+        this.noSlides = new JLabel("Slides: ");
 
         /*
-        * Add buttons to bottom sections
-        * */
-        bottomSection.add(addNewSlide);
-        bottomSection.add(deleteSlide);
-        bottomSection.add(present);
-        bottomSection.add(presentAt);
-        bottomSection.add(noSlides);
+         * Add buttons to bottom sections
+         * */
+        bottomSection.add(this.addNewSlide);
+        bottomSection.add(this.deleteSlide);
+        bottomSection.add(this.present);
+        bottomSection.add(this.presentAt);
+        bottomSection.add(this.noSlides);
 
         /*
          * Adds each section/button onto the display
@@ -137,53 +146,50 @@ public class SlideManager {
         presentationSliderPanel.add(bottomSection, BorderLayout.SOUTH);
 
         /*
-         * Adds the presentationSlider directly onto the application frame window
+         * Adds the presentationSlider directly onto the frame window
          * */
-        frame.add(presentationSliderPanel, BorderLayout.SOUTH);
+        uiFrame.add(presentationSliderPanel, BorderLayout.SOUTH);
     }
 
-    /**
-     * Adds the first slide to the display on startup of the program
-     * */
-    private void addFirstSlide() {
-        firstSlide = new JPanel();
-        firstSlide.setBackground(Color.ORANGE);
+    /** POSSIBLE CHANGES WILL BE MADE HERE
+     * Displays the first slide in the presentation
+     */
+    private void displayFirstSlide() {
+        Slide firstSlide = presentation.getSlideAtIndex(0);
 
-        Integer firstPSSlideNo = presentationSliderSlides.size() + 1;
-        JButton firstPSSlide = createPSSlide(firstPSSlideNo);
-        presentationSliderSlides.add(firstPSSlide);
-        sliderPanel.add(firstPSSlide);
+        int firstSlideInViewerNo = this.slidesViewer.size() + 1;
+        JButton firstSlideInViewer = createSlideForViewer(firstSlideInViewerNo);
 
-        this.slides.add(firstSlide);
+        this.slidesViewer.add(firstSlideInViewer);
+        this.viewSliderPanel.add(firstSlideInViewer);
 
-        JLabel slideNo = new JLabel("Slide " + (slides.size()));
-        slideNo.setFont(new Font("Arial", Font.BOLD, 24));
-        firstSlide.add(slideNo);
+        this.mainDisplay.add(firstSlide.asComp(), BorderLayout.CENTER);
 
-        applicationFrame.add(firstSlide, BorderLayout.CENTER);
-        System.out.println("New SlideF - " + (slides.size()) + "!");
+        System.out.println("New Slide - " + (this.presentation.getSlideCount()) + "!");
     }
 
     /**
      * Displays the previous slide in the presentation slider given that there is at least one slide
+     * present.
      * */
-    private void showPrevSlide() {
-        /*
-         * Get the previous slide if there is one
-         * Remove the current slide from the display
-         * Set the previous slide to the display
-         * */
+    private void showPrevSlide()
+    {
         if(this.currentSlide > 1) {
-            JPanel currentSlide = getCurrentSlide();
+            // Get the current slide
+            Slide currentSlide = getCurrentSlide();
+
+            // Decrement values
             this.currentSlide--;
             this.currentSlideIndex--;
-            JPanel prevSlide = getPrevSlide(currentSlide);
+
+            // Get the previous slide if there is one
+            Slide prevSlide = getPrevSlide(currentSlide);
 
             if(prevSlide != null) {
-                // Display slide
-                showSlide(currentSlide, prevSlide, applicationFrame);
+                // Display the previous slide
+                displaySlide(prevSlide, this.mainDisplay);
             } else {
-                System.out.println("PROBLEM!");
+                System.out.println("PROBLEM - PREV SLIDE IS NULL!");
             }
         } else {
             System.out.println("First slide reached!");
@@ -191,24 +197,28 @@ public class SlideManager {
     }
 
     /**
-     * Displays the next slide in the presentation slider given that it has not reached the last slide
+     * Displays the next slide in the presentation slider given that the last slide has not been
+     * reached yet.
      * */
-    private void showNextSlide() {
-        /*
-         * Get the next slide if there is one
-         * Remove the current slide from the display
-         * Set the next slide to the display
-         * */
-        if(this.currentSlide < slides.size()) {
-            JPanel currentSlide = getCurrentSlide();
+    private void showNextSlide()
+    {
+        if(this.currentSlide < presentation.getSlideCount()) {
+            // Get the current slide
+            Slide currentSlide = getCurrentSlide();
+
+            // Increment values
             this.currentSlide++;
             this.currentSlideIndex++;
-            JPanel nextSlide = getNextSlide(currentSlide);
+
+            // Get the next slide
+            Slide nextSlide = getNextSlide(currentSlide);
+
             if(nextSlide != null) {
-                // Display Slide
-                showSlide(currentSlide, nextSlide, applicationFrame);
+                // Display the next slide
+                displaySlide(nextSlide, this.mainDisplay);
+                this.mainDisplay.repaint();
             } else {
-                System.out.println("PROBLEM!");
+                System.out.println("PROBLEM - NEXT SLIDE IS NULL!");
             }
         } else {
             System.out.println("Last slide reached!");
@@ -217,95 +227,100 @@ public class SlideManager {
 
     /**
      * Displays the slideToDisplay onto the display
-     * @param slideToRemove The slide to remove from the display
      * @param slideToDisplay The slide to add to the display
      * @param display The display the slide will be added and removed from
      * */
-    private void showSlide(JPanel slideToRemove, JPanel slideToDisplay, JFrame display) {
-        // Remove current slide
-        display.remove(slideToRemove);
-        // Add new slide
-        display.add(slideToDisplay, BorderLayout.CENTER);
-        // Repaint frame
+    private void displaySlide(Slide slideToDisplay, MainDisplayPanel display) {
+        // Remove currently displayed slide
+        display.removeAll();
+        // Display the new slide
+        display.add(slideToDisplay.asComp(), BorderLayout.CENTER);
+        // Update frame
         display.revalidate();
         display.repaint();
+        //display.pack();
     }
 
     /**
      * Creates a new slide and assigns it a slide number, then adds the slide onto the end of the existing slides
      * and finally display the new slide onto the screen.
      * */
-    private void addNewSlide(Boolean displayNewSlides) {
-        /*
-         * Create a new slide
-         * Create a new presentation slider slide (PS slide)
-         * Assign each with the same slide number (label for now)
-         * Add slide to main display
-         * Add PS slide to slider
-         * Display new slide on the display - OPTIONAL
-         * */
+    private void addNewSlide() {
+        // Create new slide
+        Slide newSlide = this.presentation.newSlide();
 
-        // Create new slide JPanel (FOR NOW)
-        JPanel newSlide = new JPanel();
-        newSlide.setBackground(Color.LIGHT_GRAY);
+        // Keeps track of the slide currently being displayed
+        this.currentSlide = this.presentation.getSlideCount();
+        this.currentSlideIndex = this.currentSlide - 1;
 
-        // Create a new presentation slider slide (PS slide) and assign its number
-        Integer slideNum = presentationSliderSlides.size() + 1;
-        JButton newPSSlide = createPSSlide(slideNum);
+        // -------- This code is only used to differentiate slides added
+        newSlide.asComp().setBackground(new Color((float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1));
+        // --------
 
-        // Assign the slide its slide number
-        JLabel slideNo = new JLabel("Slide " + (slides.size() + 1));
-        slideNo.setFont(new Font("Arial", Font.BOLD, 24));
-        newSlide.add(slideNo);
-
-        // Add the slide onto the end of slide linked list (slider)
-        slides.add(newSlide);
-        //System.out.println("New Slide - " + (slides.size()) + "!");
-
-        // Add PS slide to presentation slider linked list
-        this.presentationSliderSlides.add(newPSSlide);
-
-        // Add PS slide to slider
-        this.sliderPanel.add(newPSSlide);
-        this.sliderPanel.revalidate();
-
-        // The code below changes the main display to the new slide added
-        if(displayNewSlides) {
-            // There is only one slide currently being displayed - the first slide
-            if(slides.size() == 1) {
-                // Display slide
-                showSlide(firstSlide, newSlide, applicationFrame);
-                // Increment slide index to current slide added
-                this.currentSlide = slides.size();
-                this.currentSlideIndex = slides.size() - 1;
-                System.out.println("New Slide - " + (slides.size()) + "!");
-            } else if (slides.size() > 1) { // There is more than one slide present
-                // Get current slide
-                JPanel currentSlide = getCurrentSlide();
-                // Check if slide exists
-                if(currentSlide != null) {
-                    // Display
-                    showSlide(currentSlide, newSlide, applicationFrame);
-                    // Increment slide index to current slide added
-                    this.currentSlide = slides.size();
-                    this.currentSlideIndex = slides.size() - 1;
-                    System.out.println("New Slide - " + (slides.size()) + "!");
-                } else {
-                    System.out.println("PROBLEM IN ADD_SLIDE");
-                }
-            }
+        // The code below will display the new slide added to the main display panel if displayNewSlide equals true
+        if(this.displayNewSlide) {
+            // Display new slide
+            displaySlide(newSlide, this.mainDisplay);
         }
+
+        // Add slide to presentation slider
+        addSlideToViewer();
+
+        System.out.println("New Slide - " + (this.presentation.getSlideCount()) + "!");
+    }
+
+    /** POSSIBLE CHANGES WILL BE MADE HERE
+     * Creates a slide for the slides viewer
+     * @param slideNo The slide number to assign it to
+     * @return JButton
+     * */
+    private JButton createSlideForViewer(int slideNo) {
+        JButton slide = new JButton("Slide " + slideNo);
+
+        slide.setPreferredSize(new Dimension(200, 115));
+        slide.setBackground(Color.white);
+        slide.setFocusable(false);
+        //slide.setIcon(new ImageIcon());
+
+        slide.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                displaySelectedSlide(slideNo);
+                //System.out.println("Slide " + slideNo + " Clicked!");
+            }
+        });
+
+        return slide;
+
+    }
+
+    /**
+     * Adds new slides ot the slide viewer
+     */
+    private void addSlideToViewer() {
+        int slideNum = this.slidesViewer.size() + 1;
+
+        JButton newPSSlide = createSlideForViewer(slideNum);
+
+        this.slidesViewer.add(newPSSlide);
+
+        this.viewSliderPanel.add(newPSSlide);
+
+        this.viewSliderPanel.revalidate();
     }
 
     /**
      * Returns the slide before the selected slide if there is none it returns null.
      * @param slide The current slide
+     * @return The previous slide
      * */
-    private JPanel getPrevSlide(JPanel slide) {
-        int indexOfSelectedSlide = slides.indexOf(slide);
+    private Slide getPrevSlide(Slide slide) {
+        int indexOfSelectedSlide = this.presentation.getSlides().indexOf(slide);
         int indexOfPrevSlide = indexOfSelectedSlide - 1;
+        //System.out.println("Selected slide: " + indexOfSelectedSlide + " Previous slide before selected slide: " + indexOfPrevSlide);
+
         if(indexOfPrevSlide >= 0) {
-            return slides.get(indexOfPrevSlide);
+            return this.presentation.getSlideAtIndex(indexOfPrevSlide);
         } else {
             return null;
         }
@@ -315,12 +330,13 @@ public class SlideManager {
      * Returns the slide after the selected slide if there is none it returns null.
      * @param slide The current slide
      * */
-    private JPanel getNextSlide(JPanel slide) {
-        int indexOfSelectedSlide = slides.indexOf(slide);
+    private Slide getNextSlide(Slide slide) {
+        int indexOfSelectedSlide = this.presentation.getSlides().indexOf(slide);
         int indexOfNextSlide = indexOfSelectedSlide + 1;
+        //System.out.println("Selected slide: " + indexOfSelectedSlide + " Next slide after selected slide: " + indexOfNextSlide);
 
-        if(indexOfNextSlide <= slides.size()) {
-            return slides.get(indexOfNextSlide);
+        if(indexOfNextSlide <= this.presentation.getSlideCount()) {
+            return this.presentation.getSlideAtIndex(indexOfNextSlide);
         } else {
             return null;
         }
@@ -328,88 +344,87 @@ public class SlideManager {
 
     /**
      * Returns the current slide being displayed
+     * @return Slide
      * */
-    private JPanel getCurrentSlide() {
-        if(this.currentSlide >= 1 && this.currentSlide <= this.slides.size()) {
-            return slides.get(this.currentSlideIndex);
+    private Slide getCurrentSlide() {
+        if(this.currentSlide >= 1 && this.currentSlide <= this.presentation.getSlideCount()) {
+            return this.presentation.getSlideAtIndex(this.currentSlideIndex);
         } else {
             return null;
         }
     }
 
     /**
-     * Creates a PS slide
-     * @param slideNo The slide number to assign it to
-     * @return JButton (PS Slide)
-     * */
-    private JButton createPSSlide(Integer slideNo) {
-        JButton newPSSlide = new JButton("Slide " + slideNo);
-
-        newPSSlide.setPreferredSize(new Dimension(200, 120));
-        newPSSlide.setBackground(Color.white);
-        newPSSlide.setFocusable(false);
-
-        newPSSlide.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                highlightSelectedSlide(newPSSlide);
-                displaySelectedSlide(slideNo);
-            }
-        });
-
-        return newPSSlide;
-    }
-
-    /**
      * Add a slide after the selected slide
      * @param selectedSlide The selected slide
      * */
-    private void addSlideAfter(JPanel selectedSlide) {}
+    private void addSlideAfter(Slide selectedSlide) {}
 
     /**
      * Add a slide before the selected slide
      * @param selectedSlide The selected slide
      * */
-    private void addSlideBefore(JPanel selectedSlide) {}
+    private void addSlideBefore(Slide selectedSlide) {}
 
     /**
      * Gets the selected slide
-     * @param slideNo The slide number
+     * @param slideIndex The index of the selected slide
      * @return JPanel
      * */
-    private JPanel getSelectedSlide(Integer slideNo) {
-        return slides.get(slideNo - 1);
+    private Slide getSelectedSlide(int slideIndex) {
+        return this.presentation.getSlideAtIndex(slideIndex);
     }
 
     /**
-     * Highlights the slide (PS Slide)
-     * @param PSSlide The PS Slide that was selected
+     * Highlights a selected slide in the slide viewer
+     * @param JButton Slide
      * */
-    private void highlightSelectedSlide(JButton PSSlide) {
+    /*private void highlightSelectedSlide(JButton Slide) {
         /*
-        * Get selected slide
-        * Highlight ONLY that selected slide
-        * use boolean isSelected for slides
-        * onClick of slide set isSelected true and every other slide false
-        * from slides array filter out clicked slide and set isSelected slide to true
-        * other slides set false
-        * apply action to the isSelected slide like display, highlight slide
-        * */
+         * Get selected slide
+         * Highlight ONLY that selected slide
+         * use boolean isSelected for slides
+         * onClick of slide set isSelected true and every other slide false
+         * from slides array filter out clicked slide and set isSelected slide to true
+         * other slides set false
+         * apply action to the isSelected slide like display, highlight slide
+         *
         PSSlide.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
-    }
+    }*/
 
     /**
      * Displays the selected slide to the main display
+     * @param slideNo The slide number (position) of the selected slide
      * */
     private void displaySelectedSlide(int slideNo) {
-        JPanel currentSlide = getCurrentSlide();
-        JPanel selectedSlide = getSelectedSlide(slideNo);
+        Slide currentSlide = getCurrentSlide();
+        Slide selectedSlide = getSelectedSlide(slideNo - 1);
+
         this.currentSlide = slideNo;
         this.currentSlideIndex = slideNo - 1;
-        // Display slide
-        showSlide(currentSlide, selectedSlide, applicationFrame);
+
+        // Display selected slide
+        displaySlide(selectedSlide, this.mainDisplay);
     }
 
+    /*private ImageIcon bufferImageToImageIcon(BufferedImage imageToConvert) {
+        return new ImageIcon(imageToConvert);
+    }*/
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == this.prevSlide) { // Previous Slide Button
+            showPrevSlide();
+        } else if (e.getSource() == this.nextSlide) { // Next slide Button
+            showNextSlide();
+        } else if (e.getSource() == this.addNewSlide) { // Add New Slide
+            addNewSlide();
+        } else if (e.getSource() == this.deleteSlide) { // Delete (a selected) Slide
+            System.out.println("Do Something!");
+        } else if (e.getSource() == this.present) { // Start Presentation mode at the beginning
+            System.out.println("Do Something Else!");
+        } else if (e.getSource() == this.presentAt) { // Start Presentation mode at the selected slide
+            System.out.println("Do Something Better!");
+        }
+    }
 }
