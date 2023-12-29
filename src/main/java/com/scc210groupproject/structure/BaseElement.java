@@ -1,10 +1,14 @@
 package com.scc210groupproject.structure;
 
 import java.awt.Component;
+import java.awt.Container;
+import java.awt.Point;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.swing.SwingUtilities;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
@@ -14,6 +18,7 @@ import com.scc210groupproject.structure.liveness.IDestroyProvider;
 import com.scc210groupproject.structure.liveness.IUpdateListener;
 import com.scc210groupproject.structure.liveness.IUpdateProvider;
 import com.scc210groupproject.structure.liveness.UpdateManager;
+import com.fasterxml.jackson.databind.JsonSerializable.Base;
 import com.scc210groupproject.readwrite.IJsonSerializable;
 
 /**
@@ -61,8 +66,22 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
 
     public abstract Component asComp();
 
-    protected abstract void processNewElement(BaseElement element);
-    protected abstract void prepareRemoveElement(BaseElement element);
+    protected void processNewElement(BaseElement element) {
+        Component comp = asComp();
+        if (comp instanceof Container) {
+            Container cont = (Container)comp;
+            cont.add(element.asComp());
+        }
+        comp.revalidate();
+    }
+    protected void prepareRemoveElement(BaseElement element) {
+        Component comp = asComp();
+        if (comp instanceof Container) {
+            Container cont = (Container)comp;
+            cont.remove(element.asComp());
+        }
+        comp.revalidate();
+    }
     public final void add(BaseElement child)
     {
         children.add(child);
@@ -126,5 +145,61 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
             destroy();
         else if (children.contains(object))
             remove((BaseElement)object);
+    }
+
+    // similar to javax.swing.SwingUtilities:isDescendingFrom
+    // return immediate decendent pointing to self
+    private Component checkParent(Component self, Component target) {
+        if (self == null)
+            return null;
+
+        Component parent = self.getParent();
+
+        if (parent == target)
+            return self;
+
+        return checkParent(parent, target);
+    }
+
+    // mirror java.awt.Container:findComponentAt
+    public BaseElement findElmentAt(Point point) {
+        Component current = asComp();
+
+        if (!current.contains(point.x, point.y))
+            return null;
+
+        if (current instanceof Container) {
+
+            Container container = (Container)current;
+
+            BaseElement result = null;
+            int lowest = Integer.MAX_VALUE;
+
+            for (BaseElement element : children) {
+
+                Component inner = element.asComp();
+
+                Component immediate = checkParent(inner, container);
+                if (immediate == null) {
+                    continue;
+                }
+
+                int zValue = container.getComponentZOrder(immediate);
+                if (zValue > lowest)
+                    continue;
+
+                BaseElement contender = element.findElmentAt(
+                    SwingUtilities.convertPoint(container, point, inner));
+                if (contender != null) {
+                    result = contender;
+                    lowest = zValue;
+                }
+            }
+
+            if (result != null)
+                return result;
+        }
+
+        return this;
     }
 }

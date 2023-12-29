@@ -10,7 +10,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Graphics2D;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -34,6 +33,7 @@ public class Slide extends BaseElement
 
     private Slide() {
         panel = new JPanel();
+        panel.setEnabled(true);
         panel.setLayout(null);
     }
 
@@ -83,36 +83,6 @@ public class Slide extends BaseElement
     }
 
     public static Slide createEmpty() { return new Slide(); }
-
-    @Override
-    protected void processNewElement(BaseElement element) {
-        panel.add(element.asComp());
-
-        Container container = panel.getParent();
-        if (container != null) {
-            container.revalidate();
-            container.repaint();
-        }
-        else {
-            panel.revalidate();
-            panel.repaint();
-        }
-    }
-
-    @Override
-    protected void prepareRemoveElement(BaseElement element) {
-        panel.remove(element.asComp());
-
-        Container container = panel.getParent();
-        if (container != null) {
-            container.revalidate();
-            container.repaint();
-        }
-        else {
-            panel.revalidate();
-            panel.repaint();
-        }
-    }
 
     /**
      * Create an image of the Slide

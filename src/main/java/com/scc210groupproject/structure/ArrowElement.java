@@ -197,18 +197,6 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
     }
 
     @Override
-    protected void processNewElement(BaseElement element) {
-        panel.add(element.asComp());
-        panel.validate();
-    }
-
-    @Override
-    protected void prepareRemoveElement(BaseElement element) {
-        panel.remove(element.asComp());
-        panel.validate();
-    }
-
-    @Override
     public void onAnchorMoved(AnchorReference anchor) {
         if (anchor == anchorA)
             panel.pointA = anchor.getCoordInSlide();
@@ -227,25 +215,30 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
     }
 
     public static class ArrowPanel extends JPanel {
-        private transient Polygon triangle;
-        private transient AffineTransform transform;
+        private Polygon triangle;
+        private Polygon box;
+        private AffineTransform transform;
 
-        protected transient Point pointA = new Point();
-        protected transient Point pointB = new Point();
+        private Shape triangleA = null;
+        private Shape triangleB = null;
+        private Shape boxLine = null;
 
-        protected transient boolean arrowOnA = true;
-        protected transient double arrowWidthA = 10.0;
-        protected transient double arrowLengthA = 10.0;
+        protected Point pointA = new Point();
+        protected Point pointB = new Point();
 
-        protected transient boolean arrowOnB = true;
-        protected transient double arrowWidthB = 10.0;
-        protected transient double arrowLengthB = 10.0;
+        protected boolean arrowOnA = true;
+        protected double arrowWidthA = 10.0;
+        protected double arrowLengthA = 10.0;
 
-        protected transient boolean lineSolid = false;
-        protected transient float lineDashLength = 10.0f;
-        protected transient float lineWidth = 5f;
+        protected boolean arrowOnB = true;
+        protected double arrowWidthB = 10.0;
+        protected double arrowLengthB = 10.0;
 
-        protected transient Color color = Color.BLACK;
+        protected boolean lineSolid = false;
+        protected float lineDashLength = 10.0f;
+        protected float lineWidth = 5f;
+
+        protected Color color = Color.BLACK;
 
         private ArrowPanel() {
             super();
@@ -254,6 +247,12 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
             triangle.addPoint(0, 1);
             triangle.addPoint(-1, 0);
             triangle.addPoint(1, 0);
+
+            box = new Polygon();
+            box.addPoint(-1, 0);
+            box.addPoint(1, 0);
+            box.addPoint(1, 1);
+            box.addPoint(-1, 1);
 
             transform = new AffineTransform();
 
@@ -281,6 +280,29 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
         }
 
         @Override
+        public boolean contains(int x, int y) {
+            if (triangleA != null && triangleA.contains(x, y))
+                return true;
+
+            if (triangleB != null && triangleB.contains(x, y))
+                return true;
+
+            if (boxLine != null && boxLine.contains(x, y))
+                return true;
+
+            return false;
+        }
+
+        private Shape getTransformed(Shape original, double tx, double ty, double r, double sx, double sy) {
+            transform.setToScale(sx, sy);
+            Shape scaled = transform.createTransformedShape(original);
+            transform.setToRotation(r);
+            Shape rotated = transform.createTransformedShape(scaled);
+            transform.setToTranslation(tx, ty);
+            return transform.createTransformedShape(rotated);
+        }
+
+        @Override
         public void paintComponent(Graphics g)
         {
             super.paintComponent(g);
@@ -302,19 +324,27 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
             double xNormal = xOffset / length;
             double yNormal = yOffset / length;
 
-            double xA = arrowOnA ?
-                xLocalA + xNormal * arrowLengthA :
-                xLocalA;
-            double yA = arrowOnA ?
-                yLocalA + yNormal * arrowLengthA :
-                yLocalA;
+            double xA, yA;
+            if (arrowOnA) {
+                xA = xLocalA + xNormal * arrowLengthA;
+                yA = yLocalA + yNormal * arrowLengthA;
+                length -= arrowLengthA;
+            }
+            else {
+                xA = xLocalA;
+                yA = yLocalA;
+            }
 
-            double xB = arrowOnB ?
-                xLocalB - xNormal * arrowLengthB :
-                xLocalB;
-            double yB = arrowOnB ?
-                yLocalB - yNormal * arrowLengthB :
-                yLocalB;
+            double xB, yB;
+            if (arrowOnB) {
+                xB = xLocalB - xNormal * arrowLengthB;
+                yB = yLocalB - yNormal * arrowLengthB;
+                length -= arrowLengthB;
+            }
+            else {
+                xB = xLocalB;
+                yB = yLocalB;
+            }
 
             Graphics2D g2d = (Graphics2D)g.create();
 
@@ -322,33 +352,29 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
 
             if (arrowOnA)
             {
-                transform.setToScale(arrowWidthA / 2.0, arrowLengthA);
-                Shape scaled = transform.createTransformedShape(triangle);
-                transform.setToRotation(radian + Math.PI);
-                Shape rotated = transform.createTransformedShape(scaled);
-                transform.setToTranslation(xA, yA);
-                Shape arrow = transform.createTransformedShape(rotated);
+                triangleA = getTransformed(triangle, xA, yA, radian + Math.PI, arrowWidthA / 2.0, arrowLengthA);
 
-                g2d.fill(arrow);
+                g2d.fill(triangleA);
             }
+            else
+                triangleA = null;
 
             if (arrowOnB)
             {
-                transform.setToScale(arrowWidthB / 2.0, arrowLengthB);
-                Shape scaled = transform.createTransformedShape(triangle);
-                transform.setToRotation(radian);
-                Shape rotated = transform.createTransformedShape(scaled);
-                transform.setToTranslation(xB, yB);
-                Shape arrow = transform.createTransformedShape(rotated);
+                triangleB = getTransformed(triangle, xB, yB, radian, arrowWidthB / 2.0, arrowLengthB);
 
-                g2d.fill(arrow);
+                g2d.fill(triangleB);
             }
+            else
+                triangleB = null;
 
             {
                 BasicStroke stroke = lineSolid ?
                     new BasicStroke((float)lineWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0) :
                     new BasicStroke((float)lineWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{ lineDashLength }, 0);
                 Line2D line = new Line2D.Double(xA, yA, xB, yB);
+
+                boxLine = getTransformed(box, xA, yA, radian, lineWidth / 2.0, length);
 
                 g2d.setStroke(stroke);
                 g2d.draw(line);
