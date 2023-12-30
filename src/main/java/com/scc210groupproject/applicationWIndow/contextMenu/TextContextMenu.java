@@ -25,6 +25,7 @@ public class TextContextMenu extends ContextMenu {
             "Add Text",
             GeneralButtons.resizeIcon(GeneralButtons.ADD_TEXT.getIcon(), 20, 20)
         );
+
         this.deleteText = makeMenuItem("Delete Text", null);
         this.alignText = makeMenuItem("Align Text", null);
         this.rotateText = makeMenuItem("Rotate", null);

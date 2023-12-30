@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public abstract class ContextMenu extends JPopupMenu {
-    // The font for all menu items
+    // The default font for all menu items
     private final Font menuItemFont = new Font("Arial", Font.BOLD, 12);
 
     // The insets for all menu items
