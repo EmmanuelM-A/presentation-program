@@ -3,6 +3,7 @@ package com.scc210groupproject.applicationWIndow.menuBarTabs.toolBars;
 import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * This class extends JToolBar and contains all the buttons that will be displayed on the
@@ -11,65 +12,78 @@ import javax.swing.*;
  * @author madukaag
  * */
 public class FileToolBar extends JToolBar {
-    private JButton newFile, openFile, saveFile, saveAs, export, print, help;
+    private JButton newFile, openFile, saveFile, saveAs, export, format, print, help;
+
+    private JSeparator separator1, separator2, separator3;
 
     public FileToolBar() {
         this.setRollover(true);
+        //this.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        newFile = new JButton(GeneralButtons.NEW.getIcon());
-        newFile.setText(GeneralButtons.NEW.getTitle());
-        newFile.setFocusable(false);
-        newFile.setHorizontalTextPosition(SwingConstants.CENTER);
-        newFile.setVerticalTextPosition(SwingConstants.BOTTOM);
+        separator1 = makeToolbarSeparator(Color.BLACK);
+        separator2 = makeToolbarSeparator(Color.BLACK);
+        separator3 = makeToolbarSeparator(Color.BLACK);
 
-        openFile = new JButton(GeneralButtons.OPEN.getIcon());
-        openFile.setText(GeneralButtons.OPEN.getTitle());
-        openFile.setFocusable(false);
-        openFile.setHorizontalTextPosition(SwingConstants.CENTER);
-        openFile.setVerticalTextPosition(SwingConstants.BOTTOM);
+        newFile = makeToolbarButton(GeneralButtons.NEW.getTitle(), GeneralButtons.NEW.getIcon());
 
-        saveFile = new JButton(GeneralButtons.SAVE.getIcon());
-        saveFile.setText(GeneralButtons.SAVE.getTitle());
-        saveFile.setFocusable(false);
-        saveFile.setHorizontalTextPosition(SwingConstants.CENTER);
-        saveFile.setVerticalTextPosition(SwingConstants.BOTTOM);
+        openFile = makeToolbarButton(GeneralButtons.OPEN.getTitle(), GeneralButtons.OPEN.getIcon());
 
-        saveAs = new JButton(GeneralButtons.SAVE_AS.getIcon());
-        saveAs.setText(GeneralButtons.SAVE_AS.getTitle());
-        saveAs.setFocusable(false);
-        saveAs.setHorizontalTextPosition(SwingConstants.CENTER);
-        saveAs.setVerticalTextPosition(SwingConstants.BOTTOM);
+        saveFile = makeToolbarButton(GeneralButtons.SAVE.getTitle(), GeneralButtons.SAVE.getIcon());
 
-        export = new JButton(GeneralButtons.EXPORT.getIcon());
-        export.setText(GeneralButtons.EXPORT.getTitle());
-        export.setFocusable(false);
-        export.setHorizontalTextPosition(SwingConstants.CENTER);
-        export.setVerticalTextPosition(SwingConstants.BOTTOM);
+        saveAs = makeToolbarButton(GeneralButtons.SAVE_AS.getTitle(), GeneralButtons.SAVE_AS.getIcon());
 
-        print = new JButton(GeneralButtons.PRINT.getIcon());
-        print.setText(GeneralButtons.PRINT.getTitle());
-        print.setFocusable(false);
-        print.setHorizontalTextPosition(SwingConstants.CENTER);
-        print.setVerticalTextPosition(SwingConstants.BOTTOM);
+        export = makeToolbarButton(GeneralButtons.EXPORT.getTitle(), GeneralButtons.EXPORT.getIcon());
 
-        help = new JButton(GeneralButtons.HELP.getIcon());
-        help.setText(GeneralButtons.HELP.getTitle());
-        help.setFocusable(false);
-        help.setHorizontalTextPosition(SwingConstants.CENTER);
-        help.setVerticalTextPosition(SwingConstants.BOTTOM);
+        format = makeToolbarButton(GeneralButtons.FORMAT.getTitle(), GeneralButtons.FORMAT.getIcon());
+
+        print = makeToolbarButton(GeneralButtons.PRINT.getTitle(), GeneralButtons.PRINT.getIcon());
+
+        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon());
 
         this.add(newFile);
         this.add(openFile);
         this.add(saveFile);
         this.add(saveAs);
-        this.addSeparator();
+        this.add(this.separator1);
 
+        this.add(export);
+        this.add(format);
         this.add(print);
-        this.addSeparator();
+        this.add(this.separator2);
 
         this.add(help);
 
         this.setName("File");
         this.setFloatable(false);
+    }
+
+    /**
+     * Creates and returns a toolbar button with its title and icon set
+     * @param title The name/title of the button
+     * @param icon The button's icon
+     * @return JButton
+     */
+    public JButton makeToolbarButton(String title, ImageIcon icon) {
+        JButton button = new JButton(icon);
+        button.setText(title);
+
+        // For button focus frame colour use Look & Feel to change its focus colour
+        button.setSize(32, 32);
+        button.setFocusable(false);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
+        button.setOpaque(false);
+        button.setBorderPainted(false);
+
+        return button;
+    }
+
+    public JSeparator makeToolbarSeparator(Color colour) {
+        JSeparator separator = new JSeparator();
+        separator.setOrientation(SwingConstants.VERTICAL);
+        separator.setBackground(colour);
+        //separator.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
+
+        return separator;
     }
 }
