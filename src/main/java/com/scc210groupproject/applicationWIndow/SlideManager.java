@@ -105,10 +105,10 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     /**
      * The JPanel that contains the components that make up the presentation slider:
      * previous slide button, next slide button, main view (the actual presentation slider) and
-     * the bottom section which will hold a bunch of buttons.
-     * @param uiFrame The frame that the slide manager will be added to
+     * the bottom section which will hold the buttons.
+     * @return The presentation slider panel
      */
-    public void createPresentationSlider(JFrame uiFrame) {
+    public JPanel createPresentationSlider() {
         JPanel presentationSliderPanel = new JPanel(new BorderLayout());
         presentationSliderPanel.setPreferredSize(new Dimension(1000, 180));
 
@@ -166,10 +166,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         presentationSliderPanel.add(presentationSlider, BorderLayout.CENTER);
         presentationSliderPanel.add(bottomSection, BorderLayout.SOUTH);
 
-        /*
-         * Adds the presentationSlider directly onto the frame window
-         * */
-        uiFrame.add(presentationSliderPanel, BorderLayout.SOUTH);
+        return presentationSliderPanel;
     }
 
     /** POSSIBLE CHANGES WILL BE MADE HERE
@@ -312,11 +309,11 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     private void addSlideToViewer() {
         int slideNum = this.slidesViewer.size() + 1;
 
-        JButton newPSSlide = createSlideForViewer(slideNum);
+        JButton slide = createSlideForViewer(slideNum);
 
-        this.slidesViewer.add(newPSSlide);
+        this.slidesViewer.add(slide);
 
-        this.viewSliderPanel.add(newPSSlide);
+        this.viewSliderPanel.add(slide);
 
         this.viewSliderPanel.revalidate();
     }

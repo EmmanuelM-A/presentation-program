@@ -51,7 +51,7 @@ public class ApplicationWindow extends JFrame {
         this.add(menuBarTabs, BorderLayout.NORTH);
         this.add(contextMenuPanel, BorderLayout.WEST);
         this.add(mainDisplayPanel, BorderLayout.CENTER);
-        SlideManager.slideManager.createPresentationSlider(this);
+        SlideManager.slideManager.createPresentationSlider();
         
         this.setVisible(true);
 

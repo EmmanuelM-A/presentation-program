@@ -1,5 +1,8 @@
 package com.scc210groupproject.applicationWIndow;
 
+import com.scc210groupproject.applicationWIndow.contextMenu.ContextMenuPanel;
+import com.scc210groupproject.applicationWIndow.menuBarTabs.MenuBarTabs;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -13,7 +16,14 @@ import java.util.ArrayList;
 public class Tests extends JFrame {
     JPanel sectionOne, sectionTwo, sectionThree, sectionFour;
 
-    GridBagConstraints c = new GridBagConstraints();
+    GridBagConstraints gbc = new GridBagConstraints();
+
+    int gap = 6;
+
+    private MenuBarTabs menuBarTabs;
+    private ContextMenuPanel contextMenuPanel;
+    private MainDisplayPanel mainDisplayPanel;
+    private SlideManager slideManager;
 
     public Tests() {
         this.setTitle("Testing Testing");
@@ -23,58 +33,57 @@ public class Tests extends JFrame {
         this.setResizable(true);
         this.setLayout(new GridBagLayout());
 
-        sectionOne = new JPanel();
+        this.contextMenuPanel = new ContextMenuPanel(300, 100, Color.WHITE);
+
+        this.menuBarTabs = new MenuBarTabs(this, this.contextMenuPanel, 100, 100, Color.WHITE);
+
+        this.mainDisplayPanel = new MainDisplayPanel(100, 100, Color.WHITE);
+
+        this.slideManager = new SlideManager(this, this.mainDisplayPanel);
+
+        /*sectionOne = new JPanel();
         sectionOne.setBackground(Color.YELLOW);
-        sectionOne.setPreferredSize(new Dimension(1000, 100));
 
         sectionTwo = new JPanel();
         sectionTwo.setBackground(Color.GREEN);
-        sectionTwo.setPreferredSize(new Dimension(100, 700));
 
         sectionThree = new JPanel();
-        sectionThree.setBackground(Color.BLUE);
-        sectionThree.setPreferredSize(new Dimension(900, 700));
+        sectionThree.setBackground(Color.BLUE);*/
 
         sectionFour = new JPanel();
         sectionFour.setBackground(Color.RED);
-        sectionFour.setPreferredSize(new Dimension(1000, 100));
 
-        /*c.anchor = GridBagConstraints.PAGE_START;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.gridwidth = 2;
-        c.gridheight = 1;*/
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0.02;
+        gbc.insets = new Insets(0, 0, gap, 0);
+        this.add(menuBarTabs, gbc);
 
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 0;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.weightx = 0.05;
+        gbc.weighty = 0.94;
+        gbc.insets = new Insets(gap, 0, gap, gap);
+        this.add(contextMenuPanel, gbc);
 
-        this.add(sectionOne, c);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 0.95;
+        gbc.insets = new Insets(gap, gap, gap, 0);
+        this.add(mainDisplayPanel, gbc);
 
-        c.anchor = GridBagConstraints.LINE_START;
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 0;
-        c.gridy = 1;
-        c.weightx = 0.3;
-        c.weighty = 1.0;
-        this.add(sectionTwo, c);
-
-        c.anchor = GridBagConstraints.CENTER;
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 1;
-        c.gridy = 1;
-        c.weightx = 0.7;
-        c.weighty = 1.0;
-        this.add(sectionThree, c);
-
-        c.anchor = GridBagConstraints.PAGE_END;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 2;
-        c.gridwidth = 2;
-        c.gridheight = 1;
-        this.add(sectionFour, c);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weighty = 0.04;
+        gbc.insets = new Insets(gap, 0, 0, 0);
+        this.add(slideManager.createPresentationSlider(), gbc);
 
         setVisible(true);
     }
