@@ -8,12 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * This class extends JToolBar and contains all the buttons that will be displayed on the
+ * This class extends ToolBar and contains all the buttons and components that will be displayed on the
  * InsertToolBar
  *
  * @author madukaag
  * */
-public class InsertToolBar extends JToolBar implements ActionListener {
+public class InsertToolBar extends ToolBar implements ActionListener {
     private JButton addText, addImage, addVideo, newSlide, addDiagram, addShape, addAudio, help;
 
     private JFrame uiFrame;
@@ -24,58 +24,25 @@ public class InsertToolBar extends JToolBar implements ActionListener {
         this.uiFrame = frame;
         this.setRollover(true);
 
-        addText = new JButton(GeneralButtons.ADD_TEXT.getIcon());
-        addText.setText(GeneralButtons.ADD_TEXT.getTitle());
-        addText.setFocusable(false);
-        addText.setHorizontalTextPosition(SwingConstants.CENTER);
-        addText.setVerticalTextPosition(SwingConstants.BOTTOM);
-        addText.addActionListener(this);
+        addText = makeToolbarButton(GeneralButtons.ADD_TEXT.getTitle(), GeneralButtons.ADD_TEXT.getIcon());
 
-        addImage = new JButton(GeneralButtons.ADD_IMAGE.getIcon());
-        addImage.setText(GeneralButtons.ADD_IMAGE.getTitle());
-        addImage.setFocusable(false);
-        addImage.setHorizontalTextPosition(SwingConstants.CENTER);
-        addImage.setVerticalTextPosition(SwingConstants.BOTTOM);
-        addImage.addActionListener(this);
+        addImage = makeToolbarButton(GeneralButtons.ADD_IMAGE.getTitle(), GeneralButtons.ADD_IMAGE.getIcon());
 
-        addVideo = new JButton(GeneralButtons.ADD_VIDEO.getIcon());
-        addVideo.setText(GeneralButtons.ADD_VIDEO.getTitle());
-        addVideo.setFocusable(false);
-        addVideo.setHorizontalTextPosition(SwingConstants.CENTER);
-        addVideo.setVerticalTextPosition(SwingConstants.BOTTOM);
+        addVideo = makeToolbarButton(GeneralButtons.ADD_VIDEO.getTitle(), GeneralButtons.ADD_VIDEO.getIcon());
 
-        newSlide = new JButton(GeneralButtons.NEW_SLIDE.getIcon());
-        newSlide.setText(GeneralButtons.NEW_SLIDE.getTitle());
-        newSlide.setFocusable(false);
-        newSlide.setHorizontalTextPosition(SwingConstants.CENTER);
-        newSlide.setVerticalTextPosition(SwingConstants.BOTTOM);
+        newSlide = makeToolbarButton(GeneralButtons.NEW_SLIDE.getTitle(), GeneralButtons.NEW_SLIDE.getIcon());
 
-        addDiagram = new JButton(GeneralButtons.ADD_DIAG.getIcon());
-        addDiagram.setText(GeneralButtons.ADD_DIAG.getTitle());
-        addDiagram.setFocusable(false);
-        addDiagram.setHorizontalTextPosition(SwingConstants.CENTER);
-        addDiagram.setVerticalTextPosition(SwingConstants.BOTTOM);
+        addDiagram = makeToolbarButton(GeneralButtons.ADD_DIAG.getTitle(), GeneralButtons.ADD_DIAG.getIcon());
 
-        addShape = new JButton(GeneralButtons.SHAPES.getIcon());
-        addShape.setText(GeneralButtons.SHAPES.getTitle());
-        addShape.setFocusable(false);
-        addShape.setHorizontalTextPosition(SwingConstants.CENTER);
-        addShape.setVerticalTextPosition(SwingConstants.BOTTOM);
+        addShape = makeToolbarButton(GeneralButtons.SHAPES.getTitle(), GeneralButtons.SHAPES.getIcon());
 
-        addAudio = new JButton(GeneralButtons.ADD_AUDIO.getIcon());
-        addAudio.setText(GeneralButtons.ADD_AUDIO.getTitle());
-        addAudio.setFocusable(false);
-        addAudio.setHorizontalTextPosition(SwingConstants.CENTER);
-        addAudio.setVerticalTextPosition(SwingConstants.BOTTOM);
+        addAudio = makeToolbarButton(GeneralButtons.ADD_AUDIO.getTitle(), GeneralButtons.ADD_AUDIO.getIcon());
 
-        help = new JButton(GeneralButtons.HELP.getIcon());
-        help.setText(GeneralButtons.HELP.getTitle());
-        help.setFocusable(false);
-        help.setHorizontalTextPosition(SwingConstants.CENTER);
-        help.setVerticalTextPosition(SwingConstants.BOTTOM);
+        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon());
 
         this.add(newSlide);
-        this.addSeparator();
+
+        separator(this);
 
         this.add(addText);
         this.add(addImage);
@@ -83,7 +50,8 @@ public class InsertToolBar extends JToolBar implements ActionListener {
         this.add(addDiagram);
         this.add(addAudio);
         this.add(addShape);
-        this.addSeparator();
+
+        separator(this);
 
         this.add(help);
 

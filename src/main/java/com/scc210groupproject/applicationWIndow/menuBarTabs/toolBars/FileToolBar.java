@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * This class extends ToolBar and contains all the buttons that will be displayed on the
+ * This class extends ToolBar and contains all the buttons and components that will be displayed on the
  * FileToolBar
  *
  * @author madukaag

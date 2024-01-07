@@ -3,56 +3,53 @@ package com.scc210groupproject.applicationWIndow.menuBarTabs.toolBars;
 import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
- * This class extends JToolBar and contains all the buttons that will be displayed on the
+ * This class extends ToolBar and contains all the buttons and components that will be displayed on the
  * ViewToolBar
  *
  * @author madukaag
  * */
-public class ViewToolBar extends JToolBar {
+public class ViewToolBar extends ToolBar {
     private JButton present, presentAt, help;
     //private JTextField presentAt;
     private JScrollPane animations, transistions;
 
+    private JPanel animationsPanel = new JPanel();
+    private JPanel transistionsPanel = new JPanel();
+
     public ViewToolBar() {
         this.setRollover(true);
 
-        present = new JButton(GeneralButtons.PRESENT.getIcon());
-        present.setText(GeneralButtons.PRESENT.getTitle());
-        present.setFocusable(false);
-        present.setHorizontalTextPosition(SwingConstants.CENTER);
-        present.setVerticalTextPosition(SwingConstants.BOTTOM);
+        present = makeToolbarButton(GeneralButtons.PRESENT.getTitle(), GeneralButtons.PRESENT.getIcon());
 
-        presentAt = new JButton(GeneralButtons.PRESENT_AT.getIcon());
-        presentAt.setText(GeneralButtons.PRESENT_AT.getTitle());
-        presentAt.setFocusable(false);
-        presentAt.setHorizontalTextPosition(SwingConstants.CENTER);
-        presentAt.setVerticalTextPosition(SwingConstants.BOTTOM);
+        presentAt = makeToolbarButton(GeneralButtons.PRESENT_AT.getTitle(), GeneralButtons.PRESENT_AT.getIcon());
 
-        animations = new JScrollPane();
+        animationsPanel.setBackground(Color.BLUE);
+        animations = new JScrollPane(animationsPanel);
         animations.setSize(50, 100);
         animations.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        transistions = new JScrollPane();
+        transistionsPanel.setBackground(Color.ORANGE);
+        transistions = new JScrollPane(transistionsPanel);
         transistions.setSize(50, 100);
         transistions.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        help = new JButton(GeneralButtons.HELP.getIcon());
-        help.setText(GeneralButtons.HELP.getTitle());
-        help.setFocusable(false);
-        help.setHorizontalTextPosition(SwingConstants.CENTER);
-        help.setVerticalTextPosition(SwingConstants.BOTTOM);
+        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon());
 
         this.add(present);
         this.add(presentAt);
-        this.addSeparator();
+
+        separator(this);
 
         this.add(animations);
-        this.addSeparator();
+
+        separator(this);
 
         this.add(transistions);
-        this.addSeparator();
+
+        separator(this);
 
         this.add(help);
 

@@ -5,7 +5,7 @@ import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
 import javax.swing.*;
 
 /**
- * This class extends JToolBar and contains all the buttons that will be displayed on the
+ * This class extends ToolBar and contains all the buttons and components that will be displayed on the
  * AboutToolBar
  *
  * @author madukaag
@@ -17,15 +17,17 @@ public class AboutToolBar extends ToolBar {
 
         license = makeToolbarButton(GeneralButtons.LICENSE.getTitle(), GeneralButtons.LICENSE.getIcon());
 
-        shortcuts = makeToolbarButton("Short Cuts", null);
+        shortcuts = makeToolbarButton(GeneralButtons.SHORTCUTS.getTitle(), GeneralButtons.SHORTCUTS.getIcon());
 
         help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon());
 
         this.add(license);
-        this.addSeparator();
+
+        separator(this);
 
         this.add(shortcuts);
-        this.addSeparator();
+
+        separator(this);
 
         this.add(help);
     

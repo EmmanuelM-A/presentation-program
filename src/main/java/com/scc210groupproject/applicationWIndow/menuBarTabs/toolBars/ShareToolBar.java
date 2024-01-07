@@ -5,56 +5,36 @@ import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
 import javax.swing.*;
 
 /**
- * This class extends JToolBar and contains all the buttons that will be displayed on the
+ * This class extends ToolBar and contains all the buttons and components that will be displayed on the
  * ShareToolBar
  *
  * @author madukaag
  * */
-public class ShareToolBar extends JToolBar {
+public class ShareToolBar extends ToolBar {
     private JButton export, importFile, share, format, help;
 
     public ShareToolBar() {
         this.setRollover(true);
 
-        export = new JButton(GeneralButtons.EXPORT.getIcon());
-        export.setText(GeneralButtons.EXPORT.getTitle());
-        export.setFocusable(false);
-        export.setHorizontalTextPosition(SwingConstants.CENTER);
-        export.setVerticalTextPosition(SwingConstants.BOTTOM);
+        export = makeToolbarButton(GeneralButtons.EXPORT.getTitle(), GeneralButtons.EXPORT.getIcon());
 
-        importFile = new JButton(GeneralButtons.IMPORT.getIcon());
-        importFile.setText(GeneralButtons.IMPORT.getTitle());
-        importFile.setFocusable(false);
-        importFile.setHorizontalTextPosition(SwingConstants.CENTER);
-        importFile.setVerticalTextPosition(SwingConstants.BOTTOM);
+        importFile = makeToolbarButton(GeneralButtons.IMPORT.getTitle(), GeneralButtons.IMPORT.getIcon());
 
-        share = new JButton(GeneralButtons.SHARE.getIcon());
-        share.setText(GeneralButtons.SHARE.getTitle());
-        share = new JButton(GeneralButtons.SHARE.getIcon());
-        share.setText(GeneralButtons.SHARE.getTitle());
-        share.setFocusable(false);
-        share.setHorizontalTextPosition(SwingConstants.CENTER);
-        share.setVerticalTextPosition(SwingConstants.BOTTOM);
+        format = makeToolbarButton(GeneralButtons.FORMAT.getTitle(), GeneralButtons.FORMAT.getIcon());
 
-        format = new JButton(GeneralButtons.FORMAT.getIcon());
-        format.setText(GeneralButtons.FORMAT.getTitle());
-        format.setFocusable(false);
-        format.setHorizontalTextPosition(SwingConstants.CENTER);
-        format.setVerticalTextPosition(SwingConstants.BOTTOM);
+        share = makeToolbarButton(GeneralButtons.SHARE.getTitle(), GeneralButtons.SHARE.getIcon());
 
-        help = new JButton(GeneralButtons.HELP.getIcon());
-        help.setText(GeneralButtons.HELP.getTitle());
-        help.setFocusable(false);
-        help.setHorizontalTextPosition(SwingConstants.CENTER);
-        help.setVerticalTextPosition(SwingConstants.BOTTOM);
+        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon());
 
         this.add(export);
         this.add(importFile);
         this.add(share);
-        this.addSeparator();
+
+        separator(this);
 
         this.add(format);
-        this.addSeparator();
+
+        separator(this);
 
         this.add(help);
 
