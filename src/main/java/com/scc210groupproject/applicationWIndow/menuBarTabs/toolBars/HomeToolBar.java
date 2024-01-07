@@ -103,7 +103,7 @@ public class HomeToolBar extends JToolBar {
 
                 this.add(help);
 
-                this.setName("About");
+                this.setName("Home");
                 this.setFloatable(false);
         }
 }
