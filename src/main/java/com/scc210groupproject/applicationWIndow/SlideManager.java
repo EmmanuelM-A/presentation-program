@@ -7,6 +7,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.LinkedList;
 
+/**
+ * This class handles the slides currently being displayed on the screen.
+ *
+ * @author madukaag
+ */
 public class SlideManager implements ActionListener {
     // The current presentation being viewed by the program
     private final Presentation presentation;

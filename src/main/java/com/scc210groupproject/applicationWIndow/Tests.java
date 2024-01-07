@@ -10,158 +10,73 @@ import java.util.ArrayList;
  *
  * @author madukaag
  * */
-public class Tests {
-    static Point compCoords;
-    static JFrame frame = new JFrame();
+public class Tests extends JFrame {
+    JPanel sectionOne, sectionTwo, sectionThree, sectionFour;
+
+    GridBagConstraints c = new GridBagConstraints();
+
     public Tests() {
-        frame.setTitle("Testing whats and what not!");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setMinimumSize(new Dimension(1000, 700));
-        //frame.setUndecorated(true);
-        //frame.setLayout(new BorderLayout());
-        //createTitleBar();
+        this.setTitle("Testing Testing");
+        this.setMinimumSize(new Dimension(1000, 700));
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setResizable(true);
+        this.setLayout(new GridBagLayout());
 
-        createPresentationSlider();
+        sectionOne = new JPanel();
+        sectionOne.setBackground(Color.YELLOW);
+        sectionOne.setPreferredSize(new Dimension(1000, 100));
 
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    }
+        sectionTwo = new JPanel();
+        sectionTwo.setBackground(Color.GREEN);
+        sectionTwo.setPreferredSize(new Dimension(100, 700));
 
-    private static void createTitleBar() {
-        // Create custom title bar panel
-        JPanel titleBarPanel = new JPanel(new BorderLayout());
-        titleBarPanel.setPreferredSize(new Dimension(1000, 35));
-        titleBarPanel.setBackground(Color.GRAY);
+        sectionThree = new JPanel();
+        sectionThree.setBackground(Color.BLUE);
+        sectionThree.setPreferredSize(new Dimension(900, 700));
 
-        // Add buttons to the left side of the title bar
-        JPanel leftButtonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        leftButtonsPanel.setOpaque(false);
+        sectionFour = new JPanel();
+        sectionFour.setBackground(Color.RED);
+        sectionFour.setPreferredSize(new Dimension(1000, 100));
 
-        JButton button1 = new JButton("Save");
-        JButton button2 = new JButton("Undo");
-        JButton button3 = new JButton("Redo");
+        /*c.anchor = GridBagConstraints.PAGE_START;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 2;
+        c.gridheight = 1;*/
 
-        leftButtonsPanel.add(button1);
-        leftButtonsPanel.add(button2);
-        leftButtonsPanel.add(button3);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 0;
 
-        titleBarPanel.add(leftButtonsPanel, BorderLayout.WEST);
+        this.add(sectionOne, c);
 
-        // Add standard window buttons to the right side of the title bar
-        JPanel rightButtonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        rightButtonsPanel.setOpaque(false);
+        c.anchor = GridBagConstraints.LINE_START;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx = 0;
+        c.gridy = 1;
+        c.weightx = 0.3;
+        c.weighty = 1.0;
+        this.add(sectionTwo, c);
 
-        JButton minimizeButton = new JButton("-");
-        JButton maximizeRestoreButton = new JButton("□");
-        JButton closeButton = new JButton("X");
+        c.anchor = GridBagConstraints.CENTER;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx = 1;
+        c.gridy = 1;
+        c.weightx = 0.7;
+        c.weighty = 1.0;
+        this.add(sectionThree, c);
 
-        minimizeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Handle minimize button action
-                frame.setExtendedState(JFrame.ICONIFIED);
-            }
-        });
+        c.anchor = GridBagConstraints.PAGE_END;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 2;
+        c.gridwidth = 2;
+        c.gridheight = 1;
+        this.add(sectionFour, c);
 
-        maximizeRestoreButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Handle maximize/restore button action
-                int state = frame.getExtendedState();
-                if ((state & JFrame.MAXIMIZED_BOTH) == 0) {
-                    frame.setExtendedState(state | JFrame.MAXIMIZED_BOTH);
-                } else {
-                    frame.setExtendedState(state & ~JFrame.MAXIMIZED_BOTH);
-                }
-            }
-        });
-
-        closeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Handle close button action
-                System.exit(0);
-            }
-        });
-
-        rightButtonsPanel.add(minimizeButton);
-        rightButtonsPanel.add(maximizeRestoreButton);
-        rightButtonsPanel.add(closeButton);
-
-        titleBarPanel.add(rightButtonsPanel, BorderLayout.EAST);
-
-        JLabel title = new JLabel("Presentation Program");
-        title.setHorizontalAlignment(JLabel.CENTER);
-        title.setVerticalAlignment(JLabel.CENTER);
-
-        titleBarPanel.add(title, BorderLayout.CENTER);
-
-        compCoords = null;
-        titleBarPanel.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-            }
-            @Override
-            public void mousePressed(MouseEvent e) {
-                compCoords = e.getPoint();
-            }
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                compCoords = null;
-            }
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
-        titleBarPanel.addMouseMotionListener(new MouseMotionListener() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                Point currCoords = e.getLocationOnScreen();
-                frame.setLocation(currCoords.x - compCoords.x, currCoords.y - compCoords.y);
-            }
-
-            @Override
-            public void mouseMoved(MouseEvent e) {
-
-            }
-        });
-
-        // Add the custom title bar to the frame
-        frame.add(titleBarPanel, BorderLayout.NORTH);
-    }
-
-    private static void createPresentationSlider() {
-        JPanel slide = new JPanel();
-        //List<JPanel> slides = new ArrayList<>();
-        int currentSlideIndex = 0;
-
-        JPanel presentationSliderPanel = new JPanel(new BorderLayout());
-        presentationSliderPanel.setPreferredSize(new Dimension(1000, 180));
-        presentationSliderPanel.setBackground(Color.YELLOW);
-
-        JButton prevSlide = new JButton("<");
-        prevSlide.setPreferredSize(new Dimension(30, 160));
-
-        JButton nextSlide = new JButton(">");
-        nextSlide.setPreferredSize(new Dimension(30, 160));
-
-        JPanel mainView = new JPanel();
-        mainView.setPreferredSize(new Dimension(1000, 160));
-        mainView.setBackground(Color.green);
-
-        JPanel bottom = new JPanel();
-        bottom.setPreferredSize(new Dimension(1000, 20));
-        bottom.setBackground(Color.blue);
-
-        presentationSliderPanel.add(prevSlide, BorderLayout.WEST);
-        presentationSliderPanel.add(nextSlide, BorderLayout.EAST);
-        presentationSliderPanel.add(mainView, BorderLayout.CENTER);
-        presentationSliderPanel.add(bottom, BorderLayout.SOUTH);
-
-        frame.add(presentationSliderPanel, BorderLayout.SOUTH);
+        setVisible(true);
     }
 
     public static void main( String[] args ) {

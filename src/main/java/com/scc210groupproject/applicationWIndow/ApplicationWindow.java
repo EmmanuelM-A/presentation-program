@@ -26,7 +26,7 @@ public class ApplicationWindow extends JFrame {
 
     public ApplicationWindow() {
         this.setTitle("Presentation Program");
-        //this.setSize((int)size.getWidth(), (int)size.getHeight());
+        this.setSize((int)size.getWidth(), (int)size.getHeight());
         this.setMinimumSize(new Dimension(1000, 700));
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -34,7 +34,8 @@ public class ApplicationWindow extends JFrame {
         this.setLayout(new BorderLayout(40, 20));
         this.getContentPane().setBackground(new Color(211, 211, 211));
 
-        //this.customTitleBar = new TitleBar(this); // Instantiates the class and adds a custom title bar to the frame
+        // Instantiates the class and adds a custom title bar to the frame. REQUIRES A BIT OF REPOSITIONING TO DISPLAY
+        //this.customTitleBar = new TitleBar(this);
 
         this.contextMenuPanel = new ContextMenuPanel(300, 100, Color.WHITE);
 
@@ -51,7 +52,7 @@ public class ApplicationWindow extends JFrame {
         this.add(contextMenuPanel, BorderLayout.WEST);
         this.add(mainDisplayPanel, BorderLayout.CENTER);
         this.slideManager.createPresentationSlider(this);
-
+        
         this.setVisible(true);
 
     }
