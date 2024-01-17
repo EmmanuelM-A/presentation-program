@@ -13,6 +13,9 @@ import java.util.LinkedList;
  * @author madukaag
  */
 public class SlideManager implements ActionListener {
+
+    public static SlideManager slideManager;
+
     // The current presentation being viewed by the program
     private final Presentation presentation;
 
@@ -285,7 +288,7 @@ public class SlideManager implements ActionListener {
         slide.setPreferredSize(new Dimension(200, 115));
         slide.setBackground(Color.white);
         slide.setFocusable(false);
-        //slide.setIcon(new ImageIcon());
+        //slide.setIcon(presentation.getSlideAtIndex(slideNo));
 
         slide.addActionListener(new ActionListener() {
             @Override
@@ -351,7 +354,7 @@ public class SlideManager implements ActionListener {
      * Returns the current slide being displayed
      * @return Slide
      * */
-    private Slide getCurrentSlide() {
+    public Slide getCurrentSlide() {
         if(this.currentSlide >= 1 && this.currentSlide <= this.presentation.getSlideCount()) {
             return this.presentation.getSlideAtIndex(this.currentSlideIndex);
         } else {

@@ -2,6 +2,7 @@ package com.scc210groupproject.applicationWIndow;
 
 import com.scc210groupproject.applicationWIndow.contextMenu.ContextMenuPanel;
 import com.scc210groupproject.applicationWIndow.menuBarTabs.MenuBarTabs;
+import com.scc210groupproject.structure.Slide;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +23,6 @@ public class ApplicationWindow extends JFrame {
     private MenuBarTabs menuBarTabs;
     private ContextMenuPanel contextMenuPanel;
     private MainDisplayPanel mainDisplayPanel;
-    private SlideManager slideManager;
 
     public ApplicationWindow() {
         this.setTitle("Presentation Program");
@@ -43,7 +43,7 @@ public class ApplicationWindow extends JFrame {
 
         this.mainDisplayPanel = new MainDisplayPanel(100, 100, Color.WHITE);
 
-        this.slideManager = new SlideManager(this, this.mainDisplayPanel);
+        SlideManager.slideManager = new SlideManager(this, this.mainDisplayPanel);
 
         /*
          * The adds and positions each panel/section/element/component onto the window
@@ -51,7 +51,7 @@ public class ApplicationWindow extends JFrame {
         this.add(menuBarTabs, BorderLayout.NORTH);
         this.add(contextMenuPanel, BorderLayout.WEST);
         this.add(mainDisplayPanel, BorderLayout.CENTER);
-        this.slideManager.createPresentationSlider(this);
+        SlideManager.slideManager.createPresentationSlider(this);
         
         this.setVisible(true);
 

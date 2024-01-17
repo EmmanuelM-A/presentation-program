@@ -2,6 +2,7 @@ package com.scc210groupproject.applicationWIndow.menuBarTabs.toolBars;
 
 import com.scc210groupproject.applicationWIndow.contextMenu.*;
 import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
+import com.scc210groupproject.structure.Presentation;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
