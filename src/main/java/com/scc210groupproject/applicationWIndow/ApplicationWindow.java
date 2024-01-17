@@ -6,6 +6,8 @@ import com.scc210groupproject.structure.Slide;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 /**
  * This class creates the JFrame and adds the components onto the frame.
@@ -28,10 +30,11 @@ public class ApplicationWindow extends JFrame {
         this.setTitle("Presentation Program");
         this.setSize((int)size.getWidth(), (int)size.getHeight());
         this.setMinimumSize(new Dimension(1000, 700));
+        this.pack();
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(true);
-        this.setLayout(new BorderLayout(40, 20));
+        this.setLayout(new BorderLayout(10, 10));
         this.getContentPane().setBackground(new Color(211, 211, 211));
 
         // Instantiates the class and adds a custom title bar to the frame. REQUIRES A BIT OF REPOSITIONING TO DISPLAY
@@ -43,16 +46,21 @@ public class ApplicationWindow extends JFrame {
 
         this.mainDisplayPanel = new MainDisplayPanel(100, 100, Color.WHITE);
 
-        SlideManager.slideManager = new SlideManager(this, this.mainDisplayPanel);
+        SlideManager.slideManager = new SlideManager(this.mainDisplayPanel);
 
         /*
          * The adds and positions each panel/section/element/component onto the window
          * */
         this.add(menuBarTabs, BorderLayout.NORTH);
+
         this.add(contextMenuPanel, BorderLayout.WEST);
+
         this.add(mainDisplayPanel, BorderLayout.CENTER);
+
         SlideManager.slideManager.createPresentationSlider();
-        
+
+        //this.add(slideManager.createPresentationSlider(), BorderLayout.SOUTH);
+
         this.setVisible(true);
 
     }

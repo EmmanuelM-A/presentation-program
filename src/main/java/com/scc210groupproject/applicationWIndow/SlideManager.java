@@ -25,7 +25,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     private final Presentation presentation;
 
     // This list represents the slides on the slide view slider
-    private final LinkedList<JButton> slidesViewer = new LinkedList<>();;
+    private final LinkedList<JButton> slidesViewer = new LinkedList<>();
 
     // Determines if a new slide added should be displayed or not
     private boolean displayNewSlide;
@@ -44,7 +44,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
 
     private JButton prevSlide, nextSlide, addNewSlide, deleteSlide, present, presentAt;
 
-    private JLabel noSlides;
+    //private JLabel noSlides;
 
     // The main display panel
     private final MainDisplayPanel mainDisplay;
@@ -53,10 +53,9 @@ public class SlideManager implements ActionListener, IChangePresentationListener
 
     /**
      * Constructor for the SlideManager
-     * @param frame The ui frame
      * @param mainDisplay The main display panel of the ui frame
      */
-    public SlideManager(final JFrame frame, MainDisplayPanel mainDisplay) {
+    public SlideManager(MainDisplayPanel mainDisplay) {
         // Get the current presentation
         this.presentation = mainDisplay.getCurrentPresentation();
 
@@ -94,7 +93,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     }
 
     /**
-     * Set to true to display new slides added. Set the variable to false to not display new
+     * Set to true to display new slides added. Set to false to not display new
      * slides added.
      * @param yesOrNo Either true or false
      * */
@@ -130,6 +129,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
          * This is where the actual presentation slider will go
          * */
         this.viewSliderPanel.setBackground(Color.lightGray);
+        //this.viewSliderPanel.setPreferredSize(new Dimension(1000, 160));
         presentationSlider.setPreferredSize(new Dimension(1000, 160));
         presentationSlider.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
@@ -147,7 +147,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         this.deleteSlide = new JButton("Delete Slide");
         this.present = new JButton("Present");
         this.presentAt = new JButton("Present From");
-        this.noSlides = new JLabel("Slides: ");
+        //this.noSlides = new JLabel("Slides: ");
 
         /*
          * Add buttons to bottom sections
@@ -156,7 +156,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         bottomSection.add(this.deleteSlide);
         bottomSection.add(this.present);
         bottomSection.add(this.presentAt);
-        bottomSection.add(this.noSlides);
+        //bottomSection.add(this.noSlides);
 
         /*
          * Adds each section/button onto the display
@@ -181,7 +181,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         this.slidesViewer.add(firstSlideInViewer);
         this.viewSliderPanel.add(firstSlideInViewer);
 
-        this.mainDisplay.add(firstSlide.asComp(), BorderLayout.CENTER);
+        displaySlide(firstSlide, this.mainDisplay);
 
         System.out.println("New Slide - " + (this.presentation.getSlideCount()) + "!");
     }
@@ -256,7 +256,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         // Update frame
         display.revalidate();
         display.repaint();
-        //display.pack();
+
     }
 
     /**
@@ -387,7 +387,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         return this.presentation.getSlideAtIndex(slideIndex);
     }
 
-    /**
+    /*
      * Highlights a selected slide in the slide viewer
      * @param JButton Slide
      * */
@@ -409,7 +409,6 @@ public class SlideManager implements ActionListener, IChangePresentationListener
      * @param slideNo The slide number (position) of the selected slide
      * */
     private void displaySelectedSlide(int slideNo) {
-        Slide currentSlide = getCurrentSlide();
         Slide selectedSlide = getSelectedSlide(slideNo - 1);
 
         this.currentSlide = slideNo;
@@ -418,10 +417,6 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         // Display selected slide
         displaySlide(selectedSlide, this.mainDisplay);
     }
-
-    /*private ImageIcon bufferImageToImageIcon(BufferedImage imageToConvert) {
-        return new ImageIcon(imageToConvert);
-    }*/
 
     @Override
     public void actionPerformed(ActionEvent e) {
