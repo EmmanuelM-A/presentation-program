@@ -2,6 +2,7 @@ package com.scc210groupproject.applicationWIndow;
 
 import com.scc210groupproject.action.NewSlideAction;
 import com.scc210groupproject.structure.*;
+
 import com.scc210groupproject.structure.eventListeners.IChangePresentationListener;
 import com.scc210groupproject.structure.eventListeners.ICreateSlideListener;
 import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;
@@ -10,6 +11,8 @@ import com.scc210groupproject.structure.eventListeners.IUpdateSlideListener;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -82,6 +85,8 @@ public class SlideManager implements ActionListener, IChangePresentationListener
 
         displayFirstSlide();
         instance = this;
+
+        //displayFirstSlide();
     }
 
     /**
@@ -253,11 +258,21 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         display.removeAll();
         // Display the new slide
         display.add(slideToDisplay.asComp(), BorderLayout.CENTER);
+
         // Update frame
         display.revalidate();
         display.repaint();
 
     }
+
+    /*private void displaySlide2(Slide slideToDisplay) {
+        mainDisplay.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                scaleSlide.renderSlide(slideToDisplay);
+            }
+        });
+    }*/
 
     /**
      * Creates a new slide and assigns it a slide number, then adds the slide onto the end of the existing slides
@@ -268,13 +283,31 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     }
 
     private void deleteSlide(){
-
         Slide currentSlide = getCurrentSlide();
         presentation.removeSlide(currentSlide);
+        // The code below will display the new slide added to the main display panel if displayNewSlide equals true
+        if(this.displayNewSlide) {
+            // Display new slide
+            //displaySlide(newSlide, this.mainDisplay);
+            //displaySlide2(newSlide);
+        }
 
         showPrevSlide();
 
         System.out.println("is this running?");
+
+    }
+
+    private void updateSlideDimension()
+    {
+        int width = this.mainDisplay.getWidth();
+        int height = this.mainDisplay.getHeight();
+
+        for (int i = 0; i < this.presentation.getSlideCount(); i++) {
+            this.presentation.getSlideAtIndex(i).setDimension(new Dimension(width, height));
+        }
+
+        System.out.println("Slide Width: " + getCurrentSlide().asComp().getWidth() + " Height: " + getCurrentSlide().asComp().getHeight());
 
     }
 

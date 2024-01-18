@@ -48,6 +48,8 @@ public class ApplicationWindow extends JFrame {
 
         SlideManager.slideManager = new SlideManager(this.mainDisplayPanel);
 
+        System.out.println("Main display width: " + this.mainDisplayPanel.getWidth() + ", height: " + this.mainDisplayPanel.getHeight());
+
         /*
          * The adds and positions each panel/section/element/component onto the window
          * */

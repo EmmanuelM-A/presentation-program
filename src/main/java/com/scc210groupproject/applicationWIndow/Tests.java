@@ -6,6 +6,7 @@ import com.scc210groupproject.applicationWIndow.menuBarTabs.MenuBarTabs;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -99,6 +100,18 @@ public class Tests extends JFrame {
         System.out.println("Main display Width: " + width + " Height: " + height);
 
         this.slideManager.getCurrentSlide().setDimension(new Dimension(width, height));
+
+        updateMainDisplaySlideSize(width, height);
+    }
+
+    private void updateMainDisplaySlideSize(int width, int height) {
+        //this.mainDisplayPanel.removeAll();
+
+        //this.slideManager.getCurrentSlide().setDiemension(new Dimension(width, height));
+        BufferedImage slide = this.slideManager.getCurrentSlide().createPreview(new Dimension(width, height));
+
+        JLabel slideImage = new JLabel(new ImageIcon(slide));
+        this.mainDisplayPanel.add(slideImage);
     }
 
     public static void main( String[] args ) {

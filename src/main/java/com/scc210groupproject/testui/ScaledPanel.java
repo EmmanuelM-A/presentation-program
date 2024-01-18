@@ -52,7 +52,7 @@ public class ScaledPanel extends JPanel
             return;
 
         double slideRatio = (double)slide.asComp().getWidth() / (double)slide.asComp().getHeight();
-        double diplayRatio = super.getWidth() / super.getHeight();
+        double diplayRatio = (double) super.getWidth() / super.getHeight();
 
         Dimension dimension = slideRatio > diplayRatio ?
             new Dimension(super.getWidth(), (int)((double)super.getWidth() / slideRatio)) :

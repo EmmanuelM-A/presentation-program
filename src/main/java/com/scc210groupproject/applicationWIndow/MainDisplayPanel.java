@@ -3,10 +3,13 @@ package com.scc210groupproject.applicationWIndow;
 import javax.swing.*;
 import java.awt.*;
 import com.scc210groupproject.structure.*;
+import com.scc210groupproject.ui.ScaledPanel;
 
 public class MainDisplayPanel extends JPanel {
 
     public static MainDisplayPanel instance;
+
+    private ScaledPanel scaledPanel;
 
     private Presentation currentPresentation;
 
@@ -16,6 +19,8 @@ public class MainDisplayPanel extends JPanel {
         this.setPreferredSize(new Dimension(width, height));
         //this.setLayout(new GridBagLayout());
         this.setLayout(new BorderLayout());
+
+        this.scaledPanel = new ScaledPanel();
         this.currentPresentation = null;
         createNewPresentation();
 
