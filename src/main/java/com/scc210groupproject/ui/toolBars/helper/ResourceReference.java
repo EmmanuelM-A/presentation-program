@@ -5,61 +5,54 @@ import javax.swing.*;
 public enum ResourceReference {
 
     NEW_FILE(
-        "NEW\nFILE",
-        "new-document.png"),
-    OPEN_PLAIN(
-        "OPEN\nPLAIN",
-        "folder.png"),
-    OPEN_COMPRESS(
-        "OPEN\nZIP",
-        "folder.png"),
-    SAVE_PLAIN(
-        "SAVE\nPLAIN",
-        "diskette.png"),
-    SAVE_COMPRESS(
-        "SAVE\nZIP",
-        "diskette.png"),
+            "NEW\nFILE",
+            "new-document.png"),
+    OPEN(
+            "OPEN",
+            "folder.png"),
+    SAVE(
+            "SAVE",
+            "diskette.png"),
     CREATE_SLIDE(
-        "NEW\nSLIDE",
-        "create-slide.png"),
+            "NEW\nSLIDE",
+            "create-slide.png"),
     DELETE_SLIDE(
-        "DELETE\nSLIDE",
-        "projector-screen.png"),
+            "DELETE\nSLIDE",
+            "projector-screen.png"),
     ADD_TEXT(
-        "TEXT",
-        "add-text.png"),
+            "TEXT",
+            "add-text.png"),
     ADD_IMAGE(
-        "IMAGE",
-        "add-image.png"),
+            "IMAGE",
+            "add-image.png"),
     ADD_VIDEO(
-        "VIDEO",
-        "add-video.png"),
+            "VIDEO",
+            "add-video.png"),
     ADD_BOX(
-        "BOX",
-        "projector-screen.png"),
+            "BOX",
+            "projector-screen.png"),
     DELETE_FIRST(
-        "DELETE\nFIRST",
-        "projector-screen.png"),
+            "DELETE\nFIRST",
+            "projector-screen.png"),
     EXPORT(
-        "EXPORT",
-        "export.png"),
+            "EXPORT",
+            "export.png"),
     IMPORT(
-        "IMPORT",
-        "import.png"),
+            "IMPORT",
+            "import.png"),
     SHARE(
-        "SHARE",
-        "share.png"),
+            "SHARE",
+            "share.png"),
     PRESENT(
-        "PRESENT",
-        "projector-screen.png");
+            "PRESENT",
+            "projector-screen.png");
 
     private static final String imageFolderPath = "src/main/resources/images/";
 
     public final String multiLineTitle;
     public final ImageIcon icon;
 
-    private ResourceReference(String title, String filename)
-    {
+    private ResourceReference(String title, String filename) {
         String[] lines = title.split("\n");
         this.multiLineTitle = "<html><center>" + String.join("<br>", lines) + "</center></html>";
         this.icon = new ImageIcon(imageFolderPath + filename);
