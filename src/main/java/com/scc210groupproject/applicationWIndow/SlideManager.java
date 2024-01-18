@@ -277,6 +277,15 @@ public class SlideManager implements ActionListener {
         System.out.println("New Slide - " + (this.presentation.getSlideCount()) + "!");
     }
 
+    private void deleteSlide(){
+
+        Slide currentSlide = getCurrentSlide();
+        presentation.removeSlide(currentSlide);
+
+
+
+    }
+
     /** POSSIBLE CHANGES WILL BE MADE HERE
      * Creates a slide for the slides viewer
      * @param slideNo The slide number to assign it to
@@ -428,7 +437,9 @@ public class SlideManager implements ActionListener {
         } else if (e.getSource() == this.addNewSlide) { // Add New Slide
             addNewSlide();
         } else if (e.getSource() == this.deleteSlide) { // Delete (a selected) Slide
-            System.out.println("Do Something!");
+            // System.out.println("Do Something!");
+            deleteSlide();
+
         } else if (e.getSource() == this.present) { // Start Presentation mode at the beginning
             System.out.println("Do Something Else!");
         } else if (e.getSource() == this.presentAt) { // Start Presentation mode at the selected slide

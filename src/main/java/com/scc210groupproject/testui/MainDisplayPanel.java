@@ -16,7 +16,7 @@ public class MainDisplayPanel extends JPanel implements IChangePresentationListe
     public static MainDisplayPanel instance;
 
     private ScaledPanel scaledPanel;
-    private Slide currentSilde;
+    private Slide currentSlide;
 
     public MainDisplayPanel()
     {
@@ -28,12 +28,12 @@ public class MainDisplayPanel extends JPanel implements IChangePresentationListe
         scaledPanel = new ScaledPanel();
         super.add(scaledPanel);
 
-        currentSilde = null;
+        currentSlide = null;
 
         super.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                scaledPanel.renderSlide(currentSilde);
+                scaledPanel.renderSlide(currentSlide);
             }
         });
 
@@ -46,9 +46,9 @@ public class MainDisplayPanel extends JPanel implements IChangePresentationListe
 
     public void showSlideAtIndex(int i)
     {
-        currentSilde = Presentation.get().getSlideAtIndex(i);
+        currentSlide = Presentation.get().getSlideAtIndex(i);
 
-        scaledPanel.renderSlide(currentSilde);
+        scaledPanel.renderSlide(currentSlide);
     }
 
     @Override
@@ -58,24 +58,24 @@ public class MainDisplayPanel extends JPanel implements IChangePresentationListe
             return;
         }
 
-        currentSilde = null;
+        currentSlide = null;
         scaledPanel.clearRender();
     }
 
 
     @Override
     public void onUpdateSlide(int index, Slide slide) {
-        if (slide == currentSilde)
+        if (slide == currentSlide)
             scaledPanel.renderSlide(slide);
     }
 
     @Override
     public void onDiscardSlide(int index, Slide slide) {
-        if (slide == currentSilde)
+        if (slide == currentSlide)
             showSlideAtIndex(index >= Presentation.get().getSlideCount() ? index - 1 : index);
     }
 
     public Slide getDisplayedSlide() {
-        return currentSilde;
+        return currentSlide;
     }
 }
