@@ -15,21 +15,24 @@ import java.util.Iterator;
 
 /**
  * @author wonge1
- * Class to Deserialize the Presentation
+ *         Class to Deserialize the Presentation
  */
 public class FileDeserializer {
 
     /**
      * Read a presentation from path
+     * 
      * @param path file path to read from
      * @return presentation read
-     * @throws IOException thrown if FileInputStream and/or ObjectOutputStream failed to start
-     * @throws ClassNotFoundException thrown if ObjectOutputStream cannot find Presentation object in the file
+     * @throws IOException            thrown if FileInputStream and/or
+     *                                ObjectOutputStream failed to start
+     * @throws ClassNotFoundException thrown if ObjectOutputStream cannot find
+     *                                Presentation object in the file
      */
     public static void readFromPath(String path) throws IOException, ClassNotFoundException {
         Presentation result;
         try (FileInputStream fileStream = new FileInputStream(path)) {
-            if (path.endsWith(".compressed"))
+            if (path.endsWith(".pcomp"))
                 try (GZIPInputStream compressedStream = new GZIPInputStream(fileStream)) {
                     result = deserialize(compressedStream);
                 }
@@ -42,16 +45,17 @@ public class FileDeserializer {
 
     /**
      * Read a presentation to a FileOutputStream
+     * 
      * @param inputStream stream to write to
      * @return presentation read
-     * @throws IOException thrown if ObjectOutputStream failed to start
-     * @throws ClassNotFoundException thrown if ObjectOutputStream cannot find Presentation object in the file
+     * @throws IOException            thrown if ObjectOutputStream failed to start
+     * @throws ClassNotFoundException thrown if ObjectOutputStream cannot find
+     *                                Presentation object in the file
      */
     public static Presentation deserialize(InputStream inputStream) throws IOException {
         Reader reader = new Reader(inputStream);
-        return (Presentation)reader.loadHierarchy();
+        return (Presentation) reader.loadHierarchy();
     }
-
 
     public static class Reader {
 
@@ -67,6 +71,7 @@ public class FileDeserializer {
             mapper = new ObjectMapper();
             root = mapper.readTree(stream);
         }
+
         private Reader() {
             resolvedObjects = new HashMap<>();
         }
@@ -80,7 +85,7 @@ public class FileDeserializer {
         }
 
         public float readFloat(String name) throws IOException {
-            return (float)current.get(name).asDouble();
+            return (float) current.get(name).asDouble();
         }
 
         public double readDouble(String name) throws IOException {
@@ -115,19 +120,21 @@ public class FileDeserializer {
 
             List<?> intermediate;
             try {
-                intermediate = (List<?>)type.getConstructor().newInstance();
-            } catch (InstantiationException | IllegalAccessException | SecurityException | NoSuchMethodException | InvocationTargetException e) {
-                throw new IllegalArgumentException("Cannot call 0 argument constructor on " + listClassName + ", make sure it is public");
+                intermediate = (List<?>) type.getConstructor().newInstance();
+            } catch (InstantiationException | IllegalAccessException | SecurityException | NoSuchMethodException
+                    | InvocationTargetException e) {
+                throw new IllegalArgumentException(
+                        "Cannot call 0 argument constructor on " + listClassName + ", make sure it is public");
             }
 
             List<Object> list;
             try {
-                list = (List<Object>)intermediate;
+                list = (List<Object>) intermediate;
             } catch (ClassCastException e) {
                 throw new IllegalArgumentException("Failed to cast generic lsit");
             }
 
-            ArrayNode values = (ArrayNode)construct.get("values");
+            ArrayNode values = (ArrayNode) construct.get("values");
 
             Iterator<JsonNode> iterator = values.iterator();
             while (iterator.hasNext())
@@ -164,9 +171,10 @@ public class FileDeserializer {
             try {
                 Method method = type.getDeclaredMethod("createEmpty");
                 method.setAccessible(true);
-                object = (IJsonSerializable)method.invoke(null);
+                object = (IJsonSerializable) method.invoke(null);
             } catch (IllegalAccessException | SecurityException | NoSuchMethodException | InvocationTargetException e) {
-                throw new IllegalArgumentException("Cannot call static method createEmpty() on " + className + ", make sure it is declared and return Object implementing IJsonSerializable");
+                throw new IllegalArgumentException("Cannot call static method createEmpty() on " + className
+                        + ", make sure it is declared and return Object implementing IJsonSerializable");
             }
 
             resolvedObjects.put(id, object);
