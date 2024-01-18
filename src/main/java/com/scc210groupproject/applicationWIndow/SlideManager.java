@@ -1,6 +1,11 @@
 package com.scc210groupproject.applicationWIndow;
 
+import com.scc210groupproject.action.NewSlideAction;
 import com.scc210groupproject.structure.*;
+import com.scc210groupproject.structure.eventListeners.IChangePresentationListener;
+import com.scc210groupproject.structure.eventListeners.ICreateSlideListener;
+import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;
+import com.scc210groupproject.structure.eventListeners.IUpdateSlideListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +17,7 @@ import java.util.LinkedList;
  *
  * @author madukaag
  */
-public class SlideManager implements ActionListener {
+public class SlideManager implements ActionListener, IChangePresentationListener, ICreateSlideListener, IDiscardSlideListener, IUpdateSlideListener {
 
     public static SlideManager slideManager;
 
@@ -44,6 +49,8 @@ public class SlideManager implements ActionListener {
     // The main display panel
     private final MainDisplayPanel mainDisplay;
 
+    public static SlideManager instance;
+
     /**
      * Constructor for the SlideManager
      * @param frame The ui frame
@@ -69,7 +76,13 @@ public class SlideManager implements ActionListener {
         // The main display panel where slides will be added viewed and edited
         this.mainDisplay = mainDisplay;
 
+        Presentation.addCreateSlideListener(this);
+        Presentation.addUpdateSlideListener(this);
+        Presentation.addDiscardSlideListener(this);
+        Presentation.addChangePresentationListener(this);
+
         displayFirstSlide();
+        instance = this;
     }
 
     /**
@@ -129,7 +142,7 @@ public class SlideManager implements ActionListener {
         bottomSection.setBackground(Color.lightGray);
 
         this.addNewSlide = new JButton("New Slide");
-        this.addNewSlide.addActionListener(this);
+        this.addNewSlide.addActionListener(new NewSlideAction());
 
         this.deleteSlide = new JButton("Delete Slide");
         this.present = new JButton("Present");
@@ -254,27 +267,7 @@ public class SlideManager implements ActionListener {
      * and finally display the new slide onto the screen.
      * */
     private void addNewSlide() {
-        // Create new slide
-        Slide newSlide = this.presentation.newSlide();
 
-        // Keeps track of the slide currently being displayed
-        this.currentSlide = this.presentation.getSlideCount();
-        this.currentSlideIndex = this.currentSlide - 1;
-
-        // -------- This code is only used to differentiate slides added
-        newSlide.asComp().setBackground(new Color((float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1));
-        // --------
-
-        // The code below will display the new slide added to the main display panel if displayNewSlide equals true
-        if(this.displayNewSlide) {
-            // Display new slide
-            displaySlide(newSlide, this.mainDisplay);
-        }
-
-        // Add slide to presentation slider
-        addSlideToViewer();
-
-        System.out.println("New Slide - " + (this.presentation.getSlideCount()) + "!");
     }
 
     private void deleteSlide(){
@@ -282,7 +275,9 @@ public class SlideManager implements ActionListener {
         Slide currentSlide = getCurrentSlide();
         presentation.removeSlide(currentSlide);
 
+        showPrevSlide();
 
+        System.out.println("is this running?");
 
     }
 
@@ -341,6 +336,9 @@ public class SlideManager implements ActionListener {
         } else {
             return null;
         }
+
+        //SlideManager.instance
+
     }
 
     /**
@@ -435,15 +433,56 @@ public class SlideManager implements ActionListener {
         } else if (e.getSource() == this.nextSlide) { // Next slide Button
             showNextSlide();
         } else if (e.getSource() == this.addNewSlide) { // Add New Slide
-            addNewSlide();
+            //addNewSlide();
         } else if (e.getSource() == this.deleteSlide) { // Delete (a selected) Slide
             // System.out.println("Do Something!");
             deleteSlide();
-
         } else if (e.getSource() == this.present) { // Start Presentation mode at the beginning
             System.out.println("Do Something Else!");
         } else if (e.getSource() == this.presentAt) { // Start Presentation mode at the selected slide
             System.out.println("Do Something Better!");
         }
+    }
+
+    @Override
+    public void onChangePresentation(Presentation current, Presentation discarded) {
+
+    }
+
+    @Override
+    public void onCreateSlide(int index, Slide slide) {
+
+        // Create new slide
+        //Slide newSlide = this.presentation.newSlide();
+
+        // Keeps track of the slide currently being displayed
+        //this.currentSlide = this.presentation.getSlideCount();
+        //this.currentSlideIndex = this.currentSlide - 1;
+
+        // -------- This code is only used to differentiate slides added
+        slide.asComp().setBackground(new Color((float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1));
+        // --------
+
+        // The code below will display the new slide added to the main display panel if displayNewSlide equals true
+        if(this.displayNewSlide) {
+            // Display new slide
+            displaySlide(slide, this.mainDisplay);
+        }
+
+        // Add slide to presentation slider
+        addSlideToViewer();
+
+        System.out.println("New Slide - " + (this.presentation.getSlideCount()) + "!");
+
+    }
+
+    @Override
+    public void onDiscardSlide(int index, Slide slide) {
+
+    }
+
+    @Override
+    public void onUpdateSlide(int index, Slide slide) {
+
     }
 }
