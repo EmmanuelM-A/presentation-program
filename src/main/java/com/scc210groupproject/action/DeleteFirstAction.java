@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.scc210groupproject.structure.Slide;
-import com.scc210groupproject.ui.MainDisplayPanel;
+import com.scc210groupproject.testui.MainDisplayPanel;
 
 public class DeleteFirstAction implements ActionListener {
 

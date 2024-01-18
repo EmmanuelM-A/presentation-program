@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.scc210groupproject.structure.SampleElement;
-import com.scc210groupproject.ui.MainDisplayPanel;
+import com.scc210groupproject.testui.MainDisplayPanel;
 
 public class NewBoxAction implements ActionListener {
 
