@@ -1,10 +1,10 @@
-package com.scc210groupproject.ui.toolBars;
+package com.scc210groupproject.testui.toolBars;
 
 import com.scc210groupproject.action.NewFileAction;
 import com.scc210groupproject.action.OpenAction;
 import com.scc210groupproject.action.SaveAction;
-import com.scc210groupproject.ui.toolBars.helper.ResourceReference;
-import com.scc210groupproject.ui.toolBars.helper.Utility;
+import com.scc210groupproject.testui.toolBars.helper.ResourceReference;
+import com.scc210groupproject.testui.toolBars.helper.Utility;
 
 public class FileToolBar extends TemplateToolBar {
     @Override

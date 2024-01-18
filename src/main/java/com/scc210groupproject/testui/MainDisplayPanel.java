@@ -1,4 +1,4 @@
-package com.scc210groupproject.ui;
+package com.scc210groupproject.testui;
 
 import javax.swing.*;
 

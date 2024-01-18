@@ -1,4 +1,4 @@
-package com.scc210groupproject.ui.toolBars;
+package com.scc210groupproject.testui.toolBars;
 
 import javax.swing.*;
 

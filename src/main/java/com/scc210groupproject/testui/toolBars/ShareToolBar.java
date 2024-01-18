@@ -1,7 +1,7 @@
-package com.scc210groupproject.ui.toolBars;
+package com.scc210groupproject.testui.toolBars;
 
-import com.scc210groupproject.ui.toolBars.helper.ResourceReference;
-import com.scc210groupproject.ui.toolBars.helper.Utility;
+import com.scc210groupproject.testui.toolBars.helper.ResourceReference;
+import com.scc210groupproject.testui.toolBars.helper.Utility;
 
 public class ShareToolBar extends TemplateToolBar
 {

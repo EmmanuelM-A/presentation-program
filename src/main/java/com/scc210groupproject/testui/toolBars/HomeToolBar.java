@@ -1,9 +1,9 @@
-package com.scc210groupproject.ui.toolBars;
+package com.scc210groupproject.testui.toolBars;
 
 import com.scc210groupproject.action.DeleteSlideAction;
 import com.scc210groupproject.action.NewSlideAction;
-import com.scc210groupproject.ui.toolBars.helper.ResourceReference;
-import com.scc210groupproject.ui.toolBars.helper.Utility;
+import com.scc210groupproject.testui.toolBars.helper.ResourceReference;
+import com.scc210groupproject.testui.toolBars.helper.Utility;
 
 public class HomeToolBar extends TemplateToolBar
 {

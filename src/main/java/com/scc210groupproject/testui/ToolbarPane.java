@@ -1,9 +1,9 @@
-package com.scc210groupproject.ui;
+package com.scc210groupproject.testui;
 
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 
-import com.scc210groupproject.ui.toolBars.*;
+import com.scc210groupproject.testui.toolBars.*;
 
 import java.awt.Component;
 import java.awt.Dimension;
