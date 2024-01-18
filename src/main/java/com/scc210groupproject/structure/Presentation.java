@@ -12,6 +12,7 @@ import com.scc210groupproject.structure.eventListeners.IUpdateSlideListener;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -108,7 +109,7 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
     /**
      * Default size, array of length 2 (x for pixel width, y for pixel height)
      */
-    private static Dimension defaultSize = new Dimension(1600, 900);
+    private static Dimension defaultSize = new Dimension(Toolkit.getDefaultToolkit().getScreenSize());
 
     /**
      * Construct a presentation of one slide
@@ -131,9 +132,9 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
     private Slide newSlide(boolean notify)
     {
 
-        //Slide slide = new Slide(defaultSize);
+        Slide slide = new Slide(defaultSize);
 
-        Slide slide = new Slide();
+        //Slide slide = new Slide();
         //slide.asComp().setSize(defaultSize);
 
 
@@ -160,11 +161,11 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
         arrowElement.setAnchor(ArrowElement.Side.B, sampleElement2.getAnchors().get(1));
         slide.add(sampleElement2);
 
-        TextElement textElement = new TextElement();
-        textElement.setBackground(Color.BLACK);
-        textElement.setLocation(new Point(0, 0));
-        textElement.setSize(new Dimension(400,400));
-        slide.add(textElement);
+        DraggableResizableElement DraggableResizableElement = new DraggableResizableElement();
+        DraggableResizableElement.setBackground(Color.BLACK);
+        DraggableResizableElement.setLocation(new Point(0, 0));
+        DraggableResizableElement.setSize(new Dimension(400,400));
+        slide.add(DraggableResizableElement);
 
         sampleElement.setLocation(new Point(400, 400));
         sampleElement2.setSize(new Dimension(20, 10));

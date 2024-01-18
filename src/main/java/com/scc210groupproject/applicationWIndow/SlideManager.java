@@ -288,7 +288,7 @@ public class SlideManager implements ActionListener {
         slide.setPreferredSize(new Dimension(200, 115));
         slide.setBackground(Color.white);
         slide.setFocusable(false);
-        //slide.setIcon(presentation.getSlideAtIndex(slideNo));
+        slide.setIcon(new ImageIcon(presentation.getSlideAtIndex(slideNo - 1).createPreview(new Dimension(200, 115))));
 
         slide.addActionListener(new ActionListener() {
             @Override

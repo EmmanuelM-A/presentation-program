@@ -22,53 +22,36 @@ import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.structure.optionalAnchors.AnchorReference;
 
-public class TextElement extends BaseElement
+public class DraggableResizableElement extends BaseElement
 {
-    private JPanel textPanel;
-    private JTextPane textPane;
+    private JPanel panel;
     private Point screenPos;
     private Point componentPos;
     private Point offset;
 
-    public TextElement()
+    public DraggableResizableElement()
     {
-        textPanel = new JPanel();
-        textPane = new JTextPane();
-        textPanel.setLayout(new BorderLayout());
-        textPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        textPane.setText("Add Text");
-        textPanel.add(textPane, BorderLayout.CENTER);
+        panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-        textPanel.addMouseListener(new MouseAdapter(){
+        panel.addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent e){
                 screenPos = e.getLocationOnScreen();
                 offset = e.getPoint();
                 componentPos = e.getPoint();
-                componentPos = SwingUtilities.convertPoint(textPanel, componentPos, (SlideManager.slideManager.getCurrentSlide().asComp()));
-                System.out.println("Mouse pressed");
-                System.out.println(screenPos);
-                System.out.println(componentPos);
-                System.out.println("End");
+                componentPos = SwingUtilities.convertPoint(panel, componentPos, (SlideManager.slideManager.getCurrentSlide().asComp()));
             }
         });
 
-        textPanel.addMouseMotionListener(new MouseAdapter(){
+        panel.addMouseMotionListener(new MouseAdapter(){
             public void mouseDragged(MouseEvent e){
                 Point newScreenPos = e.getLocationOnScreen();
+
                 int changeX = (int)((newScreenPos.getX() - screenPos.getX()));
                 int changeY = (int)((newScreenPos.getY() - screenPos.getY()));
 
-                System.out.println(changeX);
-                System.out.println(changeY);
-
-                System.out.println("New location:");
-                System.out.println(((int)componentPos.getX() + changeX));
-                System.out.println(((int)componentPos.getY() + changeY));
-
-                System.out.println("Component position");
-                System.out.println(componentPos);
-
-                textPanel.setLocation((int)(componentPos.getX() + changeX - offset.getX()), (int)(componentPos.getY() + changeY - offset.getY()));
+                panel.setLocation((int)(componentPos.getX() + changeX - offset.getX()), (int)(componentPos.getY() + changeY - offset.getY()));
 
 
             }
@@ -76,16 +59,18 @@ public class TextElement extends BaseElement
     }
 
     public void setLocation(Point p) {
-        textPanel.setLocation(p);
+        panel.setLocation(p);
     }
 
     public void setSize(Dimension d) {
-        textPanel.setSize(d);
+        panel.setSize(d);
     }
 
     public void setBackground(Color color) {
-        textPanel.setBackground(color);
+        panel.setBackground(color);
     }
+
+    
 
     @Override
     protected void writeSelf(Writer writer) throws IOException {
@@ -100,5 +85,5 @@ public class TextElement extends BaseElement
     }
 
     @Override
-    public Component asComp() { return textPanel; }
+    public Component asComp() { return panel; }
 }
