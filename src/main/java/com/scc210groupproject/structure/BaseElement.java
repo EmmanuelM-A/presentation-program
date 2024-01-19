@@ -18,7 +18,6 @@ import com.scc210groupproject.structure.liveness.IDestroyProvider;
 import com.scc210groupproject.structure.liveness.IUpdateListener;
 import com.scc210groupproject.structure.liveness.IUpdateProvider;
 import com.scc210groupproject.structure.liveness.UpdateManager;
-import com.fasterxml.jackson.databind.JsonSerializable.Base;
 import com.scc210groupproject.readwrite.IJsonSerializable;
 
 /**
