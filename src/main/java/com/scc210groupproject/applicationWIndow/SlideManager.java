@@ -52,6 +52,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     // The main display panel
     private final MainDisplayPanel mainDisplay;
 
+
     public static SlideManager instance;
 
     /**
@@ -86,7 +87,11 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         displayFirstSlide();
         instance = this;
 
-        //displayFirstSlide();
+        displayFirstSlide();
+    }
+
+    public Presentation getPresentation() {
+        return this.presentation;
     }
 
     /**
@@ -186,6 +191,8 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         this.slidesViewer.add(firstSlideInViewer);
         this.viewSliderPanel.add(firstSlideInViewer);
 
+        firstSlide.setDimension(new Dimension(100, 100));
+
         displaySlide(firstSlide, this.mainDisplay);
 
         System.out.println("New Slide - " + (this.presentation.getSlideCount()) + "!");
@@ -255,13 +262,15 @@ public class SlideManager implements ActionListener, IChangePresentationListener
      * */
     private void displaySlide(Slide slideToDisplay, MainDisplayPanel display) {
         // Remove currently displayed slide
-        display.removeAll();
+        /*display.removeAll();
         // Display the new slide
         display.add(slideToDisplay.asComp(), BorderLayout.CENTER);
 
         // Update frame
         display.revalidate();
-        display.repaint();
+        display.repaint();*/
+
+        //scaledSlide.renderSlide(slideToDisplay);
 
     }
 
@@ -269,7 +278,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         mainDisplay.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                scaleSlide.renderSlide(slideToDisplay);
+                scaledSlide.renderSlide(slideToDisplay);
             }
         });
     }*/
@@ -280,7 +289,19 @@ public class SlideManager implements ActionListener, IChangePresentationListener
      * */
     private void addNewSlide() {
 
+
     }
+/*=======
+        // Keeps track of the slide currently being displayed
+        this.currentSlide = this.presentation.getSlideCount();
+        this.currentSlideIndex = this.currentSlide - 1;
+
+        newSlide.setDiemension(new Dimension(100, 100));
+
+        // -------- This code is only used to differentiate slides added
+        newSlide.asComp().setBackground(new Color((float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1));
+        // --------
+>>>>>>> 0817a11 (No significant changes, still working on slide scaling)*/
 
     private void deleteSlide(){
         Slide currentSlide = getCurrentSlide();

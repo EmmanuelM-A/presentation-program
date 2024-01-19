@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author madukaag
  * */
 public class Tests extends JFrame {
-    GridBagConstraints gbc = new GridBagConstraints();
+    /*GridBagConstraints gbc = new GridBagConstraints();
 
     int gap = 6;
 
@@ -41,7 +41,7 @@ public class Tests extends JFrame {
 
         this.mainDisplayPanel = new MainDisplayPanel(0, 0, Color.WHITE);
 
-        this.slideManager = new SlideManager(this.mainDisplayPanel);
+        this.slideManager = new SlideManager(this.mainDisplayPanel, this.mainDisplayPanel.getScaledSlide());
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -92,7 +92,7 @@ public class Tests extends JFrame {
         - Sort out the slide scaling/resolution - set the slide size to match the size of the main display panel
      */
 
-    private void updateComponentSize()
+    /*private void updateComponentSize()
     {
         int width = this.mainDisplayPanel.getWidth();
         int height = this.mainDisplayPanel.getHeight();
@@ -116,5 +116,5 @@ public class Tests extends JFrame {
 
     public static void main( String[] args ) {
         new Tests();
-    }
+    }*/
 }
