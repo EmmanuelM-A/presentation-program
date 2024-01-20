@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+import com.scc210groupproject.applicationWIndow.SlideManager;
 import com.scc210groupproject.structure.*;
 import com.scc210groupproject.structure.eventListeners.IChangePresentationListener;
 import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;

@@ -5,9 +5,8 @@ import com.scc210groupproject.applicationWIndow.menuBarTabs.MenuBarTabs;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 /**
  * This class is used to test new features and components. NO CLASSES IMPORT THIS CLASS
@@ -15,7 +14,7 @@ import java.util.ArrayList;
  * @author madukaag
  * */
 public class Tests extends JFrame {
-    /*GridBagConstraints gbc = new GridBagConstraints();
+    GridBagConstraints gbc = new GridBagConstraints();
 
     int gap = 6;
 
@@ -41,7 +40,7 @@ public class Tests extends JFrame {
 
         this.mainDisplayPanel = new MainDisplayPanel(0, 0, Color.WHITE);
 
-        this.slideManager = new SlideManager(this.mainDisplayPanel, this.mainDisplayPanel.getScaledSlide());
+        this.slideManager = new SlideManager(this.mainDisplayPanel, this);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -77,14 +76,15 @@ public class Tests extends JFrame {
 
         setVisible(true);
 
-        addComponentListener(new ComponentAdapter() {
+        /*addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                updateComponentSize();
+                slideImage.updateSlideImageDimensions(display);
             }
-        });
-    }
+        });*/
+    }}
 
+//<<<<<<< HEAD
     /*
         TODO LIST:
         - Change the layout manager of the application window to this one and sort out positioning of components
@@ -113,8 +113,10 @@ public class Tests extends JFrame {
         JLabel slideImage = new JLabel(new ImageIcon(slide));
         this.mainDisplayPanel.add(slideImage);
     }
+=======
+>>>>>>> 7b4e027 (Slides are now being painted onto the main display instead of being added)
 
     public static void main( String[] args ) {
         new Tests();
-    }*/
-}
+    }
+}*/
