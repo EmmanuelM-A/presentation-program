@@ -2,10 +2,10 @@ package com.scc210groupproject.structure;
 
 import javax.swing.JPanel;
 
-import com.scc210groupproject.structure.optionalAnchors.IAnchorListener;
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
-import com.scc210groupproject.structure.optionalAnchors.AnchorReference;
+import com.scc210groupproject.structure.anchors.AnchorReference;
+import com.scc210groupproject.structure.anchors.IAnchorListener;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

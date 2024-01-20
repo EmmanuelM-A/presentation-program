@@ -16,11 +16,11 @@ import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
-import com.scc210groupproject.structure.optionalAnchors.IAnchorListener;
 import com.scc210groupproject.applicationWIndow.SlideManager;
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
-import com.scc210groupproject.structure.optionalAnchors.AnchorReference;
+import com.scc210groupproject.structure.anchors.AnchorReference;
+import com.scc210groupproject.structure.anchors.IAnchorListener;
 
 public class DraggableResizableElement extends BaseElement
 {

@@ -1,4 +1,4 @@
-package com.scc210groupproject.structure.optionalAnchors;
+package com.scc210groupproject.structure.anchors;
 
 public interface IAnchorListener {
     public void onAnchorMoved(AnchorReference anchor);

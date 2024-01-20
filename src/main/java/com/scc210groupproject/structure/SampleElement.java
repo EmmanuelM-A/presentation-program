@@ -4,8 +4,12 @@ import javax.swing.JPanel;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
-import com.scc210groupproject.structure.optionalAnchors.AnchorManager;
-import com.scc210groupproject.structure.optionalAnchors.IAnchorProvider;
+import com.scc210groupproject.structure.anchors.AnchorManager;
+import com.scc210groupproject.structure.anchors.IAnchorProvider;
+import com.scc210groupproject.structure.input.MouseEmulator.MouseState;
+import com.scc210groupproject.structure.input.adapters.MouseButtonAdapter;
+import com.scc210groupproject.structure.input.adapters.MouseMotionAdapter;
+import com.scc210groupproject.structure.input.adapters.MouseOccupancyAdapter;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -20,7 +24,7 @@ import java.io.IOException;
  * Use this as a reference (dont extend from this) for elements
  */
 public class SampleElement extends BaseElement implements IAnchorProvider {
-
+    
     private JPanel panel = new JPanel();
 
     private AnchorManager manager = new AnchorManager(
@@ -102,5 +106,53 @@ public class SampleElement extends BaseElement implements IAnchorProvider {
     @Override
     public AnchorManager getAnchorManager() {
         return manager;
+    }
+
+    public SampleElement() {
+        super();
+
+        addMouseListener(new MouseButtonAdapter() {
+
+            @Override
+            public void mouseClicked(MouseState state) {
+                System.out.println("Mouse clicked at: " + state.getLastChangedButton());
+            }
+            
+            @Override
+            public void mousePressed(MouseState state) {
+                System.out.println("Mouse pressed at: " + state.getLastChangedButton());
+            }
+            
+            @Override
+            public void mouseReleased(MouseState state) {
+                System.out.println("Mouse released at: " + state.getLastChangedButton());
+            }
+        });
+        
+        addMouseListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseState state) {
+                System.out.println("Mouse moved at: " + state.getLocationInSlide());
+            }
+        
+            @Override
+            public void mouseDragged(MouseState state) {
+                System.out.println("Mouse dragged at: " + state.getLocationInSlide());
+            }
+            
+        });
+        
+        addMouseListener(new MouseOccupancyAdapter() {
+            @Override
+            public void mouseEntered(MouseState state) {
+                System.out.println("Mouse entered at: " + state.getLocationInSlide());
+            }
+        
+            @Override
+            public void mouseExited(MouseState state) {
+                System.out.println("Mouse exited at: " + state.getLocationInSlide());
+            }
+            
+        });
     }
 }

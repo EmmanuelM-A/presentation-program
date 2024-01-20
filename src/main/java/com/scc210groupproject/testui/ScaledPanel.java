@@ -7,16 +7,20 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
 import com.scc210groupproject.structure.Slide;
+import com.scc210groupproject.structure.input.MouseEmulator;
 
 public class ScaledPanel extends JPanel
 {
     private BufferedImage image;
     private Point offset;
+
+    private MouseEmulator mouse = new MouseEmulator();
 
     private Slide slide;
     private double scale;
@@ -28,16 +32,9 @@ public class ScaledPanel extends JPanel
         super.setBackground(Color.gray);
         super.setLayout(null);
 
-        super.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (slide != null) {
-                    System.out.println(slide.findElmentAt(new Point(
-                        (int)((double)(e.getX() - offset.x) * scale),
-                        (int)((double)(e.getY() - offset.y) * scale))));
-                }
-            }
-        });
+        super.addMouseListener(mouse);
+        super.addMouseMotionListener(mouse);
+        super.addMouseWheelListener(mouse);
     }
 
     @Override
@@ -70,6 +67,7 @@ public class ScaledPanel extends JPanel
             (super.getHeight() - dimension.height) / 2);
         scale = (double)slide.asComp().getWidth() / (double)dimension.width;
 
+        mouse.setTargetSlide(slide, offset, scale);
         super.repaint();
     }
 
@@ -77,6 +75,7 @@ public class ScaledPanel extends JPanel
         image = null;
         slide = null;
 
+        mouse.clearTargetSlide();
         super.repaint();
     }
 }
