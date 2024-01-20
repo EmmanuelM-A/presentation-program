@@ -21,11 +21,39 @@ public class SlideImage extends JPanel {
 
     private Graphics2D g2;
 
-    public SlideImage(Slide slide) {
+    public SlideImage(Slide slide, Dimension dimension) {
         this.slide = slide;
 
-        this.slideImage = this.slide.createPreview(new Dimension(700, 300));
+        this.offset = new Point(50, 50);
+
+        this.slideImage = this.slide.createPreview(dimension);
         this.g2 = (Graphics2D) slideImage.getGraphics();
+    }
+
+    public BufferedImage getSlideImage() {
+        return this.slideImage;
+    }
+    public Slide getSlide() {
+        return slide;
+    }
+    public Point getOffset() {
+        return offset;
+    }
+    public double getScale() {
+        return scale;
+    }
+
+    public void setSlideImage(BufferedImage newSlideImage) {
+        this.slideImage = newSlideImage;
+    }
+    public void setSlide(Slide slide) {
+        this.slide = slide;
+    }
+    public void setOffset(Point offset) {
+        this.offset = offset;
+    }
+    public void setScale(double scale) {
+        this.scale = scale;
     }
 
     @Override
@@ -33,12 +61,12 @@ public class SlideImage extends JPanel {
     {
         super.paintComponent(g);
 
-        if (this.slideImage == null) return;
-
-        g.drawImage(this.slideImage, 0, 0, null);
+        if (this.slideImage != null) {
+            g.drawImage(this.slideImage, 0, 0, null);
+        }
     }
 
-    public BufferedImage updateSlideImageDimensions(MainDisplayPanel display) {
+    /*public BufferedImage updateSlideImageDimensions(MainDisplayPanel display) {
         // Calculate the aspect ratio of the slide
         double slideRatio = (double)this.slide.asComp().getWidth() / (double)slide.asComp().getHeight();
 
@@ -62,5 +90,5 @@ public class SlideImage extends JPanel {
         scale = (double)slide.asComp().getWidth() / (double)dimension.width;
 
         return newSlideImage;
-    }
+    }*/
 }

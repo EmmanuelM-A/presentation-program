@@ -6,6 +6,8 @@ import com.scc210groupproject.structure.Slide;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 /**
  * This class creates the JFrame and adds the components onto the frame.
@@ -77,7 +79,7 @@ public class ApplicationWindow extends JFrame {
 
     public ApplicationWindow() {
         this.setTitle("Presentation Program");
-        this.setSize((int)size.getWidth(), (int)size.getHeight());
+        //this.setSize((int)size.getWidth(), (int)size.getHeight());
         this.setMinimumSize(new Dimension(1000, 700));
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -93,6 +95,8 @@ public class ApplicationWindow extends JFrame {
 
         //this.slideManager = new SlideManager(this.mainDisplayPanel, this);
         SlideManager.slideManager = new SlideManager(this.mainDisplayPanel, this);
+
+        //this.mainDisplayPanel.setSlideImage(slideManager.getSlideImage());
 
         // Instantiates the class and adds a custom title bar to the frame. REQUIRES A BIT OF REPOSITIONING TO DISPLAY
         //this.customTitleBar = new TitleBar(this);

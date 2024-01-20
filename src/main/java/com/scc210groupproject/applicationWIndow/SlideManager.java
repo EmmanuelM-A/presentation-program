@@ -58,6 +58,8 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     private final JFrame uiFrame;
 //>>>>>>> 7b4e027 (Slides are now being painted onto the main display instead of being added)
 
+    private SlideImage slideImage;
+
     /**
      * Constructor for the SlideManager
      *
@@ -94,6 +96,10 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         instance = this;
 
         displayFirstSlide();
+    }
+
+    public SlideImage getSlideImage() {
+        return this.slideImage;
     }
 
     public Presentation getPresentation() {
@@ -284,7 +290,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     }*/
 
     private void displaySlide2(Slide slideToDisplay, MainDisplayPanel display) {
-        SlideImage slideImage = new SlideImage(slideToDisplay);
+        this.slideImage = new SlideImage(slideToDisplay, new Dimension(1000, 600));
 
     /*private void displaySlide2(Slide slideToDisplay) {
         mainDisplay.addComponentListener(new ComponentAdapter() {
@@ -295,6 +301,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
 
         display.revalidate();
         display.repaint();
+<<<<<<< HEAD
 
         /*display.addComponentListener(new ComponentAdapter() {
 >>>>>>> 7b4e027 (Slides are now being painted onto the main display instead of being added)
