@@ -290,7 +290,8 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     }*/
 
     private void displaySlide2(Slide slideToDisplay, MainDisplayPanel display) {
-        this.slideImage = new SlideImage(slideToDisplay, new Dimension(1000, 600));
+        this.slideImage = new SlideImage(slideToDisplay, new Dimension(1600, 900));
+        //this.slideImage = new SlideImage(slideToDisplay, new Dimension(display.getWidth(), display.getHeight()));
 
     /*private void displaySlide2(Slide slideToDisplay) {
         mainDisplay.addComponentListener(new ComponentAdapter() {

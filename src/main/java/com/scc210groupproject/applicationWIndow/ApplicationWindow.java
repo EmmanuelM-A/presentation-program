@@ -87,20 +87,22 @@ public class ApplicationWindow extends JFrame {
         this.setLayout(new GridBagLayout());
         this.getContentPane().setBackground(new Color(211, 211, 211));
 
-        this.contextMenuPanel = new ContextMenuPanel(0, 0, Color.WHITE);
+        /*this.contextMenuPanel = new ContextMenuPanel(0, 0, Color.WHITE);
 
         this.menuBarTabs = new MenuBarTabs(this, this.contextMenuPanel, 0, 0, Color.WHITE);
 
         this.mainDisplayPanel = new MainDisplayPanel(0, 0, Color.WHITE);
 
         //this.slideManager = new SlideManager(this.mainDisplayPanel, this);
-        SlideManager.slideManager = new SlideManager(this.mainDisplayPanel, this);
+        SlideManager.slideManager = new SlideManager(this.mainDisplayPanel, this);*/
 
         //this.mainDisplayPanel.setSlideImage(slideManager.getSlideImage());
+
 
         // Instantiates the class and adds a custom title bar to the frame. REQUIRES A BIT OF REPOSITIONING TO DISPLAY
         //this.customTitleBar = new TitleBar(this);
 
+        this.menuBarTabs = new MenuBarTabs(this, this.contextMenuPanel, 0, 0, Color.WHITE);
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -110,6 +112,7 @@ public class ApplicationWindow extends JFrame {
         gbc.insets = new Insets(0, 0, gap, 0);
         this.add(menuBarTabs, gbc);
 
+        this.contextMenuPanel = new ContextMenuPanel(0, 0, Color.WHITE);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 1;
@@ -119,6 +122,7 @@ public class ApplicationWindow extends JFrame {
         gbc.insets = new Insets(gap, 0, gap, gap);
         this.add(contextMenuPanel, gbc);
 
+        this.mainDisplayPanel = new MainDisplayPanel(0, 0, Color.WHITE);
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -126,12 +130,15 @@ public class ApplicationWindow extends JFrame {
         gbc.insets = new Insets(gap, gap, gap, 0);
         this.add(mainDisplayPanel, gbc);
 
+        SlideManager.slideManager = new SlideManager(this.mainDisplayPanel, this);
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.weighty = 0.01;
         gbc.insets = new Insets(gap, 0, 0, 0);
         this.add(SlideManager.slideManager.createPresentationSlider(), gbc);
+
+        //this.mainDisplayPanel.setSlideImage(slideManager.getSlideImage());
 
         setVisible(true);
 
