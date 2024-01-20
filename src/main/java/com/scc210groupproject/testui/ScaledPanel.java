@@ -17,12 +17,9 @@ public class ScaledPanel extends JPanel
 {
     private BufferedImage image;
     private Point offset;
-<<<<<<< HEAD:src/main/java/com/scc210groupproject/testui/ScaledPanel.java
 
     private MouseEmulator mouse = new MouseEmulator();
 
-=======
->>>>>>> 7b4e027 (Slides are now being painted onto the main display instead of being added):src/main/java/com/scc210groupproject/ui/ScaledPanel.java
     private Slide slide;
     private double scale;
 
