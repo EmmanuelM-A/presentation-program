@@ -1,4 +1,4 @@
-package com.scc210groupproject.structure;
+package com.scc210groupproject.structure.helper;
 
 import java.awt.Color;
 import java.awt.Component;
