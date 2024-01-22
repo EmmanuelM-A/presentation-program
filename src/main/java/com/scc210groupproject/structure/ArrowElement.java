@@ -2,10 +2,10 @@ package com.scc210groupproject.structure;
 
 import javax.swing.JPanel;
 
-import com.scc210groupproject.structure.optionalAnchors.IAnchorListener;
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
-import com.scc210groupproject.structure.optionalAnchors.AnchorReference;
+import com.scc210groupproject.structure.anchors.AnchorReference;
+import com.scc210groupproject.structure.anchors.IAnchorListener;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -42,10 +42,10 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
 
     private ArrowElement() {}
 
-    public void setPoint(Side side, Point newPoisition) {
+    public void setPoint(Side side, Point newPosition) {
         switch (side) {
             case A:
-                panel.pointA = newPoisition;
+                panel.pointA = newPosition;
                 if (anchorA != null) {
                     anchorA.removeListener(this);
                     anchorA = null;
@@ -53,7 +53,7 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
                 break;
 
             case B:
-                panel.pointB = newPoisition;
+                panel.pointB = newPosition;
                 if (anchorB != null) {
                     anchorB.removeListener(this);
                     anchorB = null;

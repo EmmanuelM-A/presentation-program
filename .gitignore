@@ -1,6 +1,6 @@
 # Standard Maven gitignore from https://github.com/github/gitignore/blob/main/Maven.gitignore
 
-target/
+target/*
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup

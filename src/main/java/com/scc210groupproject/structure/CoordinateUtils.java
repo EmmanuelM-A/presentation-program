@@ -26,7 +26,8 @@ public class CoordinateUtils {
 
     public static Point convertLocalToSlideSpace(Point local, BaseElement element)
     {
-        Point p = local;
+        int x = local.x;
+        int y = local.y;
 
         BaseElement above = element;
         while (above != null) {
@@ -34,13 +35,20 @@ public class CoordinateUtils {
                 break;
 
             Point space = above.asComp().getLocation();
-            p.setLocation(
-                space.x + p.x,
-                space.y + p.y);
+            x += space.x;
+            y += space.y;
 
             above = above.parent;
         }
 
-        return p;
+        return new Point(x, y);
+    }
+    
+
+    public static Point convertSlideToLocalSpace(Point global, BaseElement element)
+    {
+        Point offset = convertLocalToSlideSpace(new Point(0, 0), element);
+
+        return new Point(global.x - offset.x, global.y + offset.y);
     }
 }

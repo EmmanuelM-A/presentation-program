@@ -169,17 +169,18 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
         // arrowElement.setAnchor(ArrowElement.Side.B, sampleElement2.getAnchors().get(1));
         // slide.add(sampleElement2);
 
-        // sampleElement.setLocation(new Point(400, 400));
-        // sampleElement2.setSize(new Dimension(20, 10));
-        // arrowElement.setAnchor(ArrowElement.Side.A, sampleElement.getAnchors().get(3));
-//=======
-        slide.asComp().setBackground(new Color((float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1));
-        
-        // SampleElement sampleElement = new SampleElement();
-        // sampleElement.asComp().setBackground(Color.GREEN);
-        // slide.add(sampleElement);
-// end of demo/testing code
+/*
+        DraggableResizableElement DraggableResizableElement = new DraggableResizableElement();
+        DraggableResizableElement.setBackground(Color.BLACK);
+        DraggableResizableElement.setLocation(new Point(0, 0));
+        DraggableResizableElement.setSize(new Dimension(400,400));
+        slide.add(DraggableResizableElement);
 
+*/
+        sampleElement.setLocation(new Point(400, 400));
+        sampleElement2.setSize(new Dimension(20, 10));
+        arrowElement.setAnchor(ArrowElement.Side.A, sampleElement.getAnchors().get(3));
+        
         slides.add(slide);
         slide.addUpdateListener(this);
 

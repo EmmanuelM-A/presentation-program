@@ -28,7 +28,7 @@ public class Slide extends BaseElement
     public Slide(Dimension dimension) {
         this();
 
-        setDiemension(dimension);
+        setDimension(dimension);
     }
 
     Slide() {
@@ -37,7 +37,7 @@ public class Slide extends BaseElement
         panel.setLayout(null);
     }
 
-    public void setDiemension(Dimension dimension) {
+    public void setDimension(Dimension dimension) {
         panel.setSize(dimension);
         panel.setPreferredSize(dimension);
         panel.setMinimumSize(dimension);
@@ -77,7 +77,7 @@ public class Slide extends BaseElement
             reader.readInt("width"),
             reader.readInt("height"));
 
-        setDiemension(dimension);
+        setDimension(dimension);
 
         panel.setBackground(new Color(reader.readInt("background")));
     }
