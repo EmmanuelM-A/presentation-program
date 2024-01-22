@@ -1,7 +1,5 @@
 package com.scc210groupproject.action;
 
-import com.scc210groupproject.applicationWIndow.SlideManager;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

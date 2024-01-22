@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import com.scc210groupproject.applicationWIndow.SlideManager;
 import com.scc210groupproject.structure.Slide;
 import com.scc210groupproject.structure.input.MouseEmulator;
 
