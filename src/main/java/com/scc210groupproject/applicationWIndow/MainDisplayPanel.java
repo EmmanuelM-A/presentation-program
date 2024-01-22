@@ -11,21 +11,28 @@ import java.awt.image.BufferedImage;
 import com.scc210groupproject.structure.*;
 //import com.scc210groupproject.ui.ScaledPanel;
 
+/**
+ * This class handles the displaying of the slides as well as the automatic resizing of slides displayed when
+ * the frame is resized.
+ */
 public class MainDisplayPanel extends JPanel
 {
+    // The slideImage to be displayed
     private SlideImage slideImage;
-    private BufferedImage bufferedSlideImage;
-    public static MainDisplayPanel instance;
-    private Presentation currentPresentation;
 
-    private Dimension slideDimension;
+    // The corresponding bufferedSlideImage for the slideImage
+    private BufferedImage bufferedSlideImage;
+
+    // The main display panel
+    public static MainDisplayPanel instance;
+
+    // The current presentation being viewed/used in the program
+    private Presentation currentPresentation;
 
     public MainDisplayPanel(int width, int height, Color colour)
     {
         this.setBackground(colour);
         this.setPreferredSize(new Dimension(width, height));
-        //this.setLayout(new GridBagLayout());
-        //this.setLayout(new BorderLayout());
         super.setLayout(new GridLayout(0, 1));
 
         this.currentPresentation = null;
@@ -41,8 +48,6 @@ public class MainDisplayPanel extends JPanel
                 }
             }
         });
-
-        //resizeBufferedSlideImage();
 
         addComponentListener(new ComponentListener() {
             @Override
@@ -69,6 +74,48 @@ public class MainDisplayPanel extends JPanel
         instance = this;
     }
 
+    /**
+     * Gets the slideImage currently being displayed
+     * @return SlideImage
+     */
+    public SlideImage getSlideImage() {
+        return slideImage;
+    }
+
+    /**
+     * Gets the bufferedSlideImage that is painted
+     * @return BufferImage
+     */
+    public BufferedImage getBufferedSlideImage() {
+        return bufferedSlideImage;
+    }
+
+    /**
+     * Gets the current presentation
+     * @return Presentation
+     */
+    public Presentation getCurrentPresentation()
+    {
+        return this.currentPresentation;
+    }
+
+    /**
+     * Allows you to change the slideImage as well as set the bufferedSlideImage.
+     * @param newslideImage The newSlideImage you wish to change to
+     */
+    public void setSlideImage(SlideImage newslideImage) {
+        this.slideImage = newslideImage;
+        setBufferedSlideImage(this.slideImage.getBufferedSlideImage());
+    }
+
+    /**
+     * Allows you to change the bufferedSlideImage being painted to the display.
+     * @param newBufferedSlideImage The bufferImage you wish to paint
+     */
+    private void setBufferedSlideImage(BufferedImage newBufferedSlideImage) {
+        this.bufferedSlideImage = newBufferedSlideImage;
+    }
+
     public void createNewPresentation()
     {
         currentPresentation = Presentation.getOrCreate();
@@ -80,74 +127,44 @@ public class MainDisplayPanel extends JPanel
         this.removeAll();
         JPanel panel = (JPanel)currentPresentation.getSlideAtIndex(0).asComp();
         panel.setBackground(Color.ORANGE);
-        /*panel.setPreferredSize(panel.getSize());
-        panel.setMinimumSize(panel.getSize());
-        panel.setMaximumSize(panel.getSize());*/
-
         this.add(panel);
         this.revalidate();
     }
 
-    public Presentation getCurrentPresentation()
-    {
-        return this.currentPresentation;
-    }
-
+    /**
+     * Resizes the current slide image being displayed so that it grows and shrinks proportionally to the size of the frame.
+     * The offset of the image is also maintained as frame changes size.
+     */
     public void resizeBufferedSlideImage() {
+        // Get the dimensions of the display
         int width = this.getWidth();
         int height = this.getHeight();
 
         if (width > 0 && height > 0) {
+            // Calculate slide aspect ratio and display aspect ratio
             double slideRatio = (double)bufferedSlideImage.getWidth() / (double)bufferedSlideImage.getHeight();
             double displayRatio = (double) width / (double) height;
 
-            System.out.println("Slide width: " + bufferedSlideImage.getWidth() + " height: " + bufferedSlideImage.getHeight());
-
-            this.slideDimension = slideRatio > displayRatio ?
+            // Determine the slide dimension to be used
+            Dimension slideDimension = slideRatio > displayRatio ?
                     new Dimension(width, (int) ((double) width / slideRatio)) :
                     new Dimension((int) ((double) height * slideRatio), height);
 
+            // Calculate and set the new offset
             Point newOffset = new Point(
-                    (super.getWidth() - this.slideDimension.width) / 2,
-                    (super.getHeight() - this.slideDimension.height) / 2);
-
+                    (super.getWidth() - slideDimension.width) / 2,
+                    (super.getHeight() - slideDimension.height) / 2);
             slideImage.setOffset(newOffset);
 
-            //System.out.println("Offset x:" + slideImage.getOffset().x + " y: " + slideImage.getOffset().y);
+            // Set the new bufferedSlideImage to the newly created buffer image with the new slide dimensions
+            slideImage.setBufferedSlideImage(slideImage.getSlide().createPreview(slideDimension));
 
-            slideImage.setBufferedSlideImage(slideImage.getSlide().createPreview(this.slideDimension));
-
-            double newScale = (double)bufferedSlideImage.getWidth() / (double)this.slideDimension.width;
-
+            // Calculate and set the new scale
+            double newScale = (double)bufferedSlideImage.getWidth() / (double) slideDimension.width;
             slideImage.setScale(newScale);
-
-            System.out.println("New slide width: " + slideDimension.getWidth() + " height: " + slideDimension.getHeight());
 
             repaint();
         }
-    }
-
-    public SlideImage getSlideImage() {
-        return slideImage;
-    }
-
-    public BufferedImage getBufferedSlideImage() {
-        return this.bufferedSlideImage;
-    }
-
-    public void setBufferedSlideImage(BufferedImage newSlideImage) {
-        this.bufferedSlideImage = newSlideImage;
-        resizeBufferedSlideImage();
-        repaint();
-    }
-
-    public Dimension getSlideDimension() {
-        return this.slideDimension;
-    }
-
-    public void setSlideImage(SlideImage slideImage) {
-        this.slideImage = slideImage;
-        this.bufferedSlideImage = this.slideImage.getBufferedSlideImage();
     }
 }
 

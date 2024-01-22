@@ -26,55 +26,7 @@ public class ApplicationWindow extends JFrame {
     private ContextMenuPanel contextMenuPanel;
     private MainDisplayPanel mainDisplayPanel;
 
-    /*public ApplicationWindow() {
-        this.setTitle("Presentation Program");
-        this.setSize((int)size.getWidth(), (int)size.getHeight());
-        this.setMinimumSize(new Dimension(1000, 700));
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setResizable(true);
-        this.setLayout(new BorderLayout(10, 10));
-        this.getContentPane().setBackground(new Color(211, 211, 211));
-
-        // Instantiates the class and adds a custom title bar to the frame. REQUIRES A BIT OF REPOSITIONING TO DISPLAY
-        //this.customTitleBar = new TitleBar(this);
-
-        this.contextMenuPanel = new ContextMenuPanel(300, 100, Color.WHITE);
-
-        this.menuBarTabs = new MenuBarTabs(this, this.contextMenuPanel, 100, 100, Color.WHITE);
-
-        this.mainDisplayPanel = new MainDisplayPanel(100, 100, Color.WHITE);
-
-<<<<<<< HEAD
-        SlideManager.slideManager = new SlideManager(this.mainDisplayPanel);
-=======
-        this.slideManager = new SlideManager(this.mainDisplayPanel, this);
->>>>>>> 7b4e027 (Slides are now being painted onto the main display instead of being added)
-
-        //SlideImage slideImage = new SlideImage(slideManager.getCurrentSlide());
-
-        /*
-         * The adds and positions each panel/section/element/component onto the window
-         * */
-       /* this.add(menuBarTabs, BorderLayout.NORTH);
-
-        this.add(contextMenuPanel, BorderLayout.WEST);
-
-        this.add(mainDisplayPanel, BorderLayout.CENTER);
-
-        SlideManager.slideManager.createPresentationSlider();
-
-        //this.add(slideManager.createPresentationSlider(), BorderLayout.SOUTH);
-
-        //mainDisplayPanel.add(slideImage);
-
-        this.setVisible(true);
-
-    }*/
-
     GridBagConstraints gbc = new GridBagConstraints();
-
     int gap = 6;
 
     public ApplicationWindow() {
@@ -86,18 +38,6 @@ public class ApplicationWindow extends JFrame {
         this.setResizable(true);
         this.setLayout(new GridBagLayout());
         this.getContentPane().setBackground(new Color(211, 211, 211));
-
-        /*this.contextMenuPanel = new ContextMenuPanel(0, 0, Color.WHITE);
-
-        this.menuBarTabs = new MenuBarTabs(this, this.contextMenuPanel, 0, 0, Color.WHITE);
-
-        this.mainDisplayPanel = new MainDisplayPanel(0, 0, Color.WHITE);
-
-        //this.slideManager = new SlideManager(this.mainDisplayPanel, this);
-        SlideManager.slideManager = new SlideManager(this.mainDisplayPanel, this);*/
-
-        //this.mainDisplayPanel.setSlideImage(slideManager.getSlideImage());
-
 
         // Instantiates the class and adds a custom title bar to the frame. REQUIRES A BIT OF REPOSITIONING TO DISPLAY
         //this.customTitleBar = new TitleBar(this);
@@ -131,7 +71,6 @@ public class ApplicationWindow extends JFrame {
         this.add(mainDisplayPanel, gbc);
 
         SlideManager.slideManager = new SlideManager(this.mainDisplayPanel);
-
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
