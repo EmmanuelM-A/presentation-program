@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.structure.anchors.AnchorManager;
+import com.scc210groupproject.structure.anchors.IAnchorProvider;
 
 
 public class DraggableResizableElement extends BaseElement implements IAnchorProvider

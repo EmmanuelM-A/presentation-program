@@ -177,9 +177,9 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
         slide.add(DraggableResizableElement);
 
 */
-        sampleElement.setLocation(new Point(400, 400));
-        sampleElement2.setSize(new Dimension(20, 10));
-        arrowElement.setAnchor(ArrowElement.Side.A, sampleElement.getAnchors().get(3));
+        // sampleElement.setLocation(new Point(400, 400));
+        // sampleElement2.setSize(new Dimension(20, 10));
+        // arrowElement.setAnchor(ArrowElement.Side.A, sampleElement.getAnchors().get(3));
         
         slides.add(slide);
         slide.addUpdateListener(this);
