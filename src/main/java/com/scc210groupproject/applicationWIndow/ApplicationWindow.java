@@ -39,6 +39,16 @@ public class ApplicationWindow extends JFrame {
         // Instantiates the class and adds a custom title bar to the frame. REQUIRES A BIT OF REPOSITIONING TO DISPLAY
         //this.customTitleBar = new TitleBar(this);
 
+        MenuBarTabs menuBarTabs = new MenuBarTabs(this, null, 0, 0, Color.WHITE);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0.2;
+        gbc.insets = new Insets(0, 0, gap, 0);
+        this.add(menuBarTabs, gbc);
+
         ContextMenuPanel contextMenuPanel = new ContextMenuPanel(0, 0, Color.WHITE);
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -48,16 +58,6 @@ public class ApplicationWindow extends JFrame {
         gbc.weighty = 0.79;
         gbc.insets = new Insets(gap, 0, gap, gap);
         this.add(contextMenuPanel, gbc);
-
-        MenuBarTabs menuBarTabs = new MenuBarTabs(this, contextMenuPanel, 0, 0, Color.WHITE);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 1.0;
-        gbc.weighty = 0.2;
-        gbc.insets = new Insets(0, 0, gap, 0);
-        this.add(menuBarTabs, gbc);
 
         MainDisplayPanel mainDisplayPanel = new MainDisplayPanel(0, 0, Color.WHITE);
         gbc.gridx = 1;
