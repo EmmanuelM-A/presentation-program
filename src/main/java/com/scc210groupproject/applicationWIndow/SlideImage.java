@@ -19,18 +19,29 @@ public class SlideImage extends JPanel {
     // The scale
     private double scale;
 
-    public SlideImage(Slide slide, Dimension dimension) {
+    private Dimension slideDimension = new Dimension(1000, 600);
+
+    public SlideImage(Slide slide, MainDisplayPanel display) {
         this.slide = slide;
 
         this.setLayout(null);
 
-        this.bufferedSlideImage = this.slide.createPreview(dimension);
+        int width = display.getWidth();
+        int height = display.getHeight();
 
-        /*this.offset = new Point(
-                (super.getWidth() - this.bufferedSlideImage.getWidth()) / 2,
-                (super.getHeight() - this.bufferedSlideImage.getHeight()) / 2);*/
+        this.bufferedSlideImage = this.slide.createPreview(slideDimension);
 
-        this.offset = new Point(0, 0);
+        double slideRatio = (double)bufferedSlideImage.getWidth() / (double)bufferedSlideImage.getHeight();
+        double displayRatio = (double) width / (double) height;
+
+        this.slideDimension = slideRatio > displayRatio ?
+                new Dimension(width, (int) ((double) width / slideRatio)) :
+                new Dimension((int) ((double) height * slideRatio), height);
+
+        this.offset = new Point(
+                (super.getWidth() - this.slideDimension.width) / 2,
+                (super.getHeight() - this.slideDimension.height) / 2);
+
     }
 
     public BufferedImage getBufferedSlideImage() {
@@ -45,6 +56,9 @@ public class SlideImage extends JPanel {
     public double getScale() {
         return scale;
     }
+    public Dimension getSlideDimension() {
+        return slideDimension;
+    }
 
     public void setBufferedSlideImage(BufferedImage newBufferedSlideImage) {
         this.bufferedSlideImage = newBufferedSlideImage;
@@ -57,6 +71,9 @@ public class SlideImage extends JPanel {
     }
     public void setScale(double scale) {
         this.scale = scale;
+    }
+    public void setSlideDimension(Dimension slideDimension) {
+        this.slideDimension = slideDimension;
     }
 
     @Override

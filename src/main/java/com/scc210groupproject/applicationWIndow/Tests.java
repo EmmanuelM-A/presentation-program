@@ -40,7 +40,7 @@ public class Tests extends JFrame {
 
         this.mainDisplayPanel = new MainDisplayPanel(0, 0, Color.WHITE);
 
-        this.slideManager = new SlideManager(this.mainDisplayPanel, this);
+        this.slideManager = new SlideManager(this.mainDisplayPanel);
 
         gbc.gridx = 0;
         gbc.gridy = 0;

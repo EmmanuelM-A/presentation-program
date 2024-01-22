@@ -130,15 +130,14 @@ public class ApplicationWindow extends JFrame {
         gbc.insets = new Insets(gap, gap, gap, 0);
         this.add(mainDisplayPanel, gbc);
 
-        SlideManager.slideManager = new SlideManager(this.mainDisplayPanel, this);
+        SlideManager.slideManager = new SlideManager(this.mainDisplayPanel);
+
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.weighty = 0.01;
         gbc.insets = new Insets(gap, 0, 0, 0);
         this.add(SlideManager.slideManager.createPresentationSlider(), gbc);
-
-        //this.mainDisplayPanel.setSlideImage(slideManager.getSlideImage());
 
         setVisible(true);
 
