@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JTextPane;
+
 /**
  * @author wonge1
  * Class to hold an entire presentation
@@ -137,7 +139,7 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
         //Slide slide = new Slide();
         //slide.asComp().setSize(defaultSize);
 
-/*
+
         slide.setBackground(new Color((float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1));
 
         SampleElement sampleElement = new SampleElement();
@@ -146,38 +148,38 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
         sampleElement.setSize(new Dimension(100, 50));
         slide.add(sampleElement);
 
+        DraggableResizableElement draggableResizableElement = new DraggableResizableElement(new JTextPane());
+        draggableResizableElement.setLocation(new Point(0, 0));
+        draggableResizableElement.setSize(new Dimension(400,400));
+        slide.add(draggableResizableElement);
+
         ArrowElement arrowElement = new ArrowElement(new Point(20, 20), new Point(100, 200));
         arrowElement.setArrow(ArrowElement.Side.A, true, 20, 20);
         arrowElement.setArrow(ArrowElement.Side.B, true, 30, 30);
         arrowElement.setColor(Color.GREEN);
         arrowElement.setLine(false, 5, 5);
         arrowElement.setAnchor(ArrowElement.Side.A, sampleElement.getAnchors().get(1));
+        arrowElement.setAnchor(ArrowElement.Side.B, draggableResizableElement.getAnchors().get(3));
         slide.add(arrowElement);
 
-        SampleElement sampleElement2 = new SampleElement();
-        sampleElement2.setBackground(Color.BLUE);
-        sampleElement2.setLocation(new Point(100, 50));
-        sampleElement2.setSize(new Dimension(50, 200));
-        arrowElement.setAnchor(ArrowElement.Side.B, sampleElement2.getAnchors().get(1));
-        slide.add(sampleElement2);
+        // SampleElement sampleElement2 = new SampleElement();
+        // sampleElement2.setBackground(Color.BLUE);
+        // sampleElement2.setLocation(new Point(100, 50));
+        // sampleElement2.setSize(new Dimension(50, 200));
+        // arrowElement.setAnchor(ArrowElement.Side.B, sampleElement2.getAnchors().get(1));
+        // slide.add(sampleElement2);
 
-        DraggableResizableElement DraggableResizableElement = new DraggableResizableElement();
-        DraggableResizableElement.setBackground(Color.BLACK);
-        DraggableResizableElement.setLocation(new Point(0, 0));
-        DraggableResizableElement.setSize(new Dimension(400,400));
-        slide.add(DraggableResizableElement);
-
-        sampleElement.setLocation(new Point(400, 400));
-        sampleElement2.setSize(new Dimension(20, 10));
-        arrowElement.setAnchor(ArrowElement.Side.A, sampleElement.getAnchors().get(3));
+        // sampleElement.setLocation(new Point(400, 400));
+        // sampleElement2.setSize(new Dimension(20, 10));
+        // arrowElement.setAnchor(ArrowElement.Side.A, sampleElement.getAnchors().get(3));
 //=======
         slide.asComp().setBackground(new Color((float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1));
         
-        SampleElement sampleElement = new SampleElement();
-        sampleElement.asComp().setBackground(Color.GREEN);
-        slide.add(sampleElement);
+        // SampleElement sampleElement = new SampleElement();
+        // sampleElement.asComp().setBackground(Color.GREEN);
+        // slide.add(sampleElement);
 // end of demo/testing code
-*/
+
         slides.add(slide);
         slide.addUpdateListener(this);
 
