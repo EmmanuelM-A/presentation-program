@@ -18,16 +18,6 @@ public class ApplicationWindow extends JFrame {
      * to be set to the size of the screen no matter the computer.
      * */
     private final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-    /*
-     * Application Window Components
-     * */
-    private TitleBar customTitleBar;
-    private MenuBarTabs menuBarTabs;
-    private ContextMenuPanel contextMenuPanel;
-    private MainDisplayPanel mainDisplayPanel;
-
-    GridBagConstraints gbc = new GridBagConstraints();
-    int gap = 6;
 
     public ApplicationWindow() {
         this.setTitle("Presentation Program");
@@ -39,20 +29,17 @@ public class ApplicationWindow extends JFrame {
         this.setLayout(new GridBagLayout());
         this.getContentPane().setBackground(new Color(211, 211, 211));
 
+        GridBagConstraints gbc = new GridBagConstraints();
+        int gap = 6;
+
+        /*
+         * Application Window Components and their position on the frame
+         * */
+
         // Instantiates the class and adds a custom title bar to the frame. REQUIRES A BIT OF REPOSITIONING TO DISPLAY
         //this.customTitleBar = new TitleBar(this);
 
-        this.menuBarTabs = new MenuBarTabs(this, this.contextMenuPanel, 0, 0, Color.WHITE);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 1.0;
-        gbc.weighty = 0.2;
-        gbc.insets = new Insets(0, 0, gap, 0);
-        this.add(menuBarTabs, gbc);
-
-        this.contextMenuPanel = new ContextMenuPanel(0, 0, Color.WHITE);
+        ContextMenuPanel contextMenuPanel = new ContextMenuPanel(0, 0, Color.WHITE);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 1;
@@ -62,7 +49,17 @@ public class ApplicationWindow extends JFrame {
         gbc.insets = new Insets(gap, 0, gap, gap);
         this.add(contextMenuPanel, gbc);
 
-        this.mainDisplayPanel = new MainDisplayPanel(0, 0, Color.WHITE);
+        MenuBarTabs menuBarTabs = new MenuBarTabs(this, contextMenuPanel, 0, 0, Color.WHITE);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0.2;
+        gbc.insets = new Insets(0, 0, gap, 0);
+        this.add(menuBarTabs, gbc);
+
+        MainDisplayPanel mainDisplayPanel = new MainDisplayPanel(0, 0, Color.WHITE);
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -70,7 +67,7 @@ public class ApplicationWindow extends JFrame {
         gbc.insets = new Insets(gap, gap, gap, 0);
         this.add(mainDisplayPanel, gbc);
 
-        SlideManager.slideManager = new SlideManager(this.mainDisplayPanel);
+        SlideManager.slideManager = new SlideManager(mainDisplayPanel);
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
