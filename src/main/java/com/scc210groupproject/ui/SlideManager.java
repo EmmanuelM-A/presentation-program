@@ -18,8 +18,8 @@ import java.util.LinkedList;
  *
  * @author madukaag
  */
-public class SlideManager implements ActionListener, IChangePresentationListener, ICreateSlideListener, IDiscardSlideListener, IUpdateSlideListener {
-
+public class SlideManager implements ActionListener/*, IChangePresentationListener, ICreateSlideListener, IDiscardSlideListener, IUpdateSlideListener*/
+{
     public static SlideManager slideManager;
 
     // The current presentation being viewed by the program
@@ -51,9 +51,6 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     private final MainDisplayPanel mainDisplay;
 
     public static SlideManager instance;
-    private Dimension slideDimension;
-
-    private SlideImage slideImage;
 
     // This list represents the slideImages that are painted onto the display
     private final LinkedList<SlideImage> slideImages = new LinkedList<>();
@@ -83,15 +80,13 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         // The main display panel where slides will be added viewed and edited
         this.mainDisplay = mainDisplay;
 
-        Presentation.addCreateSlideListener(this);
+        /*Presentation.addCreateSlideListener(this);
         Presentation.addUpdateSlideListener(this);
         Presentation.addDiscardSlideListener(this);
-        Presentation.addChangePresentationListener(this);
+        Presentation.addChangePresentationListener(this);*/
 
         displayFirstSlide();
         instance = this;
-
-        //displayFirstSlide();
     }
 
     /**
@@ -262,16 +257,15 @@ public class SlideManager implements ActionListener, IChangePresentationListener
      * @param display The display the slide will be added and removed from
      */
     private void displaySlide(SlideImage slideToDisplay, MainDisplayPanel display) {
-        //this.slideImage = slideToDisplay;
+        // Set the slideImage on the main display
         display.setSlideImage(slideToDisplay);
-
+        // Remove previous slide displayed
         display.removeAll();
-
+        // Display new slide
         display.add(slideToDisplay);
-
+        // Repaint display
         display.revalidate();
         display.repaint();
-
         // Update slideImage dimension on frame resize
         display.resizeBufferedSlideImage();
     }
@@ -470,7 +464,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         }
     }
 
-    @Override
+    /*@Override
     public void onChangePresentation(Presentation current, Presentation discarded) {
 
     }
@@ -510,5 +504,5 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     @Override
     public void onUpdateSlide(int index, Slide slide) {
 
-    }
+    }*/
 }

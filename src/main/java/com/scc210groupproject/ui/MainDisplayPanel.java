@@ -2,14 +2,11 @@ package com.scc210groupproject.ui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
 import com.scc210groupproject.structure.*;
-//import com.scc210groupproject.ui.ScaledPanel;
+
 
 /**
  * This class handles the displaying of the slides as well as the automatic resizing of slides displayed when

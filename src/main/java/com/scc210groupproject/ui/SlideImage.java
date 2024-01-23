@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * This class converts slides into images and handles the painting of the slides.
+ */
 public class SlideImage extends JPanel {
     // The image of current slide being displayed
     private BufferedImage bufferedSlideImage;
@@ -19,8 +22,14 @@ public class SlideImage extends JPanel {
     // The scale
     private double scale;
 
+    // Default slide dimensions (changed later once displayed)
     private Dimension slideDimension = new Dimension(1000, 600);
 
+    /**
+     * Allows you to create an instance of the SlideImage class
+     * @param slide A slide
+     * @param display An instance of the main display panel
+     */
     public SlideImage(Slide slide, MainDisplayPanel display) {
         this.slide = slide;
 
@@ -44,34 +53,76 @@ public class SlideImage extends JPanel {
 
     }
 
+    /**
+     * Gets the buffer image of the slide that has been made.
+     * @return BufferImage
+     */
     public BufferedImage getBufferedSlideImage() {
         return this.bufferedSlideImage;
     }
+    /**
+     * Gets the slide that was used to create the slideImage.
+     * @return Slide
+     */
     public Slide getSlide() {
         return slide;
     }
+    /**
+     * Gets the offset of the image painted to the display.
+     * @return Point
+     */
     public Point getOffset() {
         return offset;
     }
+    /**
+     * Gets the scale.
+     * @return double
+     */
     public double getScale() {
         return scale;
     }
+    /**
+     * Gets the (default) slide dimension.
+     * @return Dimension
+     */
     public Dimension getSlideDimension() {
         return slideDimension;
     }
 
+    /**
+     * Allows you to change the buffer image of the slide image.
+     * @param newBufferedSlideImage The bufferImage you wish to change to
+     */
     public void setBufferedSlideImage(BufferedImage newBufferedSlideImage) {
         this.bufferedSlideImage = newBufferedSlideImage;
     }
+    /**
+     * Allows you to change the slide being used to create the slideImage
+     * @param slide A slide instance
+     */
     public void setSlide(Slide slide) {
         this.slide = slide;
     }
+    /**
+     * Allows you to change the offset of the image being painted
+     * @param offset The new offset
+     */
     public void setOffset(Point offset) {
         this.offset = offset;
     }
+
+    /**
+     * Allows you to change the scale
+     * @param scale The new scale
+     */
     public void setScale(double scale) {
         this.scale = scale;
     }
+
+    /**
+     * Allows you to change the slide dimension being used
+     * @param slideDimension The new slide
+     */
     public void setSlideDimension(Dimension slideDimension) {
         this.slideDimension = slideDimension;
     }
