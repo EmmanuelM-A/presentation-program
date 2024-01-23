@@ -31,7 +31,7 @@ public class NewImageElementAction implements ActionListener
 
         String path = fileChooser.getSelectedFile().getAbsolutePath();
 
-        ImageElement imageElement = new ImageElement(/*new ImageIcon(path)*/);
+        ImageElement imageElement = new ImageElement(new ImageIcon(path));
 
         MainDisplayPanel.instance.getDisplayedSlide().add(imageElement);
     }

@@ -14,10 +14,8 @@ public class ImageElement extends DraggableResizableElement
 {
     private ImageIcon image;
 
-    public ImageElement()
+    public ImageElement(ImageIcon image)
     {
-        image = new ImageIcon("/home/tloxley/Year2/SCC210/scc210-2324-grp-62/src/main/resources/images/add-image.png");
-
         panel.add(new JLabel(image), BorderLayout.CENTER);
 
         class ResizeListener extends ComponentAdapter

@@ -111,7 +111,7 @@ public enum GeneralButtons {
         Image image = icon.getImage();
 
         // Resize the Image
-        Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_FAST);
 
         // Return the resized ImageIcon
         return new ImageIcon(resizedImage);

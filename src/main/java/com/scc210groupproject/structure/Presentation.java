@@ -151,10 +151,10 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
         textElement.setSize(new Dimension(400,400));
         slide.add(textElement);
 
-        ImageElement imageElement = new ImageElement();
-        imageElement.setLocation(new Point(0, 0));
-        imageElement.setSize(new Dimension(400,400));
-        slide.add(imageElement);
+        // ImageElement imageElement = new ImageElement();
+        // imageElement.setLocation(new Point(0, 0));
+        // imageElement.setSize(new Dimension(400,400));
+        // slide.add(imageElement);
 
         ArrowElement arrowElement = new ArrowElement(new Point(20, 20), new Point(100, 200));
         arrowElement.setArrow(ArrowElement.Side.A, true, 20, 20);
