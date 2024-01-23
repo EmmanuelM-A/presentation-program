@@ -1,5 +1,7 @@
 package com.scc210groupproject.structure;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JTextPane;
 
 public class TextElement extends DraggableResizableElement
@@ -8,6 +10,6 @@ public class TextElement extends DraggableResizableElement
     {
         super();
 
-        super.panel.add(new JTextPane());
+        super.panel.add(new JTextPane(), BorderLayout.CENTER);
     }
 }

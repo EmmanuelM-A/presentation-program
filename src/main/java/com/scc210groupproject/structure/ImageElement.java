@@ -1,18 +1,36 @@
 package com.scc210groupproject.structure;
 
 import java.awt.BorderLayout;
+import java.awt.Image;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
+
 public class ImageElement extends DraggableResizableElement
 {
-        public ImageElement()
+    private ImageIcon image;
+
+    public ImageElement()
     {
-        super();
+        image = new ImageIcon("/home/tloxley/Year2/SCC210/scc210-2324-grp-62/src/main/resources/images/add-image.png");
 
-        ImageIcon imageY = new ImageIcon("/home/tloxley/Year2/SCC210/scc210-2324-grp-62/src/main/resources/images/add-image.png");
+        panel.add(new JLabel(image), BorderLayout.CENTER);
 
-        super.panel.add(new JLabel(imageY), BorderLayout.CENTER);
+        class ResizeListener extends ComponentAdapter
+        {
+            public void componentResized(ComponentEvent e)
+            {
+                ImageElement.this.image = GeneralButtons.resizeIcon(image, panel.getWidth(), panel.getHeight());
+                ImageElement.this.panel.removeAll();
+                ImageElement.this.panel.add(new JLabel(image), BorderLayout.CENTER);
+                ImageElement.this.panel.revalidate();
+            }
+        }
+
+        panel.addComponentListener(new ResizeListener());
     }
 }
