@@ -94,6 +94,7 @@ public enum GeneralButtons {
         try {
             return new ImageIcon(filePath);
         } catch (Exception e) {
+            System.out.println("Could not load icons");
             return null;
         }
     }

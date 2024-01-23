@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.JTextPane;
-
 /**
  * @author wonge1
  * Class to hold an entire presentation
@@ -148,10 +146,15 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
         sampleElement.setSize(new Dimension(100, 50));
         slide.add(sampleElement);
 
-        DraggableResizableElement draggableResizableElement = new DraggableResizableElement(new JTextPane());
-        draggableResizableElement.setLocation(new Point(0, 0));
-        draggableResizableElement.setSize(new Dimension(400,400));
-        slide.add(draggableResizableElement);
+        TextElement textElement = new TextElement();
+        textElement.setLocation(new Point(0, 0));
+        textElement.setSize(new Dimension(400,400));
+        slide.add(textElement);
+
+        ImageElement imageElement = new ImageElement();
+        imageElement.setLocation(new Point(0, 0));
+        imageElement.setSize(new Dimension(400,400));
+        slide.add(imageElement);
 
         ArrowElement arrowElement = new ArrowElement(new Point(20, 20), new Point(100, 200));
         arrowElement.setArrow(ArrowElement.Side.A, true, 20, 20);
@@ -159,7 +162,7 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
         arrowElement.setColor(Color.GREEN);
         arrowElement.setLine(false, 5, 5);
         arrowElement.setAnchor(ArrowElement.Side.A, sampleElement.getAnchors().get(1));
-        arrowElement.setAnchor(ArrowElement.Side.B, draggableResizableElement.getAnchors().get(3));
+        arrowElement.setAnchor(ArrowElement.Side.B, textElement.getAnchors().get(3));
         slide.add(arrowElement);
 
         // SampleElement sampleElement2 = new SampleElement();
@@ -170,11 +173,11 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
         // slide.add(sampleElement2);
 
 /*
-        DraggableResizableElement DraggableResizableElement = new DraggableResizableElement();
-        DraggableResizableElement.setBackground(Color.BLACK);
-        DraggableResizableElement.setLocation(new Point(0, 0));
-        DraggableResizableElement.setSize(new Dimension(400,400));
-        slide.add(DraggableResizableElement);
+        TextElement TextElement = new TextElement();
+        TextElement.setBackground(Color.BLACK);
+        TextElement.setLocation(new Point(0, 0));
+        TextElement.setSize(new Dimension(400,400));
+        slide.add(TextElement);
 
 */
         // sampleElement.setLocation(new Point(400, 400));

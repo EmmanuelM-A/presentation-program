@@ -11,7 +11,6 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -24,19 +23,18 @@ import com.scc210groupproject.structure.helper.SelectionBorder;
 
 public class DraggableResizableElement extends BaseElement implements IAnchorProvider
 {
-    private JPanel panel;
+    protected JPanel panel;
     private SelectionBorder selectionBorder = new SelectionBorder();
     private Point clicked;
     private int operation;
 
-    public DraggableResizableElement(JComponent content)
+    public DraggableResizableElement()
     {
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.setBorder(new EmptyBorder(10,10,10,10));
         panel.setOpaque(false);
 
-        panel.add(content);
         
         panel.addMouseListener(new MouseAdapter()
         {

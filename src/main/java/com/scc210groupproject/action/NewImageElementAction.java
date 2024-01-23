@@ -12,12 +12,13 @@ import javax.swing.JTextPane;
 import javax.swing.JWindow;
 
 import com.scc210groupproject.structure.DraggableResizableElement;
+import com.scc210groupproject.structure.ImageElement;
 import com.scc210groupproject.testui.MainDisplayPanel;
 
-public class NewImageElementAction implements ActionListener{
+public class NewImageElementAction implements ActionListener
+{
 
     @Override
-    
     public void actionPerformed(ActionEvent _)
     {
         JWindow fileWindow = new JWindow();
@@ -30,10 +31,9 @@ public class NewImageElementAction implements ActionListener{
 
         String path = fileChooser.getSelectedFile().getAbsolutePath();
 
-        DraggableResizableElement imageElement = new DraggableResizableElement(new ImageIcon(path));
+        ImageElement imageElement = new ImageElement(/*new ImageIcon(path)*/);
 
         MainDisplayPanel.instance.getDisplayedSlide().add(imageElement);
-
     }
     
 }
