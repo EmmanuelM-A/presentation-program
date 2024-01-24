@@ -6,60 +6,61 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.structure.anchors.AnchorManager;
 import com.scc210groupproject.structure.anchors.IAnchorProvider;
 import com.scc210groupproject.structure.helper.SelectionBorder;
+import com.scc210groupproject.structure.input.MouseEmulator.MouseState;
+import com.scc210groupproject.structure.input.adapters.MouseButtonAdapter;
+import com.scc210groupproject.structure.input.adapters.MouseMotionAdapter;
+import com.scc210groupproject.structure.input.adapters.MouseOccupancyAdapter;
 
 
 public class DraggableResizableElement extends BaseElement implements IAnchorProvider
 {
     protected JPanel panel;
     private SelectionBorder selectionBorder = new SelectionBorder();
-    private Point clicked;
+    private Point last = null;
     private int operation;
 
     public DraggableResizableElement()
     {
+        super();
+
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        panel.setBorder(new EmptyBorder(10,10,10,10));
-        panel.setOpaque(false);
+        panel.setBorder(null);
+        //panel.setOpaque(true);
 
-        
-        panel.addMouseListener(new MouseAdapter()
-        {
-            public void mouseEntered(MouseEvent e)
-            {
-                panel.setBorder(selectionBorder);
+        BaseElement self = this;
+        super.addMouseListener(new MouseButtonAdapter() {
+            @Override
+            public void mousePressed(MouseState state) {
+                Point local = CoordinateUtils.convertSlideToLocalSpace(state.getLocationInSlide(), self);
+
+                System.out.println(local);
+                operation = selectionBorder.findPoint(local.x, local.y);
+                System.out.println(operation);
             }
 
-            public void mouseExited(MouseEvent e)
-            {
-                panel.setBorder(new EmptyBorder(10,10,10,10));
-            }
-
-            public void mousePressed(MouseEvent e)
-            {
-                clicked = e.getPoint();
-                operation = selectionBorder.findPoint((int)clicked.getX(), (int)clicked.getY());
+            @Override
+            public void mouseReleased(MouseState state) {
+                last = null;
             }
         });
+        
+        super.addMouseListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseState state) {
+                Point local = CoordinateUtils.convertSlideToLocalSpace(state.getLocationInSlide(), self);
 
-        panel.addMouseMotionListener(new MouseAdapter()
-        {
-            public void mouseMoved(MouseEvent e)
-            {
-                switch(selectionBorder.findPoint((int)e.getX(), (int)e.getY())){
+                switch(selectionBorder.findPoint(local.x, local.y)){
                     
                     case 0:
                         panel.setCursor(new Cursor(Cursor.N_RESIZE_CURSOR));
@@ -90,16 +91,18 @@ public class DraggableResizableElement extends BaseElement implements IAnchorPro
                 }
             }
 
-            public void mouseDragged(MouseEvent e)
-            {
-                panel.setBorder(selectionBorder);
+            @Override
+            public void mouseDragged(MouseState state) {
+                Point global = state.getLocationInSlide();
 
-                int changeY = (int)(e.getY() - clicked.getY());
-                int changeX = (int)(e.getX() - clicked.getX());
+                int changeY = last != null ? global.y - last.y : 0;
+                int changeX = last != null ? global.x - last.x : 0;
 
-                System.out.println("changeX: "+ changeX + " changeY: " + changeY);
-                System.out.println("e.getX: " + e.getX() + " e.getY: " + e.getY());
-                System.out.println("clicked.getX: " + clicked.getX() + " clicked.getY: " + clicked.getY());
+                last = global;
+
+                //System.out.println("changeX: "+ changeX + " changeY: " + changeY);
+                System.out.println("e.getX: " + global.x + " e.getY: " + global.y);
+                System.out.println("clicked.getX: " + last.x + " clicked.getY: " + last.y);
 
                 switch(operation){
 
@@ -116,7 +119,6 @@ public class DraggableResizableElement extends BaseElement implements IAnchorPro
                         {
                             panel.setLocation(panel.getX(), panel.getY() + changeY);
                             panel.setSize(panel.getWidth() + changeX, panel.getHeight() - changeY);
-                            clicked = new Point(e.getX(), (int)clicked.getY());
                             panel.revalidate();
                         }
                         break;   
@@ -125,7 +127,6 @@ public class DraggableResizableElement extends BaseElement implements IAnchorPro
                         {
                             panel.setLocation(panel.getX(), panel.getY());
                             panel.setSize(panel.getWidth() + changeX, panel.getHeight());
-                            clicked = new Point(e.getX(), (int)clicked.getY());
                             panel.revalidate();
                         }
                         break;
@@ -134,7 +135,6 @@ public class DraggableResizableElement extends BaseElement implements IAnchorPro
                         {
                             panel.setLocation(panel.getX(), panel.getY());
                             panel.setSize(panel.getWidth() + changeX, panel.getHeight() + changeY);
-                            clicked = new Point(e.getX(), e.getY());
                             panel.revalidate();
                         }
                         break;
@@ -143,7 +143,6 @@ public class DraggableResizableElement extends BaseElement implements IAnchorPro
                         {
                             panel.setLocation(panel.getX(), panel.getY());
                             panel.setSize(panel.getWidth(), panel.getHeight() + changeY);
-                            clicked = new Point((int)clicked.getX(), e.getY());
                             panel.revalidate();
                         }
                         break;
@@ -152,7 +151,6 @@ public class DraggableResizableElement extends BaseElement implements IAnchorPro
                         {
                             panel.setLocation(panel.getX() + changeX, panel.getY());
                             panel.setSize(panel.getWidth() - changeX, panel.getHeight() + changeY);
-                            clicked = new Point((int)clicked.getX(), e.getY());
                             panel.revalidate();
                         }
                         break;   
@@ -175,8 +173,25 @@ public class DraggableResizableElement extends BaseElement implements IAnchorPro
                     case 8:
                         panel.setLocation(panel.getX() + changeX, panel.getY() + changeY);
                 }
+                self.notifyUpdate(self);
                 manager.onChangeSize();
             }
+        });
+        
+        super.addMouseListener(new MouseOccupancyAdapter() {
+            @Override
+            public void mouseEntered(MouseState state) {
+                last = null;
+                panel.setBorder(selectionBorder);
+                self.notifyUpdate(self);
+            }
+        
+            @Override
+            public void mouseExited(MouseState state) {
+                panel.setBorder(null);
+                self.notifyUpdate(self);
+            }
+            
         });
     }
 
