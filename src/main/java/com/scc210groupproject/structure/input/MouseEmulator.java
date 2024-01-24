@@ -31,10 +31,15 @@ public class MouseEmulator implements MouseListener, MouseMotionListener, MouseW
     private Point offset = new Point();
     private double scale = 1f;
 
-    public void setTargetSlide(Slide slide, Point offsetFromFrame, double scaleOfSlide) {
+    public void setTargetSlide(Slide slide) {
         currentSlide = slide;
         currentElement = null;
 
+        tryEnableMovement();
+    }
+
+    public void setPositioning(Point offsetFromFrame, double scaleOfSlide) {
+        
         offset = offsetFromFrame;
         scale = scaleOfSlide;
 

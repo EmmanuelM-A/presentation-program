@@ -59,8 +59,10 @@ public class MouseManager {
                 for (Object l : listeners)
                     try {
                         type.getDeclaredMethods()[0].invoke(l, state);
-                    } catch (IllegalAccessException | InvocationTargetException | SecurityException e) {
+                    } catch (IllegalAccessException | SecurityException e) {
                         throw new IllegalArgumentException("provided type is not a IMouseListener");
+                    } catch (InvocationTargetException e) {
+                        throw new IllegalArgumentException("check method used for " + type.getName());
                     }
             }
             else {
@@ -77,6 +79,7 @@ public class MouseManager {
         Class<?> c = listener.getClass();
 
         for (Map.Entry<Class<?>, MouseController> controller : controllers.entrySet()) {
+            
             if (controller.getKey().isAssignableFrom(c))
                 controller.getValue().addListener(listener);
         }

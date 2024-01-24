@@ -109,8 +109,6 @@ public class SampleElement extends BaseElement implements IAnchorProvider {
     }
 
     public SampleElement() {
-        super();
-
         addMouseListener(new MouseButtonAdapter() {
 
             @Override
