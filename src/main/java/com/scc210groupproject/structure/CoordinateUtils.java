@@ -49,6 +49,6 @@ public class CoordinateUtils {
     {
         Point offset = convertLocalToSlideSpace(new Point(0, 0), element);
 
-        return new Point(global.x - offset.x, global.y + offset.y);
+        return new Point(global.x - offset.x, global.y - offset.y);
     }
 }
