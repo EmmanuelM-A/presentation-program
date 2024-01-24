@@ -305,13 +305,27 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     }
 
     private void deleteSlide() {
+        /*
+        Get the selected slide (slide clicked)
+        Delete selected slide from slides list
+        then remove selected slide from display
+        Check if there is slides before and after it.
+        if before display slide before else display slide after
+        if there are none at all display nothing
+         */
         Slide currentSlide = getCurrentSlide();
         presentation.removeSlide(currentSlide);
 
-        showPrevSlide();
-
-        System.out.println("is this running?");
-
+        if(getPrevSlide(currentSlide) != null) {
+            showPrevSlide();
+            System.out.println("Waluigi!");
+        } else if(getNextSlide(currentSlide) != null) {
+            showNextSlide();
+            System.out.println("Waluigi!");
+        } else {
+            // Show nothing an empty presentation
+            System.out.println("Show nothing, an empty presentation!");
+        }
     }
 
     /** POSSIBLE CHANGES WILL BE MADE HERE
@@ -466,7 +480,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
             //addNewSlide();
         } else if (e.getSource() == this.deleteSlide) { // Delete (a selected) Slide
             // System.out.println("Do Something!");
-            deleteSlide();
+            //deleteSlide();
         } else if (e.getSource() == this.present) { // Start Presentation mode at the beginning
             System.out.println("Do Something Else!");
         } else if (e.getSource() == this.presentAt) { // Start Presentation mode at the selected slide
@@ -516,7 +530,22 @@ public class SlideManager implements ActionListener, IChangePresentationListener
 
     @Override
     public void onDiscardSlide(int index, Slide slide) {
+        if(slide == getCurrentSlide()) {
+            showSlideAtIndex(index > presentation.getSlideCount() ? index - 1 : index);
+        }
+        /*Slide currentSlide = getCurrentSlide();
+        presentation.removeSlide(currentSlide);
 
+        if(getPrevSlide(currentSlide) != null) {
+            showPrevSlide();
+            System.out.println("Waluigi!");
+        } else if(getNextSlide(currentSlide) != null) {
+            showNextSlide();
+            System.out.println("Waluigi!");
+        } else {
+            // Show nothing an empty presentation
+            System.out.println("Show nothing, an empty presentation!");
+        }*/
     }
 
     @Override
