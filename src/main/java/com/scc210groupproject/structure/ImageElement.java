@@ -8,7 +8,7 @@ import java.awt.event.ComponentEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import com.scc210groupproject.applicationWIndow.helper.GeneralButtons;
+import com.scc210groupproject.ui.helper.GeneralButtons;
 
 public class ImageElement extends DraggableResizableElement
 {
