@@ -18,8 +18,8 @@ import java.util.LinkedList;
  *
  * @author madukaag
  */
-public class SlideManager implements ActionListener, IChangePresentationListener, ICreateSlideListener, IDiscardSlideListener, IUpdateSlideListener {
-
+public class SlideManager implements ActionListener, IChangePresentationListener, ICreateSlideListener, IDiscardSlideListener, IUpdateSlideListener
+{
     public static SlideManager slideManager;
 
     // The current presentation being viewed by the program
@@ -51,9 +51,6 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     private final MainDisplayPanel mainDisplay;
 
     public static SlideManager instance;
-    private Dimension slideDimension;
-
-    private SlideImage slideImage;
 
     // This list represents the slideImages that are painted onto the display
     private final LinkedList<SlideImage> slideImages = new LinkedList<>();
@@ -90,8 +87,6 @@ public class SlideManager implements ActionListener, IChangePresentationListener
 
         displayFirstSlide();
         instance = this;
-
-        //displayFirstSlide();
     }
 
     /**
@@ -186,6 +181,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         Slide firstSlide = presentation.getSlideAtIndex(0);
 
         SlideImage firstSlideImage = new SlideImage(firstSlide, this.mainDisplay);
+        this.slideImages.add(firstSlideImage);
 
         int firstSlideInViewerNo = this.slidesViewer.size() + 1;
         JButton firstSlideInViewer = createSlideForViewer(firstSlideInViewerNo);
@@ -194,7 +190,6 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         this.viewSliderPanel.add(firstSlideInViewer);
 
         displaySlide(firstSlideImage, this.mainDisplay);
-        this.slideImages.add(firstSlideImage);
 
         System.out.println("New Slide - " + (this.presentation.getSlideCount()) + "!");
     }
@@ -247,7 +242,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
             if(nextSlide != null) {
                 // Display the next slide
                 displaySlide(nextSlide, this.mainDisplay);
-                this.mainDisplay.repaint();
+                //this.mainDisplay.repaint();
             } else {
                 System.out.println("PROBLEM - NEXT SLIDE IS NULL!");
             }
@@ -262,16 +257,15 @@ public class SlideManager implements ActionListener, IChangePresentationListener
      * @param display The display the slide will be added and removed from
      */
     private void displaySlide(SlideImage slideToDisplay, MainDisplayPanel display) {
-        //this.slideImage = slideToDisplay;
-        display.setSlideImage(slideToDisplay);
-
+        // Set the slideImage on the main display
+        display.setCurrentSlideImage(slideToDisplay);
+        // Remove previous slide displayed
         display.removeAll();
-
+        // Display new slide
         display.add(slideToDisplay);
-
+        // Repaint display
         display.revalidate();
         display.repaint();
-
         // Update slideImage dimension on frame resize
         display.resizeBufferedSlideImage();
     }
@@ -283,36 +277,55 @@ public class SlideManager implements ActionListener, IChangePresentationListener
      * and finally display the new slide onto the screen.
      * */
     private void addNewSlide() {
+        // Create new slide
+        Slide newSlide = this.presentation.newSlide();
 
-        /*// Keeps track of the slide currently being displayed
+        // Keeps track of the slide currently being displayed
         this.currentSlide = this.presentation.getSlideCount();
         this.currentSlideIndex = this.currentSlide - 1;
-
-        SlideImage newSlideImage = new SlideImage(newSlide, this.mainDisplay);
-
-        this.slideImages.add(newSlideImage);
 
         // -------- This code is only used to differentiate slides added
         newSlide.asComp().setBackground(new Color((float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1));
         // --------
 
+        SlideImage newSlideImage = new SlideImage(newSlide, this.mainDisplay);
 
+        this.slideImages.add(newSlideImage);
 
         // The code below will display the new slide added to the main display panel if displayNewSlide equals true
         if(this.displayNewSlide) {
             // Display new slide
             displaySlide(newSlideImage, this.mainDisplay);
-        }*/
+        }
+
+        // Add slide to presentation slider
+        addSlideToViewer();
+
+        System.out.println("New Slide - " + (this.presentation.getSlideCount()) + "!");
     }
 
     private void deleteSlide() {
+        /*
+        Get the selected slide (slide clicked)
+        Delete selected slide from slides list
+        then remove selected slide from display
+        Check if there is slides before and after it.
+        if before display slide before else display slide after
+        if there are none at all display nothing
+         */
         Slide currentSlide = getCurrentSlide();
         presentation.removeSlide(currentSlide);
 
-        showPrevSlide();
-
-        System.out.println("is this running?");
-
+        if(getPrevSlide(currentSlide) != null) {
+            showPrevSlide();
+            System.out.println("Waluigi!");
+        } else if(getNextSlide(currentSlide) != null) {
+            showNextSlide();
+            System.out.println("Waluigi!");
+        } else {
+            // Show nothing an empty presentation
+            System.out.println("Show nothing, an empty presentation!");
+        }
     }
 
     /** POSSIBLE CHANGES WILL BE MADE HERE
@@ -323,10 +336,15 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     private JButton createSlideForViewer(int slideNo) {
         JButton slide = new JButton("Slide " + slideNo);
 
+        //System.out.println("SlideImage List size: " + slideImages.size());
+
         slide.setPreferredSize(new Dimension(200, 115));
         slide.setBackground(Color.white);
         slide.setFocusable(false);
         slide.setIcon(new ImageIcon(presentation.getSlideAtIndex(slideNo - 1).createPreview(new Dimension(200, 115))));
+        /*SlideImage slideImage = slideImages.get(slideNo - 1);
+        //slideImage.setSlideDimension(new Dimension(200, 115));
+        slide.setIcon(new ImageIcon(slideImage.getBufferedSlideImage()));*/
 
         slide.addActionListener(new ActionListener() {
             @Override
@@ -379,10 +397,10 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     private SlideImage getNextSlide(Slide slide) {
         int indexOfSelectedSlide = this.presentation.getSlides().indexOf(slide);
         int indexOfNextSlide = indexOfSelectedSlide + 1;
-        //System.out.println("Selected slide: " + indexOfSelectedSlide + " Next slide after selected slide: " + indexOfNextSlide);
+        System.out.println("Selected slide: " + indexOfSelectedSlide + " Next slide after selected slide: " + indexOfNextSlide);
 
         if(indexOfNextSlide <= this.presentation.getSlideCount()) {
-            return this.slideImages.get(indexOfNextSlide);
+            return this.slideImages.get(indexOfNextSlide -1);
         } else {
             return null;
         }
@@ -462,7 +480,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
             //addNewSlide();
         } else if (e.getSource() == this.deleteSlide) { // Delete (a selected) Slide
             // System.out.println("Do Something!");
-            deleteSlide();
+            //deleteSlide();
         } else if (e.getSource() == this.present) { // Start Presentation mode at the beginning
             System.out.println("Do Something Else!");
         } else if (e.getSource() == this.presentAt) { // Start Presentation mode at the selected slide
@@ -470,41 +488,64 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         }
     }
 
+    public void showSlideAtIndex(int index) {
+        Slide currentSlide = this.presentation.getSlideAtIndex(index);
+        SlideImage currentSlideImage = new SlideImage(currentSlide, this.mainDisplay);
+
+        displaySlide(currentSlideImage, this.mainDisplay);
+    }
+
     @Override
     public void onChangePresentation(Presentation current, Presentation discarded) {
+        if (current != null && current.getSlideCount() > 0) {
+            showSlideAtIndex(0);
+            return;
+        }
 
+        this.mainDisplay.setCurrentSlideImage(null);
+        this.mainDisplay.clearPaintedSlide();
     }
 
     @Override
     public void onCreateSlide(int index, Slide slide) {
-
-        // Create new slide
-        //Slide newSlide = this.presentation.newSlide();
-
-        // Keeps track of the slide currently being displayed
-        //this.currentSlide = this.presentation.getSlideCount();
-        //this.currentSlideIndex = this.currentSlide - 1;
-
         // -------- This code is only used to differentiate slides added
         slide.asComp().setBackground(new Color((float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1));
         // --------
 
+        SlideImage newSlideImage = new SlideImage(slide, this.mainDisplay);
+
+        this.slideImages.add(newSlideImage);
+
         // The code below will display the new slide added to the main display panel if displayNewSlide equals true
         if(this.displayNewSlide) {
             // Display new slide
-            //displaySlide(slide, this.mainDisplay);
+            displaySlide(newSlideImage, this.mainDisplay);
         }
 
         // Add slide to presentation slider
         addSlideToViewer();
 
         System.out.println("New Slide - " + (this.presentation.getSlideCount()) + "!");
-
     }
 
     @Override
     public void onDiscardSlide(int index, Slide slide) {
+        if(slide == getCurrentSlide()) {
+            showSlideAtIndex(index > presentation.getSlideCount() ? index - 1 : index);
+        }
+        /*Slide currentSlide = getCurrentSlide();
+        presentation.removeSlide(currentSlide);
 
+        if(getPrevSlide(currentSlide) != null) {
+            showPrevSlide();
+            System.out.println("Waluigi!");
+        } else if(getNextSlide(currentSlide) != null) {
+            showNextSlide();
+            System.out.println("Waluigi!");
+        } else {
+            // Show nothing an empty presentation
+            System.out.println("Show nothing, an empty presentation!");
+        }*/
     }
 
     @Override

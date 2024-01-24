@@ -2,14 +2,11 @@ package com.scc210groupproject.ui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
 import com.scc210groupproject.structure.*;
-//import com.scc210groupproject.ui.ScaledPanel;
+
 
 /**
  * This class handles the displaying of the slides as well as the automatic resizing of slides displayed when
@@ -18,7 +15,7 @@ import com.scc210groupproject.structure.*;
 public class MainDisplayPanel extends JPanel
 {
     // The slideImage to be displayed
-    private SlideImage slideImage;
+    private SlideImage currentSlideImage;
 
     // The corresponding bufferedSlideImage for the slideImage
     private BufferedImage bufferedSlideImage;
@@ -41,10 +38,10 @@ public class MainDisplayPanel extends JPanel
         super.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (slideImage.getSlide() != null) {
-                    System.out.println(slideImage.getSlide().findElmentAt(new Point(
-                            (int)((double)(e.getX() - slideImage.getOffset().x) * slideImage.getScale()),
-                            (int)((double)(e.getY() - slideImage.getOffset().y) * slideImage.getScale()))));
+                if (currentSlideImage.getSlide() != null) {
+                    System.out.println(currentSlideImage.getSlide().findElmentAt(new Point(
+                            (int)((double)(e.getX() - currentSlideImage.getOffset().x) * currentSlideImage.getScale()),
+                            (int)((double)(e.getY() - currentSlideImage.getOffset().y) * currentSlideImage.getScale()))));
                 }
             }
         });
@@ -78,8 +75,8 @@ public class MainDisplayPanel extends JPanel
      * Gets the slideImage currently being displayed
      * @return SlideImage
      */
-    public SlideImage getSlideImage() {
-        return slideImage;
+    public SlideImage getCurrentSlideImage() {
+        return currentSlideImage;
     }
 
     /**
@@ -103,9 +100,9 @@ public class MainDisplayPanel extends JPanel
      * Allows you to change the slideImage as well as set the bufferedSlideImage.
      * @param newslideImage The newSlideImage you wish to change to
      */
-    public void setSlideImage(SlideImage newslideImage) {
-        this.slideImage = newslideImage;
-        setBufferedSlideImage(this.slideImage.getBufferedSlideImage());
+    public void setCurrentSlideImage(SlideImage newslideImage) {
+        this.currentSlideImage = newslideImage;
+        setBufferedSlideImage(this.currentSlideImage.getBufferedSlideImage());
     }
 
     /**
@@ -154,17 +151,27 @@ public class MainDisplayPanel extends JPanel
             Point newOffset = new Point(
                     (super.getWidth() - slideDimension.width) / 2,
                     (super.getHeight() - slideDimension.height) / 2);
-            slideImage.setOffset(newOffset);
+            currentSlideImage.setOffset(newOffset);
 
             // Set the new bufferedSlideImage to the newly created buffer image with the new slide dimensions
-            slideImage.setBufferedSlideImage(slideImage.getSlide().createPreview(slideDimension));
+            currentSlideImage.setBufferedSlideImage(currentSlideImage.getSlide().createPreview(slideDimension));
 
             // Calculate and set the new scale
             double newScale = (double)bufferedSlideImage.getWidth() / (double) slideDimension.width;
-            slideImage.setScale(newScale);
+            currentSlideImage.setScale(newScale);
 
             repaint();
         }
+    }
+
+    /**
+     * Removes the painted image from display
+     */
+    public void clearPaintedSlide() {
+        this.bufferedSlideImage = null;
+        this.currentSlideImage.setSlide(null);
+
+        super.repaint();
     }
 }
 
