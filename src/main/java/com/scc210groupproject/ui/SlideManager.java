@@ -267,7 +267,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         display.revalidate();
         display.repaint();
         // Update slideImage dimension on frame resize
-        display.resizeBufferedSlideImage();
+        display.updateBufferedSlideImage();
     }
 
 

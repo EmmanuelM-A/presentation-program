@@ -6,13 +6,15 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
 import com.scc210groupproject.structure.*;
+import com.scc210groupproject.structure.eventListeners.IUpdateSlideListener;
+import com.scc210groupproject.structure.input.MouseEmulator;
 
 
 /**
  * This class handles the displaying of the slides as well as the automatic resizing of slides displayed when
  * the frame is resized.
  */
-public class MainDisplayPanel extends JPanel
+public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
 {
     // The slideImage to be displayed
     private SlideImage currentSlideImage;
@@ -25,9 +27,25 @@ public class MainDisplayPanel extends JPanel
 
     // The current presentation being viewed/used in the program
     private Presentation currentPresentation;
+    
+    private MouseEmulator mouseEmulator;
+
+    private MouseEmulator getMouseEmulator() {
+        if (mouseEmulator == null)
+            mouseEmulator = new MouseEmulator();
+        return mouseEmulator;
+    }
 
     public MainDisplayPanel(int width, int height, Color colour)
     {
+        mouseEmulator = new MouseEmulator();
+
+        super.addMouseListener(mouseEmulator);
+        super.addMouseMotionListener(mouseEmulator);
+        super.addMouseWheelListener(mouseEmulator);
+
+        Presentation.addUpdateSlideListener(this);
+
         this.setBackground(colour);
         this.setPreferredSize(new Dimension(width, height));
         super.setLayout(new GridLayout(0, 1));
@@ -35,21 +53,12 @@ public class MainDisplayPanel extends JPanel
         this.currentPresentation = null;
         createNewPresentation();
 
-        super.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (currentSlideImage.getSlide() != null) {
-                    System.out.println(currentSlideImage.getSlide().findElmentAt(new Point(
-                            (int)((double)(e.getX() - currentSlideImage.getOffset().x) * currentSlideImage.getScale()),
-                            (int)((double)(e.getY() - currentSlideImage.getOffset().y) * currentSlideImage.getScale()))));
-                }
-            }
-        });
 
+        
         addComponentListener(new ComponentListener() {
             @Override
             public void componentResized(ComponentEvent componentEvent) {
-                resizeBufferedSlideImage();
+                updateBufferedSlideImage();
             }
 
             @Override
@@ -101,6 +110,12 @@ public class MainDisplayPanel extends JPanel
      * @param newslideImage The newSlideImage you wish to change to
      */
     public void setCurrentSlideImage(SlideImage newslideImage) {
+            
+        Slide newSlide = newslideImage != null ? newslideImage.getSlide() : null;
+        Slide currentSlide = currentSlideImage != null ? currentSlideImage.getSlide() : null;
+        if (newSlide != currentSlide)
+            mouseEmulator.setTargetSlide(newSlide);
+
         this.currentSlideImage = newslideImage;
         setBufferedSlideImage(this.currentSlideImage.getBufferedSlideImage());
     }
@@ -132,14 +147,17 @@ public class MainDisplayPanel extends JPanel
      * Resizes the current slide image being displayed so that it grows and shrinks proportionally to the size of the frame.
      * The offset of the image is also maintained as frame changes size.
      */
-    public void resizeBufferedSlideImage() {
+    public void updateBufferedSlideImage() {
+
+        Component slideComp = currentSlideImage.getSlide().asComp();
+
         // Get the dimensions of the display
         int width = this.getWidth();
         int height = this.getHeight();
 
         if (width > 0 && height > 0) {
             // Calculate slide aspect ratio and display aspect ratio
-            double slideRatio = (double)bufferedSlideImage.getWidth() / (double)bufferedSlideImage.getHeight();
+            double slideRatio = (double)slideComp.getWidth() / (double)slideComp.getHeight();
             double displayRatio = (double) width / (double) height;
 
             // Determine the slide dimension to be used
@@ -160,6 +178,9 @@ public class MainDisplayPanel extends JPanel
             double newScale = (double)bufferedSlideImage.getWidth() / (double) slideDimension.width;
             currentSlideImage.setScale(newScale);
 
+            
+            mouseEmulator.setPositioning(newOffset, (double)slideComp.getWidth() / (double)slideDimension.width);
+
             repaint();
         }
     }
@@ -172,6 +193,11 @@ public class MainDisplayPanel extends JPanel
         this.currentSlideImage.setSlide(null);
 
         super.repaint();
+    }
+
+    @Override
+    public void onUpdateSlide(int index, Slide slide) {
+        updateBufferedSlideImage();
     }
 }
 
