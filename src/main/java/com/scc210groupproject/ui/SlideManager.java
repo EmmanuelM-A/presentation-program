@@ -550,6 +550,6 @@ public class SlideManager implements ActionListener, IChangePresentationListener
 
     @Override
     public void onUpdateSlide(int index, Slide slide) {
-
+        
     }
 }

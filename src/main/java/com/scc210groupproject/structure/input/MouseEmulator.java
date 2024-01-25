@@ -104,8 +104,6 @@ public class MouseEmulator implements MouseListener, MouseMotionListener, MouseW
                 (int) ((double) (event.getX() - offset.x) * scale),
                 (int) ((double) (event.getY() - offset.y) * scale));
 
-        System.out.println(currentState.locationInSlide);
-
         BaseElement located = currentSlide != null ? currentSlide.findElmentAt(currentState.locationInSlide) : null;
 
         if (located != currentElement) {

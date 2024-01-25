@@ -172,14 +172,12 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
         // arrowElement.setAnchor(ArrowElement.Side.B, sampleElement2.getAnchors().get(1));
         // slide.add(sampleElement2);
 
-/*
         TextElement TextElement = new TextElement();
         TextElement.setBackground(Color.BLACK);
         TextElement.setLocation(new Point(0, 0));
         TextElement.setSize(new Dimension(400,400));
         slide.add(TextElement);
 
-*/
         // sampleElement.setLocation(new Point(400, 400));
         // sampleElement2.setSize(new Dimension(20, 10));
         // arrowElement.setAnchor(ArrowElement.Side.A, sampleElement.getAnchors().get(3));

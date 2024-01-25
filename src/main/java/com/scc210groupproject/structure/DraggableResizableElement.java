@@ -44,9 +44,7 @@ public class DraggableResizableElement extends BaseElement implements IAnchorPro
             public void mousePressed(MouseState state) {
                 Point local = CoordinateUtils.convertSlideToLocalSpace(state.getLocationInSlide(), self);
 
-                System.out.println(local);
                 operation = selectionBorder.findPoint(local.x, local.y);
-                System.out.println(operation);
             }
 
             @Override
@@ -99,10 +97,6 @@ public class DraggableResizableElement extends BaseElement implements IAnchorPro
                 int changeX = last != null ? global.x - last.x : 0;
 
                 last = global;
-
-                //System.out.println("changeX: "+ changeX + " changeY: " + changeY);
-                System.out.println("e.getX: " + global.x + " e.getY: " + global.y);
-                System.out.println("clicked.getX: " + last.x + " clicked.getY: " + last.y);
 
                 switch(operation){
 
