@@ -108,19 +108,19 @@ public class MouseEmulator implements MouseListener, MouseMotionListener, MouseW
 
         if (located != currentElement) {
             if (currentElement != null)
-                currentElement.passMouseEvent(IMouseExited.class, currentState);
+                currentElement.passMouseEvent(IMouseExited.class, currentElement, currentState);
                 
             currentElement = located;
             
             if (currentElement != null)
-                currentElement.passMouseEvent(IMouseEntered.class, currentState);
+                currentElement.passMouseEvent(IMouseEntered.class, currentElement, currentState);
 
         }
     }
 
     private void disableMovement() {
         if (currentElement != null) {
-            currentElement.passMouseEvent(IMouseExited.class, currentState);
+            currentElement.passMouseEvent(IMouseExited.class, currentElement, currentState);
             currentElement = null;
         }
 
@@ -134,7 +134,7 @@ public class MouseEmulator implements MouseListener, MouseMotionListener, MouseW
         currentState.lastChangedButton = button;
 
         if (currentElement != null)
-            currentElement.passMouseEvent(IMousePressed.class, currentState);
+            currentElement.passMouseEvent(IMousePressed.class, currentElement, currentState);
             
     }
 
@@ -145,8 +145,8 @@ public class MouseEmulator implements MouseListener, MouseMotionListener, MouseW
         currentState.lastChangedButton = button;
 
         if (currentElement != null) {
-            currentElement.passMouseEvent(IMouseReleased.class, currentState);
-            currentElement.passMouseEvent(IMouseClicked.class, currentState);
+            currentElement.passMouseEvent(IMouseReleased.class, currentElement, currentState);
+            currentElement.passMouseEvent(IMouseClicked.class, currentElement, currentState);
         }
 
         draggedElement = null;
@@ -157,7 +157,7 @@ public class MouseEmulator implements MouseListener, MouseMotionListener, MouseW
         currentState.wheelDelta = e.getPreciseWheelRotation();
 
         if (currentElement != null)
-            currentElement.passMouseEvent(IMouseWheel.class, currentState);
+            currentElement.passMouseEvent(IMouseWheel.class, currentElement, currentState);
     }
 
     @Override
@@ -179,7 +179,7 @@ public class MouseEmulator implements MouseListener, MouseMotionListener, MouseW
             draggedElement = currentElement;
 
         if (draggedElement != null)
-            draggedElement.passMouseEvent(IMouseDragged.class, currentState);
+            draggedElement.passMouseEvent(IMouseDragged.class, draggedElement, currentState);
     }
 
     @Override
@@ -187,7 +187,7 @@ public class MouseEmulator implements MouseListener, MouseMotionListener, MouseW
         processMovement(e);
 
         if (currentElement != null)
-            currentElement.passMouseEvent(IMouseMoved.class, currentState);
+            currentElement.passMouseEvent(IMouseMoved.class, currentElement, currentState);
     }
 
     @Override

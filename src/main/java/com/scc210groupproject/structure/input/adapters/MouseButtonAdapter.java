@@ -8,15 +8,15 @@ import com.scc210groupproject.structure.input.listeners.IMouseReleased;
 public class MouseButtonAdapter implements IMouseClicked, IMousePressed, IMouseReleased {
 
     @Override
-    public void mouseReleased(MouseState state) {
+    public void mouseReleased(Object target, MouseState state) {
     }
 
     @Override
-    public void mousePressed(MouseState state) {
+    public void mousePressed(Object target, MouseState state) {
     }
 
     @Override
-    public void mouseClicked(MouseState state) {
+    public void mouseClicked(Object target, MouseState state) {
     }
     
 }
