@@ -2,6 +2,8 @@ package com.scc210groupproject.ui.menuBarTabs.toolBars;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public abstract class ToolBar extends JToolBar {
 
@@ -11,7 +13,7 @@ public abstract class ToolBar extends JToolBar {
      * @param icon The button's icon
      * @return JButton
      */
-    public JButton makeToolbarButton(String title, ImageIcon icon) {
+    public JButton makeToolbarButton(String title, ImageIcon icon, JPanel recent) {
         JButton button = new JButton(title, icon);
 
         // For button focus frame colour use Look & Feel to change its focus colour
@@ -22,6 +24,13 @@ public abstract class ToolBar extends JToolBar {
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
         button.setOpaque(false);
         button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                addToRecents(recent, button);
+            }
+        });
 
         return button;
     }
@@ -39,5 +48,9 @@ public abstract class ToolBar extends JToolBar {
         toolBar.addSeparator();
         toolBar.add(separator);
         toolBar.addSeparator();
+    }
+
+    public void addToRecents(JPanel recent, JButton lastUsed) {
+
     }
 }
