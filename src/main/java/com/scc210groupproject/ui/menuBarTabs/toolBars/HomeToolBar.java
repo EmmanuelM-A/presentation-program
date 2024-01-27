@@ -20,15 +20,15 @@ public class HomeToolBar extends ToolBar {
         private static final JPanel recentsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         private ArrayList<JButton> recentsList = new ArrayList<>();
-        private final int capcity = 10;
+        private final int CAPACITY = 10;
 
         public HomeToolBar() {
                 this.setRollover(true);
-                this.setLayout(new FlowLayout(FlowLayout.LEFT));
+                this.setMaximumSize(new Dimension(1500, 100));
 
-                //recentsPanel.setBackground(Color.GREEN);
+                recentsPanel.setBackground(Color.WHITE);
                 JScrollPane recents = new JScrollPane(recentsPanel);
-                recents.setPreferredSize(new Dimension(500, 90));
+                recents.setMaximumSize(new Dimension(500, 90));
                 recents.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
                 newSlide = makeToolbarButton(GeneralButtons.NEW_SLIDE.getTitle(), GeneralButtons.NEW_SLIDE.getIcon(), recentsPanel);
@@ -87,48 +87,51 @@ public class HomeToolBar extends ToolBar {
         }
 
         @Override
-        public void addToRecents(JPanel recent, JButton lastUsed) {
+        public void addToRecents(JPanel recents, JButton lastUsed) {
                 // Get button title and icon
                 String buttonTitle = lastUsed.getText();
                 ImageIcon buttonIcon = (ImageIcon) lastUsed.getIcon();
 
                 // Make a copy of the button
-                JButton copyOfButton = makeToolbarButton(buttonTitle, buttonIcon, recent);
+                JButton copyOfButton = makeToolbarButton(buttonTitle, buttonIcon, recents);
 
-                // If the list is full remove the oldest button
-                if(recentsList.size() == capcity) {
-                        JButton oldest = recentsList.get(0);
-                        recentsPanel.remove(oldest);
-                        recentsList.remove(0);
-
-                        recentsPanel.repaint();
-                        recentsPanel.revalidate();
+                // Check if the capacity has not been reached but if so remove the oldest button
+                if (recents.getComponentCount() >= CAPACITY) {
+                        recents.remove(recents.getComponentCount() - 1);
                 }
 
                 /*
-                        Only add the button if it doesn't already exist in the list.
-                        This is done by comparing every button's text with the copyButton's
-                        text to see if there is a match.
+                If button is present in recents, remove it at its position then add it again to the start of recents.
+                If it isn't just add it to the start of recents.
                  */
-                if(recentsList.isEmpty()) {
-                        recentsList.add(copyOfButton);
-                        recentsPanel.add(copyOfButton);
+                if(containsButton(recents, lastUsed)) {
+                        recents.remove(getButtonIfMatch(recents, lastUsed));
+                        recents.add(copyOfButton, 0);
                 } else {
-                        for(int i = 0; i < recentsList.size(); i++) {
-                                if(!Objects.equals(recentsList.get(i).getText(), lastUsed.getText()) && !recentsList.contains(lastUsed)) {
-                                        recentsList.add(copyOfButton);
-                                        recentsPanel.add(copyOfButton);
-                                }
-                        }
+                        recents.add(copyOfButton, 0);
                 }
 
                 // Update recents panel
-                recent.repaint();
-                recent.revalidate();
+                recents.repaint();
+                recents.revalidate();
 
         }
 
-        /*private void checkIfButtonExists(JButton button) {
+        private boolean containsButton(JPanel recents, JButton button) {
+                for(Component component : recents.getComponents()) {
+                        if (component instanceof JButton && Objects.equals(((JButton) component).getText(), button.getText())) {
+                                return true;
+                        }
+                }
+                return false;
+        }
 
-        }*/
+        private JButton getButtonIfMatch(JPanel recents, JButton button) {
+                for(Component component : recents.getComponents()) {
+                        if (component instanceof JButton && Objects.equals(((JButton) component).getText(), button.getText())) {
+                                return (JButton) component;
+                        }
+                }
+                return null;
+        }
 }

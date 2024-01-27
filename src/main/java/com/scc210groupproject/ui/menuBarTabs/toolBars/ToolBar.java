@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 
 public abstract class ToolBar extends JToolBar {
 
+    protected JPanel recents;
+
     /**
      * Creates and returns a toolbar button with its title and icon set
      * @param title The name/title of the button
@@ -42,7 +44,7 @@ public abstract class ToolBar extends JToolBar {
     public void separator(JToolBar toolBar) {
         JSeparator separator = new JSeparator();
         // REMINDER - USE LOOK AND FEEL TO CHANGE SEPARATOR COLOUR
-        separator.setMaximumSize(new Dimension(1, 60));
+        separator.setMaximumSize(new Dimension(1, 80));
         separator.setOrientation(JSeparator.VERTICAL);
 
         toolBar.addSeparator();
