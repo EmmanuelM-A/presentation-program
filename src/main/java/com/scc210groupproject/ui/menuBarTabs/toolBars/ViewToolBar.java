@@ -19,12 +19,12 @@ public class ViewToolBar extends ToolBar {
     private JPanel animationsPanel = new JPanel();
     private JPanel transistionsPanel = new JPanel();
 
-    public ViewToolBar() {
+    public ViewToolBar(JPanel recentsPanel) {
         this.setRollover(true);
 
-        present = makeToolbarButton(GeneralButtons.PRESENT.getTitle(), GeneralButtons.PRESENT.getIcon(), HomeToolBar.getRecentPanel());
+        present = makeToolbarButton(GeneralButtons.PRESENT.getTitle(), GeneralButtons.PRESENT.getIcon(), recentsPanel);
 
-        presentAt = makeToolbarButton(GeneralButtons.PRESENT_AT.getTitle(), GeneralButtons.PRESENT_AT.getIcon(), HomeToolBar.getRecentPanel());
+        presentAt = makeToolbarButton(GeneralButtons.PRESENT_AT.getTitle(), GeneralButtons.PRESENT_AT.getIcon(), recentsPanel);
 
         animationsPanel.setBackground(Color.BLUE);
         animations = new JScrollPane(animationsPanel);

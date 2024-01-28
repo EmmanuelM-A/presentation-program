@@ -17,19 +17,14 @@ import java.util.Queue;
 public class HomeToolBar extends ToolBar {
         private JButton newSlide, newFile, openFile, saveFile, clipboard, select, paste, settings, spellChecker, help;
 
-        private static final JPanel recentsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-
-        private ArrayList<JButton> recentsList = new ArrayList<>();
-        private final int CAPACITY = 10;
-
-        public HomeToolBar() {
+        public HomeToolBar(JPanel recentsPanel) {
                 this.setRollover(true);
                 this.setMaximumSize(new Dimension(1500, 100));
 
                 recentsPanel.setBackground(Color.WHITE);
-                JScrollPane recents = new JScrollPane(recentsPanel);
-                recents.setMaximumSize(new Dimension(500, 90));
-                recents.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                JScrollPane recentsScrollPane = new JScrollPane(recentsPanel);
+                recentsScrollPane.setMaximumSize(new Dimension(500, 90));
+                recentsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
                 newSlide = makeToolbarButton(GeneralButtons.NEW_SLIDE.getTitle(), GeneralButtons.NEW_SLIDE.getIcon(), recentsPanel);
 
@@ -61,7 +56,7 @@ public class HomeToolBar extends ToolBar {
 
                 separator(this);
 
-                this.add(recents);
+                this.add(recentsScrollPane);
 
                 separator(this);
 
@@ -83,10 +78,10 @@ public class HomeToolBar extends ToolBar {
         }
 
         public static JPanel getRecentPanel() {
-                return recentsPanel;
+                return null;
         }
 
-        @Override
+        /*@Override
         public void addToRecents(JPanel recents, JButton lastUsed) {
                 // Get button title and icon
                 String buttonTitle = lastUsed.getText();
@@ -100,10 +95,9 @@ public class HomeToolBar extends ToolBar {
                         recents.remove(recents.getComponentCount() - 1);
                 }
 
-                /*
-                If button is present in recents, remove it at its position then add it again to the start of recents.
-                If it isn't just add it to the start of recents.
-                 */
+                // If button is present in recents, remove it at its position then add it again to the start of recents.
+                // If it isn't just add it to the start of recents.
+
                 if(containsButton(recents, lastUsed)) {
                         recents.remove(getButtonIfMatch(recents, lastUsed));
                         recents.add(copyOfButton, 0);
@@ -114,7 +108,6 @@ public class HomeToolBar extends ToolBar {
                 // Update recents panel
                 recents.repaint();
                 recents.revalidate();
-
         }
 
         private boolean containsButton(JPanel recents, JButton button) {
@@ -133,5 +126,5 @@ public class HomeToolBar extends ToolBar {
                         }
                 }
                 return null;
-        }
+        }*/
 }

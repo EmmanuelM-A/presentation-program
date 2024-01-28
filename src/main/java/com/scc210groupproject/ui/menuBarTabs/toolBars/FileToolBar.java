@@ -13,22 +13,22 @@ import javax.swing.*;
 public class FileToolBar extends ToolBar {
     private JButton newFile, openFile, saveFile, export, format, print, help;
 
-    public FileToolBar() {
+    public FileToolBar(JPanel recentsPanel) {
         this.setRollover(true);
 
-        newFile = makeToolbarButton(GeneralButtons.NEW.getTitle(), GeneralButtons.NEW.getIcon(), HomeToolBar.getRecentPanel());
+        newFile = makeToolbarButton(GeneralButtons.NEW.getTitle(), GeneralButtons.NEW.getIcon(), recentsPanel);
 
-        openFile = makeToolbarButton(GeneralButtons.OPEN.getTitle(), GeneralButtons.OPEN.getIcon(), HomeToolBar.getRecentPanel());
+        openFile = makeToolbarButton(GeneralButtons.OPEN.getTitle(), GeneralButtons.OPEN.getIcon(), recentsPanel);
 
-        saveFile = makeToolbarButton(GeneralButtons.SAVE.getTitle(), GeneralButtons.SAVE.getIcon(), HomeToolBar.getRecentPanel());
+        saveFile = makeToolbarButton(GeneralButtons.SAVE.getTitle(), GeneralButtons.SAVE.getIcon(), recentsPanel);
 
-        export = makeToolbarButton(GeneralButtons.EXPORT.getTitle(), GeneralButtons.EXPORT.getIcon(), HomeToolBar.getRecentPanel());
+        export = makeToolbarButton(GeneralButtons.EXPORT.getTitle(), GeneralButtons.EXPORT.getIcon(), recentsPanel);
 
-        format = makeToolbarButton(GeneralButtons.FORMAT.getTitle(), GeneralButtons.FORMAT.getIcon(), HomeToolBar.getRecentPanel());
+        format = makeToolbarButton(GeneralButtons.FORMAT.getTitle(), GeneralButtons.FORMAT.getIcon(), recentsPanel);
 
-        print = makeToolbarButton(GeneralButtons.PRINT.getTitle(), GeneralButtons.PRINT.getIcon(), HomeToolBar.getRecentPanel());
+        print = makeToolbarButton(GeneralButtons.PRINT.getTitle(), GeneralButtons.PRINT.getIcon(), recentsPanel);
 
-        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), HomeToolBar.getRecentPanel());
+        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), recentsPanel);
 
         this.add(newFile);
         this.add(openFile);
