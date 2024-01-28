@@ -1,5 +1,6 @@
 package com.scc210groupproject.ui;
 
+import com.scc210groupproject.action.DeleteSlideAction;
 import com.scc210groupproject.action.NewSlideAction;
 import com.scc210groupproject.structure.*;
 
@@ -155,6 +156,8 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         this.addNewSlide.addActionListener(new NewSlideAction());
 
         this.deleteSlide = new JButton("Delete Slide");
+        this.deleteSlide.addActionListener(this);
+        
         this.present = new JButton("Present");
         this.presentAt = new JButton("Present From");
         //this.noSlides = new JLabel("Slides: ");
@@ -207,7 +210,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
      * Displays the previous slide in the presentation slider given that there is at least one slide
      * present.
      * */
-    private void showPrevSlide()
+    private boolean showPrevSlide()
     {
         if(this.currentSlide > 1) {
             // Get the current slide
@@ -217,25 +220,29 @@ public class SlideManager implements ActionListener, IChangePresentationListener
             this.currentSlide--;
             this.currentSlideIndex--;
 
+            //System.out.println("Previous Slide: " + this.currentSlide);
+
             // Get the previous slide if there is one
             SlideImage prevSlide = getPrevSlide(currentSlide);
 
             if(prevSlide != null) {
                 // Display the previous slide
                 displaySlide(prevSlide, this.mainDisplay);
+                return true;
             } else {
                 System.out.println("PROBLEM - PREV SLIDE IS NULL!");
             }
         } else {
             System.out.println("First slide reached!");
         }
+        return false;
     }
 
     /** PROBLEM HERE
      * Displays the next slide in the presentation slider given that the last slide has not been
      * reached yet.
      * */
-    private void showNextSlide()
+    private boolean showNextSlide()
     {
         if(this.currentSlide < presentation.getSlideCount()) {
             // Get the current slide
@@ -245,18 +252,22 @@ public class SlideManager implements ActionListener, IChangePresentationListener
             this.currentSlide++;
             this.currentSlideIndex++;
 
+            //System.out.println("Next Slide: " + this.currentSlide);
+
             // Get the next slide
             SlideImage nextSlide = getNextSlide(currentSlide);
 
             if(nextSlide != null) {
                 // Display the next slide
                 displaySlide(nextSlide, this.mainDisplay);
+                return true;
             } else {
                 System.out.println("PROBLEM - NEXT SLIDE IS NULL!");
             }
         } else {
             System.out.println("Last slide reached!");
         }
+        return false;
     }
 
     /**
@@ -319,18 +330,23 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         if before display slide before else display slide after
         if there are none at all display nothing
          */
-        Slide currentSlide = getCurrentSlide();
-        presentation.removeSlide(currentSlide);
 
-        if(getPrevSlide(currentSlide) != null) {
-            showPrevSlide();
-            System.out.println("Waluigi!");
-        } else if(getNextSlide(currentSlide) != null) {
-            showNextSlide();
-            System.out.println("Waluigi!");
+        Slide currentSlide = getCurrentSlide();
+        // Delete from presentation slides
+        //this.presentation.removeSlide(currentSlide);
+        this.presentation.getSlides().remove(currentSlide);
+        // Delete from slide images
+        this.slideImages.remove(getSelectedSlide(currentSlideIndex));
+        // Delete from slidesViewer
+        this.slidesViewer.remove(currentSlideIndex);
+
+        if(showPrevSlide()) {
+            System.out.println("Slide " + + (this.currentSlide + 1) + " deleted - Now displaying previous slide!");
+        } else if(showNextSlide()) {
+            System.out.println("Slide  " + (this.currentSlide + 1) + " deleted - Now displaying next slide!");
         } else {
             // Show nothing an empty presentation
-            System.out.println("Show nothing, an empty presentation!");
+            System.out.println("Slide " + + (this.currentSlide + 1) + " deleted - Presentation empty!");
         }
     }
 
@@ -377,14 +393,14 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         this.viewSliderPanel.revalidate();
     }
     /**
-     * Gets the slideImage before the selected slide. If there is none it returns null.
+     * Gets the slide's slideImage before the selected slide. If there is none it returns null.
      * @param slide The current/selected slide
      * @return SlideImage
      */
     private SlideImage getPrevSlide(Slide slide) {
-        int indexOfSelectedSlide = this.presentation.getSlides().indexOf(slide);
+        int indexOfSelectedSlide = this.currentSlideIndex;
         int indexOfPrevSlide = indexOfSelectedSlide - 1;
-        //System.out.println("Selected slide: " + indexOfSelectedSlide + " Previous slide before selected slide: " + indexOfPrevSlide);
+        System.out.println("Selected slide index: " + indexOfSelectedSlide + " Previous slide index before selected slide: " + indexOfPrevSlide);
 
         if(indexOfPrevSlide >= 0) {
             return this.slideImages.get(indexOfPrevSlide);
@@ -399,12 +415,12 @@ public class SlideManager implements ActionListener, IChangePresentationListener
      * @return SlideImage
      */
     private SlideImage getNextSlide(Slide slide) {
-        int indexOfSelectedSlide = this.presentation.getSlides().indexOf(slide);
+        int indexOfSelectedSlide = this.currentSlideIndex;
         int indexOfNextSlide = indexOfSelectedSlide + 1;
-        System.out.println("Selected slide: " + indexOfSelectedSlide + " Next slide after selected slide: " + indexOfNextSlide);
+        System.out.println("Selected slide index: " + indexOfSelectedSlide + " Next slide index after selected slide: " + indexOfNextSlide);
 
         if(indexOfNextSlide <= this.presentation.getSlideCount()) {
-            return this.slideImages.get(indexOfNextSlide -1);
+            return this.slideImages.get(indexOfNextSlide);
         } else {
             return null;
         }
@@ -463,8 +479,11 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     private void displaySelectedSlide(int slideNo) {
         SlideImage selectedSlide = getSelectedSlide(slideNo - 1);
 
-        currentSlide = slideNo;
-        currentSlideIndex = slideNo - 1;
+        this.currentSlide = slideNo;
+        this.currentSlideIndex = slideNo - 1;
+
+        System.out.println("Slide " + this.currentSlide + " has been selected!");
+        System.out.println("Slide index is " + this.currentSlideIndex);
 
         // Display selected slide
         displaySlide(selectedSlide, this.mainDisplay);
@@ -479,7 +498,6 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         } else if (e.getSource() == this.addNewSlide) { // Add New Slide
             //addNewSlide();
         } else if (e.getSource() == this.deleteSlide) { // Delete (a selected) Slide
-            // System.out.println("Do Something!");
             deleteSlide();
         } else if (e.getSource() == this.present) { // Start Presentation mode at the beginning
             System.out.println("Do Something Else!");
@@ -508,6 +526,10 @@ public class SlideManager implements ActionListener, IChangePresentationListener
 
     @Override
     public void onCreateSlide(int index, Slide slide) {
+        // Keeps track of the slide currently being displayed
+        this.currentSlide = this.presentation.getSlideCount();
+        this.currentSlideIndex = this.currentSlide - 1;
+
         // -------- This code is only used to differentiate slides added
         slide.asComp().setBackground(new Color((float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1));
         // --------
@@ -539,19 +561,26 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         /*if(slide == getCurrentSlide()) {
             showSlideAtIndex(index > presentation.getSlideCount() ? index - 1 : index);
         }*/
-        Slide currentSlide = getCurrentSlide();
-        presentation.removeSlide(currentSlide);
 
-        if(getPrevSlide(currentSlide) != null) {
-            showPrevSlide();
-            System.out.println("Waluigi!");
-        } else if(getNextSlide(currentSlide) != null) {
-            showNextSlide();
-            System.out.println("Waluigi!");
+        // Delete from presentation slides
+        //this.presentation.removeSlide(currentSlide);
+        // Delete from slide images
+        /*this.slideImages.remove(getSelectedSlide(currentSlideIndex));
+        // Delete from slidesViewer
+        this.slidesViewer.remove(currentSlideIndex);
+
+        System.out.println("Slide " + this.currentSlide + " has been deleted!");
+
+        if(getPrevSlide(slide) != null) {
+            //showPrevSlide();
+            System.out.println("Slide deleted - Now displaying previous slide!");
+        } else if(getNextSlide(slide) != null) {
+            //showNextSlide();
+            System.out.println("Slide deleted - Now displaying next slide!");
         } else {
             // Show nothing an empty presentation
             System.out.println("Show nothing, an empty presentation!");
-        }
+        }*/
     }
 
     @Override
