@@ -349,6 +349,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         slide.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                //highlightSelectedSlide(slide);
                 displaySelectedSlide(slideNo);
                 //System.out.println("Slide " + slideNo + " Clicked!");
             }
@@ -443,7 +444,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
      * Highlights a selected slide in the slide viewer
      * @param JButton Slide
      * */
-    /*private void highlightSelectedSlide(JButton Slide) {
+    private void highlightSelectedSlide(JButton slide, int slideNo) {
         /*
          * Get selected slide
          * Highlight ONLY that selected slide
@@ -452,9 +453,18 @@ public class SlideManager implements ActionListener, IChangePresentationListener
          * from slides array filter out clicked slide and set isSelected slide to true
          * other slides set false
          * apply action to the isSelected slide like display, highlight slide
-         *
-        PSSlide.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
-    }*/
+         */
+        /*SlideImage selectedSlide = getSelectedSlide(slideNo);
+
+        selectedSlide.setIsSelected(true);*/
+
+
+
+
+
+        //slide.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
+
+    }
 
     /**
      * Displays the selected slideImage to the main display
@@ -480,7 +490,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
             //addNewSlide();
         } else if (e.getSource() == this.deleteSlide) { // Delete (a selected) Slide
             // System.out.println("Do Something!");
-            //deleteSlide();
+            deleteSlide();
         } else if (e.getSource() == this.present) { // Start Presentation mode at the beginning
             System.out.println("Do Something Else!");
         } else if (e.getSource() == this.presentAt) { // Start Presentation mode at the selected slide
@@ -530,10 +540,10 @@ public class SlideManager implements ActionListener, IChangePresentationListener
 
     @Override
     public void onDiscardSlide(int index, Slide slide) {
-        if(slide == getCurrentSlide()) {
+        /*if(slide == getCurrentSlide()) {
             showSlideAtIndex(index > presentation.getSlideCount() ? index - 1 : index);
-        }
-        /*Slide currentSlide = getCurrentSlide();
+        }*/
+        Slide currentSlide = getCurrentSlide();
         presentation.removeSlide(currentSlide);
 
         if(getPrevSlide(currentSlide) != null) {
@@ -545,7 +555,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         } else {
             // Show nothing an empty presentation
             System.out.println("Show nothing, an empty presentation!");
-        }*/
+        }
     }
 
     @Override

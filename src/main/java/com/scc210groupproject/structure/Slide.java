@@ -25,6 +25,8 @@ public class Slide extends BaseElement
 {
     private JPanel panel;
 
+    private boolean isSelected;
+
     public Slide(Dimension dimension) {
         this();
 
@@ -102,5 +104,13 @@ public class Slide extends BaseElement
 
         scaled = operation.filter(original, scaled);
         return scaled;
+    }
+
+    public boolean getIsSelected() {
+        return this.isSelected;
+    }
+
+    public void setIsSelected(boolean truthy) {
+        this.isSelected = truthy;
     }
 }
