@@ -7,10 +7,12 @@ import com.scc210groupproject.structure.eventListeners.IChangePresentationListen
 import com.scc210groupproject.structure.eventListeners.ICreateSlideListener;
 import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;
 import com.scc210groupproject.structure.eventListeners.IUpdateSlideListener;
+import com.scc210groupproject.ui.helper.GeneralButtons;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 /**
@@ -334,17 +336,16 @@ public class SlideManager implements ActionListener, IChangePresentationListener
      * @return JButton
      * */
     private JButton createSlideForViewer(int slideNo) {
-        JButton slide = new JButton("Slide " + slideNo);
-
-        //System.out.println("SlideImage List size: " + slideImages.size());
+        JButton slide = new JButton();
 
         slide.setPreferredSize(new Dimension(200, 115));
-        slide.setBackground(Color.white);
+
         slide.setFocusable(false);
-        slide.setIcon(new ImageIcon(presentation.getSlideAtIndex(slideNo - 1).createPreview(new Dimension(200, 115))));
-        /*SlideImage slideImage = slideImages.get(slideNo - 1);
-        //slideImage.setSlideDimension(new Dimension(200, 115));
-        slide.setIcon(new ImageIcon(slideImage.getBufferedSlideImage()));*/
+
+        ImageIcon previewSlideImage = new ImageIcon(slideImages.get(slideNo - 1).getBufferedSlideImage());
+        slide.setIcon(GeneralButtons.resizeIcon(previewSlideImage, 200, 115));
+
+        //slide.repaint();
 
         slide.addActionListener(new ActionListener() {
             @Override
@@ -560,6 +561,13 @@ public class SlideManager implements ActionListener, IChangePresentationListener
 
     @Override
     public void onUpdateSlide(int index, Slide slide) {
-        
+        // Get the slide in the slideViewer at the index
+        JButton previewSlide = this.slidesViewer.get(index);
+
+        // Recreate the slide image (icon) for that slide in the slideViewer
+        ImageIcon previewSlideImage = new ImageIcon(slideImages.get(index).getBufferedSlideImage());
+
+        // Reset the image icon of that slide to the new slide image
+        previewSlide.setIcon(GeneralButtons.resizeIcon(previewSlideImage, 200, 115));
     }
 }
