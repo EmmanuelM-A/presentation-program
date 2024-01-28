@@ -52,6 +52,9 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     // The main display panel
     private final MainDisplayPanel mainDisplay;
 
+    // Used as a temp variable to store previously highlighted slides
+    private JButton prevHighlightedSlide;
+
     public static SlideManager instance;
 
     // This list represents the slideImages that are painted onto the display
@@ -188,15 +191,19 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         int firstSlideInViewerNo = this.slidesViewer.size() + 1;
         JButton firstSlideInViewer = createSlideForViewer(firstSlideInViewerNo);
 
+        this.prevHighlightedSlide = firstSlideInViewer;
+
         this.slidesViewer.add(firstSlideInViewer);
         this.viewSliderPanel.add(firstSlideInViewer);
 
         displaySlide(firstSlideImage, this.mainDisplay);
 
+        highlightSlide(firstSlideInViewer);
+
         System.out.println("New Slide - " + (this.presentation.getSlideCount()) + "!");
     }
 
-    /**
+    /** PROBLEM HERE
      * Displays the previous slide in the presentation slider given that there is at least one slide
      * present.
      * */
@@ -224,7 +231,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         }
     }
 
-    /**
+    /** PROBLEM HERE
      * Displays the next slide in the presentation slider given that the last slide has not been
      * reached yet.
      * */
@@ -244,7 +251,6 @@ public class SlideManager implements ActionListener, IChangePresentationListener
             if(nextSlide != null) {
                 // Display the next slide
                 displaySlide(nextSlide, this.mainDisplay);
-                //this.mainDisplay.repaint();
             } else {
                 System.out.println("PROBLEM - NEXT SLIDE IS NULL!");
             }
@@ -271,8 +277,6 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         // Update slideImage dimension on frame resize
         display.updateBufferedSlideImage();
     }
-
-
 
     /**
      * Creates a new slide and assigns it a slide number, then adds the slide onto the end of the existing slides
@@ -330,7 +334,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         }
     }
 
-    /** POSSIBLE CHANGES WILL BE MADE HERE
+    /**
      * Creates a slide for the slides viewer
      * @param slideNo The slide number to assign it to
      * @return JButton
@@ -345,12 +349,10 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         ImageIcon previewSlideImage = new ImageIcon(slideImages.get(slideNo - 1).getBufferedSlideImage());
         slide.setIcon(GeneralButtons.resizeIcon(previewSlideImage, 200, 115));
 
-        //slide.repaint();
-
         slide.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                //highlightSelectedSlide(slide);
+                highlightSlide(slide);
                 displaySelectedSlide(slideNo);
                 //System.out.println("Slide " + slideNo + " Clicked!");
             }
@@ -441,30 +443,17 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         return this.slideImages.get(slideIndex);
     }
 
-    /*
-     * Highlights a selected slide in the slide viewer
-     * @param JButton Slide
-     * */
-    private void highlightSelectedSlide(JButton slide, int slideNo) {
-        /*
-         * Get selected slide
-         * Highlight ONLY that selected slide
-         * use boolean isSelected for slides
-         * onClick of slide set isSelected true and every other slide false
-         * from slides array filter out clicked slide and set isSelected slide to true
-         * other slides set false
-         * apply action to the isSelected slide like display, highlight slide
-         */
-        /*SlideImage selectedSlide = getSelectedSlide(slideNo);
-
-        selectedSlide.setIsSelected(true);*/
-
-
-
-
-
-        //slide.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
-
+    /**
+     * Highlights the slide in the slides viewer if the slide is selected or is currently being displayed
+     * @param slide The slide in the slide viewer
+     */
+    private void highlightSlide(JButton slide) {
+        // Set the highlighting of the previous slide to null
+        this.prevHighlightedSlide.setBorder(null);
+        // Highlight new slide
+        slide.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
+        // Set the previous highlighted slide to the new slide
+        this.prevHighlightedSlide = slide;
     }
 
     /**
@@ -523,8 +512,10 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         slide.asComp().setBackground(new Color((float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1));
         // --------
 
+        // Create a new slide image of the slide
         SlideImage newSlideImage = new SlideImage(slide, this.mainDisplay);
 
+        // Add to slide images list
         this.slideImages.add(newSlideImage);
 
         // The code below will display the new slide added to the main display panel if displayNewSlide equals true
@@ -535,6 +526,10 @@ public class SlideManager implements ActionListener, IChangePresentationListener
 
         // Add slide to presentation slider
         addSlideToViewer();
+
+        // Changes highlighting to slides added
+        JButton slideInViewer = this.slidesViewer.get(index);
+        highlightSlide(slideInViewer);
 
         System.out.println("New Slide - " + (this.presentation.getSlideCount()) + "!");
     }
