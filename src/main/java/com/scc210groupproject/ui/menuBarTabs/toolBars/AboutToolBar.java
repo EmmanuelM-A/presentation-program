@@ -12,14 +12,14 @@ import javax.swing.*;
  * */
 public class AboutToolBar extends ToolBar {
     private JButton license, shortcuts, help;
-    public AboutToolBar() {
+    public AboutToolBar(JPanel recentsPanel) {
         this.setRollover(true);
 
-        license = makeToolbarButton(GeneralButtons.LICENSE.getTitle(), GeneralButtons.LICENSE.getIcon());
+        license = makeToolbarButton(GeneralButtons.LICENSE.getTitle(), GeneralButtons.LICENSE.getIcon(), recentsPanel);
 
-        shortcuts = makeToolbarButton(GeneralButtons.SHORTCUTS.getTitle(), GeneralButtons.SHORTCUTS.getIcon());
+        shortcuts = makeToolbarButton(GeneralButtons.SHORTCUTS.getTitle(), GeneralButtons.SHORTCUTS.getIcon(), recentsPanel);
 
-        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon());
+        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), recentsPanel);
 
         this.add(license);
 
