@@ -3,8 +3,6 @@ package com.scc210groupproject.structure;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.scc210groupproject.structure.helper.SelectionBorder;
 import com.scc210groupproject.structure.input.MouseEmulator.MouseState;
@@ -29,6 +27,7 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
         
         Point local = CoordinateUtils.convertSlideToLocalSpace(state.getLocationInSlide(), resizable.asBaseElement());
         operation = border.findPoint(local.x, local.y);
+        System.out.println(operation);
     }
 
     @Override
@@ -91,7 +90,7 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
         switch (operation) {
 
             case 0:
-                if (oldSize.height - changeY < 20) {
+                if (oldSize.height - changeY > 20) {
                     resizable.setLocation(new Point(oldPosition.x, oldPosition.y + changeY));
                     resizable.setSize(new Dimension(oldSize.width, oldSize.height - changeY));
                 }
