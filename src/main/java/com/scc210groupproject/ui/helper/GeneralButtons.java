@@ -1,5 +1,8 @@
 package com.scc210groupproject.ui.helper;
 
+import com.scc210groupproject.action.OpenAction;
+import com.scc210groupproject.action.SaveAction;
+
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.*;
@@ -16,8 +19,8 @@ import java.util.Objects;
  * */
 public enum GeneralButtons {
     NEW("New File", "new-document.png", 32, 32, null),
-    OPEN("Open File", "folder.png", 32, 32, null),
-    SAVE("Save File", "diskette.png", 32, 32, null),
+    OPEN("Open File", "folder.png", 32, 32, new OpenAction()),
+    SAVE("Save File", "diskette.png", 32, 32, new SaveAction()),
     SAVE_AS("Save As", "", 32, 32, null),
     PRINT("Print", "printer.png", 32, 32, null),
     RECENTS("Recents", "", 32, 32, null),

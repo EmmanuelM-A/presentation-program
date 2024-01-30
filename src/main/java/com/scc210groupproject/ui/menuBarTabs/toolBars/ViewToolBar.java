@@ -22,9 +22,9 @@ public class ViewToolBar extends ToolBar {
     public ViewToolBar(JPanel recentsPanel) {
         this.setRollover(true);
 
-        present = makeToolbarButton(GeneralButtons.PRESENT.getTitle(), GeneralButtons.PRESENT.getIcon(), recentsPanel);
+        present = makeToolbarButton(GeneralButtons.PRESENT.getTitle(), GeneralButtons.PRESENT.getIcon(), null, recentsPanel);
 
-        presentAt = makeToolbarButton(GeneralButtons.PRESENT_AT.getTitle(), GeneralButtons.PRESENT_AT.getIcon(), recentsPanel);
+        presentAt = makeToolbarButton(GeneralButtons.PRESENT_AT.getTitle(), GeneralButtons.PRESENT_AT.getIcon(), null, recentsPanel);
 
         animationsPanel.setBackground(Color.BLUE);
         animations = new JScrollPane(animationsPanel);
@@ -36,7 +36,7 @@ public class ViewToolBar extends ToolBar {
         transistions.setSize(50, 100);
         transistions.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), HomeToolBar.getRecentPanel());
+        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), null, recentsPanel);
 
         this.add(present);
         this.add(presentAt);

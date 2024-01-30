@@ -621,6 +621,19 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         this.viewSliderPanel.repaint();
 
         //System.out.println("Number of slides: " + this.presentation.getSlideCount() + " - SlideImages list size: " + this.slideImages.size() + " - SlidesInViewer is: " + this.slidesViewer.size() + " - No. of components in the slidesViewerPanel: " + this.viewSliderPanel.getComponentCount());
+        /*if(this.presentation.getSlideCount() > 1) {
+            if(showPrevSlide()) {
+                System.out.println("Slide " + + (this.currentSlide + 1) + " deleted - Now displaying previous slide!");
+            } else if(showNextSlide()) {
+                System.out.println("Slide " + (this.currentSlide - 1) + " deleted - Now displaying next slide!");
+            } else {
+                // Show nothing an empty presentation
+                System.out.println("Slide 1 was deleted - Presentation empty!");
+            }
+        } else {
+            displaySlide(this.slideImages.get(0), this.mainDisplay);
+            highlightSlide(this.slidesViewer.get(0));
+        }*/
 
         if(showPrevSlide()) {
             System.out.println("Slide " + + (this.currentSlide + 1) + " deleted - Now displaying previous slide!");

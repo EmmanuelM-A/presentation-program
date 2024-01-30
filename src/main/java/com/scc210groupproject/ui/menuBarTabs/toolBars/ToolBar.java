@@ -53,7 +53,7 @@ public abstract class ToolBar extends JToolBar {
      * @param icon The button's icon
      * @return JButton
      */
-    protected JButton makeToolbarButton(String title, ImageIcon icon, JPanel recents) {
+    protected JButton makeToolbarButton(String title, ImageIcon icon, ActionListener mainListener, JPanel recents) {
         JButton button = new JButton(title, icon);
 
         // For button focus frame colour use Look & Feel to change its focus colour
@@ -71,6 +71,7 @@ public abstract class ToolBar extends JToolBar {
                 addToRecents(recents, button);
             }
         });
+        button.addActionListener(mainListener);
 
         return button;
     }
@@ -100,9 +101,15 @@ public abstract class ToolBar extends JToolBar {
         // Get button title and icon
         String buttonTitle = lastUsed.getText();
         ImageIcon buttonIcon = (ImageIcon) lastUsed.getIcon();
+        ActionListener mainButtonListener = lastUsed.getAction();
 
         // Make a copy of the button
-        JButton copyOfButton = makeToolbarButton(buttonTitle, buttonIcon, recents);
+        JButton copyOfButton = makeToolbarButton(buttonTitle, buttonIcon, mainButtonListener, recents);
+
+        // If there are anymore action listeners added to the original button also add them to it's copy
+        for(ActionListener listener : lastUsed.getActionListeners()) {
+            copyOfButton.addActionListener(listener);
+        }
 
         // Check if the capacity has not been reached but if so remove the oldest button
         if (recents.getComponentCount() >= CAPACITY) {

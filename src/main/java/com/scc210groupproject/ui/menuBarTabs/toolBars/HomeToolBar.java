@@ -29,27 +29,27 @@ public class HomeToolBar extends ToolBar {
                 recentsScrollPane.setMaximumSize(new Dimension(500, 90));
                 recentsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-                newSlide = makeToolbarButton(GeneralButtons.NEW_SLIDE.getTitle(), GeneralButtons.NEW_SLIDE.getIcon(), recentsPanel);
+                newSlide = makeToolbarButton(GeneralButtons.NEW_SLIDE.getTitle(), GeneralButtons.NEW_SLIDE.getIcon(), null, recentsPanel);
 
-                newFile = makeToolbarButton(GeneralButtons.NEW.getTitle(), GeneralButtons.NEW.getIcon(), recentsPanel);
+                newFile = makeToolbarButton(GeneralButtons.NEW.getTitle(), GeneralButtons.NEW.getIcon(), GeneralButtons.NEW.getEvent(), recentsPanel);
 
-                openFile = makeToolbarButton(GeneralButtons.OPEN.getTitle(), GeneralButtons.OPEN.getIcon(), recentsPanel);
-                openFile.addActionListener(new OpenAction());
+                openFile = makeToolbarButton(GeneralButtons.OPEN.getTitle(), GeneralButtons.OPEN.getIcon(), GeneralButtons.OPEN.getEvent(), recentsPanel);
+                //openFile.addActionListener(new OpenAction());
 
-                saveFile = makeToolbarButton(GeneralButtons.SAVE.getTitle(), GeneralButtons.SAVE.getIcon(), recentsPanel);
-                saveFile.addActionListener(new SaveAction());
+                saveFile = makeToolbarButton(GeneralButtons.SAVE.getTitle(), GeneralButtons.SAVE.getIcon(), GeneralButtons.SAVE.getEvent(), recentsPanel);
+                //saveFile.addActionListener(new SaveAction());
 
-                clipboard = makeToolbarButton(GeneralButtons.CLIPBOARD.getTitle(), GeneralButtons.CLIPBOARD.getIcon(), recentsPanel);
+                clipboard = makeToolbarButton(GeneralButtons.CLIPBOARD.getTitle(), GeneralButtons.CLIPBOARD.getIcon(), null, recentsPanel);
 
-                select = makeToolbarButton(GeneralButtons.SELECT.getTitle(), GeneralButtons.SELECT.getIcon(), recentsPanel);
+                select = makeToolbarButton(GeneralButtons.SELECT.getTitle(), GeneralButtons.SELECT.getIcon(), null, recentsPanel);
 
-                paste = makeToolbarButton(GeneralButtons.PASTE.getTitle(), GeneralButtons.PASTE.getIcon(), recentsPanel);
+                paste = makeToolbarButton(GeneralButtons.PASTE.getTitle(), GeneralButtons.PASTE.getIcon(), null, recentsPanel);
 
-                settings = makeToolbarButton(GeneralButtons.SETTINGS.getTitle(), GeneralButtons.SETTINGS.getIcon(), recentsPanel);
+                settings = makeToolbarButton(GeneralButtons.SETTINGS.getTitle(), GeneralButtons.SETTINGS.getIcon(), null, recentsPanel);
 
-                spellChecker = makeToolbarButton(GeneralButtons.SPELL_CHECKER.getTitle(), GeneralButtons.SPELL_CHECKER.getIcon(), recentsPanel);
+                spellChecker = makeToolbarButton(GeneralButtons.SPELL_CHECKER.getTitle(), GeneralButtons.SPELL_CHECKER.getIcon(), null,  recentsPanel);
 
-                help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), recentsPanel);
+                help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), null, recentsPanel);
 
                 this.add(newSlide);
 
@@ -81,55 +81,4 @@ public class HomeToolBar extends ToolBar {
                 this.setName("Home");
                 this.setFloatable(false);
         }
-
-        public static JPanel getRecentPanel() {
-                return null;
-        }
-
-        /*@Override
-        public void addToRecents(JPanel recents, JButton lastUsed) {
-                // Get button title and icon
-                String buttonTitle = lastUsed.getText();
-                ImageIcon buttonIcon = (ImageIcon) lastUsed.getIcon();
-
-                // Make a copy of the button
-                JButton copyOfButton = makeToolbarButton(buttonTitle, buttonIcon, recents);
-
-                // Check if the capacity has not been reached but if so remove the oldest button
-                if (recents.getComponentCount() >= CAPACITY) {
-                        recents.remove(recents.getComponentCount() - 1);
-                }
-
-                // If button is present in recents, remove it at its position then add it again to the start of recents.
-                // If it isn't just add it to the start of recents.
-
-                if(containsButton(recents, lastUsed)) {
-                        recents.remove(getButtonIfMatch(recents, lastUsed));
-                        recents.add(copyOfButton, 0);
-                } else {
-                        recents.add(copyOfButton, 0);
-                }
-
-                // Update recents panel
-                recents.repaint();
-                recents.revalidate();
-        }
-
-        private boolean containsButton(JPanel recents, JButton button) {
-                for(Component component : recents.getComponents()) {
-                        if (component instanceof JButton && Objects.equals(((JButton) component).getText(), button.getText())) {
-                                return true;
-                        }
-                }
-                return false;
-        }
-
-        private JButton getButtonIfMatch(JPanel recents, JButton button) {
-                for(Component component : recents.getComponents()) {
-                        if (component instanceof JButton && Objects.equals(((JButton) component).getText(), button.getText())) {
-                                return (JButton) component;
-                        }
-                }
-                return null;
-        }*/
 }
