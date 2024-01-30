@@ -1,6 +1,7 @@
 package com.scc210groupproject.structure;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -16,7 +17,15 @@ public class ImageElement extends DraggableResizableElement
 
     public ImageElement(ImageIcon image)
     {
-        panel.add(new JLabel(image), BorderLayout.CENTER);
+        this.image = image;
+
+        JLabel jLabel = new JLabel(this.image);
+
+        jLabel.setPreferredSize(new Dimension(400, 400));
+
+        System.out.println(panel.getWidth() + panel.getHeight());
+
+        panel.add(jLabel, BorderLayout.CENTER);
 
         class ResizeListener extends ComponentAdapter
         {
@@ -24,7 +33,9 @@ public class ImageElement extends DraggableResizableElement
             {
                 ImageElement.this.image = GeneralButtons.resizeIcon(image, panel.getWidth(), panel.getHeight());
                 ImageElement.this.panel.removeAll();
-                ImageElement.this.panel.add(new JLabel(image), BorderLayout.CENTER);
+                JLabel jLabel = new JLabel(ImageElement.this.image);
+                jLabel.setPreferredSize(new Dimension(400, 400));
+                ImageElement.this.panel.add(jLabel, BorderLayout.CENTER);
                 ImageElement.this.panel.revalidate();
             }
         }

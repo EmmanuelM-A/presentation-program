@@ -10,6 +10,7 @@ import java.awt.geom.Point2D;
 import java.io.IOException;
 
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
@@ -33,10 +34,10 @@ public class DraggableResizableElement extends BaseElement implements IAnchorPro
     {
         super();
 
-        panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.setBorder(null);
-        //panel.setOpaque(true);
+        panel = new JPanel(new BorderLayout());
+        panel.setSize(400, 400);
+        panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        panel.setOpaque(false);
 
         BaseElement self = this;
         super.addMouseListener(new MouseButtonAdapter() {
@@ -97,6 +98,8 @@ public class DraggableResizableElement extends BaseElement implements IAnchorPro
                 int changeX = last != null ? global.x - last.x : 0;
 
                 last = global;
+
+                panel.setBorder(new SelectionBorder());
 
                 switch(operation){
 
@@ -182,7 +185,7 @@ public class DraggableResizableElement extends BaseElement implements IAnchorPro
         
             @Override
             public void mouseExited(MouseState state) {
-                panel.setBorder(null);
+                panel.setBorder(new EmptyBorder(10, 10, 10, 10));
                 self.notifyUpdate(self);
             }
             

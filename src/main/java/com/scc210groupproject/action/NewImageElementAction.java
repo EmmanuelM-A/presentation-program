@@ -13,11 +13,11 @@ import javax.swing.JWindow;
 
 import com.scc210groupproject.structure.DraggableResizableElement;
 import com.scc210groupproject.structure.ImageElement;
-import com.scc210groupproject.testui.MainDisplayPanel;
+import com.scc210groupproject.ui.MainDisplayPanel;
+import com.scc210groupproject.ui.SlideManager;
 
 public class NewImageElementAction implements ActionListener
 {
-
     @Override
     public void actionPerformed(ActionEvent _)
     {
@@ -33,7 +33,7 @@ public class NewImageElementAction implements ActionListener
 
         ImageElement imageElement = new ImageElement(new ImageIcon(path));
 
-        MainDisplayPanel.instance.getDisplayedSlide().add(imageElement);
+        SlideManager.slideManager.getCurrentSlide().add(imageElement);
     }
     
 }
