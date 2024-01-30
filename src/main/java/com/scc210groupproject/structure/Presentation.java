@@ -12,7 +12,6 @@ import com.scc210groupproject.structure.eventListeners.IUpdateSlideListener;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;

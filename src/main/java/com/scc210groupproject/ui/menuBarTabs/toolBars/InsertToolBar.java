@@ -1,5 +1,6 @@
 package com.scc210groupproject.ui.menuBarTabs.toolBars;
 
+import com.scc210groupproject.action.NewImageElementAction;
 import com.scc210groupproject.ui.contextMenu.*;
 import com.scc210groupproject.ui.helper.GeneralButtons;
 
@@ -44,6 +45,8 @@ public class InsertToolBar extends ToolBar implements ActionListener {
 
         separator(this);
 
+        addText.addActionListener(new NewImageElementAction());
+
         this.add(addText);
         this.add(addImage);
         this.add(addVideo);
@@ -62,6 +65,7 @@ public class InsertToolBar extends ToolBar implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == this.addText) {
+            
             //System.out.println("SOMETHING WAS CLICKED!");
             //new TextContextMenu(this.uiFrame, 0, 157);
             //new DataStructureContextMenu(this.uiFrame, 0, 157);

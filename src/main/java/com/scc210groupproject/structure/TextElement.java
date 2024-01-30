@@ -4,16 +4,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.geom.Point2D;
 import java.io.IOException;
 
 import javax.swing.JTextPane;
-import javax.swing.border.Border;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.structure.anchors.AnchorManager;
-import com.scc210groupproject.structure.anchors.IAnchorProvider;
 
 public class TextElement extends ExtendedElement
 {

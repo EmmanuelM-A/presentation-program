@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
@@ -25,10 +26,10 @@ public class DraggableResizableElement extends BaseElement implements IAnchorPro
     {
         super();
 
-        panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.setBorder(null);
-        //panel.setOpaque(true);
+        panel = new JPanel(new BorderLayout());
+        panel.setSize(400, 400);
+        panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        panel.setOpaque(false);
 
         super.addMouseListener(new DragResizer());
     }
