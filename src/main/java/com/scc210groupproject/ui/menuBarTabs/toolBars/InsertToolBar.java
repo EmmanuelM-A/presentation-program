@@ -45,7 +45,7 @@ public class InsertToolBar extends ToolBar implements ActionListener {
 
         separator(this);
 
-        addText.addActionListener(new NewImageElementAction());
+        addImage.addActionListener(new NewImageElementAction());
 
         this.add(addText);
         this.add(addImage);

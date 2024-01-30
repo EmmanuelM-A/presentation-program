@@ -1,19 +1,14 @@
 package com.scc210groupproject.action;
 
-import java.awt.Image;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JTextPane;
 import javax.swing.JWindow;
 
-import com.scc210groupproject.structure.DraggableResizableElement;
 import com.scc210groupproject.structure.ImageElement;
-import com.scc210groupproject.ui.MainDisplayPanel;
 import com.scc210groupproject.ui.SlideManager;
 
 public class NewImageElementAction implements ActionListener
@@ -32,6 +27,8 @@ public class NewImageElementAction implements ActionListener
         String path = fileChooser.getSelectedFile().getAbsolutePath();
 
         ImageElement imageElement = new ImageElement(new ImageIcon(path));
+
+        imageElement.setSize(new Dimension(400, 400));
 
         SlideManager.slideManager.getCurrentSlide().add(imageElement);
     }

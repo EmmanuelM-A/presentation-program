@@ -26,6 +26,7 @@ public class ImageContextMenu extends ContextMenu {
 
 
         this.add(insertImage);
+        this.add(deleteImage);
         this.add(rotateImage);
         this.add(resizeImage);
         this.add(border);
