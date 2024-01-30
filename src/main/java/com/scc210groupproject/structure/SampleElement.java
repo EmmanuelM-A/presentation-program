@@ -112,29 +112,29 @@ public class SampleElement extends BaseElement implements IAnchorProvider {
         addMouseListener(new MouseButtonAdapter() {
 
             @Override
-            public void mouseClicked(MouseState state) {
+            public void mouseClicked(Object target, MouseState state) {
                 System.out.println("Mouse clicked at: " + state.getLastChangedButton());
             }
             
             @Override
-            public void mousePressed(MouseState state) {
+            public void mousePressed(Object target, MouseState state) {
                 System.out.println("Mouse pressed at: " + state.getLastChangedButton());
             }
             
             @Override
-            public void mouseReleased(MouseState state) {
+            public void mouseReleased(Object target, MouseState state) {
                 System.out.println("Mouse released at: " + state.getLastChangedButton());
             }
         });
         
         addMouseListener(new MouseMotionAdapter() {
             @Override
-            public void mouseMoved(MouseState state) {
+            public void mouseMoved(Object target, MouseState state) {
                 System.out.println("Mouse moved at: " + state.getLocationInSlide());
             }
         
             @Override
-            public void mouseDragged(MouseState state) {
+            public void mouseDragged(Object target, MouseState state) {
                 System.out.println("Mouse dragged at: " + state.getLocationInSlide());
             }
             
@@ -142,12 +142,12 @@ public class SampleElement extends BaseElement implements IAnchorProvider {
         
         addMouseListener(new MouseOccupancyAdapter() {
             @Override
-            public void mouseEntered(MouseState state) {
+            public void mouseEntered(Object target, MouseState state) {
                 System.out.println("Mouse entered at: " + state.getLocationInSlide());
             }
         
             @Override
-            public void mouseExited(MouseState state) {
+            public void mouseExited(Object target, MouseState state) {
                 System.out.println("Mouse exited at: " + state.getLocationInSlide());
             }
             

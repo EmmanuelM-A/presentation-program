@@ -54,11 +54,11 @@ public class MouseManager {
             listeners.remove(listener);
         }
     
-        public void passEvent(MouseEmulator.MouseState state) {
+        public void passEvent(BaseElement element, MouseEmulator.MouseState state) {
             if (listeners.size() > 0) {
                 for (Object l : listeners)
                     try {
-                        type.getDeclaredMethods()[0].invoke(l, state);
+                        type.getDeclaredMethods()[0].invoke(l, element, state);
                     } catch (IllegalAccessException | SecurityException e) {
                         throw new IllegalArgumentException("provided type is not a IMouseListener");
                     } catch (InvocationTargetException e) {
@@ -68,7 +68,7 @@ public class MouseManager {
             else {
                 BaseElement parent = element.getParent();
                 if (parent != null)
-                    parent.getMouseManager().controllers.get(type).passEvent(state);
+                    parent.getMouseManager().controllers.get(type).passEvent(parent, state);
             }
         }
     }

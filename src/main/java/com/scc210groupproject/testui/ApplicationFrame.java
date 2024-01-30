@@ -10,7 +10,7 @@ public class ApplicationFrame extends JFrame
 {
     public static ApplicationFrame instance;
 
-    public static void main(String[] args) { new ApplicationFrame(); }
+    //public static void main(String[] args) { new ApplicationFrame(); }
 
     public ApplicationFrame()
     {

@@ -1,5 +1,6 @@
 package com.scc210groupproject.structure.input;
 
+import com.scc210groupproject.structure.BaseElement;
 import com.scc210groupproject.structure.input.MouseEmulator.MouseState;
 
 public interface IMouseProvider {
@@ -13,7 +14,7 @@ public interface IMouseProvider {
         getMouseManager().removeListener(listener);
     }
 
-    public default void passMouseEvent(Class<?> type, MouseState state) {
-        getMouseManager().controllers.get(type).passEvent(state);
+    public default void passMouseEvent(Class<?> type, BaseElement currentElement, MouseState state) {
+        getMouseManager().controllers.get(type).passEvent(currentElement, state);
     }
 }

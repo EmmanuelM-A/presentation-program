@@ -7,11 +7,11 @@ import com.scc210groupproject.structure.input.listeners.IMouseExited;
 public class MouseOccupancyAdapter implements IMouseEntered, IMouseExited {
 
     @Override
-    public void mouseExited(MouseState state) {
+    public void mouseExited(Object target, MouseState state) {
     }
 
     @Override
-    public void mouseEntered(MouseState state) {
+    public void mouseEntered(Object target, MouseState state) {
     }
     
 }
