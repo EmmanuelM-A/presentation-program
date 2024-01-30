@@ -1,6 +1,7 @@
 package com.scc210groupproject.structure;
 
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
@@ -23,7 +24,7 @@ import java.io.IOException;
  * @author wonge1
  * Use this as a reference (dont extend from this) for elements
  */
-public class SampleElement extends BaseElement implements IAnchorProvider {
+public class SampleElement extends BaseElement implements IResizable, IAnchorProvider {
     
     private JPanel panel = new JPanel();
 
@@ -35,14 +36,39 @@ public class SampleElement extends BaseElement implements IAnchorProvider {
         new Point2D.Double(0.5, 0.0)
     );
 
+    @Override
     public void setLocation(Point p) {
         panel.setLocation(p);
         manager.onChangeSize();
+        super.notifyUpdate(this);
     }
 
+    @Override
     public void setSize(Dimension d) {
         panel.setSize(d);
         manager.onChangeSize();
+        super.notifyUpdate(this);
+    }
+
+    @Override
+    public void setBorder(Border b) {
+        panel.setBorder(b);
+        super.notifyUpdate(this);
+    }
+    
+    @Override
+    public Point getLocation() {
+        return panel.getLocation();
+    }
+
+    @Override
+    public Dimension getSize() {
+        return panel.getSize();
+    }
+
+    @Override
+    public BaseElement asBaseElement() {
+        return this;
     }
 
     public void setBackground(Color color) {
@@ -109,6 +135,7 @@ public class SampleElement extends BaseElement implements IAnchorProvider {
     }
 
     public SampleElement() {
+        addMouseListener(new DragResizer());
         addMouseListener(new MouseButtonAdapter() {
 
             @Override

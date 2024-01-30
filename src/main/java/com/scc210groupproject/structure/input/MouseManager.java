@@ -62,7 +62,7 @@ public class MouseManager {
                     } catch (IllegalAccessException | SecurityException e) {
                         throw new IllegalArgumentException("provided type is not a IMouseListener");
                     } catch (InvocationTargetException e) {
-                        throw new IllegalArgumentException("check method used for " + type.getName());
+                        throw new IllegalArgumentException("\ncheck method used for " + type.getName() + "\nIf you are using DragResizer, make sure the Element it is attached to implements IResizable");
                     }
             }
             else {
