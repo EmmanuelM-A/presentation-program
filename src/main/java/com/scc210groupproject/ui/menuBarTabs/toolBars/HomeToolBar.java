@@ -21,7 +21,8 @@ public class HomeToolBar extends ToolBar {
 
         public HomeToolBar(JPanel recentsPanel) {
                 this.setRollover(true);
-                this.setMaximumSize(new Dimension(1500, 100));
+                this.setMaximumSize(new Dimension(2000, 140));
+                this.setMinimumSize(new Dimension(1000, 100));
 
                 recentsPanel.setBackground(Color.WHITE);
                 JScrollPane recentsScrollPane = new JScrollPane(recentsPanel);
