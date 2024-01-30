@@ -1,5 +1,7 @@
 package com.scc210groupproject.ui.menuBarTabs.toolBars;
 
+import com.scc210groupproject.action.OpenAction;
+import com.scc210groupproject.action.SaveAction;
 import com.scc210groupproject.ui.helper.GeneralButtons;
 
 import javax.swing.*;
@@ -19,8 +21,10 @@ public class FileToolBar extends ToolBar {
         newFile = makeToolbarButton(GeneralButtons.NEW.getTitle(), GeneralButtons.NEW.getIcon(), recentsPanel);
 
         openFile = makeToolbarButton(GeneralButtons.OPEN.getTitle(), GeneralButtons.OPEN.getIcon(), recentsPanel);
+        openFile.addActionListener(new OpenAction());
 
         saveFile = makeToolbarButton(GeneralButtons.SAVE.getTitle(), GeneralButtons.SAVE.getIcon(), recentsPanel);
+        saveFile.addActionListener(new SaveAction());
 
         export = makeToolbarButton(GeneralButtons.EXPORT.getTitle(), GeneralButtons.EXPORT.getIcon(), recentsPanel);
 
