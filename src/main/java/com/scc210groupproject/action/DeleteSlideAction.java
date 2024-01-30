@@ -13,11 +13,7 @@ public class DeleteSlideAction implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent _)
     {
-        /*Presentation presentation = Presentation.getOrCreate();
-        Slide slide = MainDisplayPanel.instance.getDisplayedSlide(); // using test ui (everywhere)
-        presentation.removeSlide(slide);*/
-        /*SlideManager.instance.getCurrentSlide()
-        Presentation.removeSli*/
+        Presentation.getOrCreate().removeSlide(SlideManager.instance.getCurrentSlide());
     }
 
 }
