@@ -80,6 +80,10 @@ public class FileSerializer {
             queuedObjects = new LinkedList<>();
         }
 
+        public void writeString(String name, String value) throws IOException {
+            generator.writeStringField(name, value);
+        }
+
         public void writeInt(String name, int value) throws IOException {
             generator.writeNumberField(name, value);
         }

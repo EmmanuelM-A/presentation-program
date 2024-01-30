@@ -80,6 +80,10 @@ public class FileDeserializer {
             return current.has(name);
         }
 
+        public String readString(String name) throws IOException {
+            return current.get(name).asText();
+        }
+        
         public int readInt(String name) throws IOException {
             return current.get(name).asInt();
         }

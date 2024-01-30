@@ -31,6 +31,8 @@ public class TextElement extends ExtendedElement
         writer.writeInt("height", d.height);
 
         writer.writeInt("background", pane.getBackground().getRGB());
+
+        writer.writeString("text", pane.getText());
     }
 
     @Override
@@ -52,6 +54,8 @@ public class TextElement extends ExtendedElement
         pane.setSize(d);
 
         pane.setBackground(new Color(reader.readInt("background")));
+
+        pane.setText(reader.readString("text"));
     }
 
     @Override
