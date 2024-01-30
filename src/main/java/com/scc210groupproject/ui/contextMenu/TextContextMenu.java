@@ -49,7 +49,7 @@ public class TextContextMenu extends ContextMenu {
         this.add(this.textSpacing);
 
         // On some action display PopupMenu
-        this.show(frame, x, y);
+        //this.show(frame, x, y);
     }
 
 

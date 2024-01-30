@@ -24,6 +24,6 @@ public class CodeContextMenu extends ContextMenu {
         this.add(this.git);
         this.add(this.colourScheme);
 
-        this.show(frame, x, y);
+        //this.show(frame, x, y);
     }
 }

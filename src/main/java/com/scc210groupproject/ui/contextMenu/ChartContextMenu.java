@@ -27,7 +27,7 @@ public class ChartContextMenu extends ContextMenu {
         this.add(this.drawChart);
 
         // On some action display PopupMenu
-        this.show(frame, x, y);
+        //this.show(frame, x, y);
     }
 
 

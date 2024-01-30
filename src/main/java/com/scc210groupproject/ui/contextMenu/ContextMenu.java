@@ -3,7 +3,7 @@ package com.scc210groupproject.ui.contextMenu;
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class ContextMenu extends JPopupMenu {
+public abstract class ContextMenu extends JPanel {
     // The default font for all menu items
     private final Font menuItemFont = new Font("Arial", Font.BOLD, 12);
 

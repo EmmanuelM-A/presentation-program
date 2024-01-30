@@ -28,6 +28,7 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
         Point local = CoordinateUtils.convertSlideToLocalSpace(state.getLocationInSlide(), resizable.asBaseElement());
         operation = border.findPoint(local.x, local.y);
         System.out.println(operation);
+        
     }
 
     @Override

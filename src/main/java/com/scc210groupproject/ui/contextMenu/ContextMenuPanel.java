@@ -16,6 +16,12 @@ public class ContextMenuPanel extends JPanel implements ActionListener {
         this.setPreferredSize(new Dimension(width, height));
     }
 
+    public void setPanel()
+    {
+
+
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 

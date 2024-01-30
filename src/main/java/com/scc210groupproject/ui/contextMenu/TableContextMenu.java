@@ -28,6 +28,6 @@ public class TableContextMenu extends ContextMenu {
         super.add(this.formatTable);
 
         // On some action display PopupMenu
-        show(frame, x, y);
+        //show(frame, x, y);
     }
 }
