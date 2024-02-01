@@ -20,17 +20,7 @@ public class TextElement extends ExtendedElement
 
     @Override
     protected void writeSelf(Writer writer) throws IOException {
-        writer.writeObject("manager", manager);
-
-        Point p = pane.getLocation();
-        writer.writeInt("x", p.x);
-        writer.writeInt("y", p.y);
-
-        Dimension d = pane.getSize();
-        writer.writeInt("width", d.width);
-        writer.writeInt("height", d.height);
-
-        writer.writeInt("background", pane.getBackground().getRGB());
+        super.writeExtended(writer);
 
         writer.writeString("text", pane.getText());
     }
@@ -39,23 +29,9 @@ public class TextElement extends ExtendedElement
     public void readSelf(Reader reader) throws IOException {
         pane = new JTextPane();
 
-        manager = (AnchorManager)reader.readObject("manager");
-
-        Point p = new Point();
-        p.setLocation(
-            reader.readDouble("x"),
-            reader.readDouble("y"));
-        pane.setLocation(p);
-
-        Dimension d = new Dimension();
-        d.setSize(
-            reader.readDouble("width"),
-            reader.readDouble("height"));
-        pane.setSize(d);
-
-        pane.setBackground(new Color(reader.readInt("background")));
-
         pane.setText(reader.readString("text"));
+
+        super.readExtended(reader);
     }
 
     @Override

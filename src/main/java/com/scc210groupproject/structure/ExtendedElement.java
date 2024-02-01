@@ -4,10 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.geom.Point2D;
+import java.io.IOException;
 
 import javax.swing.JComponent;
+import javax.swing.JTextPane;
 import javax.swing.border.Border;
 
+import com.scc210groupproject.readwrite.FileDeserializer.Reader;
+import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.structure.adjust.DragResizer;
 import com.scc210groupproject.structure.adjust.IResizable;
 import com.scc210groupproject.structure.anchors.AnchorManager;
@@ -75,4 +79,39 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
     public AnchorManager getAnchorManager() {
         return manager;
     }
+    
+    protected void writeExtended(Writer writer) throws IOException {
+        writer.writeObject("manager", manager);
+
+        Point p = asComp().getLocation();
+        writer.writeInt("x", p.x);
+        writer.writeInt("y", p.y);
+
+        Dimension d = asComp().getSize();
+        writer.writeInt("width", d.width);
+        writer.writeInt("height", d.height);
+
+        writer.writeInt("background", asComp().getBackground().getRGB());
+    }
+
+    public void readExtended(Reader reader) throws IOException {
+        manager = (AnchorManager)reader.readObject("manager");
+
+        Point p = new Point();
+        p.setLocation(
+            reader.readDouble("x"),
+            reader.readDouble("y"));
+        asComp().setLocation(p);
+
+        Dimension d = new Dimension();
+        d.setSize(
+            reader.readDouble("width"),
+            reader.readDouble("height"));
+        asComp().setSize(d);
+
+        asComp().setBackground(new Color(reader.readInt("background")));
+
+        addInputListener(new DragResizer());
+    }
+
 }
