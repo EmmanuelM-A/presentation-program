@@ -15,11 +15,11 @@ public class AboutToolBar extends ToolBar {
     public AboutToolBar(JPanel recentsPanel) {
         this.setRollover(true);
 
-        license = makeToolbarButton(GeneralButtons.LICENSE.getTitle(), GeneralButtons.LICENSE.getIcon(), null, recentsPanel);
+        license = makeToolbarButton(GeneralButtons.LICENSE.getTitle(), GeneralButtons.LICENSE.getIcon(), GeneralButtons.LICENSE.getEvent(), recentsPanel);
 
-        shortcuts = makeToolbarButton(GeneralButtons.SHORTCUTS.getTitle(), GeneralButtons.SHORTCUTS.getIcon(), null, recentsPanel);
+        shortcuts = makeToolbarButton(GeneralButtons.SHORTCUTS.getTitle(), GeneralButtons.SHORTCUTS.getIcon(), GeneralButtons.SHORTCUTS.getEvent(), recentsPanel);
 
-        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), null, recentsPanel);
+        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), GeneralButtons.HELP.getEvent(), recentsPanel);
 
         this.add(license);
 
