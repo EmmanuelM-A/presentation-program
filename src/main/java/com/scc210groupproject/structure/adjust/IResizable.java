@@ -1,9 +1,11 @@
-package com.scc210groupproject.structure;
+package com.scc210groupproject.structure.adjust;
 
 import java.awt.Dimension;
 import java.awt.Point;
 
 import javax.swing.border.Border;
+
+import com.scc210groupproject.structure.BaseElement;
 
 public interface IResizable {
     public Point getLocation();

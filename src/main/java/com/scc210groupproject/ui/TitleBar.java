@@ -15,10 +15,7 @@ public class TitleBar {
     /**
      * Gets the location of the mouse - Important for moving the window frame.
      */
-    static Point compCoords;
-    public TitleBar(JFrame frame) {
-        createTitleBar(frame);
-    }
+    static Point compCords;
 
     /**
      * Creates a custom title bar with the three standard buttons along with a save, undo
@@ -26,10 +23,8 @@ public class TitleBar {
      *
      * @param frame The frame the title bar should be added to
      */
-    private static void createTitleBar(final JFrame frame) {
-        /**
-         * Removes the default title bar to make way for the custom title bar
-         */
+    public static JPanel createTitleBar(final JFrame frame) {
+        // Removes the default title bar to make way for the custom title bar
         frame.setUndecorated(true);
         // Create custom title bar panel
         JPanel titleBarPanel = new JPanel(new BorderLayout());
@@ -99,7 +94,7 @@ public class TitleBar {
 
         titleBarPanel.add(title, BorderLayout.CENTER);
 
-        compCoords = null;
+        compCords = null;
 
         // Handles the movement of the application window
         titleBarPanel.addMouseListener(new MouseListener() {
@@ -108,11 +103,11 @@ public class TitleBar {
             }
             @Override
             public void mousePressed(MouseEvent e) {
-                compCoords = e.getPoint();
+                compCords = e.getPoint();
             }
             @Override
             public void mouseReleased(MouseEvent e) {
-                compCoords = null;
+                compCords = null;
             }
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -127,7 +122,7 @@ public class TitleBar {
             @Override
             public void mouseDragged(MouseEvent e) {
                 Point currCoords = e.getLocationOnScreen();
-                frame.setLocation(currCoords.x - compCoords.x, currCoords.y - compCoords.y);
+                frame.setLocation(currCoords.x - compCords.x, currCoords.y - compCords.y);
             }
 
             @Override
@@ -136,7 +131,6 @@ public class TitleBar {
             }
         });
 
-        // Add the custom title bar to the frame
-        frame.add(titleBarPanel, BorderLayout.NORTH);
+        return titleBarPanel;
     }
 }

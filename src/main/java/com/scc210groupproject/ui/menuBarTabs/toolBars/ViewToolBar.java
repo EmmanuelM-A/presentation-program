@@ -16,25 +16,44 @@ public class ViewToolBar extends ToolBar {
     //private JTextField presentAt;
     private JScrollPane animations, transistions;
 
-    private JPanel animationsPanel = new JPanel();
-    private JPanel transistionsPanel = new JPanel();
+    private JPanel animationsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    private JPanel transistionsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
     public ViewToolBar(JPanel recentsPanel) {
         this.setRollover(true);
 
-        present = makeToolbarButton(GeneralButtons.PRESENT.getTitle(), GeneralButtons.PRESENT.getIcon(), null, recentsPanel);
+        present = makeToolbarButton(GeneralButtons.PRESENT.getTitle(), GeneralButtons.PRESENT.getIcon(), GeneralButtons.PRESENT.getEvent(), recentsPanel);
 
-        presentAt = makeToolbarButton(GeneralButtons.PRESENT_AT.getTitle(), GeneralButtons.PRESENT_AT.getIcon(), null, recentsPanel);
+        presentAt = makeToolbarButton(GeneralButtons.PRESENT_AT.getTitle(), GeneralButtons.PRESENT_AT.getIcon(), GeneralButtons.PRESENT_AT.getEvent(), recentsPanel);
 
-        animationsPanel.setBackground(Color.BLUE);
+        animationsPanel.setBackground(Color.WHITE);
         animations = new JScrollPane(animationsPanel);
-        animations.setSize(50, 100);
+        animations.setMaximumSize(new Dimension(500, 90));
         animations.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        transistionsPanel.setBackground(Color.ORANGE);
+        transistionsPanel.setBackground(Color.WHITE);
         transistions = new JScrollPane(transistionsPanel);
-        transistions.setSize(50, 100);
+        transistions.setMaximumSize(new Dimension(500, 90));
         transistions.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), GeneralButtons.HELP.getEvent(), recentsPanel);
+
+        addButtonsToAnimations("Animation 1");
+        addButtonsToAnimations("Animation 2");
+        addButtonsToAnimations("Animation 3");
+        addButtonsToAnimations("Animation 4");
+        addButtonsToAnimations("Animation 5");
+        addButtonsToAnimations("Animation 6");
+        addButtonsToAnimations("Animation 7");
+
+        addButtonsToTransition("Transition 1");
+        addButtonsToTransition("Transition 2");
+        addButtonsToTransition("Transition 3");
+        addButtonsToTransition("Transition 4");
+        addButtonsToTransition("Transition 5");
+        addButtonsToTransition("Transition 6");
+        addButtonsToTransition("Transition 7");
+
 
         help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), null, recentsPanel);
 
@@ -55,5 +74,27 @@ public class ViewToolBar extends ToolBar {
 
         this.setName("View");
         this.setFloatable(false);
+    }
+
+    private void addButtonsToTransition(String title) {
+        JButton button = new JButton("<html> " + title + "</html>");
+        button.setPreferredSize(new Dimension(76, 76));
+        button.setFocusable(false);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
+        button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+
+        transistionsPanel.add(button);
+    }
+
+    private void addButtonsToAnimations(String title) {
+        JButton button = new JButton("<html> " + title + "</html>");
+        button.setPreferredSize(new Dimension(76, 76));
+        button.setFocusable(false);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
+        button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+
+        animationsPanel.add(button);
     }
 }

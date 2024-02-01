@@ -1,4 +1,4 @@
-package com.scc210groupproject.structure.helper;
+package com.scc210groupproject.structure.adjust;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -30,21 +30,45 @@ public class SelectionBorder extends AbstractBorder
 
         Graphics2D graphics2d = (Graphics2D)graphics;
 
-        rectangles[0] = new Rectangle(topLeftCornerX + width / 2, topLeftCornerY, margin, margin);
+        rectangles[0] = new Rectangle(
+            topLeftCornerX + width / 2 - margin / 2, 
+            topLeftCornerY, 
+            margin, margin);
         graphics2d.fill(rectangles[0]);
-        rectangles[1] = new Rectangle(topLeftCornerX + width - margin, topLeftCornerY, margin, margin);
+        rectangles[1] = new Rectangle(
+            topLeftCornerX + width - margin, 
+            topLeftCornerY, 
+            margin, margin);
         graphics2d.fill(rectangles[1]);
-        rectangles[2] = new Rectangle(topLeftCornerX + width - margin, topLeftCornerY + height / 2 - margin, margin, margin);
+        rectangles[2] = new Rectangle(
+            topLeftCornerX + width - margin,
+            topLeftCornerY + height / 2 - margin / 2, 
+            margin, margin);
         graphics2d.fill(rectangles[2]);
-        rectangles[3] = new Rectangle(topLeftCornerX + width - margin, topLeftCornerY + height - margin, margin, margin);
+        rectangles[3] = new Rectangle(
+            topLeftCornerX + width - margin, 
+            topLeftCornerY + height - margin, 
+            margin, margin);
         graphics2d.fill(rectangles[3]);
-        rectangles[4] = new Rectangle(topLeftCornerX + width / 2 - margin, topLeftCornerY + height - margin, margin, margin);
+        rectangles[4] = new Rectangle(
+            topLeftCornerX + width / 2 - margin / 2, 
+            topLeftCornerY + height - margin, 
+            margin, margin);
         graphics2d.fill(rectangles[4]);
-        rectangles[5] = new Rectangle(topLeftCornerX, topLeftCornerY + height - margin, margin, margin);
+        rectangles[5] = new Rectangle(
+            topLeftCornerX, 
+            topLeftCornerY + height - margin, 
+            margin, margin);
         graphics2d.fill(rectangles[5]);
-        rectangles[6] = new Rectangle(topLeftCornerX, topLeftCornerY + height / 2 - margin, margin, margin);
+        rectangles[6] = new Rectangle(
+            topLeftCornerX, 
+            topLeftCornerY + height / 2 - margin / 2, 
+            margin, margin);
         graphics2d.fill(rectangles[6]);
-        rectangles[7] = new Rectangle(topLeftCornerX, topLeftCornerY, margin, margin);
+        rectangles[7] = new Rectangle(
+            topLeftCornerX, 
+            topLeftCornerY, 
+            margin, margin);
         graphics2d.fill(rectangles[7]);
     }
 

@@ -1,14 +1,6 @@
 package com.scc210groupproject.ui.helper;
 
-import com.scc210groupproject.action.NewFileAction;
-import com.scc210groupproject.action.NewImageElementAction;
-import com.scc210groupproject.action.OpenAction;
-import com.scc210groupproject.action.SaveAction;
-import com.scc210groupproject.action.SaveAsAction;
-import com.scc210groupproject.action.PrintAction;
-
-import com.scc210groupproject.action.NewSlideAction;
-import com.scc210groupproject.action.NewTextElementAction;
+import com.scc210groupproject.action.*;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -20,7 +12,6 @@ import java.util.Objects;
  * The primary aim of this enum is to store buttons that will be use in more than one place and where is function is not changed
  * (but a new function can always be assigned).
  * <p>
- * At some point the actions performed onClicks, drags etc. will be added in, or you can add them yourself.
  *
  * @author madukaag
  * */
@@ -28,34 +19,34 @@ public enum GeneralButtons {
     NEW("New File", "new-document.png", 32, 32, new NewFileAction()),
     OPEN("Open File", "folder.png", 32, 32, new OpenAction()),
     SAVE("Save File", "diskette.png", 32, 32, new SaveAction()),
-    SAVE_AS("Save As", "", 32, 32, new SaveAsAction()),
+    SAVE_AS("Save As", "save-as.png", 32, 32, new SaveAsAction()),
     PRINT("Print", "printer.png", 32, 32, new PrintAction()),
-    RECENTS("Recents", "", 32, 32, null),
-    CLIPBOARD("Clipboard", "", 32, 32, null),
-    SELECT("Select", "", 32, 32, null),
-    PASTE("Paste", "", 32, 32, null),
-    SETTINGS("Settings", "", 32, 32, null),
-    SPELL_CHECKER("Spell Checker", "", 32, 32, null),
-    HELP("Help", "question.png", 32, 32, null),
-    NEW_SLIDE("New Slide", "", 32, 32, new NewSlideAction()),
+    RECENTS("Recents", "", 32, 32, new RecentsAction()),
+    CLIPBOARD("Clipboard", "clipboard.png", 32, 32, new ClipboardAction()),
+    SELECT("Select", "selection.png", 32, 32, new SelectAction()),
+    PASTE("Paste", "paste.png", 32, 32, new PasteAction()),
+    SETTINGS("Settings", "gear.png", 32, 32, new SettingsAction()),
+    SPELL_CHECKER("Spell Checker", "search.png", 32, 32, new SpellCheckerAction()),
+    HELP("Help", "question.png", 32, 32, new HelpAction()),
+    NEW_SLIDE("New Slide", "new-slide.png", 32, 32, new NewSlideAction()),
     ADD_TEXT("Text", "add-text.png", 32, 32, new NewTextElementAction()),
     ADD_IMAGE("Image", "add-image.png", 32, 32, new NewImageElementAction()),
-    ADD_VIDEO("Video", "add-video.png", 32, 32, null),
-    ADD_AUDIO("Audio", "", 32, 32, null),
-    ADD_DIAG("Diagrams", "", 32, 32, null),
-    SHAPES("Shapes", "", 32, 32, null),
-    EXPORT("Export", "export.png", 32, 32, null),
-    IMPORT("Import", "import.png", 32, 32, null),
-    SHARE("Share", "share.png", 32, 32, null),
-    FORMAT("Format", "format.png", 32, 32, null),
-    PRESENT("Present", "projector-screen.png", 32, 32, null),
-    PRESENT_AT("Present From", "", 32, 32, null),
+    ADD_VIDEO("Video", "add-video.png", 32, 32, new NewVideoElementAction()),
+    ADD_AUDIO("Audio", "add-audio.png", 32, 32, new NewAudioElementAction()),
+    ADD_DIAG("Diagrams", "", 32, 32, new NewDiagramElementAction()),
+    SHAPES("Shapes", "", 32, 32, new ShapesAction()),
+    EXPORT("Export", "export.png", 32, 32, new ExportAction()),
+    IMPORT("Import", "import.png", 32, 32, new ImportAction()),
+    SHARE("Share", "share.png", 32, 32, new ShareAction()),
+    FORMAT("Format", "format.png", 32, 32, new FormatAction()),
+    PRESENT("Present", "projector-screen.png", 32, 32, new PresentAction()),
+    PRESENT_AT("Present From", "", 32, 32, new PresentAtAction()),
     AUTOMATE("Automate Slides", "", 32, 32, null),
     HIDE_SLIDE("Hide Slides", "", 32, 32, null),
     ANIMATIONS("Animations", "", 32, 32, null),
     TRANSITIONS("Transitions", "", 32, 32, null),
-    LICENSE("License", "", 32, 32, null),
-    SHORTCUTS("Shortcuts", "", 32, 32, null);
+    LICENSE("License", "", 32, 32, new LicenseAction()),
+    SHORTCUTS("Shortcuts", "", 32, 32, new ShortcutsAction());
 
     private final String title; // Button title - will be used for hover text
     private final ImageIcon icon; // Button icon - will be used to set the icon of a button

@@ -14,10 +14,12 @@ import javax.swing.border.EmptyBorder;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
+import com.scc210groupproject.structure.adjust.DragResizer;
+import com.scc210groupproject.structure.adjust.IResizable;
 import com.scc210groupproject.structure.anchors.AnchorManager;
 import com.scc210groupproject.structure.anchors.IAnchorProvider;
 
-
+@java.lang.Deprecated
 public class DraggableResizableElement extends BaseElement implements IAnchorProvider, IResizable
 {
     protected JPanel panel;

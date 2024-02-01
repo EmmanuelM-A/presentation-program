@@ -14,30 +14,31 @@ import java.awt.*;
  * @author madukaag
  * */
 public class FileToolBar extends ToolBar {
-    private JButton newFile, openFile, saveFile, export, format, print, help;
+    private JButton newFile, openFile, saveFile, saveFileAs, export, format, print, help;
 
     public FileToolBar(JPanel recentsPanel) {
         this.setRollover(true);
 
-        newFile = makeToolbarButton(GeneralButtons.NEW.getTitle(), GeneralButtons.NEW.getIcon(), null, recentsPanel);
+        newFile = makeToolbarButton(GeneralButtons.NEW.getTitle(), GeneralButtons.NEW.getIcon(), GeneralButtons.NEW.getEvent(), recentsPanel);
 
         openFile = makeToolbarButton(GeneralButtons.OPEN.getTitle(), GeneralButtons.OPEN.getIcon(), GeneralButtons.OPEN.getEvent(), recentsPanel);
-        //openFile.addActionListener(new OpenAction());
 
         saveFile = makeToolbarButton(GeneralButtons.SAVE.getTitle(), GeneralButtons.SAVE.getIcon(), GeneralButtons.SAVE.getEvent(), recentsPanel);
-        //saveFile.addActionListener(new SaveAction());
 
-        export = makeToolbarButton(GeneralButtons.EXPORT.getTitle(), GeneralButtons.EXPORT.getIcon(), null, recentsPanel);
+        saveFileAs = makeToolbarButton(GeneralButtons.SAVE_AS.getTitle(), GeneralButtons.SAVE_AS.getIcon(), GeneralButtons.SAVE_AS.getEvent(), recentsPanel);
 
-        format = makeToolbarButton(GeneralButtons.FORMAT.getTitle(), GeneralButtons.FORMAT.getIcon(), null, recentsPanel);
+        export = makeToolbarButton(GeneralButtons.EXPORT.getTitle(), GeneralButtons.EXPORT.getIcon(), GeneralButtons.EXPORT.getEvent(), recentsPanel);
 
-        print = makeToolbarButton(GeneralButtons.PRINT.getTitle(), GeneralButtons.PRINT.getIcon(), null, recentsPanel);
+        format = makeToolbarButton(GeneralButtons.FORMAT.getTitle(), GeneralButtons.FORMAT.getIcon(), GeneralButtons.FORMAT.getEvent(), recentsPanel);
 
-        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), null, recentsPanel);
+        print = makeToolbarButton(GeneralButtons.PRINT.getTitle(), GeneralButtons.PRINT.getIcon(), GeneralButtons.PRINT.getEvent(), recentsPanel);
+
+        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), GeneralButtons.HELP.getEvent(), recentsPanel);
 
         this.add(newFile);
         this.add(openFile);
         this.add(saveFile);
+        this.add(saveFileAs);
 
         separator(this);
 

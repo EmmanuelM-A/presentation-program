@@ -1,10 +1,10 @@
-package com.scc210groupproject.structure;
+package com.scc210groupproject.structure.adjust;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
 
-import com.scc210groupproject.structure.helper.SelectionBorder;
+import com.scc210groupproject.structure.helper.CoordinateUtils;
 import com.scc210groupproject.structure.input.InputEmulator.InputState;
 import com.scc210groupproject.structure.input.listeners.IMouseClicked;
 import com.scc210groupproject.structure.input.listeners.IMouseDragged;
@@ -23,6 +23,7 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
 
     @Override
     public void mousePressed(Object target, InputState state) {
+        System.out.println("hi");
         IResizable resizable = (IResizable)target;
         
         Point local = CoordinateUtils.convertSlideToLocalSpace(state.getLocationInSlide(), resizable.asBaseElement());
