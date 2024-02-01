@@ -57,7 +57,9 @@ public abstract class ToolBar extends JToolBar {
         JButton button = new JButton(title, icon);
 
         // For button focus frame colour use Look & Feel to change its focus colour
-        //button.setPreferredSize(new Dimension(54, 54));
+        /*button.setPreferredSize(new Dimension(54, 54));
+        button.setMinimumSize(new Dimension(32, 32));
+        button.setMaximumSize(new Dimension(54, 54));*/
         button.setSize(new Dimension(54, 54));
         button.setFocusable(false);
         button.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -65,13 +67,13 @@ public abstract class ToolBar extends JToolBar {
         button.setOpaque(false);
         button.setBorderPainted(false);
         button.setFocusPainted(false);
+        button.addActionListener(mainListener);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 addToRecents(recents, button);
             }
         });
-        button.addActionListener(mainListener);
 
         return button;
     }

@@ -26,22 +26,22 @@ public class MenuBarTabs extends JTabbedPane {
         this.setFocusable(false);
 
         this.fileToolBar = new FileToolBar(ToolBar.getRecentsPanel());
-        this.fileToolBar.setBackground(Color.WHITE);
+        this.fileToolBar.setBackground(colour);
 
         this.homeToolBar = new HomeToolBar(ToolBar.getRecentsPanel());
-        this.homeToolBar.setBackground(Color.WHITE);
+        this.homeToolBar.setBackground(colour);
 
         this.insertToolBar = new InsertToolBar(frame, contextMenuPanel, ToolBar.getRecentsPanel());
-        this.insertToolBar.setBackground(Color.WHITE);
+        this.insertToolBar.setBackground(colour);
 
         this.viewToolBar = new ViewToolBar(ToolBar.getRecentsPanel());
-        this.viewToolBar.setBackground(Color.WHITE);
+        this.viewToolBar.setBackground(colour);
 
         this.shareToolBar = new ShareToolBar(ToolBar.getRecentsPanel());
-        this.shareToolBar.setBackground(Color.WHITE);
+        this.shareToolBar.setBackground(colour);
 
         this.aboutToolBar = new AboutToolBar(ToolBar.getRecentsPanel());
-        this.aboutToolBar.setBackground(Color.WHITE);
+        this.aboutToolBar.setBackground(colour);
 
         super.add(this.fileToolBar);
         super.add(this.homeToolBar);
