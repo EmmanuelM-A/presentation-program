@@ -7,7 +7,8 @@ import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.structure.anchors.AnchorManager;
 import com.scc210groupproject.structure.anchors.IAnchorProvider;
-import com.scc210groupproject.structure.input.MouseEmulator.MouseState;
+import com.scc210groupproject.structure.input.InputEmulator.InputState;
+import com.scc210groupproject.structure.input.adapters.KeyAdapter;
 import com.scc210groupproject.structure.input.adapters.MouseButtonAdapter;
 import com.scc210groupproject.structure.input.adapters.MouseMotionAdapter;
 import com.scc210groupproject.structure.input.adapters.MouseOccupancyAdapter;
@@ -135,49 +136,66 @@ public class SampleElement extends BaseElement implements IResizable, IAnchorPro
     }
 
     public SampleElement() {
-        addMouseListener(new DragResizer());
-        addMouseListener(new MouseButtonAdapter() {
+        addInputListener(new DragResizer());
+        addInputListener(new MouseButtonAdapter() {
 
             @Override
-            public void mouseClicked(Object target, MouseState state) {
+            public void mouseClicked(Object target, InputState state) {
                 System.out.println("Mouse clicked at: " + state.getLastChangedButton());
             }
             
             @Override
-            public void mousePressed(Object target, MouseState state) {
+            public void mousePressed(Object target, InputState state) {
                 System.out.println("Mouse pressed at: " + state.getLastChangedButton());
             }
             
             @Override
-            public void mouseReleased(Object target, MouseState state) {
+            public void mouseReleased(Object target, InputState state) {
                 System.out.println("Mouse released at: " + state.getLastChangedButton());
             }
         });
         
-        addMouseListener(new MouseMotionAdapter() {
+        addInputListener(new MouseMotionAdapter() {
             @Override
-            public void mouseMoved(Object target, MouseState state) {
+            public void mouseMoved(Object target, InputState state) {
                 System.out.println("Mouse moved at: " + state.getLocationInSlide());
             }
         
             @Override
-            public void mouseDragged(Object target, MouseState state) {
+            public void mouseDragged(Object target, InputState state) {
                 System.out.println("Mouse dragged at: " + state.getLocationInSlide());
             }
             
         });
         
-        addMouseListener(new MouseOccupancyAdapter() {
+        addInputListener(new MouseOccupancyAdapter() {
             @Override
-            public void mouseEntered(Object target, MouseState state) {
+            public void mouseEntered(Object target, InputState state) {
                 System.out.println("Mouse entered at: " + state.getLocationInSlide());
             }
         
             @Override
-            public void mouseExited(Object target, MouseState state) {
+            public void mouseExited(Object target, InputState state) {
                 System.out.println("Mouse exited at: " + state.getLocationInSlide());
             }
             
+        });
+
+        addInputListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(Object target, InputState state) {
+                System.out.println("Key pressed: " + state.getStandardKeyCode() + " or " + state.getExtendedKeyCode() + " at " + state.getKeyLocation());
+            }
+
+            @Override
+            public void keyTyped(Object target, InputState state) {
+                System.out.println("Key typed: " + state.getKeyChar() + " at " + state.getKeyLocation());
+            }
+
+            @Override
+            public void keyReleased(Object target, InputState state) {
+                System.out.println("Key released: " + state.getStandardKeyCode() + " or " + state.getExtendedKeyCode() + " at " + state.getKeyLocation());
+            }
         });
     }
 }

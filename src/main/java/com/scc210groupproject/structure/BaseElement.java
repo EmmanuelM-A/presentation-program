@@ -12,8 +12,8 @@ import javax.swing.SwingUtilities;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
-import com.scc210groupproject.structure.input.IMouseProvider;
-import com.scc210groupproject.structure.input.MouseManager;
+import com.scc210groupproject.structure.input.IInputProvider;
+import com.scc210groupproject.structure.input.InputManager;
 import com.scc210groupproject.structure.liveness.DestroyManager;
 import com.scc210groupproject.structure.liveness.IDestroyListener;
 import com.scc210groupproject.structure.liveness.IDestroyProvider;
@@ -32,7 +32,7 @@ import com.scc210groupproject.readwrite.IJsonSerializable;
  * Mark them as transient
  * @see BaseElement#component
  */
-public abstract class BaseElement implements IJsonSerializable, IUpdateProvider, IUpdateListener, IDestroyProvider, IDestroyListener, IMouseProvider
+public abstract class BaseElement implements IJsonSerializable, IUpdateProvider, IUpdateListener, IDestroyProvider, IDestroyListener, IInputProvider
 {
     protected abstract void writeSelf(Writer writer) throws IOException;
     protected abstract void readSelf(Reader reader) throws IOException;
@@ -42,7 +42,7 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
 
     private UpdateManager updateManager = new UpdateManager(this);
     private DestroyManager destroyManager = new DestroyManager(this);
-    private MouseManager mouseManager = new MouseManager(this);
+    private InputManager mouseManager = new InputManager();
 
     @Override
     public void writeValue(Writer writer) throws IOException {
@@ -65,7 +65,7 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
         for (BaseElement element : children)
             processNewElement(element);
 
-        mouseManager = new MouseManager(this);
+        mouseManager = new InputManager();
     }
 
     public abstract Component asComp();
@@ -209,7 +209,7 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
         return this;
     }
 
-    public MouseManager getMouseManager() {
+    public InputManager getMouseManager() {
         return mouseManager;
     }
 }

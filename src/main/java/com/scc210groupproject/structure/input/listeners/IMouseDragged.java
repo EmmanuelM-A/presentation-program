@@ -1,7 +1,7 @@
 package com.scc210groupproject.structure.input.listeners;
 
-import com.scc210groupproject.structure.input.MouseEmulator.MouseState;
+import com.scc210groupproject.structure.input.InputEmulator.InputState;
 
-public interface IMouseDragged extends IMouseListener {
-    public void mouseDragged(Object target, MouseState state);
+public interface IMouseDragged extends IInputListener {
+    public void mouseDragged(Object target, InputState state);
 }

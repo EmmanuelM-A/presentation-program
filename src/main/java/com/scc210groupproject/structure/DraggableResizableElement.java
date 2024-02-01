@@ -31,7 +31,7 @@ public class DraggableResizableElement extends BaseElement implements IAnchorPro
         panel.setBorder(new EmptyBorder(10, 10, 10, 10));
         panel.setOpaque(false);
 
-        super.addMouseListener(new DragResizer());
+        super.addInputListener(new DragResizer());
     }
 
     private AnchorManager manager = new AnchorManager(

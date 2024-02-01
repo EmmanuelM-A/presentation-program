@@ -1,6 +1,8 @@
 package com.scc210groupproject.structure.input;
 
 import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -10,6 +12,9 @@ import java.util.HashMap;
 
 import com.scc210groupproject.structure.BaseElement;
 import com.scc210groupproject.structure.Slide;
+import com.scc210groupproject.structure.input.listeners.IKeyPressed;
+import com.scc210groupproject.structure.input.listeners.IKeyReleased;
+import com.scc210groupproject.structure.input.listeners.IKeyTyped;
 import com.scc210groupproject.structure.input.listeners.IMouseClicked;
 import com.scc210groupproject.structure.input.listeners.IMouseDragged;
 import com.scc210groupproject.structure.input.listeners.IMouseEntered;
@@ -19,14 +24,15 @@ import com.scc210groupproject.structure.input.listeners.IMousePressed;
 import com.scc210groupproject.structure.input.listeners.IMouseReleased;
 import com.scc210groupproject.structure.input.listeners.IMouseWheel;
 
-public class MouseEmulator implements MouseListener, MouseMotionListener, MouseWheelListener {
+public class InputEmulator implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
 
     private boolean active = false;
 
     private Slide currentSlide = null;
     private BaseElement draggedElement = null;
+    private BaseElement focusedElement = null;
     private BaseElement currentElement = null;
-    private MouseState currentState = new MouseState();
+    private InputState currentState = new InputState();
 
     private Point offset = new Point();
     private double scale = 1f;
@@ -53,13 +59,18 @@ public class MouseEmulator implements MouseListener, MouseMotionListener, MouseW
         disableMovement();
     }
 
-    public static class MouseState {
+    public static class InputState {
         protected int lastChangedButton;
 
         protected HashMap<Integer, Boolean> buttons = new HashMap<>();
         protected Point locationInSlide = new Point();
         protected int clickCount = 0;
         protected double wheelDelta = 0.0;
+
+        protected int standardKeyCode = KeyEvent.VK_UNDEFINED;
+        protected int extendedKeyCode = KeyEvent.VK_UNDEFINED;
+        protected char keyChar = KeyEvent.CHAR_UNDEFINED;
+        protected int keyLocation = KeyEvent.KEY_LOCATION_UNKNOWN;
 
         public int getLastChangedButton() {
             return lastChangedButton;
@@ -86,6 +97,22 @@ public class MouseEmulator implements MouseListener, MouseMotionListener, MouseW
 
         public double getWheelDelta() {
             return wheelDelta;
+        }
+
+        public int getStandardKeyCode() {
+            return standardKeyCode;
+        }
+
+        public int getExtendedKeyCode() {
+            return extendedKeyCode;
+        }
+
+        public char getKeyChar() {
+            return keyChar;
+        }
+
+        public int getKeyLocation() {
+            return keyLocation;
         }
     }
 
@@ -136,6 +163,7 @@ public class MouseEmulator implements MouseListener, MouseMotionListener, MouseW
         if (currentElement != null)
             currentElement.passMouseEvent(IMousePressed.class, currentElement, currentState);
             
+        focusedElement = currentElement;
     }
 
     @Override
@@ -193,6 +221,38 @@ public class MouseEmulator implements MouseListener, MouseMotionListener, MouseW
     @Override
     public void mouseClicked(MouseEvent e) {
         // not used
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        currentState.keyChar = e.getKeyChar();
+
+        currentState.keyLocation = e.getKeyLocation();
+
+        if (focusedElement != null)
+            focusedElement.passMouseEvent(IKeyTyped.class, focusedElement, currentState);
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        currentState.standardKeyCode = e.getKeyCode();
+        currentState.extendedKeyCode = e.getExtendedKeyCode();
+
+        currentState.keyLocation = e.getKeyLocation();
+
+        if (focusedElement != null)
+            focusedElement.passMouseEvent(IKeyPressed.class, focusedElement, currentState);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        currentState.standardKeyCode = e.getKeyCode();
+        currentState.extendedKeyCode = e.getExtendedKeyCode();
+
+        currentState.keyLocation = e.getKeyLocation();
+
+        if (focusedElement != null)
+            focusedElement.passMouseEvent(IKeyReleased.class, focusedElement, currentState);
     }
 
 }

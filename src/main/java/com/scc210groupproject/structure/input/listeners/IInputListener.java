@@ -1,4 +1,4 @@
 package com.scc210groupproject.structure.input.listeners;
 
-public abstract interface IMouseListener {
+public abstract interface IInputListener {
  }

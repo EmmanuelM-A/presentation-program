@@ -1,7 +1,7 @@
 package com.scc210groupproject.structure.input.listeners;
 
-import com.scc210groupproject.structure.input.MouseEmulator.MouseState;
+import com.scc210groupproject.structure.input.InputEmulator.InputState;
 
-public interface IMouseExited extends IMouseListener  {
-    public void mouseExited(Object target, MouseState state);
+public interface IMouseExited extends IInputListener  {
+    public void mouseExited(Object target, InputState state);
 }

@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 import com.scc210groupproject.structure.*;
 import com.scc210groupproject.structure.eventListeners.IUpdateSlideListener;
-import com.scc210groupproject.structure.input.MouseEmulator;
+import com.scc210groupproject.structure.input.InputEmulator;
 
 
 /**
@@ -28,21 +28,23 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
     // The current presentation being viewed/used in the program
     private Presentation currentPresentation;
     
-    private MouseEmulator mouseEmulator;
+    private InputEmulator emulator;
 
-    private MouseEmulator getMouseEmulator() {
-        if (mouseEmulator == null)
-            mouseEmulator = new MouseEmulator();
-        return mouseEmulator;
+    private InputEmulator getEmulator() {
+        if (emulator == null)
+            emulator = new InputEmulator();
+        return emulator;
     }
 
     public MainDisplayPanel(int width, int height, Color colour)
     {
-        mouseEmulator = new MouseEmulator();
+        emulator = new InputEmulator();
 
-        super.addMouseListener(mouseEmulator);
-        super.addMouseMotionListener(mouseEmulator);
-        super.addMouseWheelListener(mouseEmulator);
+        super.addMouseListener(emulator);
+        super.addMouseMotionListener(emulator);
+        super.addMouseWheelListener(emulator);
+        super.addKeyListener(emulator);
+        super.setFocusable(true);
 
         Presentation.addUpdateSlideListener(this);
 
@@ -114,7 +116,7 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
         Slide newSlide = newslideImage != null ? newslideImage.getSlide() : null;
         Slide currentSlide = currentSlideImage != null ? currentSlideImage.getSlide() : null;
         if (newSlide != currentSlide)
-            mouseEmulator.setTargetSlide(newSlide);
+            emulator.setTargetSlide(newSlide);
 
         this.currentSlideImage = newslideImage;
         setBufferedSlideImage(this.currentSlideImage.getBufferedSlideImage());
@@ -179,7 +181,7 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
             currentSlideImage.setScale(newScale);
 
             
-            mouseEmulator.setPositioning(newOffset, (double)slideComp.getWidth() / (double)slideDimension.width);
+            emulator.setPositioning(newOffset, (double)slideComp.getWidth() / (double)slideDimension.width);
 
             repaint();
         }

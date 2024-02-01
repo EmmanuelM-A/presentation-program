@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 
 import com.scc210groupproject.structure.helper.SelectionBorder;
-import com.scc210groupproject.structure.input.MouseEmulator.MouseState;
+import com.scc210groupproject.structure.input.InputEmulator.InputState;
 import com.scc210groupproject.structure.input.listeners.IMouseClicked;
 import com.scc210groupproject.structure.input.listeners.IMouseDragged;
 import com.scc210groupproject.structure.input.listeners.IMouseEntered;
@@ -22,7 +22,7 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
     private SelectionBorder border = null;
 
     @Override
-    public void mousePressed(Object target, MouseState state) {
+    public void mousePressed(Object target, InputState state) {
         IResizable resizable = (IResizable)target;
         
         Point local = CoordinateUtils.convertSlideToLocalSpace(state.getLocationInSlide(), resizable.asBaseElement());
@@ -32,13 +32,13 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
     }
 
     @Override
-    public void mouseReleased(Object target, MouseState state) {
+    public void mouseReleased(Object target, InputState state) {
 
         last = null;
     }
 
     @Override
-    public void mouseMoved(Object target, MouseState state) {
+    public void mouseMoved(Object target, InputState state) {
         IResizable resizable = (IResizable)target;
 
         Point local = CoordinateUtils.convertSlideToLocalSpace(state.getLocationInSlide(), resizable.asBaseElement());
@@ -75,7 +75,7 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
     }
 
     @Override
-    public void mouseDragged(Object target, MouseState state) {
+    public void mouseDragged(Object target, InputState state) {
         IResizable resizable = (IResizable)target;
         
         Point global = state.getLocationInSlide();
@@ -144,7 +144,7 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
     }
 
     @Override
-    public void mouseEntered(Object target, MouseState state) {
+    public void mouseEntered(Object target, InputState state) {
         IResizable resizable = (IResizable)target;
 
         last = null;
@@ -153,14 +153,14 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
     }
 
     @Override
-    public void mouseExited(Object target, MouseState state) {
+    public void mouseExited(Object target, InputState state) {
         IResizable resizable = (IResizable)target;
 
         resizable.setBorder(null);
     }
 
     @Override
-    public void mouseClicked(Object target, MouseState state) {
+    public void mouseClicked(Object target, InputState state) {
         // not used, here to block message being taken by another element
     }
 }

@@ -66,7 +66,7 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
     }
 
     public ExtendedElement() {
-        addMouseListener(new DragResizer());
+        addInputListener(new DragResizer());
     }
 
     @Override

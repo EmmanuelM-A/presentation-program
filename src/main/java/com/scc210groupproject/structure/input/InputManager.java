@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.scc210groupproject.structure.BaseElement;
+import com.scc210groupproject.structure.input.listeners.IKeyPressed;
+import com.scc210groupproject.structure.input.listeners.IKeyReleased;
+import com.scc210groupproject.structure.input.listeners.IKeyTyped;
 import com.scc210groupproject.structure.input.listeners.IMouseClicked;
 import com.scc210groupproject.structure.input.listeners.IMouseDragged;
 import com.scc210groupproject.structure.input.listeners.IMouseEntered;
@@ -16,31 +19,33 @@ import com.scc210groupproject.structure.input.listeners.IMousePressed;
 import com.scc210groupproject.structure.input.listeners.IMouseReleased;
 import com.scc210groupproject.structure.input.listeners.IMouseWheel;
 
-public class MouseManager {
-    public HashMap<Class<?>, MouseController> controllers;
+public class InputManager {
+    public HashMap<Class<?>, InputController> controllers;
 
-    public MouseManager(BaseElement element) {
+    public InputManager() {
         controllers = new HashMap<>();
         
-        controllers.put(IMouseEntered.class, new MouseController(IMouseEntered.class, element));
-        controllers.put(IMouseExited.class, new MouseController(IMouseExited.class, element));
+        controllers.put(IMouseEntered.class, new InputController(IMouseEntered.class));
+        controllers.put(IMouseExited.class, new InputController(IMouseExited.class));
         
-        controllers.put(IMouseDragged.class, new MouseController(IMouseDragged.class, element));
-        controllers.put(IMouseMoved.class, new MouseController(IMouseMoved.class, element));
+        controllers.put(IMouseDragged.class, new InputController(IMouseDragged.class));
+        controllers.put(IMouseMoved.class, new InputController(IMouseMoved.class));
 
-        controllers.put(IMouseClicked.class, new MouseController(IMouseClicked.class, element));
-        controllers.put(IMousePressed.class, new MouseController(IMousePressed.class, element));
-        controllers.put(IMouseReleased.class, new MouseController(IMouseReleased.class, element));
+        controllers.put(IMouseClicked.class, new InputController(IMouseClicked.class));
+        controllers.put(IMousePressed.class, new InputController(IMousePressed.class));
+        controllers.put(IMouseReleased.class, new InputController(IMouseReleased.class));
 
-        controllers.put(IMouseWheel.class, new MouseController(IMouseWheel.class, element));
+        controllers.put(IMouseWheel.class, new InputController(IMouseWheel.class));
+
+        controllers.put(IKeyTyped.class, new InputController(IKeyTyped.class));
+        controllers.put(IKeyPressed.class, new InputController(IKeyPressed.class));
+        controllers.put(IKeyReleased.class, new InputController(IKeyReleased.class));
     }
 
-    public static class MouseController {
-        private BaseElement element;
+    public static class InputController {
         private Class<?> type;
 
-        public MouseController(Class<?> type, BaseElement element) {
-            this.element = element;
+        public InputController(Class<?> type) {
             this.type = type;
         }
 
@@ -54,7 +59,7 @@ public class MouseManager {
             listeners.remove(listener);
         }
     
-        public void passEvent(BaseElement element, MouseEmulator.MouseState state) {
+        public void passEvent(BaseElement element, InputEmulator.InputState state) {
             if (listeners.size() > 0) {
                 for (Object l : listeners)
                     try {
@@ -78,7 +83,7 @@ public class MouseManager {
         //interested in runtime class (which we can get all the implemented interface)
         Class<?> c = listener.getClass();
 
-        for (Map.Entry<Class<?>, MouseController> controller : controllers.entrySet()) {
+        for (Map.Entry<Class<?>, InputController> controller : controllers.entrySet()) {
             
             if (controller.getKey().isAssignableFrom(c))
                 controller.getValue().addListener(listener);
@@ -90,7 +95,7 @@ public class MouseManager {
         //interested in runtime class (which we can get all the implemented interface)
         Class<?> c = listener.getClass();
 
-        for (Map.Entry<Class<?>, MouseController> controller : controllers.entrySet()) {
+        for (Map.Entry<Class<?>, InputController> controller : controllers.entrySet()) {
             if (controller.getKey().isAssignableFrom(c))
                 controller.getValue().removeListener(listener);
         }
