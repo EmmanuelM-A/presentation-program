@@ -11,8 +11,8 @@ import java.util.LinkedList;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
+import com.scc210groupproject.structure.helper.CoordinateUtils;
 import com.scc210groupproject.readwrite.IJsonSerializable;
-import com.scc210groupproject.structure.CoordinateUtils;
 
 public class AnchorReference implements IJsonSerializable {
     private Point2D.Double location;

@@ -1,9 +1,10 @@
-package com.scc210groupproject.structure;
+package com.scc210groupproject.structure.adjust;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
 
+import com.scc210groupproject.structure.helper.CoordinateUtils;
 import com.scc210groupproject.structure.helper.SelectionBorder;
 import com.scc210groupproject.structure.input.InputEmulator.InputState;
 import com.scc210groupproject.structure.input.listeners.IMouseClicked;

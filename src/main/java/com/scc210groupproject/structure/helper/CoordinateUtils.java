@@ -1,8 +1,11 @@
-package com.scc210groupproject.structure;
+package com.scc210groupproject.structure.helper;
 
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.geom.Point2D;
+
+import com.scc210groupproject.structure.BaseElement;
+import com.scc210groupproject.structure.Slide;
 
 public class CoordinateUtils {
 
@@ -38,7 +41,7 @@ public class CoordinateUtils {
             x += space.x;
             y += space.y;
 
-            above = above.parent;
+            above = above.getParent();
         }
 
         return new Point(x, y);
