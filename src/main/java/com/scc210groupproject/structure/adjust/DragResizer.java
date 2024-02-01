@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Point;
 
 import com.scc210groupproject.structure.helper.CoordinateUtils;
-import com.scc210groupproject.structure.helper.SelectionBorder;
 import com.scc210groupproject.structure.input.InputEmulator.InputState;
 import com.scc210groupproject.structure.input.listeners.IMouseClicked;
 import com.scc210groupproject.structure.input.listeners.IMouseDragged;
