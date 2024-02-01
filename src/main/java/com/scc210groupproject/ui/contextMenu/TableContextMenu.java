@@ -3,7 +3,8 @@ package com.scc210groupproject.ui.contextMenu;
 import javax.swing.*;
 import java.awt.*;
 
-public class TableContextMenu extends ContextMenu {
+public class TableContextMenu extends JPanel
+{
     private JMenuItem insertTable, deleteTable, addRow, deleteRow, addColumn, deleteColumn, formatTable;
 
     public TableContextMenu(JFrame frame, int x, int y) {

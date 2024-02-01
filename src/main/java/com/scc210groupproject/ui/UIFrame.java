@@ -1,6 +1,7 @@
 package com.scc210groupproject.ui;
 
 import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
+import com.scc210groupproject.ui.contextMenu.TextContextMenu;
 import com.scc210groupproject.ui.menuBarTabs.MenuBarTabs;
 
 import javax.swing.*;
@@ -45,7 +46,6 @@ public class UIFrame extends JFrame
         gbc.insets = new Insets(0, 0, gap, 0);
         this.add(menuBarTabs, gbc);
 
-        ContextMenuPanel contextMenuPanel = new ContextMenuPanel(0, 0, Color.WHITE);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 1;
@@ -53,7 +53,8 @@ public class UIFrame extends JFrame
         gbc.weightx = 0.2;
         gbc.weighty = 0.79;
         gbc.insets = new Insets(gap, 0, gap, gap);
-        this.add(contextMenuPanel, gbc);
+        new ContextMenuPanel(new TextContextMenu());
+        this.add(ContextMenuPanel.contextMenuPanel, gbc);
 
         MainDisplayPanel mainDisplayPanel = new MainDisplayPanel(0, 0, Color.WHITE);
         gbc.gridx = 1;

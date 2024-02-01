@@ -4,17 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CodeContextMenu extends ContextMenu {
-    private JMenuItem insertCode, editCode, deleteCode, importFile, exportFile, git, colourScheme;
     public CodeContextMenu(JFrame frame, int x, int y) {
         this.setPreferredSize(new Dimension(300, 350));
 
-        this.insertCode = makeMenuItem("Insert Code Block", null);
-        this.editCode = makeMenuItem("Edit Code Block", null);
-        this.deleteCode = makeMenuItem("Delete Code Block", null);
-        this.importFile = makeMenuItem("Import File", null);
-        this.exportFile = makeMenuItem("Export File", null);
-        this.git = makeMenuItem("Git", null);
-        this.colourScheme = makeMenuItem("Colour Format", null);
+        this.insertCode = makeButton("Insert Code Block", null);
+        this.editCode = makeButton("Edit Code Block", null);
+        this.deleteCode = makeButton("Delete Code Block", null);
+        this.importFile = makeButton("Import File", null);
+        this.exportFile = makeButton("Export File", null);
+        this.git = makeButton("Git", null);
+        this.colourScheme = makeButton("Colour Format", null);
 
         this.add(this.insertCode);
         this.add(this.editCode);

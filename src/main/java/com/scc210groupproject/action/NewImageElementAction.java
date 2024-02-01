@@ -26,9 +26,11 @@ public class NewImageElementAction implements ActionListener
 
         String path = fileChooser.getSelectedFile().getAbsolutePath();
 
-        ImageElement imageElement = new ImageElement(new ImageIcon(path));
+        ImageIcon imageIcon = new ImageIcon(path);
 
-        imageElement.setSize(new Dimension(400, 400));
+        ImageElement imageElement = new ImageElement(imageIcon);
+
+        imageElement.setSize(new Dimension(imageIcon.getIconWidth(), imageIcon.getIconHeight()));
 
         SlideManager.slideManager.getCurrentSlide().add(imageElement);
     }

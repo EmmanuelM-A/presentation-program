@@ -100,7 +100,7 @@ public enum GeneralButtons {
      * @return ImageIcon
      * */
     private ImageIcon getIconFromFile(String file) {
-        String filePath = "src/main/resources/images/" + file;
+        String filePath = "/home/tloxley/Year2/SCC210/scc210-2324-grp-62/src/main/resources/images/" + file;
         try {
             return new ImageIcon(filePath);
         } catch (Exception e) {
@@ -121,7 +121,7 @@ public enum GeneralButtons {
         Image image = icon.getImage();
 
         // Resize the Image
-        Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_FAST);
+        Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 
         // Return the resized ImageIcon
         return new ImageIcon(resizedImage);

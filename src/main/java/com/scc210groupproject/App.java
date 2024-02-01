@@ -1,6 +1,5 @@
 package com.scc210groupproject;
 
-
 import com.scc210groupproject.ui.UIFrame;
 
 /**

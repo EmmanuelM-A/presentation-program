@@ -5,7 +5,8 @@ import com.scc210groupproject.ui.helper.GeneralButtons;
 import javax.swing.*;
 import java.awt.*;
 
-public class ImageContextMenu extends ContextMenu {
+public class ImageContextMenu extends JPanel
+{
     private JMenuItem insertImage, deleteImage, rotateImage, resizeImage, border, insertText, insertLink, draw, shapes, lines;
     public ImageContextMenu(JFrame frame, int x, int y) {
         this.setPreferredSize(new Dimension(300, 350));

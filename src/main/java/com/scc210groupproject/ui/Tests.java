@@ -1,6 +1,7 @@
 package com.scc210groupproject.ui;
 
 import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
+import com.scc210groupproject.ui.contextMenu.TextContextMenu;
 import com.scc210groupproject.ui.menuBarTabs.MenuBarTabs;
 
 import javax.swing.*;
@@ -32,7 +33,7 @@ public class Tests extends JFrame {
         this.setResizable(true);
         this.setLayout(new GridBagLayout());
 
-        this.contextMenuPanel = new ContextMenuPanel(0, 0, Color.WHITE);
+        this.contextMenuPanel = new ContextMenuPanel(null);
 
         this.menuBarTabs = new MenuBarTabs(this, this.contextMenuPanel, 0, 0, Color.WHITE);
 
@@ -56,7 +57,7 @@ public class Tests extends JFrame {
         gbc.weightx = 0.2;
         gbc.weighty = 0.79;
         gbc.insets = new Insets(gap, 0, gap, gap);
-        this.add(contextMenuPanel, gbc);
+        this.add(ContextMenuPanel.contextMenuPanel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;

@@ -2,54 +2,76 @@ package com.scc210groupproject.ui.contextMenu;
 
 import com.scc210groupproject.ui.helper.GeneralButtons;
 
-
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * This class extends the JPopupMenu and contains the context menus relevant information and
- * JElements. STILL IN PROGRESS
- *
- * @author madukaag
- * */
-public class TextContextMenu extends ContextMenu {
-    // Other menu items to add: selectFont, selectFontSize
-    private JMenuItem insertText, deleteText, rotateText, alignText, moveText, boldText, italicText, underlineText, colourText, border, textSpacing;
-    public TextContextMenu(JFrame frame, int x, int y) {
+public class TextContextMenu extends JPanel
+{
+    public TextContextMenu() {
         this.setPreferredSize(new Dimension(300, 350));
+        GridBagLayout layout = new GridBagLayout();
+        GridBagConstraints gbc = new GridBagConstraints();
+        this.setLayout(layout);
 
-        // Menu items created here
-        this.insertText = makeMenuItem(
-            "Add Text",
-            GeneralButtons.resizeIcon(GeneralButtons.ADD_TEXT.getIcon(), 20, 20)
-        );
+        String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+        Integer[] fontSizes = {8,9, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72};
 
-        this.deleteText = makeMenuItem("Delete Text", null);
-        this.alignText = makeMenuItem("Align Text", null);
-        this.rotateText = makeMenuItem("Rotate", null);
-        this.moveText = makeMenuItem("Move", null);
-        this.boldText = makeMenuItem("Bold", null);
-        this.italicText = makeMenuItem("Italics", null);
-        this.underlineText = makeMenuItem("Underline", null);
-        this.colourText = makeMenuItem("Change Colour", null);
-        this.border = makeMenuItem("Border", null);
-        this.textSpacing = makeMenuItem("Text Spacing", null);
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        JComboBox<String> fontList = new JComboBox<>(fonts);
+        this.add(fontList, gbc);
 
-        // Menu items added here
-        this.add(this.insertText);
-        this.add(this.deleteText);
-        this.add(this.alignText);
-        this.add(this.rotateText);
-        this.add(this.moveText);
-        this.add(this.boldText);
-        this.add(this.italicText);
-        this.add(this.underlineText);
-        this.add(this.colourText);
-        this.add(this.border);
-        this.add(this.textSpacing);
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        JComboBox<Integer> fontSizeList = new JComboBox<>(fontSizes);
+        this.add(fontSizeList, gbc);
 
-        // On some action display PopupMenu
-        //this.show(frame, x, y);
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        this.add(new JButton("Align Text", null), gbc);
+
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        this.add(new JButton("Rotate", null), gbc);
+
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        this.add(new JButton("Move", null), gbc);
+
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        this.add(new JButton("Bold", null), gbc);
+
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        this.add(new JButton("Italics", null), gbc);
+
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        this.add(new JButton("Underline", null), gbc);
+
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.gridx = 2;
+        gbc.gridy = 2;
+        this.add(new JButton("Change Colour", null), gbc);
+
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        this.add(new JButton("Border", null), gbc);
+
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        this.add(new JButton("Text Spacing", null), gbc);
     }
 
 
