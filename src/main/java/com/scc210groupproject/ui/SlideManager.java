@@ -563,6 +563,13 @@ public class SlideManager implements ActionListener, IChangePresentationListener
 
     @Override
     public void onChangePresentation(Presentation current, Presentation discarded) {
+
+        this.slideImages.clear();
+        this.slidesViewer.clear();
+        this.viewSliderPanel.removeAll();
+        this.viewSliderPanel.revalidate();
+        this.viewSliderPanel.repaint();
+
         if (current != null && current.getSlideCount() > 0) {
             showSlideAtIndex(0);
             return;
