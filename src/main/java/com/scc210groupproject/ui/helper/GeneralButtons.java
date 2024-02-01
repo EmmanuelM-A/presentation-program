@@ -21,7 +21,7 @@ public enum GeneralButtons {
     NEW("New File", "new-document.png", 32, 32, new NewFileAction()),
     OPEN("Open File", "folder.png", 32, 32, new OpenAction()),
     SAVE("Save File", "diskette.png", 32, 32, new SaveAction()),
-    SAVE_AS("Save As", "", 32, 32, new SaveAsAction()),
+    SAVE_AS("Save As", "diskette.png", 32, 32, new SaveAsAction()),
     PRINT("Print", "printer.png", 32, 32, new PrintAction()),
     RECENTS("Recents", "", 32, 32, new RecentsAction()),
     CLIPBOARD("Clipboard", "", 32, 32, new ClipboardAction()),
