@@ -31,11 +31,22 @@ public class UIFrame extends JFrame
         /*
          * Application Window Components and their position on the frame
          * */
+        /*JPanel top = new JPanel(new BorderLayout());
+        top.setPreferredSize(new Dimension(2000, 150));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0.01;
+        gbc.insets = new Insets(0, 0, gap, 0);
+        this.add(top, gbc);
 
         // Instantiates the class and adds a custom title bar to the frame. REQUIRES A BIT OF REPOSITIONING TO DISPLAY
-        //this.customTitleBar = new TitleBar(this);
+        //TitleBar customTitleBar = new TitleBar();
+        top.add(TitleBar.createTitleBar(this), BorderLayout.NORTH);*/
 
-        MenuBarTabs menuBarTabs = new MenuBarTabs(this, null, 0, 0, Color.WHITE);
+        MenuBarTabs menuBarTabs = new MenuBarTabs(this, null, 0, 40, Color.WHITE);
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -70,6 +81,7 @@ public class UIFrame extends JFrame
         gbc.weighty = 0.01;
         gbc.insets = new Insets(gap, 0, 0, 0);
         this.add(SlideManager.slideManager.createPresentationSlider(), gbc);
+
 
         setVisible(true);
     }

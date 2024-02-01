@@ -34,10 +34,8 @@ public class HomeToolBar extends ToolBar {
                 newFile = makeToolbarButton(GeneralButtons.NEW.getTitle(), GeneralButtons.NEW.getIcon(), GeneralButtons.NEW.getEvent(), recentsPanel);
 
                 openFile = makeToolbarButton(GeneralButtons.OPEN.getTitle(), GeneralButtons.OPEN.getIcon(), GeneralButtons.OPEN.getEvent(), recentsPanel);
-                //openFile.addActionListener(new OpenAction());
 
                 saveFile = makeToolbarButton(GeneralButtons.SAVE.getTitle(), GeneralButtons.SAVE.getIcon(), GeneralButtons.SAVE.getEvent(), recentsPanel);
-                //saveFile.addActionListener(new SaveAction());
 
                 clipboard = makeToolbarButton(GeneralButtons.CLIPBOARD.getTitle(), GeneralButtons.CLIPBOARD.getIcon(), GeneralButtons.CLIPBOARD.getEvent(), recentsPanel);
 
