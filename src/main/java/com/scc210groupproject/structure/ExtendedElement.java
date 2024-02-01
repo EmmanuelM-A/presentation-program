@@ -8,6 +8,8 @@ import java.awt.geom.Point2D;
 import javax.swing.JComponent;
 import javax.swing.border.Border;
 
+import com.scc210groupproject.structure.adjust.DragResizer;
+import com.scc210groupproject.structure.adjust.IResizable;
 import com.scc210groupproject.structure.anchors.AnchorManager;
 import com.scc210groupproject.structure.anchors.IAnchorProvider;
 
