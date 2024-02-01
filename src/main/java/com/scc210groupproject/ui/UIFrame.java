@@ -82,6 +82,8 @@ public class UIFrame extends JFrame
         gbc.insets = new Insets(gap, 0, 0, 0);
         this.add(SlideManager.slideManager.createPresentationSlider(), gbc);
 
+        ShapesPopup shapesPopup = new ShapesPopup(this);
+
 
         setVisible(true);
     }

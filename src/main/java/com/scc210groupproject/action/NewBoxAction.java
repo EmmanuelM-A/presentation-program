@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import com.scc210groupproject.structure.SampleElement;
 import com.scc210groupproject.testui.MainDisplayPanel;
+import com.scc210groupproject.ui.SlideManager;
 
 public class NewBoxAction implements ActionListener {
 
@@ -19,7 +20,8 @@ public class NewBoxAction implements ActionListener {
         sampleElement.setLocation(new Point((int)(Math.random() * 400), (int)(Math.random() * 400)));
         sampleElement.setSize(new Dimension((int)(Math.random() * 75) + 25, (int)(Math.random() * 75) + 25));
 
-        MainDisplayPanel.instance.getDisplayedSlide().add(sampleElement);
+        //if (MainDisplayPanel.instance != null)
+        SlideManager.slideManager.getCurrentSlide().add(sampleElement);
     }
 
 }
