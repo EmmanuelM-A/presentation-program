@@ -2,13 +2,15 @@ package com.scc210groupproject.ui.helper;
 
 import com.scc210groupproject.action.NewFileAction;
 import com.scc210groupproject.action.NewImageElementAction;
+import com.scc210groupproject.action.NewSlideAction;
+import com.scc210groupproject.action.NewTextElementAction;
 import com.scc210groupproject.action.OpenAction;
+import com.scc210groupproject.action.PresentAction;
+import com.scc210groupproject.action.PresentAtAction;
 import com.scc210groupproject.action.SaveAction;
 import com.scc210groupproject.action.SaveAsAction;
 import com.scc210groupproject.action.PrintAction;
 
-import com.scc210groupproject.action.NewSlideAction;
-import com.scc210groupproject.action.NewTextElementAction;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -48,8 +50,8 @@ public enum GeneralButtons {
     IMPORT("Import", "import.png", 32, 32, null),
     SHARE("Share", "share.png", 32, 32, null),
     FORMAT("Format", "format.png", 32, 32, null),
-    PRESENT("Present", "projector-screen.png", 32, 32, null),
-    PRESENT_AT("Present From", "", 32, 32, null),
+    PRESENT("Present", "projector-screen.png", 32, 32, new PresentAction()),
+    PRESENT_AT("Present From", "", 32, 32, new PresentAtAction()),
     AUTOMATE("Automate Slides", "", 32, 32, null),
     HIDE_SLIDE("Hide Slides", "", 32, 32, null),
     ANIMATIONS("Animations", "", 32, 32, null),
