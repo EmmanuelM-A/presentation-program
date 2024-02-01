@@ -1,7 +1,14 @@
 package com.scc210groupproject.ui.helper;
 
+import com.scc210groupproject.action.NewFileAction;
+import com.scc210groupproject.action.NewImageElementAction;
 import com.scc210groupproject.action.OpenAction;
 import com.scc210groupproject.action.SaveAction;
+import com.scc210groupproject.action.SaveAsAction;
+import com.scc210groupproject.action.PrintAction;
+
+import com.scc210groupproject.action.NewSlideAction;
+import com.scc210groupproject.action.NewTextElementAction;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -18,11 +25,11 @@ import java.util.Objects;
  * @author madukaag
  * */
 public enum GeneralButtons {
-    NEW("New File", "new-document.png", 32, 32, null),
+    NEW("New File", "new-document.png", 32, 32, new NewFileAction()),
     OPEN("Open File", "folder.png", 32, 32, new OpenAction()),
     SAVE("Save File", "diskette.png", 32, 32, new SaveAction()),
-    SAVE_AS("Save As", "", 32, 32, null),
-    PRINT("Print", "printer.png", 32, 32, null),
+    SAVE_AS("Save As", "", 32, 32, new SaveAsAction()),
+    PRINT("Print", "printer.png", 32, 32, new PrintAction()),
     RECENTS("Recents", "", 32, 32, null),
     CLIPBOARD("Clipboard", "", 32, 32, null),
     SELECT("Select", "", 32, 32, null),
@@ -30,9 +37,9 @@ public enum GeneralButtons {
     SETTINGS("Settings", "", 32, 32, null),
     SPELL_CHECKER("Spell Checker", "", 32, 32, null),
     HELP("Help", "question.png", 32, 32, null),
-    NEW_SLIDE("New Slide", "", 32, 32, null),
-    ADD_TEXT("Text", "add-text.png", 32, 32, null),
-    ADD_IMAGE("Image", "add-image.png", 32, 32, null),
+    NEW_SLIDE("New Slide", "", 32, 32, new NewSlideAction()),
+    ADD_TEXT("Text", "add-text.png", 32, 32, new NewTextElementAction()),
+    ADD_IMAGE("Image", "add-image.png", 32, 32, new NewImageElementAction()),
     ADD_VIDEO("Video", "add-video.png", 32, 32, null),
     ADD_AUDIO("Audio", "", 32, 32, null),
     ADD_DIAG("Diagrams", "", 32, 32, null),

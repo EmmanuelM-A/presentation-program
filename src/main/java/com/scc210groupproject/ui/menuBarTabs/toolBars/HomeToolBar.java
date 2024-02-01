@@ -29,7 +29,7 @@ public class HomeToolBar extends ToolBar {
                 recentsScrollPane.setMaximumSize(new Dimension(500, 90));
                 recentsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-                newSlide = makeToolbarButton(GeneralButtons.NEW_SLIDE.getTitle(), GeneralButtons.NEW_SLIDE.getIcon(), null, recentsPanel);
+                newSlide = makeToolbarButton(GeneralButtons.NEW_SLIDE.getTitle(), GeneralButtons.NEW_SLIDE.getIcon(), GeneralButtons.NEW_SLIDE.getEvent(), recentsPanel);
 
                 newFile = makeToolbarButton(GeneralButtons.NEW.getTitle(), GeneralButtons.NEW.getIcon(), GeneralButtons.NEW.getEvent(), recentsPanel);
 
