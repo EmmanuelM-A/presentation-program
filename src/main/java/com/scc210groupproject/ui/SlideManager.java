@@ -472,7 +472,7 @@ public class SlideManager implements ActionListener, IChangePresentationListener
     }
 
     /**
-     * Gets the shared slide position of a slide
+     * Gets the index position of a slide
      * @param slide A slide
      * @return The index of the slide
      * @param <T> The type of slide
@@ -663,6 +663,6 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         ImageIcon previewSlideImage = new ImageIcon(slideImages.get(index).getBufferedSlideImage());
 
         // Reset the image icon of that slide to the new slide image
-        previewSlide.setIcon(GeneralButtons.resizeIcon(previewSlideImage, 200, 115));
+        previewSlide.setIcon(GeneralButtons.resizeIcon(previewSlideImage, 200, 118));
     }
 }
