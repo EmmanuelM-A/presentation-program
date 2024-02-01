@@ -156,7 +156,9 @@ public class SlideManager implements ActionListener, IChangePresentationListener
         this.addNewSlide.addActionListener(new NewSlideAction());
 
         this.deleteSlide = new JButton("Delete Slide");
-        this.deleteSlide.addActionListener(new DeleteSlideAction());
+        DeleteSlideAction deleteAction = new DeleteSlideAction();
+        deleteAction.setButton(this.deleteSlide);
+        this.deleteSlide.addActionListener(deleteAction);
         
         this.present = new JButton("Present");
         this.presentAt = new JButton("Present From");
