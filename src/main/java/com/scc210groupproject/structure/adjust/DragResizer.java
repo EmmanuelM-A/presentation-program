@@ -23,6 +23,7 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
 
     @Override
     public void mousePressed(Object target, InputState state) {
+        System.out.println("hi");
         IResizable resizable = (IResizable)target;
         
         Point local = CoordinateUtils.convertSlideToLocalSpace(state.getLocationInSlide(), resizable.asBaseElement());

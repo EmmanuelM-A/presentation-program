@@ -56,16 +56,14 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
     @Override
     @SuppressWarnings("unchecked")
     public void readValue(Reader reader) throws IOException {
-        readSelf(reader);
         parent = (BaseElement)reader.readObject("parent");
         updateManager = (UpdateManager)reader.readObject("update manager");
         destroyManager = (DestroyManager)reader.readObject("destroy manager");
         children = (List<BaseElement>)reader.readObjectList("children");
 
+        readSelf(reader);
         for (BaseElement element : children)
             processNewElement(element);
-
-        mouseManager = new InputManager();
     }
 
     public abstract Component asComp();

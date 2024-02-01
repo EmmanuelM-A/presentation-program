@@ -160,6 +160,8 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
         currentState.buttons.put(button, true);
         currentState.lastChangedButton = button;
 
+        System.out.println(currentElement);
+
         if (currentElement != null)
             currentElement.passMouseEvent(IMousePressed.class, currentElement, currentState);
             
