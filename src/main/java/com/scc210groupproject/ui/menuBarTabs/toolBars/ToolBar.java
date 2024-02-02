@@ -57,13 +57,16 @@ public abstract class ToolBar extends JToolBar {
         JButton button = new JButton(title, icon);
 
         // For button focus frame colour use Look & Feel to change its focus colour
-        /*button.setPreferredSize(new Dimension(54, 54));
-        button.setMinimumSize(new Dimension(32, 32));
-        button.setMaximumSize(new Dimension(54, 54));*/
-        button.setSize(new Dimension(54, 54));
+        button.setPreferredSize(new Dimension(76, 76));
+        button.setMaximumSize(new Dimension(76, 76));
+        button.setMinimumSize(new Dimension(54, 54));
+        //button.setSize(new Dimension(64, 64));
         button.setFocusable(false);
         button.setHorizontalTextPosition(SwingConstants.CENTER);
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
+        //button.setHorizontalAlignment(SwingConstants.CENTER);
+        button.setFont(new Font("Tahoma", Font.BOLD, 12));
+        button.setMargin(new Insets(0, 0, 0, 0));
         button.setOpaque(false);
         button.setBorderPainted(false);
         button.setFocusPainted(false);
@@ -87,6 +90,7 @@ public abstract class ToolBar extends JToolBar {
         // REMINDER - USE LOOK AND FEEL TO CHANGE SEPARATOR COLOUR
         separator.setMaximumSize(new Dimension(1, 80));
         separator.setOrientation(JSeparator.VERTICAL);
+        separator.setBackground(Color.BLACK);
 
         toolBar.addSeparator();
         toolBar.add(separator);

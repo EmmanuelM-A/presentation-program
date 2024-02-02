@@ -14,7 +14,7 @@ import java.awt.*;
  * @author madukaag
  * */
 public class FileToolBar extends ToolBar {
-    private JButton newFile, openFile, saveFile, saveFileAs, export, format, print, help;
+    private JButton newFile, openFile, saveFile, export, format, print, help;
 
     public FileToolBar(JPanel recentsPanel) {
         this.setRollover(true);
@@ -24,8 +24,6 @@ public class FileToolBar extends ToolBar {
         openFile = makeToolbarButton(GeneralButtons.OPEN.getTitle(), GeneralButtons.OPEN.getIcon(), GeneralButtons.OPEN.getEvent(), recentsPanel);
 
         saveFile = makeToolbarButton(GeneralButtons.SAVE.getTitle(), GeneralButtons.SAVE.getIcon(), GeneralButtons.SAVE.getEvent(), recentsPanel);
-
-        saveFileAs = makeToolbarButton(GeneralButtons.SAVE_AS.getTitle(), GeneralButtons.SAVE_AS.getIcon(), GeneralButtons.SAVE_AS.getEvent(), recentsPanel);
 
         export = makeToolbarButton(GeneralButtons.EXPORT.getTitle(), GeneralButtons.EXPORT.getIcon(), GeneralButtons.EXPORT.getEvent(), recentsPanel);
 
@@ -38,7 +36,6 @@ public class FileToolBar extends ToolBar {
         this.add(newFile);
         this.add(openFile);
         this.add(saveFile);
-        this.add(saveFileAs);
 
         separator(this);
 

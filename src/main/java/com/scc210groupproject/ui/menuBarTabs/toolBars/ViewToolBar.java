@@ -29,11 +29,13 @@ public class ViewToolBar extends ToolBar {
         animationsPanel.setBackground(Color.WHITE);
         animations = new JScrollPane(animationsPanel);
         animations.setMaximumSize(new Dimension(500, 90));
+        animations.setToolTipText("Animations");
         animations.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         transistionsPanel.setBackground(Color.WHITE);
         transistions = new JScrollPane(transistionsPanel);
         transistions.setMaximumSize(new Dimension(500, 90));
+        transistions.setToolTipText("Transitions");
         transistions.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), GeneralButtons.HELP.getEvent(), recentsPanel);

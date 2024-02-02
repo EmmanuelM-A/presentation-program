@@ -21,9 +21,9 @@ public enum GeneralButtons {
     SAVE("Save File", "diskette.png", 32, 32, new SaveAction()),
     SAVE_AS("Save As", "save-as.png", 32, 32, new SaveAsAction()),
     PRINT("Print", "printer.png", 32, 32, new PrintAction()),
-    //RECENTS("Recents", "", 32, 32, new RecentsAction()),
     CLIPBOARD("Clipboard", "clipboard.png", 32, 32, new ClipboardAction()),
     SELECT("Select", "selection.png", 32, 32, new SelectAction()),
+    COPY("Copy", "copy.png", 32, 32, null),
     PASTE("Paste", "paste.png", 32, 32, new PasteAction()),
     SETTINGS("Settings", "gear.png", 32, 32, new SettingsAction()),
     SPELL_CHECKER("Spell Checker", "search.png", 32, 32, new SpellCheckerAction()),
@@ -33,14 +33,16 @@ public enum GeneralButtons {
     ADD_IMAGE("Image", "add-image.png", 32, 32, new NewImageElementAction()),
     ADD_VIDEO("Video", "add-video.png", 32, 32, new NewVideoElementAction()),
     ADD_AUDIO("Audio", "add-audio.png", 32, 32, new NewAudioElementAction()),
-    ADD_DIAG("Diagrams", "", 32, 32, new NewDiagramElementAction()),
-    SHAPES("Shapes", "", 32, 32, new ShapesAction()),
+    ADD_DIAG("Diagrams", "add-diagram.png", 32, 32, new NewDiagramElementAction()),
+    SHAPES("Shapes", "add-shapes.png", 32, 32, new ShapesAction()),
     EXPORT("Export", "export.png", 32, 32, new ExportAction()),
     IMPORT("Import", "import.png", 32, 32, new ImportAction()),
     SHARE("Share", "share.png", 32, 32, new ShareAction()),
     FORMAT("Format", "format.png", 32, 32, new FormatAction()),
     PRESENT("Present", "projector-screen.png", 32, 32, new PresentAction()),
-    PRESENT_AT("Present From", "", 32, 32, new PresentAtAction()),
+    PRESENT_AT("Present From", "present-at.png", 32, 32, new PresentAtAction()),
+    DELETE_SLIDE("Delete Slide", "delete-slide.png", 32, 32, null),
+    DELETE_ELEMENT("Delete", "delete-element.png", 32, 32, null),
     AUTOMATE("Automate Slides", "", 32, 32, null),
     HIDE_SLIDE("Hide Slides", "", 32, 32, null),
     ANIMATIONS("Animations", "", 32, 32, null),
@@ -52,7 +54,7 @@ public enum GeneralButtons {
     private final ImageIcon icon; // Button icon - will be used to set the icon of a button
     private final ActionListener event; //
     private GeneralButtons(String title, String filename, int width, int height, ActionListener event) {
-        this.title = title;
+        this.title = "<html><center>"+title+"</center></html>";
         this.icon = resizeIcon( // Default dimensions are 32x32px
                 Objects.requireNonNull(GeneralButtons.getIconFromFile(filename)),
                 width <= 0 ? 32 : width,
