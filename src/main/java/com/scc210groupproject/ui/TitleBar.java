@@ -15,17 +15,35 @@ public class TitleBar {
     /**
      * Gets the location of the mouse - Important for moving the window frame.
      */
-    static Point compCords;
+    private static Point compCords;
+    /**
+     * The starting point of the click to resize the screen
+     */
+    private static JFrame frame;
+    /**
+     * The title of the program
+     */
+    private String title;
+    /**
+     * The instance of the class
+     */
+    public static TitleBar instance;
+
+    public TitleBar(final JFrame frame) {
+        TitleBar.frame = frame;
+
+        instance = this;
+    }
 
     /**
      * Creates a custom title bar with the three standard buttons along with a save, undo
      * and redo button (No functionality yet onclick yet).
      *
-     * @param frame The frame the title bar should be added to
      */
-    public static JPanel createTitleBar(final JFrame frame) {
+    public JPanel createTitleBar() {
         // Removes the default title bar to make way for the custom title bar
         frame.setUndecorated(true);
+        frame.setResizable(true);
         // Create custom title bar panel
         JPanel titleBarPanel = new JPanel(new BorderLayout());
         titleBarPanel.setPreferredSize(new Dimension(1000, 35));
@@ -104,6 +122,8 @@ public class TitleBar {
             @Override
             public void mousePressed(MouseEvent e) {
                 compCords = e.getPoint();
+
+                //frame.getComponentAt(compCords);
             }
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -117,20 +137,47 @@ public class TitleBar {
             }
         });
 
-        // Handles the movement of the application window
-        titleBarPanel.addMouseMotionListener(new MouseMotionListener() {
+        titleBarPanel.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                Point currCoords = e.getLocationOnScreen();
-                frame.setLocation(currCoords.x - compCords.x, currCoords.y - compCords.y);
+                super.mouseDragged(e);
+
+                int deltaX = e.getX() - compCords.x;
+                int deltaY = e.getY() - compCords.y;
+
+                if(SwingUtilities.isLeftMouseButton(e)) {
+                    // Move the frame
+                    Point currCords = e.getLocationOnScreen();
+                    frame.setLocation(currCords.x - compCords.x, currCords.y - compCords.y);
+                } else if (SwingUtilities.isLeftMouseButton(e) && isOnFrameEdge(e)) {
+                    // Resize the frame
+                    Dimension currSize = frame.getSize();
+                    frame.setSize((int) (currSize.getWidth() + deltaX), (int) (currSize.getHeight() + deltaY));
+
+                }
             }
 
             @Override
             public void mouseMoved(MouseEvent e) {
+                int cursorType = Cursor.DEFAULT_CURSOR;
 
+                if (isOnFrameEdge(e)) {
+                    cursorType = Cursor.NE_RESIZE_CURSOR;
+                }
+
+                frame.setCursor(Cursor.getPredefinedCursor(cursorType));
             }
         });
 
         return titleBarPanel;
+    }
+
+    private boolean isOnFrameEdge(MouseEvent e) {
+        Rectangle frameBounds = frame.getBounds();
+        Insets insets = frame.getInsets();
+        int resizeEdgeSize = 20;
+
+        return e.getX() >= frameBounds.width - insets.right - resizeEdgeSize &&
+                e.getY() >= frameBounds.height - insets.bottom - resizeEdgeSize;
     }
 }

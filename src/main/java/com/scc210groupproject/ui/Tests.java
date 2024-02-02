@@ -32,89 +32,87 @@ public class Tests extends JFrame {
         this.setResizable(true);
         this.setLayout(new GridBagLayout());
 
-        this.contextMenuPanel = new ContextMenuPanel(0, 0, Color.WHITE);
+        int gap = 6;
 
-        this.menuBarTabs = new MenuBarTabs(this, this.contextMenuPanel, 0, 0, Color.WHITE);
+        /*
+         * Application Window Components and their position on the frame
+         * */
 
-        this.mainDisplayPanel = new MainDisplayPanel(0, 0, Color.WHITE);
+        // The custom title bar
+        TitleBar.instance = new TitleBar(this);
+        {
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
+            gbc.fill = GridBagConstraints.BOTH;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0.01;
+            add(TitleBar.instance.createTitleBar(), gbc);
+        }
 
-        this.slideManager = new SlideManager(this.mainDisplayPanel);
+        // The Toolbar tabs
+        {
+            MenuBarTabs menuBarTabs = new MenuBarTabs(this, null, 0, 40, Color.WHITE);
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 1;
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
+            gbc.fill = GridBagConstraints.BOTH;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0.14;
+            gbc.insets = new Insets(0, 0, gap, 0);
+            add(menuBarTabs, gbc);
+        }
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 1.0;
-        gbc.weighty = 0.2;
-        gbc.insets = new Insets(0, 0, gap, 0);
-        this.add(menuBarTabs, gbc);
+        // The section where the context menus will be positioned
+        ContextMenuPanel contextMenuPanel = new ContextMenuPanel(0, 0, Color.WHITE);
+        {
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 2;
+            gbc.fill = GridBagConstraints.BOTH;
+            gbc.weightx = 0.25;
+            gbc.weighty = 0.77;
+            gbc.insets = new Insets(gap, 0, gap, gap);
+            add(contextMenuPanel, gbc);
+        }
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
-        gbc.weightx = 0.2;
-        gbc.weighty = 0.79;
-        gbc.insets = new Insets(gap, 0, gap, gap);
-        this.add(contextMenuPanel, gbc);
+        // Main display panel
+        MainDisplayPanel mainDisplayPanel = new MainDisplayPanel(0, 0, Color.WHITE);
+        {
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 1;
+            gbc.gridy = 2;
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
+            gbc.fill = GridBagConstraints.BOTH;
+            gbc.weightx = 0.75;
+            gbc.weighty = 0.77;
+            gbc.insets = new Insets(gap, gap, gap, 0);
+            add(mainDisplayPanel, gbc);
+        }
 
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.weightx = 0.8;
-        gbc.insets = new Insets(gap, gap, gap, 0);
-        this.add(mainDisplayPanel, gbc);
+        // The Slide viewer panel
+        SlideManager.slideManager = new SlideManager(mainDisplayPanel);
+        {
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 3;
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
+            gbc.fill = GridBagConstraints.BOTH;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0.03;
+            gbc.insets = new Insets(gap, 0, 0, 0);
+            add(SlideManager.slideManager.createPresentationSlider(), gbc);
+        }
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.weighty = 0.01;
-        gbc.insets = new Insets(gap, 0, 0, 0);
-        this.add(slideManager.createPresentationSlider(), gbc);
-
-        setVisible(true);
-
-        /*addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                slideImage.updateSlideImageDimensions(display);
-            }
-        });*/
-    }}
-
-//<<<<<<< HEAD
-    /*
-        TODO LIST:
-        - Change the layout manager of the application window to this one and sort out positioning of components
-        - Remove the sizes of each frame component/panel
-        - Sort out the slide scaling/resolution - set the slide size to match the size of the main display panel
-     */
-
-    /*private void updateComponentSize()
-    {
-        int width = this.mainDisplayPanel.getWidth();
-        int height = this.mainDisplayPanel.getHeight();
-
-        System.out.println("Main display Width: " + width + " Height: " + height);
-
-        this.slideManager.getCurrentSlide().setDimension(new Dimension(width, height));
-
-        updateMainDisplaySlideSize(width, height);
+        this.setVisible(true);
     }
 
-    private void updateMainDisplaySlideSize(int width, int height) {
-        //this.mainDisplayPanel.removeAll();
-
-        //this.slideManager.getCurrentSlide().setDiemension(new Dimension(width, height));
-        BufferedImage slide = this.slideManager.getCurrentSlide().createPreview(new Dimension(width, height));
-
-        JLabel slideImage = new JLabel(new ImageIcon(slide));
-        this.mainDisplayPanel.add(slideImage);
-    }
-=======
->>>>>>> 7b4e027 (Slides are now being painted onto the main display instead of being added)
-
-    public static void main( String[] args ) {
+    public static void main(String args[]) {
         new Tests();
     }
-}*/
+}
+
+
+
