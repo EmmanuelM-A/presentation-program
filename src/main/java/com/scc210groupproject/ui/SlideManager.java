@@ -13,8 +13,6 @@ import com.scc210groupproject.ui.helper.GeneralButtons;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -166,7 +164,10 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         this.addNewSlide.addActionListener(new NewSlideAction());
 
         this.deleteSlide = new JButton("Delete Slide");
-        this.deleteSlide.addActionListener(new DeleteSlideAction());
+        DeleteSlideAction deleteAction = new DeleteSlideAction();
+        deleteAction.setButton(this.deleteSlide);
+        this.deleteSlide.addActionListener(deleteAction);
+
 
         this.present = new JButton("Present");
         this.presentAt = new JButton("Present From");
