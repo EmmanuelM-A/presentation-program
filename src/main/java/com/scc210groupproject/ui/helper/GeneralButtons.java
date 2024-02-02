@@ -21,7 +21,7 @@ public enum GeneralButtons {
     SAVE("Save File", "diskette.png", 32, 32, new SaveAction()),
     SAVE_AS("Save As", "save-as.png", 32, 32, new SaveAsAction()),
     PRINT("Print", "printer.png", 32, 32, new PrintAction()),
-    RECENTS("Recents", "", 32, 32, new RecentsAction()),
+    //RECENTS("Recents", "", 32, 32, new RecentsAction()),
     CLIPBOARD("Clipboard", "clipboard.png", 32, 32, new ClipboardAction()),
     SELECT("Select", "selection.png", 32, 32, new SelectAction()),
     PASTE("Paste", "paste.png", 32, 32, new PasteAction()),
@@ -54,7 +54,7 @@ public enum GeneralButtons {
     private GeneralButtons(String title, String filename, int width, int height, ActionListener event) {
         this.title = title;
         this.icon = resizeIcon( // Default dimensions are 32x32px
-                Objects.requireNonNull(getIconFromFile(filename)),
+                Objects.requireNonNull(GeneralButtons.getIconFromFile(filename)),
                 width <= 0 ? 32 : width,
                 height <= 0 ? 32 : height
         );
@@ -90,7 +90,7 @@ public enum GeneralButtons {
      * @param file Only the name of the icon file
      * @return ImageIcon
      * */
-    private ImageIcon getIconFromFile(String file) {
+    public static ImageIcon getIconFromFile(String file) {
         String filePath = "src/main/resources/images/" + file;
         try {
             return new ImageIcon(filePath);
