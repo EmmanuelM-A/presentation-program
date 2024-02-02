@@ -18,14 +18,9 @@ public class Tests extends JFrame {
 
     private final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 
-    private MenuBarTabs menuBarTabs;
-    private ContextMenuPanel contextMenuPanel;
-    private MainDisplayPanel mainDisplayPanel;
-    private SlideManager slideManager;
-
     public Tests() {
         this.setTitle("Testing Testing");
-        //this.setSize((int)size.getWidth(), (int)size.getHeight());
+        this.setSize((int)size.getWidth(), (int)size.getHeight());
         this.setMinimumSize(new Dimension(1000, 700));
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -23,7 +23,7 @@ public class TitleBar {
     /**
      * The title of the program
      */
-    private String title;
+    //private String title;
     /**
      * The instance of the class
      */

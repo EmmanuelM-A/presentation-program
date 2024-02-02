@@ -12,7 +12,7 @@ public class UIFrame extends JFrame
      * Gets the dimensions of the screen the program is run on. Allows for the program dimensions
      * to be set to the size of the screen no matter the computer.
      * */
-    private final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+    //private final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 
     public UIFrame()
     {

@@ -45,10 +45,10 @@ public enum GeneralButtons {
     DELETE_ELEMENT("Delete", "delete-element.png", 32, 32, null),
     AUTOMATE("Automate Slides", "", 32, 32, null),
     HIDE_SLIDE("Hide Slides", "", 32, 32, null),
-    ANIMATIONS("Animations", "", 32, 32, null),
-    TRANSITIONS("Transitions", "", 32, 32, null),
-    LICENSE("License", "", 32, 32, new LicenseAction()),
-    SHORTCUTS("Shortcuts", "", 32, 32, new ShortcutsAction());
+    /*ANIMATIONS("Animations", "", 32, 32, null),
+    TRANSITIONS("Transitions", "", 32, 32, null),*/
+    LICENSE("License", "certificate.png", 32, 32, new LicenseAction()),
+    SHORTCUTS("Shortcuts", "shortcuts.png", 32, 32, new ShortcutsAction());
 
     private final String title; // Button title - will be used for hover text
     private final ImageIcon icon; // Button icon - will be used to set the icon of a button

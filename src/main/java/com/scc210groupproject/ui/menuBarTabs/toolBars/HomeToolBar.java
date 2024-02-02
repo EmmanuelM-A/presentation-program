@@ -1,7 +1,5 @@
 package com.scc210groupproject.ui.menuBarTabs.toolBars;
 
-import com.scc210groupproject.action.OpenAction;
-import com.scc210groupproject.action.SaveAction;
 import com.scc210groupproject.ui.helper.GeneralButtons;
 
 import javax.swing.*;
@@ -22,18 +20,6 @@ public class HomeToolBar extends ToolBar {
         public HomeToolBar(JPanel recentsPanel) {
                 this.setRollover(true);
 
-                /*
-                        TODO LIST:
-                        - Do animations and transistions check discord
-                        - Settings windows
-                        - Custom title Bar
-                        - Dark and light mode
-                        - Font and text section
-                        - mini toolbar
-                        - drag feature to slides
-                        - shortcuts windows
-                 */
-
                 recentsPanel.setBackground(Color.WHITE);
                 JScrollPane recentsScrollPane = new JScrollPane(recentsPanel);
                 recentsScrollPane.setPreferredSize(new Dimension(500,90));
@@ -51,8 +37,6 @@ public class HomeToolBar extends ToolBar {
                 saveFile = makeToolbarButton(GeneralButtons.SAVE.getTitle(), GeneralButtons.SAVE.getIcon(), GeneralButtons.SAVE.getEvent(), recentsPanel);
 
                 clipboard = makeToolbarButton(GeneralButtons.CLIPBOARD.getTitle(), GeneralButtons.CLIPBOARD.getIcon(), GeneralButtons.CLIPBOARD.getEvent(), recentsPanel);
-
-                //emptyClipboard = makeToolbarButton(GeneralButtons.TRASH.getTitle(), GeneralButtons.TRASH.getIcon(), GeneralButtons.TRASH.getEvent(), recentsPanel);
 
                 select = makeToolbarButton(GeneralButtons.SELECT.getTitle(), GeneralButtons.SELECT.getIcon(), GeneralButtons.SELECT.getEvent(), recentsPanel);
 
@@ -81,7 +65,6 @@ public class HomeToolBar extends ToolBar {
                 separator(this);
 
                 this.add(clipboard);
-                //this.add(emptyClipboard);
                 this.add(select);
                 this.add(copy);
                 this.add(paste);
