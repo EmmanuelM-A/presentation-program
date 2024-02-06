@@ -15,6 +15,7 @@ public class TextContextMenu extends JPanel
 
         String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
         Integer[] fontSizes = {8,9, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72};
+        String[] alignment = {"Left", "Center", "Right", "Justify"};
 
         gbc.fill = GridBagConstraints.VERTICAL;
         gbc.gridx = 0;
@@ -31,7 +32,8 @@ public class TextContextMenu extends JPanel
         gbc.fill = GridBagConstraints.VERTICAL;
         gbc.gridx = 2;
         gbc.gridy = 0;
-        this.add(new JButton("Align Text", null), gbc);
+        JComboBox<String> alignmentList = new JComboBox<>(alignment);
+        this.add(alignmentList, gbc);
 
         gbc.fill = GridBagConstraints.VERTICAL;
         gbc.gridx = 0;
@@ -72,6 +74,12 @@ public class TextContextMenu extends JPanel
         gbc.gridx = 1;
         gbc.gridy = 3;
         this.add(new JButton("Text Spacing", null), gbc);
+
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 3;
+        this.add(new JColorChooser(), gbc);
     }
 
 

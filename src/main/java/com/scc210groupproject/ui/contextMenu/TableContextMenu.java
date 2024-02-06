@@ -10,25 +10,25 @@ public class TableContextMenu extends JPanel
     public TableContextMenu(JFrame frame, int x, int y) {
         this.setPreferredSize(new Dimension(300, 350));
 
-        // Menu items created here
-        this.insertTable = makeMenuItem("Insert Table", null);
-        this.deleteTable = makeMenuItem("Delete Table", null);
-        this.addRow = makeMenuItem("Add Row", null);
-        this.deleteRow = makeMenuItem("Add Row", null);
-        this.addColumn = makeMenuItem("Add Column", null);
-        this.deleteColumn = makeMenuItem("Delete Column", null);
-        this.formatTable = makeMenuItem("Format Table", null);
+        // // Menu items created here
+        // this.insertTable = makeMenuItem("Insert Table", null);
+        // this.deleteTable = makeMenuItem("Delete Table", null);
+        // this.addRow = makeMenuItem("Add Row", null);
+        // this.deleteRow = makeMenuItem("Add Row", null);
+        // this.addColumn = makeMenuItem("Add Column", null);
+        // this.deleteColumn = makeMenuItem("Delete Column", null);
+        // this.formatTable = makeMenuItem("Format Table", null);
 
-        // Menu items added here
-        super.add(this.insertTable);
-        super.add(this.deleteTable);
-        super.add(this.addRow);
-        super.add(this.deleteRow);
-        super.add(this.addColumn);
-        super.add(this.deleteColumn);
-        super.add(this.formatTable);
+        // // Menu items added here
+        // super.add(this.insertTable);
+        // super.add(this.deleteTable);
+        // super.add(this.addRow);
+        // super.add(this.deleteRow);
+        // super.add(this.addColumn);
+        // super.add(this.deleteColumn);
+        // super.add(this.formatTable);
 
-        // On some action display PopupMenu
-        //show(frame, x, y);
+        // // On some action display PopupMenu
+        // //show(frame, x, y);
     }
 }

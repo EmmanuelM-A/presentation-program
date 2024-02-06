@@ -78,7 +78,7 @@ public class InsertToolBar extends ToolBar implements ActionListener {
             //System.out.println("SOMETHING WAS CLICKED!");
             //new TextContextMenu(this.uiFrame, 0, 157);
             //new DataStructureContextMenu(this.uiFrame, 0, 157);
-            new ChartContextMenu(this.uiFrame, 0, 157);
+            // new ChartContextMenu(this.uiFrame, 0, 157);
         } else if (e.getSource() == this.addImage) {
             //new ImageContextMenu(this.uiFrame, 0, 157);
             new CodeContextMenu(this.uiFrame, 0, 157);
