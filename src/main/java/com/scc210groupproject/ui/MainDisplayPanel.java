@@ -30,9 +30,8 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
     
     private InputEmulator emulator;
 
-    private InputEmulator getEmulator() {
-        if (emulator == null)
-            emulator = new InputEmulator();
+    public InputEmulator getInputEmulator()
+    {
         return emulator;
     }
 

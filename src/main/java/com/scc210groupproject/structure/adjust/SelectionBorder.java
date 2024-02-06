@@ -14,15 +14,24 @@ public class SelectionBorder extends AbstractBorder
     private int margin = 10;
     private Rectangle[] rectangles = new Rectangle[8];
 
-    @Override
+    public static enum Mode {
+        FULL,
+        MOVEONLY
+    }
 
+    private Mode state = Mode.FULL;
+
+    public void setState(Mode mode) {
+        state = mode;
+    }
+
+    @Override
     public Insets getBorderInsets(Component element)
     {
         return(new Insets(margin, margin, margin, margin));
     }
 
     @Override
-
     public void paintBorder(Component element, Graphics graphics, int topLeftCornerX, int topLeftCornerY, int width, int height)
     {
         graphics.setColor(Color.BLACK);
@@ -34,42 +43,50 @@ public class SelectionBorder extends AbstractBorder
             topLeftCornerX + width / 2 - margin / 2, 
             topLeftCornerY, 
             margin, margin);
-        graphics2d.fill(rectangles[0]);
         rectangles[1] = new Rectangle(
             topLeftCornerX + width - margin, 
             topLeftCornerY, 
             margin, margin);
-        graphics2d.fill(rectangles[1]);
         rectangles[2] = new Rectangle(
             topLeftCornerX + width - margin,
             topLeftCornerY + height / 2 - margin / 2, 
             margin, margin);
-        graphics2d.fill(rectangles[2]);
         rectangles[3] = new Rectangle(
             topLeftCornerX + width - margin, 
             topLeftCornerY + height - margin, 
             margin, margin);
-        graphics2d.fill(rectangles[3]);
         rectangles[4] = new Rectangle(
             topLeftCornerX + width / 2 - margin / 2, 
             topLeftCornerY + height - margin, 
             margin, margin);
-        graphics2d.fill(rectangles[4]);
         rectangles[5] = new Rectangle(
             topLeftCornerX, 
             topLeftCornerY + height - margin, 
             margin, margin);
-        graphics2d.fill(rectangles[5]);
         rectangles[6] = new Rectangle(
             topLeftCornerX, 
             topLeftCornerY + height / 2 - margin / 2, 
             margin, margin);
-        graphics2d.fill(rectangles[6]);
         rectangles[7] = new Rectangle(
             topLeftCornerX, 
             topLeftCornerY, 
             margin, margin);
-        graphics2d.fill(rectangles[7]);
+
+        switch (state) {
+            case FULL:
+                graphics2d.fill(rectangles[0]);
+                graphics2d.fill(rectangles[1]);
+                graphics2d.fill(rectangles[2]);
+                graphics2d.fill(rectangles[3]);
+                graphics2d.fill(rectangles[4]);
+                graphics2d.fill(rectangles[5]);
+                graphics2d.fill(rectangles[6]);
+                graphics2d.fill(rectangles[7]);
+                break;
+        
+            case MOVEONLY:
+                break;
+        }
     }
 
     public int findPoint(int x, int y)
