@@ -9,6 +9,8 @@ import java.awt.Rectangle;
 
 import javax.swing.border.AbstractBorder;
 
+import com.scc210groupproject.ui.MainDisplayPanel;
+
 public class SelectionBorder extends AbstractBorder
 {
     private int margin = 10;
@@ -25,15 +27,22 @@ public class SelectionBorder extends AbstractBorder
         state = mode;
     }
 
+    private void updateMargin() {
+        margin = (int) (10 * MainDisplayPanel.instance.getInputEmulator().getScale());
+    }
+
     @Override
     public Insets getBorderInsets(Component element)
     {
+        updateMargin();
         return(new Insets(margin, margin, margin, margin));
     }
 
     @Override
     public void paintBorder(Component element, Graphics graphics, int topLeftCornerX, int topLeftCornerY, int width, int height)
     {
+        updateMargin();
+        
         graphics.setColor(Color.BLACK);
         graphics.drawRect(topLeftCornerX + margin / 2, topLeftCornerY + margin / 2, width - margin, height - margin);
 

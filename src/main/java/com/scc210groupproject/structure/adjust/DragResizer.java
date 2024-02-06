@@ -175,6 +175,8 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
     public void mouseExited(Object target, InputState state) {
         if (inMultSelect)
             return;
+            
+        MainDisplayPanel.instance.setCursor(Cursor.getDefaultCursor());
 
         IResizable resizable = (IResizable)target;
         resizable.setBorder(null);

@@ -74,6 +74,10 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
         tryEnableMovement();
     }
 
+    public double getScale() {
+        return scale;
+    }
+
     public void clearTargetSlide() {
         currentSlide = null;
         currentElement = null;

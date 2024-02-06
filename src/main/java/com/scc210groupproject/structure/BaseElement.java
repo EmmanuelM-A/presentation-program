@@ -72,7 +72,7 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
         Component comp = asComp();
         if (comp instanceof Container) {
             Container cont = (Container)comp;
-            cont.add(element.asComp());
+            cont.add(element.asComp(), 0);
         }
         comp.revalidate();
     }
@@ -175,7 +175,7 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
         if (current instanceof Container) {
 
             Container container = (Container)current;
-
+            
             BaseElement result = null;
             int lowest = Integer.MAX_VALUE;
 
