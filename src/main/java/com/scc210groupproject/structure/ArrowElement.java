@@ -473,11 +473,10 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
             Dimension mouseDelta = state.getMouseDelta();
             
             ArrowElement arrow = (ArrowElement)target;
-            Point original = arrow.getPoint(targetSide);
-            Point updated = new Point(original.x + mouseDelta.width, original.y + mouseDelta.height);
-            BaseElement element = getAnchorProvider(arrow, updated);
+            Point location = state.getLocationInSlide();
+            BaseElement element = getAnchorProvider(arrow, location);
             if (element == null)
-                arrow.setPoint(targetSide, updated);
+                arrow.setPoint(targetSide, location);
             else {
                 IAnchorProvider provider = (IAnchorProvider)element;
 
@@ -485,7 +484,7 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
                 double minDistance = Double.MAX_VALUE;
 
                 for (AnchorReference anchor : provider.getAnchors()) {
-                    double distance = updated.distance(anchor.getCoordInSlide());
+                    double distance = location.distance(anchor.getCoordInSlide());
                     if (distance < minDistance) {
                         found = anchor;
                         minDistance = distance;
@@ -493,10 +492,10 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
                 }
 
                 if (found == null)
-                    arrow.setPoint(targetSide, updated);
+                    arrow.setPoint(targetSide, location);
 
                 if (minDistance * MainDisplayPanel.instance.getInputEmulator().getScale() > snapDistance)
-                    arrow.setPoint(targetSide, updated);
+                    arrow.setPoint(targetSide, location);
 
                 arrow.setAnchor(targetSide, found);
             }
