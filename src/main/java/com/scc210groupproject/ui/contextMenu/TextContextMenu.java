@@ -15,7 +15,7 @@ import java.awt.*;
 public class TextContextMenu extends ContextMenu {
     // Other menu items to add: selectFont, selectFontSize
     private JMenuItem insertText, deleteText, rotateText, alignText, moveText, boldText, italicText, underlineText, colourText, border, textSpacing;
-    public TextContextMenu(JFrame frame, int x, int y) {
+    public TextContextMenu() {
         this.setPreferredSize(new Dimension(300, 350));
 
         // Menu items created here

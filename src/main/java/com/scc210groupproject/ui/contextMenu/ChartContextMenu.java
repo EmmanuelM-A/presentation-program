@@ -9,7 +9,7 @@ public class ChartContextMenu extends ContextMenu {
     private JPanel chartSelectionPanel;
     private JMenuItem insertChart, deleteChart, editChart, insertText, drawChart;
 
-    public ChartContextMenu(JFrame frame, int x, int y) {
+    public ChartContextMenu() {
         this.setPreferredSize(new Dimension(300, 350));
 
         // Menu items created here

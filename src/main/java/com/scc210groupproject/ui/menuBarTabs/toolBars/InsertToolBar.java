@@ -73,17 +73,17 @@ public class InsertToolBar extends ToolBar implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == this.addText) {
+        // if(e.getSource() == this.addText) {
             
-            //System.out.println("SOMETHING WAS CLICKED!");
-            //new TextContextMenu(this.uiFrame, 0, 157);
-            //new DataStructureContextMenu(this.uiFrame, 0, 157);
-            new ChartContextMenu(this.uiFrame, 0, 157);
-        } else if (e.getSource() == this.addImage) {
-            //new ImageContextMenu(this.uiFrame, 0, 157);
-            new CodeContextMenu(this.uiFrame, 0, 157);
-            //new TableContextMenu(this.uiFrame, 0, 157);
-            //System.out.println("SOMETHING ELSE WAS CLICKED!");
-        }
+        //     //System.out.println("SOMETHING WAS CLICKED!");
+        //     //new TextContextMenu(this.uiFrame, 0, 157);
+        //     //new DataStructureContextMenu(this.uiFrame, 0, 157);
+        //     new ChartContextMenu(this.uiFrame, 0, 157);
+        // } else if (e.getSource() == this.addImage) {
+        //     //new ImageContextMenu(this.uiFrame, 0, 157);
+        //     new CodeContextMenu(this.uiFrame, 0, 157);
+        //     //new TableContextMenu(this.uiFrame, 0, 157);
+        //     //System.out.println("SOMETHING ELSE WAS CLICKED!");
+        // }
     }
 }

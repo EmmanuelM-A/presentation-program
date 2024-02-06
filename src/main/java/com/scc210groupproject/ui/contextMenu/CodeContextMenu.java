@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class CodeContextMenu extends ContextMenu {
     private JMenuItem insertCode, editCode, deleteCode, importFile, exportFile, git, colourScheme;
-    public CodeContextMenu(JFrame frame, int x, int y) {
+    public CodeContextMenu() {
         this.setPreferredSize(new Dimension(300, 350));
 
         this.insertCode = makeMenuItem("Insert Code Block", null);

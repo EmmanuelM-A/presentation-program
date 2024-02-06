@@ -6,7 +6,7 @@ import java.awt.*;
 public class TableContextMenu extends ContextMenu {
     private JMenuItem insertTable, deleteTable, addRow, deleteRow, addColumn, deleteColumn, formatTable;
 
-    public TableContextMenu(JFrame frame, int x, int y) {
+    public TableContextMenu() {
         this.setPreferredSize(new Dimension(300, 350));
 
         // Menu items created here

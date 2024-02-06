@@ -19,6 +19,9 @@ import com.scc210groupproject.structure.input.listeners.IMultRelease;
 import com.scc210groupproject.structure.input.listeners.IMultSelect;
 import com.scc210groupproject.structure.input.listeners.IMultiDrag;
 import com.scc210groupproject.ui.MainDisplayPanel;
+import com.scc210groupproject.ui.contextMenu.ArrowContextMenu;
+import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
+import com.scc210groupproject.ui.contextMenu.TextContextMenu;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -603,6 +606,8 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
             }
             
             arrow.notifyUpdate(arrow);
+
+            ContextMenuPanel.setMenu(new ArrowContextMenu());
         }
 
     }

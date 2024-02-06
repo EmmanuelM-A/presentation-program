@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class ImageContextMenu extends ContextMenu {
     private JMenuItem insertImage, deleteImage, rotateImage, resizeImage, border, insertText, insertLink, draw, shapes, lines;
-    public ImageContextMenu(JFrame frame, int x, int y) {
+    public ImageContextMenu() {
         this.setPreferredSize(new Dimension(300, 350));
 
         this.insertImage = makeMenuItem(
