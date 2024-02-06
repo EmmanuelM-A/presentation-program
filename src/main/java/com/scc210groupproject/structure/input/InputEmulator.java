@@ -202,6 +202,18 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
         currentState.buttons.put(button, true);
         currentState.lastChangedButton = button;
 
+        if (currentElement == null || currentElement instanceof Slide) {
+            for (BaseElement selectedElement : selectedElements)
+                selectedElement.passMouseEvent(IMultRelease.class, selectedElement, currentState);
+            selectedElements.clear();
+        }
+        else if (button == MouseEvent.BUTTON1 && e.isShiftDown()) {
+            if (!selectedElements.contains(currentElement)) {
+                selectedElements.add(currentElement);
+                currentElement.passMouseEvent(IMultSelect.class, currentElement, currentState);
+            }
+        }
+
         if (currentElement != null)
             currentElement.passMouseEvent(IMousePressed.class, currentElement, currentState);
             
@@ -214,19 +226,13 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
         currentState.buttons.put(button, false);
         currentState.lastChangedButton = button;
 
-        if (currentElement == null || currentElement instanceof Slide) {
-            for (BaseElement selectedElement : selectedElements)
-                selectedElement.passMouseEvent(IMultRelease.class, selectedElement, currentState);
-            selectedElements.clear();
-        }
-        else if (button == MouseEvent.BUTTON1 && e.isShiftDown()) {
-            selectedElements.add(currentElement);
-            currentElement.passMouseEvent(IMultSelect.class, currentElement, currentState);
-        }
-
         if (currentElement != null) {
             currentElement.passMouseEvent(IMouseReleased.class, currentElement, currentState);
             currentElement.passMouseEvent(IMouseClicked.class, currentElement, currentState);
+        }
+
+        if (draggedElement != null) {
+            draggedElement.passMouseEvent(IMouseReleased.class, draggedElement, currentState);
         }
 
         draggedElement = null;

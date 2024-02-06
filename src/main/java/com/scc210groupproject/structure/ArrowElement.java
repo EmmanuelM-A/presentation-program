@@ -29,6 +29,7 @@ import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -254,14 +255,17 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
         private Shape triangleA = null;
         private Shape triangleB = null;
         private Shape boxLine = null;
+        private Shape circle = null;
 
         protected Point pointA = new Point();
         protected Point pointB = new Point();
 
+        protected boolean highlightA = false;
         protected boolean arrowOnA = true;
         protected double arrowWidthA = 10.0;
         protected double arrowLengthA = 10.0;
 
+        protected boolean highlightB = false;
         protected boolean arrowOnB = true;
         protected double arrowWidthB = 10.0;
         protected double arrowLengthB = 10.0;
@@ -285,6 +289,8 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
             box.addPoint(1, 0);
             box.addPoint(1, 1);
             box.addPoint(-1, 1);
+            
+            circle = new Ellipse2D.Double(1.0, 1.0, 1.0, 1.0);
 
             transform = new AffineTransform();
 
@@ -412,6 +418,29 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
                 g2d.draw(line);
             }
 
+            {
+                g2d.setColor(Color.BLACK);
+                g2d.setStroke(new BasicStroke((float)2.0, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0));
+
+                if (highlightA) {
+                    if (triangleA != null)
+                        g2d.draw(triangleA);
+                    else {
+                        Shape transformed = getTransformed(circle, xA, yA, 0.0, 10.0, 10.0);
+                        g2d.draw(transformed);
+                    }
+                }
+                
+                if (highlightB) {
+                    if (triangleB != null)
+                        g2d.draw(triangleB);
+                    else {
+                        Shape transformed = getTransformed(circle, xB, yB, 0.0, 10.0, 10.0);
+                        g2d.draw(transformed);
+                    }
+                }
+            }
+
             g2d.dispose();
         }
     }
@@ -420,17 +449,49 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
 
         private Side targetSide = null;
         private double snapDistance = 10;
+        private boolean inMultiSelect = false;
 
         @Override
         public void multiDrag(Object target, InputState state) {
+            Dimension delta = state.getMouseDelta();
+
+            ArrowElement arrow = (ArrowElement)target;
+            if (arrow.anchorA == null) {
+                Point original = arrow.getPoint(Side.A);
+                arrow.setPoint(Side.A, new Point(
+                    original.x + delta.width,
+                    original.y + delta.height
+                ));
+            }
+            
+            if (arrow.anchorB == null) {
+                Point original = arrow.getPoint(Side.B);
+                arrow.setPoint(Side.B, new Point(
+                    original.x + delta.width,
+                    original.y + delta.height
+                ));
+            }
         }
 
         @Override
         public void multiRelease(Object target, InputState state) {
+            inMultiSelect = false;
+            
+            ArrowElement arrow = (ArrowElement)target;
+            arrow.panel.highlightA = false;
+            arrow.panel.highlightB = false;
+            
         }
 
         @Override
         public void multiSelect(Object target, InputState state) {
+            inMultiSelect = true;
+
+            ArrowElement arrow = (ArrowElement)target;
+            arrow.panel.highlightA = true;
+            arrow.panel.highlightB = true;
+            
+            arrow.notifyUpdate(arrow);
         }
 
         @Override
@@ -445,6 +506,7 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
 
         @Override
         public void mouseEntered(Object target, InputState state) {
+            // not used, here to block message being taken by another element
         }
 
         private BaseElement getAnchorProvider(ArrowElement arrow, Point location) {
@@ -465,9 +527,12 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
 
         @Override
         public void mouseDragged(Object target, InputState state) {
-            if (target == null)
+            if (inMultiSelect)
                 return;
-            
+
+            if (targetSide == null)
+                return;
+
             ArrowElement arrow = (ArrowElement)target;
             Point location = state.getLocationInSlide();
             BaseElement element = getAnchorProvider(arrow, location);
@@ -506,11 +571,22 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
 
         @Override
         public void mouseReleased(Object target, InputState state) {
-            target = null;
+            if (inMultiSelect)
+                return;
+
+            ArrowElement arrow = (ArrowElement)target;
+            arrow.panel.highlightA = false;
+            arrow.panel.highlightB = false;
+            targetSide = null;
+
+            arrow.notifyUpdate(arrow);
         }
 
         @Override
         public void mousePressed(Object target, InputState state) {
+            if (inMultiSelect)
+                return;
+
             Point mouseLocation = state.getLocationInSlide();
 
             ArrowElement arrow = (ArrowElement)target;
@@ -519,10 +595,14 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
 
             if (distanceA < distanceB) {
                 targetSide = Side.A;
+                arrow.panel.highlightA = true;
             }
             else {
                 targetSide = Side.B;
+                arrow.panel.highlightB = true;
             }
+            
+            arrow.notifyUpdate(arrow);
         }
 
     }
