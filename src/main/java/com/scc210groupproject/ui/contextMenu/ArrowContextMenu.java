@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 public class ArrowContextMenu extends ContextMenu {
 
-    public ArrowContextMenu(JFrame frame, int x, int y) {
+    public ArrowContextMenu() {
 
     }
     
