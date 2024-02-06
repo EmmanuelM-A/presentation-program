@@ -109,8 +109,6 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
         asComp().setSize(d);
 
         asComp().setBackground(new Color(reader.readInt("background")));
-
-        addInputListener(new DragResizer(this));
     }
 
 }
