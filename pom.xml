@@ -16,6 +16,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
+    <javafx.version>19</javafx.version>
+    <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
   </properties>
 
   <dependencies>
@@ -55,9 +57,13 @@
       <artifactId>jfreechart</artifactId>
       <version>1.0.19</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
   </dependencies>
-
-
 
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
@@ -100,6 +106,14 @@
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-maven-plugin</artifactId>
+          <version>0.0.8</version>
+          <configuration>
+              <mainClass>src/main/java/com/scc210groupproject/App.java</mainClass>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>

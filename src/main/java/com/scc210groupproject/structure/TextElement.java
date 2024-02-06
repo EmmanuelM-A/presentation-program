@@ -11,6 +11,8 @@ import javax.swing.JTextPane;
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.structure.anchors.AnchorManager;
+import org.jfree.chart.ChartFactory;
+import javafx.application.Application;
 
 public class TextElement extends ExtendedElement
 {
