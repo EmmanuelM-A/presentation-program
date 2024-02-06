@@ -14,7 +14,6 @@ import javax.swing.SwingUtilities;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
-import com.scc210groupproject.structure.helper.CoordinateUtils;
 import com.scc210groupproject.structure.input.IInputProvider;
 import com.scc210groupproject.structure.input.InputManager;
 import com.scc210groupproject.structure.liveness.DestroyManager;

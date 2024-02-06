@@ -1,17 +1,12 @@
 package com.scc210groupproject.structure;
 
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Point;
 import java.io.IOException;
 
 import javax.swing.JTextPane;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
-import com.scc210groupproject.structure.anchors.AnchorManager;
-
 public class TextElement extends ExtendedElement
 {
     JTextPane pane = new JTextPane();

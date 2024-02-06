@@ -4,7 +4,6 @@ import javax.swing.JPanel;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
-import com.scc210groupproject.structure.adjust.DragResizer;
 import com.scc210groupproject.structure.anchors.AnchorReference;
 import com.scc210groupproject.structure.anchors.IAnchorListener;
 import com.scc210groupproject.structure.anchors.IAnchorProvider;
@@ -35,7 +34,6 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * @author wonge1
@@ -469,8 +467,6 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
         public void mouseDragged(Object target, InputState state) {
             if (target == null)
                 return;
-
-            Dimension mouseDelta = state.getMouseDelta();
             
             ArrowElement arrow = (ArrowElement)target;
             Point location = state.getLocationInSlide();

@@ -1,7 +1,6 @@
 package com.scc210groupproject.structure;
 
 import java.awt.Component;
-import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
@@ -11,7 +10,6 @@ import java.io.IOException;
 import java.util.Base64;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
