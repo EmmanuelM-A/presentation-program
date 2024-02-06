@@ -94,7 +94,7 @@ public enum GeneralButtons {
      * @return ImageIcon
      * */
     public static ImageIcon getIconFromFile(String file) {
-        String filePath = "src/main/resources/images/" + file;
+        String filePath = "/home/tloxley/Year2/SCC210/scc210-2324-grp-62/src/main/resources/images/" + file;
         try {
             return new ImageIcon(filePath);
         } catch (Exception e) {
