@@ -3,7 +3,10 @@ package com.scc210groupproject.action;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JWindow;
@@ -26,11 +29,15 @@ public class NewImageElementAction implements ActionListener
 
         String path = fileChooser.getSelectedFile().getAbsolutePath();
 
-        ImageElement imageElement = new ImageElement(new ImageIcon(path));
+        try {
+            ImageElement imageElement = new ImageElement(ImageIO.read(new File(path)));
+            imageElement.setSize(new Dimension(400, 400));
+            SlideManager.slideManager.getCurrentSlide().add(imageElement);
+        }
+        catch (IOException e) {
+            return;
+        }
 
-        imageElement.setSize(new Dimension(400, 400));
-
-        SlideManager.slideManager.getCurrentSlide().add(imageElement);
     }
     
 }

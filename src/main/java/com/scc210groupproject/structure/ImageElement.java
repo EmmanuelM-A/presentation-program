@@ -1,6 +1,7 @@
 package com.scc210groupproject.structure;
 
 import java.awt.Component;
+import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.IOException;
@@ -15,18 +16,19 @@ import com.scc210groupproject.ui.helper.GeneralButtons;
 public class ImageElement extends ExtendedElement
 {
     JLabel label = new JLabel();
+    Image icon = null;
 
-    public ImageElement(ImageIcon image)
+    public ImageElement(Image image)
     {
         super();
 
-        label.setIcon(image);
+        icon = image;
 
         class ResizeListener extends ComponentAdapter
         {
             public void componentResized(ComponentEvent e)
             {
-                label.setIcon(GeneralButtons.resizeIcon((ImageIcon)label.getIcon(), label.getWidth(), label.getHeight()));
+                label.setIcon(GeneralButtons.resizeIcon(image, label.getWidth(), label.getHeight()));
             }
         }
 

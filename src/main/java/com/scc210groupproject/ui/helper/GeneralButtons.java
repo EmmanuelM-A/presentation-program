@@ -114,8 +114,20 @@ public enum GeneralButtons {
         // Get the Image from the ImageIcon
         Image image = icon.getImage();
 
+        return resizeIcon(image, width, height);
+    }
+
+    /**
+     * Allows ImageIcons to be resized to a certain width and height
+     * @param iamge - Image
+     * @param width The new width of the ImageIcon
+     * @param height The height of the ImageIcon
+     * @return ImageIcon
+     */
+    public static ImageIcon resizeIcon(Image image, int width, int height) {
+
         // Resize the Image
-        Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_FAST);
+        Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_DEFAULT);
 
         // Return the resized ImageIcon
         return new ImageIcon(resizedImage);
