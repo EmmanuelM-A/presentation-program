@@ -16,3 +16,14 @@ public class App {
         });
     }
 }
+
+/*
+                        TODO LIST:
+                        - Do animations and transistions check discord
+                        - Settings windows
+                        - Dark and light mode
+                        - Font and text section
+                        - mini toolbar
+                        - drag feature to slides
+                        - shortcuts windows
+                 */

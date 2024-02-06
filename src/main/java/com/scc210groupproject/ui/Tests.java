@@ -19,21 +19,16 @@ public class Tests extends JFrame {
 
     private final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 
-    private MenuBarTabs menuBarTabs;
-    private ContextMenuPanel contextMenuPanel;
-    private MainDisplayPanel mainDisplayPanel;
-    private SlideManager slideManager;
-
     public Tests() {
         this.setTitle("Testing Testing");
-        //this.setSize((int)size.getWidth(), (int)size.getHeight());
+        this.setSize((int)size.getWidth(), (int)size.getHeight());
         this.setMinimumSize(new Dimension(1000, 700));
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(true);
         this.setLayout(new GridBagLayout());
 
-        this.contextMenuPanel = new ContextMenuPanel(null);
+        this.contextMenuPanel = new ContextMenuPanel(0, 0, Color.WHITE);
 
         this.menuBarTabs = new MenuBarTabs(this, this.contextMenuPanel, 0, 0, Color.WHITE);
 
@@ -57,7 +52,7 @@ public class Tests extends JFrame {
         gbc.weightx = 0.2;
         gbc.weighty = 0.79;
         gbc.insets = new Insets(gap, 0, gap, gap);
-        this.add(ContextMenuPanel.contextMenuPanel, gbc);
+        this.add(contextMenuPanel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
@@ -112,10 +107,11 @@ public class Tests extends JFrame {
         JLabel slideImage = new JLabel(new ImageIcon(slide));
         this.mainDisplayPanel.add(slideImage);
     }
-=======
->>>>>>> 7b4e027 (Slides are now being painted onto the main display instead of being added)
 
-    public static void main( String[] args ) {
+    public static void main(String args[]) {
         new Tests();
     }
-}*/
+}
+
+
+

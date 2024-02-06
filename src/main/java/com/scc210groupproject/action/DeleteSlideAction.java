@@ -32,7 +32,9 @@ public class DeleteSlideAction implements ActionListener, ICreateSlideListener, 
             return;
         }
 
-        button.setEnabled(p.getSlideCount() > 1);
+        if(button != null) {
+            button.setEnabled(p.getSlideCount() > 1);
+        }
     }
 
     @Override

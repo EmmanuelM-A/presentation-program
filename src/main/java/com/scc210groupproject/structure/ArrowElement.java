@@ -4,8 +4,22 @@ import javax.swing.JPanel;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
+import com.scc210groupproject.structure.adjust.DragResizer;
 import com.scc210groupproject.structure.anchors.AnchorReference;
 import com.scc210groupproject.structure.anchors.IAnchorListener;
+import com.scc210groupproject.structure.anchors.IAnchorProvider;
+import com.scc210groupproject.structure.input.InputEmulator.InputState;
+import com.scc210groupproject.structure.input.listeners.IMouseClicked;
+import com.scc210groupproject.structure.input.listeners.IMouseDragged;
+import com.scc210groupproject.structure.input.listeners.IMouseEntered;
+import com.scc210groupproject.structure.input.listeners.IMouseExited;
+import com.scc210groupproject.structure.input.listeners.IMouseMoved;
+import com.scc210groupproject.structure.input.listeners.IMousePressed;
+import com.scc210groupproject.structure.input.listeners.IMouseReleased;
+import com.scc210groupproject.structure.input.listeners.IMultRelease;
+import com.scc210groupproject.structure.input.listeners.IMultSelect;
+import com.scc210groupproject.structure.input.listeners.IMultiDrag;
+import com.scc210groupproject.ui.MainDisplayPanel;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -18,8 +32,10 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.Component;
-
+import java.awt.Cursor;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * @author wonge1
@@ -38,6 +54,8 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
         panel.pointA = start;
         panel.pointB = end;
         panel.reposition();
+        
+        addInputListener(new ArrowMover());
     }
 
     private ArrowElement() {}
@@ -62,6 +80,20 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
         }
 
         panel.reposition();
+    }
+
+    public Point getPoint(Side side) {
+        switch (side) {
+            case A:
+                return panel.pointA;
+
+            case B:
+                return panel.pointB;
+
+            default:
+                return null;
+        }
+
     }
 
     public void toggleArrow(Side side, boolean enabled) {
@@ -194,6 +226,8 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
         panel.color = new Color(reader.readInt("color"));
 
         panel.reposition();
+        
+        addInputListener(new ArrowMover());
     }
 
     @Override
@@ -384,4 +418,117 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
         }
     }
 
+    public static class ArrowMover implements  IMousePressed, IMouseReleased, IMouseMoved, IMouseDragged, IMouseEntered, IMouseExited, IMouseClicked, IMultSelect, IMultRelease, IMultiDrag {
+
+        private Side targetSide = null;
+        private double snapDistance = 10;
+
+        @Override
+        public void multiDrag(Object target, InputState state) {
+        }
+
+        @Override
+        public void multiRelease(Object target, InputState state) {
+        }
+
+        @Override
+        public void multiSelect(Object target, InputState state) {
+        }
+
+        @Override
+        public void mouseClicked(Object target, InputState state) {
+            // not used, here to block message being taken by another element
+        }
+
+        @Override
+        public void mouseExited(Object target, InputState state) {
+            MainDisplayPanel.instance.setCursor(Cursor.getDefaultCursor());
+        }
+
+        @Override
+        public void mouseEntered(Object target, InputState state) {
+        }
+
+        private BaseElement getAnchorProvider(ArrowElement arrow, Point location) {
+            Collection<BaseElement> hierarchy = arrow.parent.getImmediateHierarchy(location);
+
+            for (BaseElement element : hierarchy) {
+                if (element == arrow)
+                    continue;
+
+                if (!IAnchorProvider.class.isAssignableFrom(element.getClass()))
+                    continue;
+
+                return element;
+            }
+            
+            return null;
+        }
+
+        @Override
+        public void mouseDragged(Object target, InputState state) {
+            if (target == null)
+                return;
+
+            Dimension mouseDelta = state.getMouseDelta();
+            
+            ArrowElement arrow = (ArrowElement)target;
+            Point original = arrow.getPoint(targetSide);
+            Point updated = new Point(original.x + mouseDelta.width, original.y + mouseDelta.height);
+            BaseElement element = getAnchorProvider(arrow, updated);
+            if (element == null)
+                arrow.setPoint(targetSide, updated);
+            else {
+                IAnchorProvider provider = (IAnchorProvider)element;
+
+                AnchorReference found = null;
+                double minDistance = Double.MAX_VALUE;
+
+                for (AnchorReference anchor : provider.getAnchors()) {
+                    double distance = updated.distance(anchor.getCoordInSlide());
+                    if (distance < minDistance) {
+                        found = anchor;
+                        minDistance = distance;
+                    }
+                }
+
+                if (found == null)
+                    arrow.setPoint(targetSide, updated);
+
+                if (minDistance * MainDisplayPanel.instance.getInputEmulator().getScale() > snapDistance)
+                    arrow.setPoint(targetSide, updated);
+
+                arrow.setAnchor(targetSide, found);
+            }
+
+            arrow.notifyUpdate(arrow);
+        }
+
+        @Override
+        public void mouseMoved(Object target, InputState state) {
+            MainDisplayPanel.instance.setCursor(new Cursor(Cursor.MOVE_CURSOR));
+        }
+
+        @Override
+        public void mouseReleased(Object target, InputState state) {
+            target = null;
+        }
+
+        @Override
+        public void mousePressed(Object target, InputState state) {
+            Point mouseLocation = state.getLocationInSlide();
+
+            ArrowElement arrow = (ArrowElement)target;
+            double distanceA = mouseLocation.distance(arrow.getPoint(Side.A));
+            double distanceB = mouseLocation.distance(arrow.getPoint(Side.B));
+
+            if (distanceA < distanceB) {
+                targetSide = Side.A;
+            }
+            else {
+                targetSide = Side.B;
+            }
+        }
+
+    }
 }

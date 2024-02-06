@@ -1,7 +1,5 @@
 package com.scc210groupproject.ui.menuBarTabs.toolBars;
 
-import com.scc210groupproject.action.OpenAction;
-import com.scc210groupproject.action.SaveAction;
 import com.scc210groupproject.ui.helper.GeneralButtons;
 
 import javax.swing.*;
@@ -17,16 +15,17 @@ import java.util.Queue;
  * @author madukaag
  * */
 public class HomeToolBar extends ToolBar {
-        private JButton newSlide, newFile, openFile, saveFile, clipboard, select, paste, settings, spellChecker, help;
+        private JButton newSlide, newFile, openFile, saveFile, clipboard, emptyClipboard, select, copy, paste, settings, spellChecker, help;
 
         public HomeToolBar(JPanel recentsPanel) {
                 this.setRollover(true);
-                this.setMaximumSize(new Dimension(2000, 140));
-                this.setMinimumSize(new Dimension(1000, 100));
 
                 recentsPanel.setBackground(Color.WHITE);
                 JScrollPane recentsScrollPane = new JScrollPane(recentsPanel);
+                recentsScrollPane.setPreferredSize(new Dimension(500,90));
                 recentsScrollPane.setMaximumSize(new Dimension(500, 90));
+                recentsScrollPane.setMinimumSize(new Dimension(100, 90));
+                recentsScrollPane.setToolTipText("Recents");
                 recentsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
                 newSlide = makeToolbarButton(GeneralButtons.NEW_SLIDE.getTitle(), GeneralButtons.NEW_SLIDE.getIcon(), GeneralButtons.NEW_SLIDE.getEvent(), recentsPanel);
@@ -40,6 +39,8 @@ public class HomeToolBar extends ToolBar {
                 clipboard = makeToolbarButton(GeneralButtons.CLIPBOARD.getTitle(), GeneralButtons.CLIPBOARD.getIcon(), GeneralButtons.CLIPBOARD.getEvent(), recentsPanel);
 
                 select = makeToolbarButton(GeneralButtons.SELECT.getTitle(), GeneralButtons.SELECT.getIcon(), GeneralButtons.SELECT.getEvent(), recentsPanel);
+
+                copy = makeToolbarButton(GeneralButtons.COPY.getTitle(), GeneralButtons.COPY.getIcon(), GeneralButtons.COPY.getEvent(), recentsPanel);
 
                 paste = makeToolbarButton(GeneralButtons.PASTE.getTitle(), GeneralButtons.PASTE.getIcon(), GeneralButtons.PASTE.getEvent(), recentsPanel);
 
@@ -65,6 +66,7 @@ public class HomeToolBar extends ToolBar {
 
                 this.add(clipboard);
                 this.add(select);
+                this.add(copy);
                 this.add(paste);
 
                 separator(this);
@@ -78,5 +80,6 @@ public class HomeToolBar extends ToolBar {
 
                 this.setName("Home");
                 this.setFloatable(false);
+
         }
 }

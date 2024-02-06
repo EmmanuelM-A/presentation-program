@@ -7,7 +7,6 @@ import java.awt.geom.Point2D;
 import java.io.IOException;
 
 import javax.swing.JComponent;
-import javax.swing.JTextPane;
 import javax.swing.border.Border;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
@@ -72,7 +71,7 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
     }
 
     public ExtendedElement() {
-        addInputListener(new DragResizer());
+        addInputListener(new DragResizer(this));
     }
 
     @Override
@@ -110,8 +109,6 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
         asComp().setSize(d);
 
         asComp().setBackground(new Color(reader.readInt("background")));
-
-        addInputListener(new DragResizer());
     }
 
 }
