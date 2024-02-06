@@ -4,14 +4,17 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Point;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeMap;
 
 import javax.swing.SwingUtilities;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
+import com.scc210groupproject.structure.helper.CoordinateUtils;
 import com.scc210groupproject.structure.input.IInputProvider;
 import com.scc210groupproject.structure.input.InputManager;
 import com.scc210groupproject.structure.liveness.DestroyManager;
@@ -205,6 +208,39 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
         }
 
         return this;
+    }
+
+    public Collection<BaseElement> getImmediateHierarchy(Point point) {
+        TreeMap<Integer, BaseElement> order = new TreeMap<>();
+
+        Component current = asComp();
+
+        if (!current.contains(point.x, point.y))
+            return null;
+
+        if (current instanceof Container) {
+
+            Container container = (Container)current;
+            
+            for (BaseElement element : children) {
+
+                Component inner = element.asComp();
+
+
+                Component immediate = checkParent(inner, container);
+                if (immediate == null) {
+                    continue;
+                }
+
+                if (!immediate.contains(SwingUtilities.convertPoint(container, point, inner)))
+                    continue;
+
+                int zValue = container.getComponentZOrder(immediate);
+                order.put(zValue, element);
+            }
+        }
+
+        return order.values();
     }
 
     public InputManager getMouseManager() {
