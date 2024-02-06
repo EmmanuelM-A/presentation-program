@@ -4,8 +4,13 @@ import java.awt.Component;
 import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -16,35 +21,65 @@ import com.scc210groupproject.ui.helper.GeneralButtons;
 public class ImageElement extends ExtendedElement
 {
     JLabel label = new JLabel();
-    Image icon = null;
+    BufferedImage image = null;
 
-    public ImageElement(Image image)
+    private class ResizeListener extends ComponentAdapter
+    {
+        private void updateIcon() {
+            if (image != null)
+                label.setIcon(GeneralButtons.resizeIcon(image, label.getWidth(), label.getHeight()));
+        }
+
+        public void componentResized(ComponentEvent e) {
+            updateIcon();
+        }
+
+        @Override
+        public void componentShown(ComponentEvent e) {
+            updateIcon();
+        }
+    }
+
+    public ImageElement(BufferedImage loaded)
     {
         super();
 
-        icon = image;
-
-        class ResizeListener extends ComponentAdapter
-        {
-            public void componentResized(ComponentEvent e)
-            {
-                label.setIcon(GeneralButtons.resizeIcon(image, label.getWidth(), label.getHeight()));
-            }
-        }
+        image = loaded;
 
         label.addComponentListener(new ResizeListener());
     }
 
+    private ImageElement() {}
+
+    public static ImageElement createEmpty() { return new ImageElement(); }
+
     @Override
     protected void writeSelf(Writer writer) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'writeSelf'");
+        
+        super.writeExtended(writer);
+
+        String encoded = "none";
+        if (image != null) {
+            ByteArrayOutputStream bo = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", bo);
+            encoded = Base64.getEncoder().encodeToString(bo.toByteArray());
+        }
+
+        writer.writeString("image", encoded);
     }
 
     @Override
     protected void readSelf(Reader reader) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'readSelf'");
+        
+        label.addComponentListener(new ResizeListener());
+
+        String encoded = reader.readString("image");
+        if (encoded != "none") {
+            ByteArrayInputStream bi = new ByteArrayInputStream(Base64.getDecoder().decode(encoded));
+            image = ImageIO.read(bi);
+        }
+
+        super.readExtended(reader);
     }
 
     @Override
