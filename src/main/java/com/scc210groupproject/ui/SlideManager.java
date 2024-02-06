@@ -160,17 +160,27 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         bottomSection.setPreferredSize(new Dimension(1000, 35));
         bottomSection.setBackground(Color.lightGray);
 
-        this.addNewSlide = new JButton("New Slide");
+        this.addNewSlide = new JButton(GeneralButtons.resizeIcon(
+            GeneralButtons.NEW_SLIDE.getIcon(), 20, 20));
         this.addNewSlide.addActionListener(new NewSlideAction());
+        this.addNewSlide.setToolTipText("New Slide");
 
-        this.deleteSlide = new JButton("Delete Slide");
+        this.deleteSlide = new JButton(GeneralButtons.resizeIcon(
+            GeneralButtons.DELETE_SLIDE.getIcon(), 20, 20));
         DeleteSlideAction deleteAction = new DeleteSlideAction();
         deleteAction.setButton(this.deleteSlide);
         this.deleteSlide.addActionListener(deleteAction);
+        this.deleteSlide.setToolTipText("Delete Slide");
 
 
-        this.present = new JButton("Present");
-        this.presentAt = new JButton("Present From");
+        this.present = new JButton(GeneralButtons.resizeIcon(
+            GeneralButtons.PRESENT.getIcon(), 20, 20));
+        this.present.setToolTipText("Present");
+
+        this.presentAt = new JButton(GeneralButtons.resizeIcon(
+            GeneralButtons.PRESENT_AT.getIcon(), 20, 20));
+        this.presentAt.setToolTipText("Present From");
+
         //this.noSlides = new JLabel("Slides: ");
 
         /*
