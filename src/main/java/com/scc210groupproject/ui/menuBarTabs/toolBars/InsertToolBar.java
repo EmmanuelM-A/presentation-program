@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
  * @author madukaag
  * */
 public class InsertToolBar extends ToolBar implements ActionListener {
-    private JButton addText, addImage, addVideo, newSlide, addDiagram, addShape, delete, addAudio, help;
+    private JButton addText, addImage, addVideo, newSlide, addDiagram, addShape, addLine, delete, addAudio, help;
 
     private JFrame uiFrame;
     private ContextMenuPanel contextMenuPanel;
@@ -37,6 +37,8 @@ public class InsertToolBar extends ToolBar implements ActionListener {
 
         addShape = makeToolbarButton(GeneralButtons.SHAPES.getTitle(), GeneralButtons.SHAPES.getIcon(), GeneralButtons.SHAPES.getEvent(), recentsPanel);
 
+        addLine = makeToolbarButton(GeneralButtons.ADD_LINE.getTitle(), GeneralButtons.ADD_LINE.getIcon(), GeneralButtons.ADD_LINE.getEvent(), recentsPanel);
+
         delete = makeToolbarButton(GeneralButtons.DELETE_ELEMENT.getTitle(), GeneralButtons.DELETE_ELEMENT.getIcon(), GeneralButtons.DELETE_ELEMENT.getEvent(), recentsPanel);
 
         addAudio = makeToolbarButton(GeneralButtons.ADD_AUDIO.getTitle(), GeneralButtons.ADD_AUDIO.getIcon(), GeneralButtons.ADD_AUDIO.getEvent(), recentsPanel);
@@ -53,10 +55,14 @@ public class InsertToolBar extends ToolBar implements ActionListener {
         this.add(addImage);
         this.add(addVideo);
         this.add(addDiagram);
-        this.add(delete);
         this.add(addAudio);
         this.add(addShape);
+        this.add(addLine);
 
+        separator(this);
+
+        this.add(delete);
+        
         separator(this);
 
         this.add(help);

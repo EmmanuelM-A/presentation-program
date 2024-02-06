@@ -34,6 +34,7 @@ public enum GeneralButtons {
     ADD_VIDEO("Video", "add-video.png", 32, 32, new NewVideoElementAction()),
     ADD_AUDIO("Audio", "add-audio.png", 32, 32, new NewAudioElementAction()),
     ADD_DIAG("Diagrams", "add-diagram.png", 32, 32, new NewDiagramElementAction()),
+    ADD_LINE("Line", "add-line.png", 32, 32, new NewArrowElementAction()),
     SHAPES("Shapes", "add-shapes.png", 32, 32, new ShapesAction()),
     EXPORT("Export", "export.png", 32, 32, new ExportAction()),
     IMPORT("Import", "import.png", 32, 32, new ImportAction()),

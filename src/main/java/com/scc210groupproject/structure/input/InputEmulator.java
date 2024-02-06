@@ -158,8 +158,6 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
         if (active == false)
             return;
 
-        
-
         Point newPosition = new Point(
             (int) ((double) (event.getX() - offset.x) * scale),
             (int) ((double) (event.getY() - offset.y) * scale));
@@ -169,7 +167,7 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
                 newPosition.x - currentState.locationInSlide.x,
                 newPosition.y - currentState.locationInSlide.y);
         else
-        currentState.mouseDelta = new Dimension();
+            currentState.mouseDelta = new Dimension();
 
         currentState.locationInSlide = newPosition;
 
@@ -203,8 +201,6 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
         int button = e.getButton();
         currentState.buttons.put(button, true);
         currentState.lastChangedButton = button;
-
-        System.out.println(currentElement);
 
         if (currentElement != null)
             currentElement.passMouseEvent(IMousePressed.class, currentElement, currentState);
