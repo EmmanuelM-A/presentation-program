@@ -1,5 +1,6 @@
 package com.scc210groupproject.ui;
 
+import com.scc210groupproject.structure.Presentation;
 import com.scc210groupproject.structure.liveness.IUpdateListener;
 import com.scc210groupproject.structure.liveness.IUpdateProvider;
 import com.scc210groupproject.structure.liveness.UpdateManager;
@@ -104,6 +105,8 @@ public class UIFrame extends JFrame implements IUpdateProvider
         setVisible(true);
 
         notifyUpdate(this);
+
+        Presentation.createNewAsCurrent();
     }
 
     @Override

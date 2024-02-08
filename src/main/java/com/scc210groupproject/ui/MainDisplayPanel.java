@@ -51,7 +51,6 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
         super.setLayout(new GridLayout(0, 1));
 
         this.currentPresentation = null;
-        createNewPresentation();
 
 
         
@@ -126,21 +125,6 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
      */
     private void setBufferedSlideImage(BufferedImage newBufferedSlideImage) {
         this.bufferedSlideImage = newBufferedSlideImage;
-    }
-
-    public void createNewPresentation()
-    {
-        currentPresentation = Presentation.getOrCreate();
-        insertIntoDisplay();
-    }
-
-    private void insertIntoDisplay()
-    {
-        this.removeAll();
-        JPanel panel = (JPanel)currentPresentation.getSlideAtIndex(0).asComp();
-        //panel.setBackground(Color.ORANGE);
-        this.add(panel);
-        this.revalidate();
     }
 
     /**

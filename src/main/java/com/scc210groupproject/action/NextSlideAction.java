@@ -6,7 +6,7 @@ import javax.swing.AbstractAction;
 
 import com.scc210groupproject.ui.SlideManager;
 
-public class PrevSlideAction extends AbstractAction {
+public class NextSlideAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
 
@@ -17,7 +17,7 @@ public class PrevSlideAction extends AbstractAction {
         // do bound checks
         // move functionality
         
-        SlideManager.instance.showPrevSlide();
+        SlideManager.instance.showNextSlide();
 
     }
 }
