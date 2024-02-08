@@ -243,6 +243,8 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
             // Get the current slide
             Slide currentSlide = getCurrentSlide();
 
+            if(currentSlide == null) System.out.println("PROBLEM WITH CURRENT SLIDE");
+
             // Decrement values
             this.currentSlide--;
             this.currentSlideIndex--;
@@ -512,10 +514,8 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
      * @param index The index of the slide to display
      */
     public void showSlideAtIndex(int index) {
-        Slide currentSlide = this.presentation.getSlideAtIndex(index);
-        SlideImage currentSlideImage = new SlideImage(currentSlide, this.mainDisplay);
-
-        displaySlide(currentSlideImage, this.mainDisplay);
+        displaySlide(this.slideImages.get(index), this.mainDisplay);
+        highlightSlide(this.slidesViewer.get(index));
     }
 
     @Override
@@ -585,6 +585,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         this.viewSliderPanel.repaint();
 
         int firstSlide = getSlidePosition(getCurrentSlide()) + 1;
+        int lastSlide = getSlidePosition(this.slidesViewer.getLast()) + 1;
 
         if(firstSlide != 1) {
             if(showPrevSlide()) {
@@ -596,6 +597,24 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
             displaySlide(this.slideImages.get(0), this.mainDisplay);
             highlightSlide(this.slidesViewer.get(0));
         }
+
+        // PROBLEM HERE - delete previous slide when slide clicked is the last slide
+        /*if(currentSlide == 1) {
+            //displaySlide(this.slideImages.get(0), this.mainDisplay);
+            //highlightSlide(this.slidesViewer.get(0));
+            showSlideAtIndex(0);
+            System.out.println("Slide " + (this.currentSlide) + " deleted - Now displaying next slide!");
+        } else if (lastSlide == this.slidesViewer.size()) {
+            System.out.println(lastSlide);
+            showSlideAtIndex(this.slidesViewer.size() - 1);
+            System.out.println("Slide " + + (this.currentSlide) + " deleted - Now displaying previous slide!");
+        } else {
+            if(showPrevSlide()) {
+                System.out.println("Slide " + + (this.currentSlide + 1) + " deleted - Now displaying previous slide!");
+            } else if (showNextSlide()) {
+                System.out.println("Slide " + (this.currentSlide - 1) + " deleted - Now displaying next slide!");
+            }
+        }*/
     }
 
     @Override
