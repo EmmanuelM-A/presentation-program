@@ -523,13 +523,15 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         this.viewSliderPanel.revalidate();
         this.viewSliderPanel.repaint();
 
-        if (current != null && current.getSlideCount() > 0) {
-            showSlideAtIndex(0);
-            return;
-        }
+        //if (current != null && current.getSlideCount() > 0) {
+        //    showSlideAtIndex(0);
+        //    return;
+        //}
 
         this.mainDisplay.setCurrentSlideImage(null);
         this.mainDisplay.clearPaintedSlide();
+
+        this.presentation = current;
     }
 
     @Override

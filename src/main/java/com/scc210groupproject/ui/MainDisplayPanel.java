@@ -116,8 +116,8 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
         if (newSlide != currentSlide)
             emulator.setTargetSlide(newSlide);
 
-        this.currentSlideImage = newslideImage;
-        setBufferedSlideImage(this.currentSlideImage.getBufferedSlideImage());
+        currentSlideImage = newslideImage;
+        setBufferedSlideImage(currentSlideImage != null ? currentSlideImage.getBufferedSlideImage() : null);
     }
 
     /**
@@ -148,6 +148,9 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
      * The offset of the image is also maintained as frame changes size.
      */
     public void updateBufferedSlideImage() {
+
+        if (currentSlideImage == null)
+            return;
 
         Component slideComp = currentSlideImage.getSlide().asComp();
 
@@ -189,8 +192,9 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
      * Removes the painted image from display
      */
     public void clearPaintedSlide() {
-        this.bufferedSlideImage = null;
-        this.currentSlideImage.setSlide(null);
+        bufferedSlideImage = null;
+        if (currentSlideImage != null)
+            currentSlideImage.setSlide(null);
 
         super.repaint();
     }
