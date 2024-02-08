@@ -1,10 +1,10 @@
 package com.scc210groupproject.structure.adjust;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Insets;
 import java.awt.Rectangle;
 
 import javax.swing.border.AbstractBorder;
@@ -13,7 +13,8 @@ import com.scc210groupproject.ui.MainDisplayPanel;
 
 public class SelectionBorder extends AbstractBorder
 {
-    private int margin = 10;
+    private int margin = -1;
+    private int borderWidth = -1;
     private Rectangle[] rectangles = new Rectangle[8];
 
     public static enum Mode {
@@ -27,26 +28,25 @@ public class SelectionBorder extends AbstractBorder
         state = mode;
     }
 
-    private void updateMargin() {
-        margin = (int) (10 * MainDisplayPanel.instance.getInputEmulator().getScale());
+    private void updateWidth() {
+        borderWidth = (int) (1 * MainDisplayPanel.instance.getInputEmulator().getScale());
     }
 
-    @Override
-    public Insets getBorderInsets(Component element)
-    {
-        updateMargin();
-        return(new Insets(margin, margin, margin, margin));
+    private void updateMargin() {
+        margin = (int) (10 * MainDisplayPanel.instance.getInputEmulator().getScale());
     }
 
     @Override
     public void paintBorder(Component element, Graphics graphics, int topLeftCornerX, int topLeftCornerY, int width, int height)
     {
         updateMargin();
-        
-        graphics.setColor(Color.BLACK);
-        graphics.drawRect(topLeftCornerX + margin / 2, topLeftCornerY + margin / 2, width - margin, height - margin);
+        updateWidth();
 
-        Graphics2D graphics2d = (Graphics2D)graphics;
+        Graphics2D graphics2d = (Graphics2D)graphics.create();
+
+        graphics2d.setColor(Color.BLACK);
+        graphics2d.setStroke(new BasicStroke(borderWidth));
+        graphics2d.drawRect(topLeftCornerX + margin / 2, topLeftCornerY + margin / 2, width - margin, height - margin);
 
         rectangles[0] = new Rectangle(
             topLeftCornerX + width / 2 - margin / 2, 
