@@ -5,8 +5,6 @@ import com.scc210groupproject.ui.contextMenu.*;
 import com.scc210groupproject.ui.helper.GeneralButtons;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * This class extends ToolBar and contains all the buttons and components that will be displayed on the
@@ -14,15 +12,10 @@ import java.awt.event.ActionListener;
  *
  * @author madukaag
  * */
-public class InsertToolBar extends ToolBar implements ActionListener {
+public class InsertToolBar extends ToolBar {
     private JButton addText, addImage, addVideo, newSlide, addDiagram, addShape, addLine, delete, addAudio, help;
 
-    private JFrame uiFrame;
-    private ContextMenuPanel contextMenuPanel;
-
     public InsertToolBar(JFrame frame, ContextMenuPanel c, JPanel recentsPanel) {
-        this.contextMenuPanel = c;
-        this.uiFrame = frame;
         this.setRollover(true);
 
         addText = makeToolbarButton(GeneralButtons.ADD_TEXT, recentsPanel);
@@ -70,20 +63,5 @@ public class InsertToolBar extends ToolBar implements ActionListener {
         this.setName("Insert");
         this.setFloatable(false);
 
-    }
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // if(e.getSource() == this.addText) {
-            
-        //     //System.out.println("SOMETHING WAS CLICKED!");
-        //     //new TextContextMenu(this.uiFrame, 0, 157);
-        //     //new DataStructureContextMenu(this.uiFrame, 0, 157);
-        //     new ChartContextMenu(this.uiFrame, 0, 157);
-        // } else if (e.getSource() == this.addImage) {
-        //     //new ImageContextMenu(this.uiFrame, 0, 157);
-        //     new CodeContextMenu(this.uiFrame, 0, 157);
-        //     //new TableContextMenu(this.uiFrame, 0, 157);
-        //     //System.out.println("SOMETHING ELSE WAS CLICKED!");
-        // }
     }
 }
