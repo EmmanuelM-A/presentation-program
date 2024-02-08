@@ -15,7 +15,7 @@ import java.util.Queue;
  * @author madukaag
  * */
 public class HomeToolBar extends ToolBar {
-        private JButton newSlide, newFile, openFile, saveFile, clipboard, emptyClipboard, select, copy, paste, settings, spellChecker, help;
+        private JButton newSlide, newFile, openFile, saveFile, clipboard, select, copy, paste, settings, spellChecker, help;
 
         public HomeToolBar(JPanel recentsPanel) {
                 this.setRollover(true);
