@@ -8,7 +8,8 @@ import com.scc210groupproject.structure.Presentation;
 public class NewSlideAction implements ActionListener {
 
     @Override
-    public void actionPerformed(ActionEvent _)
+    public void actionPerformed(ActionEvent discard
+    )
     {
         Presentation.getOrCreate().newSlide();
     }

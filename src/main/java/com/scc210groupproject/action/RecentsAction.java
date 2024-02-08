@@ -6,7 +6,8 @@ import java.awt.event.ActionListener;
 public class RecentsAction implements ActionListener {
 
     @Override
-    public void actionPerformed(ActionEvent _) {
+    public void actionPerformed(ActionEvent discard
+    ) {
 
     }
 }

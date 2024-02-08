@@ -12,7 +12,8 @@ import com.scc210groupproject.ui.SlideManager;
 public class NewTextElementAction implements ActionListener
 {
     @Override
-    public void actionPerformed(ActionEvent _)
+    public void actionPerformed(ActionEvent discard
+    )
     {
         TextElement textElement = new TextElement();
 

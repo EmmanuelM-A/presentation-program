@@ -16,15 +16,15 @@ public class ShareToolBar extends ToolBar {
     public ShareToolBar(JPanel recentsPanel) {
         this.setRollover(true);
 
-        export = makeToolbarButton(GeneralButtons.EXPORT.getTitle(), GeneralButtons.EXPORT.getIcon(), GeneralButtons.EXPORT.getEvent(), recentsPanel);
+        export = makeToolbarButton(GeneralButtons.EXPORT, recentsPanel);
 
-        importFile = makeToolbarButton(GeneralButtons.IMPORT.getTitle(), GeneralButtons.IMPORT.getIcon(), GeneralButtons.IMPORT.getEvent(), recentsPanel);
+        importFile = makeToolbarButton(GeneralButtons.IMPORT, recentsPanel);
 
-        format = makeToolbarButton(GeneralButtons.FORMAT.getTitle(), GeneralButtons.FORMAT.getIcon(), GeneralButtons.FORMAT.getEvent(), recentsPanel);
+        format = makeToolbarButton(GeneralButtons.FORMAT, recentsPanel);
 
-        share = makeToolbarButton(GeneralButtons.SHARE.getTitle(), GeneralButtons.SHARE.getIcon(), GeneralButtons.SHARE.getEvent(), recentsPanel);
+        share = makeToolbarButton(GeneralButtons.SHARE, recentsPanel);
 
-        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), GeneralButtons.HELP.getEvent(),  recentsPanel);
+        help = makeToolbarButton(GeneralButtons.HELP,  recentsPanel);
 
         this.add(export);
         this.add(importFile);

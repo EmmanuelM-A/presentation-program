@@ -133,23 +133,8 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
 
         Slide slide = new Slide(defaultSize);
 
-        //Slide slide = new Slide();
-        //slide.asComp().setSize(defaultSize);
+        slide.setBackground(Color.WHITE);
 
-
-        slide.setBackground(new Color((float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1, (float)slides.size() / 10 % 1));
-
-        TextElement textElement = new TextElement();
-        textElement.setLocation(new Point(0, 0));
-        textElement.setSize(new Dimension(400,400));
-        textElement.setText("AAAAAAA");
-        slide.add(textElement);
-
-        // ImageElement imageElement = new ImageElement();
-        // imageElement.setLocation(new Point(0, 0));
-        // imageElement.setSize(new Dimension(400,400));
-        // slide.add(imageElement);
-        
         slides.add(slide);
         slide.addUpdateListener(this);
 

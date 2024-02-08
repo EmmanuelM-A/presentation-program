@@ -19,19 +19,19 @@ public class FileToolBar extends ToolBar {
     public FileToolBar(JPanel recentsPanel) {
         this.setRollover(true);
 
-        newFile = makeToolbarButton(GeneralButtons.NEW.getTitle(), GeneralButtons.NEW.getIcon(), GeneralButtons.NEW.getEvent(), recentsPanel);
+        newFile = makeToolbarButton(GeneralButtons.NEW, recentsPanel);
 
-        openFile = makeToolbarButton(GeneralButtons.OPEN.getTitle(), GeneralButtons.OPEN.getIcon(), GeneralButtons.OPEN.getEvent(), recentsPanel);
+        openFile = makeToolbarButton(GeneralButtons.OPEN, recentsPanel);
 
-        saveFile = makeToolbarButton(GeneralButtons.SAVE.getTitle(), GeneralButtons.SAVE.getIcon(), GeneralButtons.SAVE.getEvent(), recentsPanel);
+        saveFile = makeToolbarButton(GeneralButtons.SAVE, recentsPanel);
 
-        export = makeToolbarButton(GeneralButtons.EXPORT.getTitle(), GeneralButtons.EXPORT.getIcon(), GeneralButtons.EXPORT.getEvent(), recentsPanel);
+        export = makeToolbarButton(GeneralButtons.EXPORT, recentsPanel);
 
-        format = makeToolbarButton(GeneralButtons.FORMAT.getTitle(), GeneralButtons.FORMAT.getIcon(), GeneralButtons.FORMAT.getEvent(), recentsPanel);
+        format = makeToolbarButton(GeneralButtons.FORMAT, recentsPanel);
 
-        print = makeToolbarButton(GeneralButtons.PRINT.getTitle(), GeneralButtons.PRINT.getIcon(), GeneralButtons.PRINT.getEvent(), recentsPanel);
+        print = makeToolbarButton(GeneralButtons.PRINT, recentsPanel);
 
-        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), GeneralButtons.HELP.getEvent(), recentsPanel);
+        help = makeToolbarButton(GeneralButtons.HELP, recentsPanel);
 
         this.add(newFile);
         this.add(openFile);

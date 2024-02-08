@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 public class NewDiagramElementAction implements ActionListener {
     @Override
-    public void actionPerformed(ActionEvent _) {
+    public void actionPerformed(ActionEvent discard) {
 
     }
 }

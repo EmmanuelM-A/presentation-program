@@ -128,7 +128,6 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         this.prevSlide.setPreferredSize(new Dimension(50, 160));
         this.prevSlide.addActionListener(prevSlideAction);
         this.prevSlide.setFocusable(false);
-        this.prevSlide.setBackground(Color.WHITE);
         this.prevSlide.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).
                 put(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_LEFT,0), "previous");
         this.prevSlide.getActionMap().put("previous", prevSlideAction);
@@ -140,7 +139,6 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         this.nextSlide.setPreferredSize(new Dimension(50, 160));
         this.nextSlide.addActionListener(nextSlideAction);
         this.nextSlide.setFocusable(false);
-        this.nextSlide.setBackground(Color.WHITE);
         this.nextSlide.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).
                 put(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT,0), "next");
         this.nextSlide.getActionMap().put("next", nextSlideAction);
@@ -148,7 +146,6 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         /*
          * This is where the actual presentation slider will go
          * */
-        this.viewSliderPanel.setBackground(Color.lightGray);
         presentationSlider.setPreferredSize(new Dimension(1000, 160));
         presentationSlider.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
@@ -158,7 +155,6 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
          * */
         JPanel bottomSection = new JPanel(new FlowLayout(FlowLayout.LEFT));
         bottomSection.setPreferredSize(new Dimension(1000, 35));
-        bottomSection.setBackground(Color.lightGray);
 
         this.addNewSlide = new JButton("New Slide");
         this.addNewSlide.addActionListener(new NewSlideAction());
@@ -199,7 +195,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
     private void displayFirstSlide() {
         Slide firstSlide = presentation.getSlideAtIndex(0);
 
-        SlideImage firstSlideImage = new SlideImage(firstSlide, this.mainDisplay);
+        SlideImage firstSlideImage = new SlideImage(firstSlide,  this.mainDisplay);
         this.slideImages.add(firstSlideImage);
 
         addSlideToViewer();
@@ -533,7 +529,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         this.currentSlideIndex = this.currentSlide - 1;
 
         // -------- This code is only used to differentiate slides added
-        slide.asComp().setBackground(new Color((float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1));
+        //slide.asComp().setBackground(new Color((float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1, (float)this.presentation.getSlideCount() / 10 % 1));
         // --------
 
         // Create a new slide image of the slide

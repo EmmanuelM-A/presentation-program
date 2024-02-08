@@ -17,7 +17,7 @@ import com.scc210groupproject.ui.SlideManager;
 public class NewImageElementAction implements ActionListener
 {
     @Override
-    public void actionPerformed(ActionEvent _)
+    public void actionPerformed(ActionEvent discard)
     {
         JWindow fileWindow = new JWindow();
         JFileChooser fileChooser = new JFileChooser();

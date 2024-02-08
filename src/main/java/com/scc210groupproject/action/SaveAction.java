@@ -19,7 +19,8 @@ public class SaveAction implements ActionListener {
     String path = null;
 
     @Override
-    public void actionPerformed(ActionEvent _) {
+    public void actionPerformed(ActionEvent discard
+    ) {
 
         if (path == null) {
             JWindow fileWindow = new JWindow();

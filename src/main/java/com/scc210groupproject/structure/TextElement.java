@@ -1,5 +1,6 @@
 package com.scc210groupproject.structure;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.io.IOException;
 

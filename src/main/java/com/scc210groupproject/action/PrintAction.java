@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class PrintAction implements ActionListener {
     
     @Override
-    public void actionPerformed(ActionEvent _){
+    public void actionPerformed(ActionEvent discard){
         
     }
 

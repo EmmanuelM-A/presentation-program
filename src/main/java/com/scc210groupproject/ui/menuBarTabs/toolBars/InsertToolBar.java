@@ -25,25 +25,25 @@ public class InsertToolBar extends ToolBar implements ActionListener {
         this.uiFrame = frame;
         this.setRollover(true);
 
-        addText = makeToolbarButton(GeneralButtons.ADD_TEXT.getTitle(), GeneralButtons.ADD_TEXT.getIcon(), GeneralButtons.ADD_TEXT.getEvent(), recentsPanel);
+        addText = makeToolbarButton(GeneralButtons.ADD_TEXT, recentsPanel);
 
-        addImage = makeToolbarButton(GeneralButtons.ADD_IMAGE.getTitle(), GeneralButtons.ADD_IMAGE.getIcon(), GeneralButtons.ADD_IMAGE.getEvent(), recentsPanel);
+        addImage = makeToolbarButton(GeneralButtons.ADD_IMAGE, recentsPanel);
 
-        addVideo = makeToolbarButton(GeneralButtons.ADD_VIDEO.getTitle(), GeneralButtons.ADD_VIDEO.getIcon(), GeneralButtons.ADD_VIDEO.getEvent(), recentsPanel);
+        addVideo = makeToolbarButton(GeneralButtons.ADD_VIDEO, recentsPanel);
 
-        newSlide = makeToolbarButton(GeneralButtons.NEW_SLIDE.getTitle(), GeneralButtons.NEW_SLIDE.getIcon(), GeneralButtons.NEW_SLIDE.getEvent(), recentsPanel);
+        newSlide = makeToolbarButton(GeneralButtons.NEW_SLIDE, recentsPanel);
 
-        addDiagram = makeToolbarButton(GeneralButtons.ADD_DIAG.getTitle(), GeneralButtons.ADD_DIAG.getIcon(), GeneralButtons.ADD_DIAG.getEvent(), recentsPanel);
+        addDiagram = makeToolbarButton(GeneralButtons.ADD_DIAG, recentsPanel);
 
-        addShape = makeToolbarButton(GeneralButtons.SHAPES.getTitle(), GeneralButtons.SHAPES.getIcon(), GeneralButtons.SHAPES.getEvent(), recentsPanel);
+        addShape = makeToolbarButton(GeneralButtons.SHAPES, recentsPanel);
 
-        addLine = makeToolbarButton(GeneralButtons.ADD_LINE.getTitle(), GeneralButtons.ADD_LINE.getIcon(), GeneralButtons.ADD_LINE.getEvent(), recentsPanel);
+        addLine = makeToolbarButton(GeneralButtons.ADD_LINE, recentsPanel);
 
-        delete = makeToolbarButton(GeneralButtons.DELETE_ELEMENT.getTitle(), GeneralButtons.DELETE_ELEMENT.getIcon(), GeneralButtons.DELETE_ELEMENT.getEvent(), recentsPanel);
+        delete = makeToolbarButton(GeneralButtons.DELETE_ELEMENT, recentsPanel);
 
-        addAudio = makeToolbarButton(GeneralButtons.ADD_AUDIO.getTitle(), GeneralButtons.ADD_AUDIO.getIcon(), GeneralButtons.ADD_AUDIO.getEvent(), recentsPanel);
+        addAudio = makeToolbarButton(GeneralButtons.ADD_AUDIO, recentsPanel);
 
-        help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), GeneralButtons.HELP.getEvent(), recentsPanel);
+        help = makeToolbarButton(GeneralButtons.HELP, recentsPanel);
 
         this.add(newSlide);
 

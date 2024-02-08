@@ -24,10 +24,9 @@ public class ContextMenuPanel extends JPanel implements ActionListener {
         instance.revalidate();
     }
 
-    public ContextMenuPanel(int width, int height, Color colour) {
+    public ContextMenuPanel(int width, int height) {
         instance = this;
 
-        this.setBackground(colour);
         Dimension fixed = new Dimension(width, height);
         this.setPreferredSize(fixed);
         this.setMaximumSize(fixed);

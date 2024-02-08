@@ -16,7 +16,7 @@ public class SaveAsAction implements ActionListener{
     FileFilter compressedFilter = new FileNameExtensionFilter("Compressed Presentation File", ".pcomp");
 
     @Override
-    public void actionPerformed(ActionEvent _) {
+    public void actionPerformed(ActionEvent discard) {
 
         JWindow fileWindow = new JWindow();
 

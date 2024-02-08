@@ -5,7 +5,8 @@ import java.awt.event.ActionListener;
 
 public class ImportAction implements ActionListener {
     @Override
-    public void actionPerformed(ActionEvent _) {
+    public void actionPerformed(ActionEvent discard
+    ) {
 
     }
 }

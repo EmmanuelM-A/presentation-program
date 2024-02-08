@@ -35,7 +35,7 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
         return emulator;
     }
 
-    public MainDisplayPanel(int width, int height, Color colour)
+    public MainDisplayPanel(int width, int height)
     {
         emulator = new InputEmulator();
 
@@ -47,7 +47,6 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
 
         Presentation.addUpdateSlideListener(this);
 
-        this.setBackground(colour);
         this.setPreferredSize(new Dimension(width, height));
         super.setLayout(new GridLayout(0, 1));
 
@@ -139,7 +138,7 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
     {
         this.removeAll();
         JPanel panel = (JPanel)currentPresentation.getSlideAtIndex(0).asComp();
-        panel.setBackground(Color.ORANGE);
+        //panel.setBackground(Color.ORANGE);
         this.add(panel);
         this.revalidate();
     }

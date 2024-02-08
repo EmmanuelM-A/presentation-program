@@ -2,8 +2,11 @@ package com.scc210groupproject.ui.helper;
 
 import com.scc210groupproject.action.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.awt.*;
 import java.util.Objects;
 
@@ -49,10 +52,12 @@ public enum GeneralButtons {
     /*ANIMATIONS("Animations", "", 32, 32, null),
     TRANSITIONS("Transitions", "", 32, 32, null),*/
     LICENSE("License", "certificate.png", 32, 32, new LicenseAction()),
-    SHORTCUTS("Shortcuts", "shortcuts.png", 32, 32, new ShortcutsAction());
+    SHORTCUTS("Shortcuts", "shortcuts.png", 32, 32, new ShortcutsAction()),
+    TOGGLE_THEME("Theme", "toggle-theme.png", 32, 32, new ToggleThemeAction());
 
     private final String title; // Button title - will be used for hover text
-    private final ImageIcon icon; // Button icon - will be used to set the icon of a button
+    private ImageIcon icon; // Button icon - will be used to set the icon of a button
+    private final String iconName;
     private final ActionListener event; //
     private GeneralButtons(String title, String filename, int width, int height, ActionListener event) {
         this.title = "<html><center>"+title+"</center></html>";
@@ -61,6 +66,7 @@ public enum GeneralButtons {
                 width <= 0 ? 32 : width,
                 height <= 0 ? 32 : height
         );
+        this.iconName = filename;
         this.event = event;
     }
 
@@ -79,6 +85,11 @@ public enum GeneralButtons {
     public ImageIcon getIcon() {
         return this.icon;
     }
+    
+    public ImageIcon updateIcon() {
+        this.icon = getIconFromFile(this.iconName);
+        return getIcon();
+    }
 
     /**
      * Gets the action listener of the button
@@ -95,12 +106,26 @@ public enum GeneralButtons {
      * */
     public static ImageIcon getIconFromFile(String file) {
         String filePath = "src/main/resources/images/" + file;
+        BufferedImage source;
         try {
-            return new ImageIcon(filePath);
+            source = ImageIO.read(new File(filePath));
         } catch (Exception e) {
-            System.out.println("Could not load icons");
-            return null;
+            System.out.println("Could not load icons: " + filePath);
+            source = null;
         }
+        BufferedImage result = source != null ?
+            new BufferedImage(source.getWidth(), source.getHeight(), BufferedImage.TRANSLUCENT) :
+            new BufferedImage(32, 32, BufferedImage.TRANSLUCENT);
+        Graphics2D graphics = result.createGraphics();
+        Color color = UIManager.getColor("Button.foreground");
+        graphics.setColor(color);
+        graphics.fillRect(0, 0, result.getWidth(), result.getHeight());
+        if (source != null) {
+            graphics.setComposite(AlphaComposite.DstIn);
+            graphics.drawImage(source, null, 0, 0);
+        }
+        graphics.dispose();
+        return new ImageIcon(result);
     }
 
     /**

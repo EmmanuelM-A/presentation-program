@@ -12,7 +12,8 @@ import com.scc210groupproject.ui.MainDisplayPanel;
 public class NewBoxAction implements ActionListener {
 
     @Override
-    public void actionPerformed(ActionEvent _)
+    public void actionPerformed(ActionEvent discard
+    )
     {
         SampleElement sampleElement = new SampleElement();
         sampleElement.setBackground(new Color((int)(Math.random() * 255), (int)(Math.random() * 255), (int)(Math.random() * 255)));

@@ -16,7 +16,7 @@ public class GoToSlideAction implements ActionListener {
     private GoToSlideAction() {}
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent discard) {
         MainDisplayPanel.instance.showSlideAtIndex(index);
     }
 

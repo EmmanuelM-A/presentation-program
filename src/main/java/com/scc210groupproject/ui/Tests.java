@@ -48,7 +48,7 @@ public class Tests extends JFrame {
 
         // The Toolbar tabs
         {
-            MenuBarTabs menuBarTabs = new MenuBarTabs(this, null, 0, 40, Color.WHITE);
+            MenuBarTabs menuBarTabs = new MenuBarTabs(this, null, 0, 40);
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 1;
@@ -61,7 +61,7 @@ public class Tests extends JFrame {
         }
 
         // The section where the context menus will be positioned
-        ContextMenuPanel contextMenuPanel = new ContextMenuPanel(0, 0, Color.WHITE);
+        ContextMenuPanel contextMenuPanel = new ContextMenuPanel(0, 0);
         {
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridx = 0;
@@ -74,7 +74,7 @@ public class Tests extends JFrame {
         }
 
         // Main display panel
-        MainDisplayPanel mainDisplayPanel = new MainDisplayPanel(0, 0, Color.WHITE);
+        MainDisplayPanel mainDisplayPanel = new MainDisplayPanel(0, 0);
         {
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridx = 1;

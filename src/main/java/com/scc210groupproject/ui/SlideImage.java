@@ -34,6 +34,7 @@ public class SlideImage extends JPanel {
         this.slide = slide;
 
         this.setLayout(null);
+        this.setBackground(UIManager.getColor("Main.Area"));
 
         int width = display.getWidth();
         int height = display.getHeight();

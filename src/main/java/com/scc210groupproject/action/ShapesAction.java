@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class ShapesAction implements ActionListener {
     @Override
-    public void actionPerformed(ActionEvent _) {
+    public void actionPerformed(ActionEvent discard) {
 
         ShapesPopup.shapesPopup.popup.show();
 

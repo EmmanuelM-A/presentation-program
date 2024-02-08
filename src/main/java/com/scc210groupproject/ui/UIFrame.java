@@ -1,13 +1,20 @@
 package com.scc210groupproject.ui;
 
+import com.scc210groupproject.structure.liveness.IUpdateListener;
+import com.scc210groupproject.structure.liveness.IUpdateProvider;
+import com.scc210groupproject.structure.liveness.UpdateManager;
 import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
 import com.scc210groupproject.ui.menuBarTabs.MenuBarTabs;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class UIFrame extends JFrame
+public class UIFrame extends JFrame implements IUpdateProvider
 {
+    public static UIFrame instance;
+
+    public UpdateManager manager = new UpdateManager(this);
+
     /*
      * Gets the dimensions of the screen the program is run on. Allows for the program dimensions
      * to be set to the size of the screen no matter the computer.
@@ -16,6 +23,8 @@ public class UIFrame extends JFrame
 
     public UIFrame()
     {
+        instance = this;
+
         this.setTitle("Presentation Program");
         //this.setSize((int)size.getWidth(), (int)size.getHeight());
         this.setMinimumSize(new Dimension(1000, 700));
@@ -23,7 +32,14 @@ public class UIFrame extends JFrame
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(true);
         this.setLayout(new GridBagLayout());
-        this.getContentPane().setBackground(new Color(211, 211, 211));
+
+        UIFrame self = this;
+        this.addUpdateListener(new IUpdateListener() {
+            @Override
+            public void onUpdate(Object object) {
+                self.getContentPane().setBackground(UIManager.getColor("Main.Base"));
+            }
+        });
 
         GridBagConstraints gbc = new GridBagConstraints();
         int gap = 6;
@@ -46,7 +62,7 @@ public class UIFrame extends JFrame
         //TitleBar customTitleBar = new TitleBar();
         top.add(TitleBar.createTitleBar(this), BorderLayout.NORTH);*/
 
-        MenuBarTabs menuBarTabs = new MenuBarTabs(this, null, 0, 40, Color.WHITE);
+        MenuBarTabs menuBarTabs = new MenuBarTabs(this, null, 0, 40);
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -56,7 +72,7 @@ public class UIFrame extends JFrame
         gbc.insets = new Insets(0, 0, gap, 0);
         this.add(menuBarTabs, gbc);
 
-        ContextMenuPanel contextMenuPanel = new ContextMenuPanel(0, 0, Color.WHITE);
+        ContextMenuPanel contextMenuPanel = new ContextMenuPanel(0, 0);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 1;
@@ -66,7 +82,7 @@ public class UIFrame extends JFrame
         gbc.insets = new Insets(gap, 0, gap, gap);
         this.add(contextMenuPanel, gbc);
 
-        MainDisplayPanel mainDisplayPanel = new MainDisplayPanel(0, 0, Color.WHITE);
+        MainDisplayPanel mainDisplayPanel = new MainDisplayPanel(0, 0);
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -86,5 +102,12 @@ public class UIFrame extends JFrame
 
 
         setVisible(true);
+
+        notifyUpdate(this);
+    }
+
+    @Override
+    public UpdateManager getUpdateManager() {
+        return manager;
     }
 }

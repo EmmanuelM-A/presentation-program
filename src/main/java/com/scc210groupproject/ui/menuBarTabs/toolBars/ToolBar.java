@@ -1,6 +1,10 @@
 package com.scc210groupproject.ui.menuBarTabs.toolBars;
 
 import javax.swing.*;
+
+import com.scc210groupproject.ui.helper.GeneralButtons;
+import com.scc210groupproject.ui.helper.ThemeAwareButton;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -53,8 +57,8 @@ public abstract class ToolBar extends JToolBar {
      * @param icon The button's icon
      * @return JButton
      */
-    protected JButton makeToolbarButton(String title, ImageIcon icon, ActionListener mainListener, JPanel recents) {
-        JButton button = new JButton(title, icon);
+    protected JButton makeToolbarButton(GeneralButtons buttonType, JPanel recents) {
+        ThemeAwareButton button = new ThemeAwareButton(buttonType);
 
         // For button focus frame colour use Look & Feel to change its focus colour
         button.setPreferredSize(new Dimension(76, 76));
@@ -70,7 +74,7 @@ public abstract class ToolBar extends JToolBar {
         button.setOpaque(false);
         button.setBorderPainted(false);
         button.setFocusPainted(false);
-        button.addActionListener(mainListener);
+        button.addActionListener(buttonType.getEvent());
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -103,14 +107,9 @@ public abstract class ToolBar extends JToolBar {
      * @param recents The recents JPanel
      * @param lastUsed The last clicked button
      */
-    private void addToRecents(JPanel recents, JButton lastUsed) {
-        // Get button title and icon
-        String buttonTitle = lastUsed.getText();
-        ImageIcon buttonIcon = (ImageIcon) lastUsed.getIcon();
-        ActionListener mainButtonListener = lastUsed.getAction();
-
+    private void addToRecents(JPanel recents, ThemeAwareButton lastUsed) {
         // Make a copy of the button
-        JButton copyOfButton = makeToolbarButton(buttonTitle, buttonIcon, mainButtonListener, recents);
+        JButton copyOfButton = makeToolbarButton(lastUsed.getButtonType(), recents);
 
         // If there are anymore action listeners added to the original button also add them to it's copy
         for(ActionListener listener : lastUsed.getActionListeners()) {

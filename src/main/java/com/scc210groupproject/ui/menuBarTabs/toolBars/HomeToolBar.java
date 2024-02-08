@@ -15,7 +15,7 @@ import java.util.Queue;
  * @author madukaag
  * */
 public class HomeToolBar extends ToolBar {
-        private JButton newSlide, newFile, openFile, saveFile, clipboard, emptyClipboard, select, copy, paste, settings, spellChecker, help;
+        private JButton newSlide, newFile, openFile, saveFile, clipboard, emptyClipboard, select, copy, paste, settings, spellChecker, help, toggleMode;
 
         public HomeToolBar(JPanel recentsPanel) {
                 this.setRollover(true);
@@ -28,28 +28,30 @@ public class HomeToolBar extends ToolBar {
                 recentsScrollPane.setToolTipText("Recents");
                 recentsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-                newSlide = makeToolbarButton(GeneralButtons.NEW_SLIDE.getTitle(), GeneralButtons.NEW_SLIDE.getIcon(), GeneralButtons.NEW_SLIDE.getEvent(), recentsPanel);
+                newSlide = makeToolbarButton(GeneralButtons.NEW_SLIDE, recentsPanel);
 
-                newFile = makeToolbarButton(GeneralButtons.NEW.getTitle(), GeneralButtons.NEW.getIcon(), GeneralButtons.NEW.getEvent(), recentsPanel);
+                newFile = makeToolbarButton(GeneralButtons.NEW, recentsPanel);
 
-                openFile = makeToolbarButton(GeneralButtons.OPEN.getTitle(), GeneralButtons.OPEN.getIcon(), GeneralButtons.OPEN.getEvent(), recentsPanel);
+                openFile = makeToolbarButton(GeneralButtons.OPEN, recentsPanel);
 
-                saveFile = makeToolbarButton(GeneralButtons.SAVE.getTitle(), GeneralButtons.SAVE.getIcon(), GeneralButtons.SAVE.getEvent(), recentsPanel);
+                saveFile = makeToolbarButton(GeneralButtons.SAVE, recentsPanel);
 
-                clipboard = makeToolbarButton(GeneralButtons.CLIPBOARD.getTitle(), GeneralButtons.CLIPBOARD.getIcon(), GeneralButtons.CLIPBOARD.getEvent(), recentsPanel);
+                clipboard = makeToolbarButton(GeneralButtons.CLIPBOARD, recentsPanel);
 
-                select = makeToolbarButton(GeneralButtons.SELECT.getTitle(), GeneralButtons.SELECT.getIcon(), GeneralButtons.SELECT.getEvent(), recentsPanel);
+                select = makeToolbarButton(GeneralButtons.SELECT, recentsPanel);
 
-                copy = makeToolbarButton(GeneralButtons.COPY.getTitle(), GeneralButtons.COPY.getIcon(), GeneralButtons.COPY.getEvent(), recentsPanel);
+                copy = makeToolbarButton(GeneralButtons.COPY, recentsPanel);
 
-                paste = makeToolbarButton(GeneralButtons.PASTE.getTitle(), GeneralButtons.PASTE.getIcon(), GeneralButtons.PASTE.getEvent(), recentsPanel);
+                paste = makeToolbarButton(GeneralButtons.PASTE, recentsPanel);
 
-                settings = makeToolbarButton(GeneralButtons.SETTINGS.getTitle(), GeneralButtons.SETTINGS.getIcon(), GeneralButtons.SETTINGS.getEvent(), recentsPanel);
+                settings = makeToolbarButton(GeneralButtons.SETTINGS, recentsPanel);
 
-                spellChecker = makeToolbarButton(GeneralButtons.SPELL_CHECKER.getTitle(), GeneralButtons.SPELL_CHECKER.getIcon(), GeneralButtons.SPELL_CHECKER.getEvent(),  recentsPanel);
+                spellChecker = makeToolbarButton(GeneralButtons.SPELL_CHECKER,  recentsPanel);
 
-                help = makeToolbarButton(GeneralButtons.HELP.getTitle(), GeneralButtons.HELP.getIcon(), GeneralButtons.HELP.getEvent(), recentsPanel);
+                help = makeToolbarButton(GeneralButtons.HELP, recentsPanel);
 
+                toggleMode = makeToolbarButton(GeneralButtons.TOGGLE_THEME, recentsPanel);
+                
                 this.add(newSlide);
 
                 separator(this);
@@ -77,6 +79,10 @@ public class HomeToolBar extends ToolBar {
                 separator(this);
 
                 this.add(help);
+
+                separator(this);
+
+                this.add(toggleMode);
 
                 this.setName("Home");
                 this.setFloatable(false);
