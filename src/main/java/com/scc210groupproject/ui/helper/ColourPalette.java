@@ -1,21 +1,50 @@
 package com.scc210groupproject.ui.helper;
 
-import java.awt.*;
+import java.awt.Color;
 
-/**
- * This enum contains all the colours that will be used in the program. Will be used in the application window
- * settings.
- *
- * MORE COLOURS WILL BE ADDED!
- * */
-public enum ColourPalette {
-    BACKGROUND_COLOUR(new Color(211, 211, 211));
-    private final Color colour;
-    private ColourPalette(Color colour) {
-        this.colour = colour;
+import com.scc210groupproject.ui.Settings;
+
+public class ColourPalette {
+   
+    public static ColourPalette instance;
+
+    private Color BACKGROUD_COLOUR = Settings.instance.getIsLightMode() == true ? new Color(211, 211, 211) : new Color(000, 000, 000);
+
+    private Color MENUBAR_COLOUR = Settings.instance.getIsLightMode() == true ? new Color(255, 255, 255) : new Color(000, 000, 000);
+
+    private Color CONTEXT_MENU_COLOUR = Settings.instance.getIsLightMode() == true ? new Color(255, 255, 255) : new Color(000, 000, 000);
+
+    private Color MAIN_DISPLAY_COLOUR = Settings.instance.getIsLightMode() == true ? new Color(255, 211, 211) : new Color(000, 000, 000);
+
+    private Color SLIDE_VIEWER_COLOUR = Settings.instance.getIsLightMode() == true ? new Color(211, 211, 211) : new Color(000, 000, 000);
+
+    public ColourPalette() {
+        instance = this;
     }
 
-    public Color getColour() {
-        return this.colour;
+    public Color getBackgroundColour() {
+        return this.BACKGROUD_COLOUR;
     }
+
+    public Color getMenuBarColour() {
+        return this.MENUBAR_COLOUR;
+    }
+
+    public Color getContextMenuColour() {
+        return this.CONTEXT_MENU_COLOUR;
+    }
+
+    public Color getMainDisplayColour() {
+        return this.MAIN_DISPLAY_COLOUR;
+    }
+
+    public Color getSlideViewerColour() {
+        return this.SLIDE_VIEWER_COLOUR;
+    }
+
+    public void setDefaultColourPalette() {
+        
+    }   
+
+
 }

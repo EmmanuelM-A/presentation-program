@@ -10,6 +10,7 @@ import com.scc210groupproject.structure.eventListeners.IChangePresentationListen
 import com.scc210groupproject.structure.eventListeners.ICreateSlideListener;
 import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;
 import com.scc210groupproject.structure.eventListeners.IUpdateSlideListener;
+import com.scc210groupproject.ui.helper.ColourPalette;
 import com.scc210groupproject.ui.helper.GeneralButtons;
 
 import javax.swing.*;
@@ -128,6 +129,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         /*
          * This is where the actual presentation slider will go
          * */
+        this.viewSliderPanel.setBackground(ColourPalette.instance.getSlideViewerColour());
         presentationSlider.setPreferredSize(new Dimension(1000, 160));
         presentationSlider.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
@@ -137,6 +139,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
          * */
         JPanel bottomSection = new JPanel(new FlowLayout(FlowLayout.LEFT));
         bottomSection.setPreferredSize(new Dimension(1000, 35));
+        bottomSection.setBackground(ColourPalette.instance.getSlideViewerColour());
 
         this.addNewSlide = new JButton(GeneralButtons.resizeIcon(
             GeneralButtons.NEW_SLIDE.getIcon(), 20, 20));

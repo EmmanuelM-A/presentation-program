@@ -5,6 +5,7 @@ import com.scc210groupproject.structure.liveness.IUpdateListener;
 import com.scc210groupproject.structure.liveness.IUpdateProvider;
 import com.scc210groupproject.structure.liveness.UpdateManager;
 import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
+import com.scc210groupproject.ui.helper.ColourPalette;
 import com.scc210groupproject.ui.menuBarTabs.MenuBarTabs;
 
 import javax.swing.*;
@@ -20,14 +21,14 @@ public class UIFrame extends JFrame implements IUpdateProvider
      * Gets the dimensions of the screen the program is run on. Allows for the program dimensions
      * to be set to the size of the screen no matter the computer.
      * */
-    //private final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+    private final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 
     public UIFrame()
     {
         instance = this;
 
         this.setTitle("Presentation Program");
-        //this.setSize((int)size.getWidth(), (int)size.getHeight());
+        this.setSize((int)size.getWidth(), (int)size.getHeight());
         this.setMinimumSize(new Dimension(1000, 700));
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -46,22 +47,17 @@ public class UIFrame extends JFrame implements IUpdateProvider
         int gap = 6;
 
         /*
+        * Settings
+        */
+        Settings.instance = new Settings();
+
+        ColourPalette.instance = new ColourPalette();
+
+        this.getContentPane().setBackground(ColourPalette.instance.getBackgroundColour());
+
+        /*
          * Application Window Components and their position on the frame
          * */
-        /*JPanel top = new JPanel(new BorderLayout());
-        top.setPreferredSize(new Dimension(2000, 150));
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 1.0;
-        gbc.weighty = 0.01;
-        gbc.insets = new Insets(0, 0, gap, 0);
-        this.add(top, gbc);
-
-        // Instantiates the class and adds a custom title bar to the frame. REQUIRES A BIT OF REPOSITIONING TO DISPLAY
-        //TitleBar customTitleBar = new TitleBar();
-        top.add(TitleBar.createTitleBar(this), BorderLayout.NORTH);*/
 
         MenuBarTabs menuBarTabs = new MenuBarTabs(this, null, 0, 40);
         gbc.gridx = 0;
