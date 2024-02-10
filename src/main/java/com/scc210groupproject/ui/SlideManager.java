@@ -294,8 +294,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         slide.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                //setDisplayNewSlides(true);
-                highlightSlide(slide);
+                highlightSlideOnClick(slide);
                 displaySelectedSlide(slide);
                 //System.out.println("Slide " + (getSlidePosition(slide) + 1) + " Clicked!");
             }
@@ -409,6 +408,21 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
     }
 
     /**
+     * Highlights the slide in the slides viewer if the slide is clicked
+     * @param slide The slide in the slide viewer
+     */
+    private void highlightSlideOnClick(JButton slide) {
+        // Set the highlighting of the previous slide to null
+        if(this.prevHighlightedSlide != null) this.prevHighlightedSlide.setBorder(null);
+
+        // Highlight new slide
+        slide.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
+
+        // Set the previous highlighted slide to the new slide
+        this.prevHighlightedSlide = slide;
+    }
+
+    /**
      * Highlights the slide in the slides viewer if the slide is selected or is currently being displayed
      * @param slide The slide in the slide viewer
      */
@@ -432,15 +446,14 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
     private void highlightSlide(SlideImage slideImage) {
         int position = this.slideImages.indexOf(slideImage);
 
-        if(getDisplayNewSlides()) {
-            JButton slide = this.slidesViewer.get(position);
-            // Set the highlighting of the previous slide to null
-            this.prevHighlightedSlide.setBorder(null);
-            // Highlight new slide
-            slide.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
-            // Set the previous highlighted slide to the new slide
-            this.prevHighlightedSlide = slide;
-        }
+        JButton slide = this.slidesViewer.get(position);
+        // Set the highlighting of the previous slide to null
+        this.prevHighlightedSlide.setBorder(null);
+        // Highlight new slide
+        slide.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
+        // Set the previous highlighted slide to the new slide
+        this.prevHighlightedSlide = slide;
+
     }
 
     /**
