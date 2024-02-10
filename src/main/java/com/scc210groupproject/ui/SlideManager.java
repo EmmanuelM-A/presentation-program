@@ -12,6 +12,7 @@ import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;
 import com.scc210groupproject.structure.eventListeners.IUpdateSlideListener;
 import com.scc210groupproject.ui.helper.ColourPalette;
 import com.scc210groupproject.ui.helper.GeneralButtons;
+import com.scc210groupproject.ui.menuBarTabs.toolBars.SlideMiniToolBar;
 
 import javax.swing.*;
 import java.awt.*;
@@ -296,6 +297,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
             public void actionPerformed(ActionEvent actionEvent) {
                 highlightSlideOnClick(slide);
                 displaySelectedSlide(slide);
+                displaySlideToolbar(slide);
                 //System.out.println("Slide " + (getSlidePosition(slide) + 1) + " Clicked!");
             }
         });
@@ -468,6 +470,20 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
 
         // Display selected slide
         displaySlide(selectedSlide, MainDisplayPanel.instance);
+    }
+
+    public void displaySlideToolbar(JButton slide) {
+        slide.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(SwingUtilities.isRightMouseButton(e)) {
+                    JPopupMenu popupMenu = new JPopupMenu();
+                    popupMenu.add(new SlideMiniToolBar());
+
+                    popupMenu.show(slide, e.getX(), e.getY());
+                }
+            }
+        });
     }
 
     /**
