@@ -1,11 +1,8 @@
 package com.scc210groupproject.ui.menuBarTabs.toolBars;
 
-import com.scc210groupproject.action.OpenAction;
-import com.scc210groupproject.action.SaveAction;
 import com.scc210groupproject.ui.helper.GeneralButtons;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * This class extends ToolBar and contains all the buttons and components that will be displayed on the
