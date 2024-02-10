@@ -75,6 +75,8 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         instance = this;
     }
 
+    //////////// GETTERS ////////////
+
     /**
      * Returns the value of the displayNewSlide variable
      * @return Boolean
@@ -82,6 +84,8 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
     public Boolean getDisplayNewSlides() {
         return this.displayNewSlide;
     }
+
+    //////////// SETTERS ////////////
 
     /**
      * Set to true to display new slides added or false to not display new
@@ -91,6 +95,8 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
     public void setDisplayNewSlides(Boolean yesOrNo) {
         this.displayNewSlide = yesOrNo;
     }
+
+    //////////// METHODS ////////////
 
     /**
      * The JPanel that contains the components that make up the presentation slider:
@@ -288,6 +294,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         slide.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                //setDisplayNewSlides(true);
                 highlightSlide(slide);
                 displaySelectedSlide(slide);
                 //System.out.println("Slide " + (getSlidePosition(slide) + 1) + " Clicked!");
@@ -406,14 +413,16 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
      * @param slide The slide in the slide viewer
      */
     private void highlightSlide(JButton slide) {
-        // Set the highlighting of the previous slide to null
-        if(this.prevHighlightedSlide != null) this.prevHighlightedSlide.setBorder(null);
+        if(getDisplayNewSlides()) {
+            // Set the highlighting of the previous slide to null
+            if(this.prevHighlightedSlide != null) this.prevHighlightedSlide.setBorder(null);
 
-        // Highlight new slide
-        slide.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
+            // Highlight new slide
+            slide.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
 
-        // Set the previous highlighted slide to the new slide
-        this.prevHighlightedSlide = slide;
+            // Set the previous highlighted slide to the new slide
+            this.prevHighlightedSlide = slide;
+        }
     }
 
     /**
@@ -423,13 +432,15 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
     private void highlightSlide(SlideImage slideImage) {
         int position = this.slideImages.indexOf(slideImage);
 
-        JButton slide = this.slidesViewer.get(position);
-        // Set the highlighting of the previous slide to null
-        this.prevHighlightedSlide.setBorder(null);
-        // Highlight new slide
-        slide.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
-        // Set the previous highlighted slide to the new slide
-        this.prevHighlightedSlide = slide;
+        if(getDisplayNewSlides()) {
+            JButton slide = this.slidesViewer.get(position);
+            // Set the highlighting of the previous slide to null
+            this.prevHighlightedSlide.setBorder(null);
+            // Highlight new slide
+            slide.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
+            // Set the previous highlighted slide to the new slide
+            this.prevHighlightedSlide = slide;
+        }
     }
 
     /**

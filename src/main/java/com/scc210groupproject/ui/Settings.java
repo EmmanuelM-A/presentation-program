@@ -2,12 +2,17 @@ package com.scc210groupproject.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import com.scc210groupproject.ui.helper.ColourPalette;
 
 public class Settings extends JFrame {
 
@@ -20,6 +25,11 @@ public class Settings extends JFrame {
      * New slides added by defualt should be displyed
      */
     private boolean displayNewSlide = true;
+
+    /**
+     * Determines the max number of buttons that  cna be stored in the recents section
+     */
+    private int maxRecentsCount = 10;
 
     /**
      * Accessibility Constrols- Read text on hover, Highlight text on hover, Contrasting colours
@@ -81,17 +91,15 @@ public class Settings extends JFrame {
         settingsWindowJPanel.setLayout(null);
 
         // Settings options
-        JCheckBox toggleLightMode = new JCheckBox("<html>Toggle light mode</html>");
-        toggleLightMode.setBounds(50, 50, 200, 40);
+        JCheckBox toggleLightMode = makeCheckBox("Toggle Dark Mode", 30, 30, 200, 40, toggleLightModeAction);
         settingsWindowJPanel.add(toggleLightMode); 
 
-
-        JCheckBox displayNewSlides = new JCheckBox("Display new slides added");
-        displayNewSlides.setBounds(50, 90, 200, 40);
+        JCheckBox displayNewSlides = makeCheckBox("Should new slides added be displayed?", 30, 70, 300, 40, displayNewSlideAction);
+        displayNewSlides.setSelected(true);
         settingsWindowJPanel.add(displayNewSlides);
 
         JLabel accessibility = new JLabel("Accessibility");
-        settingsWindowJPanel.add(accessibility);
+        //settingsWindowJPanel.add(accessibility);
 
         JLabel readText = new JLabel("Read text on hover");
 
@@ -113,6 +121,10 @@ public class Settings extends JFrame {
 
     public boolean getDisplayNewSlides() {
         return this.displayNewSlide;
+    }
+
+    public int getMaxRecentsCount() {
+        return this.maxRecentsCount;
     }
 
     public boolean getReadTextOnHover() {
@@ -141,6 +153,10 @@ public class Settings extends JFrame {
         this.displayNewSlide = truthy;
     }
 
+    public void setMaxRecentsCount(int newMax) {
+        this.maxRecentsCount = newMax;
+    }
+
     public void setReadTextOnHover(boolean truthy) {
         this.readTextOnHover = truthy;
     }
@@ -159,5 +175,52 @@ public class Settings extends JFrame {
 
     //////////// METHODS ////////////
 
+    public JCheckBox makeCheckBox(String title, int x, int y, int width, int height, AbstractAction action) {
+        JCheckBox cb = new JCheckBox("<html>" + title + "</html>");
+        cb.setBounds(x, y, width, height);
+        cb.setFocusPainted(false);
+        cb.setFont(new Font("Cambria", Font.BOLD, 13));
+        cb.setBackground(Color.WHITE);
+        cb.addActionListener(action);
 
+        return cb;
+    }
+
+    public void toggleDisplayNewSlides() {
+        if(SlideManager.slideManager.getDisplayNewSlides())
+            SlideManager.slideManager.setDisplayNewSlides(false);
+        else
+            SlideManager.slideManager.setDisplayNewSlides(true);
+    }
+
+    AbstractAction toggleLightModeAction = new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JCheckBox cb = (JCheckBox) e.getSource();
+            
+            if(cb.isSelected()) {
+                //setIsLightMode(false);
+                //ColourPalette.instance.setBackgroundColour(new Color(000, 000, 000));
+                System.out.println("Dark Mode Activated!");
+            } else {
+                setIsLightMode(true);
+                System.out.println("Light Mode Activated!");
+            }
+        }
+    };
+
+    AbstractAction displayNewSlideAction = new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JCheckBox cb = (JCheckBox) e.getSource();
+
+            if(cb.isSelected() == false) {
+                toggleDisplayNewSlides();
+                System.out.println("New slides added will not be displayd!");
+            } else {
+                toggleDisplayNewSlides();
+                System.out.println("New slides added will be displayed!");
+            }
+        }
+    };
 }

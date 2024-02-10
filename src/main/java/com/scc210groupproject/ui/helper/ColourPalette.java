@@ -8,7 +8,7 @@ public class ColourPalette {
    
     public static ColourPalette instance;
 
-    private Color BACKGROUD_COLOUR = Settings.instance.getIsLightMode() == true ? new Color(211, 211, 211) : new Color(000, 000, 000);
+    private Color BACKGROUND_COLOUR = Settings.instance.getIsLightMode() == true ? new Color(211, 211, 211) : new Color(000, 000, 000);
 
     private Color MENUBAR_COLOUR = Settings.instance.getIsLightMode() == true ? new Color(255, 255, 255) : new Color(000, 000, 000);
 
@@ -23,7 +23,7 @@ public class ColourPalette {
     }
 
     public Color getBackgroundColour() {
-        return this.BACKGROUD_COLOUR;
+        return this.BACKGROUND_COLOUR;
     }
 
     public Color getMenuBarColour() {
@@ -40,6 +40,10 @@ public class ColourPalette {
 
     public Color getSlideViewerColour() {
         return this.SLIDE_VIEWER_COLOUR;
+    }
+
+    public void setBackgroundColour(Color newColour) {
+        this.BACKGROUND_COLOUR = newColour;
     }
 
     public void setDefaultColourPalette() {
