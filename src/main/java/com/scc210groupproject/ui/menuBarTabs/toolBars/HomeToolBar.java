@@ -16,7 +16,7 @@ import java.util.Queue;
  * */
 public class HomeToolBar extends ToolBar {
 
-        private JButton newSlide, newFile, openFile, saveFile, clipboard, emptyClipboard, select, copy, paste, settings, spellChecker, help, toggleMode;
+        private JButton newSlide, newFile, openFile, saveFile, clipboard, select, copy, paste, settings, spellChecker, help, toggleMode;
 
 
         public HomeToolBar(JPanel recentsPanel) {

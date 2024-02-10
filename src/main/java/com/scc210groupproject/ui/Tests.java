@@ -1,5 +1,8 @@
 package com.scc210groupproject.ui;
 
+import com.scc210groupproject.structure.liveness.IUpdateListener;
+import com.scc210groupproject.structure.liveness.IUpdateProvider;
+import com.scc210groupproject.structure.liveness.UpdateManager;
 import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
 import com.scc210groupproject.ui.menuBarTabs.MenuBarTabs;
 
@@ -11,7 +14,7 @@ import java.awt.*;
  *
  * @author madukaag
  * */
-public class Tests extends JFrame {
+public class Tests extends JFrame implements IUpdateListener, IUpdateProvider {    
     GridBagConstraints gbc = new GridBagConstraints();
 
     int gap = 6;
@@ -19,6 +22,7 @@ public class Tests extends JFrame {
     private final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 
     public Tests() {
+
         this.setTitle("Testing Testing");
         this.setSize((int)size.getWidth(), (int)size.getHeight());
         this.setMinimumSize(new Dimension(1000, 700));
@@ -26,8 +30,6 @@ public class Tests extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(true);
         this.setLayout(new GridBagLayout());
-
-        int gap = 6;
 
         /*
          * Application Window Components and their position on the frame
@@ -106,6 +108,18 @@ public class Tests extends JFrame {
 
     public static void main(String args[]) {
         new Tests();
+    }
+
+    @Override
+    public UpdateManager getUpdateManager() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getUpdateManager'");
+    }
+
+    @Override
+    public void onUpdate(Object object) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'onUpdate'");
     }
 }
 

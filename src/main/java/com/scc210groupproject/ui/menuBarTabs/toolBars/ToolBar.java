@@ -91,7 +91,7 @@ public abstract class ToolBar extends JToolBar {
      */
     protected void separator(JToolBar toolBar) {
         JSeparator separator = new JSeparator();
-        // REMINDER - USE LOOK AND FEEL TO CHANGE SEPARATOR COLOUR
+
         separator.setMaximumSize(new Dimension(1, 80));
         separator.setOrientation(JSeparator.VERTICAL);
         separator.setBackground(Color.BLACK);

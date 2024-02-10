@@ -53,8 +53,6 @@ public class UIFrame extends JFrame implements IUpdateProvider
 
         ColourPalette.instance = new ColourPalette();
 
-        this.getContentPane().setBackground(ColourPalette.instance.getBackgroundColour());
-
         /*
          * Application Window Components and their position on the frame
          * */

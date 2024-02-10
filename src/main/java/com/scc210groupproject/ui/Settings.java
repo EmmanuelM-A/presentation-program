@@ -32,7 +32,7 @@ public class Settings extends JFrame {
     private int maxRecentsCount = 10;
 
     /**
-     * Accessibility Constrols- Read text on hover, Highlight text on hover, Contrasting colours
+     * Accessibility Controls- Read text on hover, Highlight text on hover, Contrasting colours
      */
 
     /**
@@ -193,17 +193,20 @@ public class Settings extends JFrame {
             SlideManager.slideManager.setDisplayNewSlides(true);
     }
 
+    public void changeMaxRecentsCount() {
+
+    }
+
     AbstractAction toggleLightModeAction = new AbstractAction() {
         @Override
         public void actionPerformed(ActionEvent e) {
             JCheckBox cb = (JCheckBox) e.getSource();
             
             if(cb.isSelected()) {
-                //setIsLightMode(false);
-                //ColourPalette.instance.setBackgroundColour(new Color(000, 000, 000));
+
                 System.out.println("Dark Mode Activated!");
             } else {
-                setIsLightMode(true);
+
                 System.out.println("Light Mode Activated!");
             }
         }
