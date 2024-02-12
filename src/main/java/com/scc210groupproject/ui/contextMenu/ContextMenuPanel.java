@@ -15,7 +15,19 @@ public class ContextMenuPanel extends JPanel implements ActionListener {
     
     private static ContextMenuPanel instance = null;
 
-    public static void setMenu(ContextMenu menu) {
+    private static Object currentMenuOwner = null;
+
+    public static void removeOwner(Object owner) {
+        if (owner != currentMenuOwner)
+            return;
+        
+        instance.removeAll();
+        instance.revalidate();
+    }
+
+    public static void setMenu(Object owner, ContextMenu menu) {
+        currentMenuOwner = owner;
+
         instance.removeAll();
 
         if (menu != null)

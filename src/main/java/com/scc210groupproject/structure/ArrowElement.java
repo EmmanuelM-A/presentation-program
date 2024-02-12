@@ -250,6 +250,11 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
             anchorB = null;
     }
 
+    @Override
+    public void destroySelf() {
+        ContextMenuPanel.removeOwner(this);
+    }
+
     public static class ArrowPanel extends JPanel {
         private Polygon triangle;
         private Polygon box;
@@ -498,11 +503,6 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
         }
 
         @Override
-        public void mouseClicked(Object target, InputState state) {
-            // not used, here to block message being taken by another element
-        }
-
-        @Override
         public void mouseExited(Object target, InputState state) {
             MainDisplayPanel.instance.setCursor(Cursor.getDefaultCursor());
         }
@@ -606,9 +606,11 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
             }
             
             arrow.notifyUpdate(arrow);
-
-            ContextMenuPanel.setMenu(new ArrowContextMenu());
         }
 
+        @Override
+        public void mouseClicked(Object target, InputState state) {
+            ContextMenuPanel.setMenu(target, new ArrowContextMenu());
+        }
     }
 }

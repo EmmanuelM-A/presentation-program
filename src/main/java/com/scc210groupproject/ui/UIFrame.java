@@ -35,6 +35,9 @@ public class UIFrame extends JFrame implements IUpdateProvider
         this.setResizable(true);
         this.setLayout(new GridBagLayout());
 
+        // this is for windows os where there is a tendency to create any java frame below the minimum size 
+        this.setMinimumSize(new Dimension(1100, 800));
+
         UIFrame self = this;
         this.addUpdateListener(new IUpdateListener() {
             @Override
