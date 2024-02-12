@@ -49,7 +49,12 @@ public enum GeneralButtons {
     /*ANIMATIONS("Animations", "", 32, 32, null),
     TRANSITIONS("Transitions", "", 32, 32, null),*/
     LICENSE("License", "certificate.png", 32, 32, new LicenseAction()),
-    SHORTCUTS("Shortcuts", "shortcuts.png", 32, 32, new ShortcutsAction());
+    SHORTCUTS("Shortcuts", "shortcuts.png", 32, 32, new ShortcutsAction()),
+    BOLD("Bold", "bold.png", 32, 32, null),
+    ITALIC("Italic", "italic.png", 32, 32, null),
+    UNDERLINE("UnderLine", "underline.png", 32, 32, null),
+    INCREASE_SIZE("Increase Size", "increase-size.png", 32, 32, null),
+    DECREASE_SIZE("Decrease Size", "decrease-size.png", 32, 32, null);
 
     private final String title; // Button title - will be used for hover text
     private final ImageIcon icon; // Button icon - will be used to set the icon of a button

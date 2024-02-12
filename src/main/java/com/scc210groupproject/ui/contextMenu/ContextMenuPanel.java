@@ -15,4 +15,9 @@ public class ContextMenuPanel{
     public ContextMenuPanel(JPanel contextMenu) {
         contextMenuPanel.add(contextMenu, BorderLayout.CENTER);
     }
+
+    public static void changeContextMenu()
+    {
+        
+    }
 }

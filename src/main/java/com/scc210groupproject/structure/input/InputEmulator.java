@@ -171,7 +171,7 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
 
         currentState.locationInSlide = newPosition;
 
-        BaseElement located = currentSlide != null ? currentSlide.findElmentAt(currentState.locationInSlide) : null;
+        BaseElement located = currentSlide != null ? currentSlide.findElementAt(currentState.locationInSlide) : null;
 
         if (located != currentElement) {
             if (currentElement != null)

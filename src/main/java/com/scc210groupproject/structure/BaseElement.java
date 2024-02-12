@@ -14,7 +14,6 @@ import javax.swing.SwingUtilities;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
-import com.scc210groupproject.structure.helper.CoordinateUtils;
 import com.scc210groupproject.structure.input.IInputProvider;
 import com.scc210groupproject.structure.input.InputManager;
 import com.scc210groupproject.structure.liveness.DestroyManager;
@@ -169,7 +168,7 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
     }
 
     // mirror java.awt.Container:findComponentAt
-    public BaseElement findElmentAt(Point point) {
+    public BaseElement findElementAt(Point point) {
         Component current = asComp();
 
         if (!current.contains(point.x, point.y))
@@ -195,7 +194,7 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
                 if (zValue > lowest)
                     continue;
 
-                BaseElement contender = element.findElmentAt(
+                BaseElement contender = element.findElementAt(
                     SwingUtilities.convertPoint(container, point, inner));
                 if (contender != null) {
                     result = contender;
