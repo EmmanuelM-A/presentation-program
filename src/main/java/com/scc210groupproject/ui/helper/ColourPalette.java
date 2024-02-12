@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import com.scc210groupproject.ui.Settings;
 
+// Using flatlaf fully, shouldn't need this
 public class ColourPalette {
    
     public static ColourPalette instance;

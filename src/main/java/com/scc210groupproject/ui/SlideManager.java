@@ -10,6 +10,7 @@ import com.scc210groupproject.structure.eventListeners.IChangePresentationListen
 import com.scc210groupproject.structure.eventListeners.ICreateSlideListener;
 import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;
 import com.scc210groupproject.structure.eventListeners.IUpdateSlideListener;
+import com.scc210groupproject.structure.liveness.IUpdateListener;
 import com.scc210groupproject.ui.helper.ColourPalette;
 import com.scc210groupproject.ui.helper.GeneralButtons;
 import com.scc210groupproject.ui.menuBarTabs.toolBars.SlideMiniToolBar;
@@ -136,9 +137,15 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         /*
          * This is where the actual presentation slider will go
          * */
-        this.viewSliderPanel.setBackground(ColourPalette.instance.getSlideViewerColour());
+        this.viewSliderPanel.setBackground(UIManager.getColor("Main.Dim"));
         presentationSlider.setPreferredSize(new Dimension(1000, 160));
         presentationSlider.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        UIFrame.instance.addUpdateListener(new IUpdateListener() {
+            @Override
+            public void onUpdate(Object object) {
+                viewSliderPanel.setBackground(UIManager.getColor("Main.Dim"));
+            }
+        });
 
         /*
          * Bottom Section of the presentation slider where buttons such as newSlide, deleteSlide,
@@ -146,7 +153,13 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
          * */
         JPanel bottomSection = new JPanel(new FlowLayout(FlowLayout.LEFT));
         bottomSection.setPreferredSize(new Dimension(1000, 35));
-        bottomSection.setBackground(ColourPalette.instance.getSlideViewerColour());
+        bottomSection.setBackground(UIManager.getColor("Main.Dim"));
+        UIFrame.instance.addUpdateListener(new IUpdateListener() {
+            @Override
+            public void onUpdate(Object object) {
+                bottomSection.setBackground(UIManager.getColor("Main.Dim"));
+            }
+        });
 
         this.addNewSlide = new JButton(GeneralButtons.resizeIcon(
             GeneralButtons.NEW_SLIDE.getIcon(), 20, 20));
