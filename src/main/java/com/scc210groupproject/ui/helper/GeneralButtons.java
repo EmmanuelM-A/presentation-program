@@ -152,7 +152,7 @@ public enum GeneralButtons {
     public static ImageIcon resizeIcon(Image image, int width, int height) {
 
         // Resize the Image
-        Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+        Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_FAST);
 
         // Return the resized ImageIcon
         return new ImageIcon(resizedImage);
