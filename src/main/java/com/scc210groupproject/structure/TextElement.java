@@ -4,11 +4,14 @@ import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Font;
 import java.io.IOException;
+import java.text.AttributedCharacterIterator.Attribute;
 
 import javax.swing.JTextPane;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.AttributeSet;
+import javax.swing.text.Element;
 import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
@@ -65,7 +68,14 @@ public class TextElement extends ExtendedElement
     public void setFontSize(int size) {
         SimpleAttributeSet attributes = new SimpleAttributeSet(pane.getParagraphAttributes());
         StyleConstants.setFontSize(attributes, size);
-        pane.setParagraphAttributes(attributes, true);
+
+        applyStyle(attributes);
+    }
+
+    private void applyStyle(AttributeSet attributes) {
+        StyledDocument document = pane.getStyledDocument();
+        Element root = document.getDefaultRootElement();
+        document.setParagraphAttributes(root.getStartOffset(), root.getEndOffset() - root.getStartOffset(), attributes, true);
         super.notifyUpdate(this);
     }
 
@@ -99,9 +109,12 @@ public class TextElement extends ExtendedElement
             case RIGHT:
                 StyleConstants.setAlignment(attributes, StyleConstants.ALIGN_RIGHT);
                 break;
+
+            default:
+                break;
         }
-        pane.setParagraphAttributes(attributes, true);
-        super.notifyUpdate(this);
+
+        applyStyle(attributes);
     }
 
     public Alignment getAlignment() throws Exception {
