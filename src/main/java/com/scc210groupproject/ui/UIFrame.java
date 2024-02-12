@@ -78,8 +78,7 @@ public class UIFrame extends JFrame implements IUpdateProvider
         gbc.weightx = 0.2;
         gbc.weighty = 0.79;
         gbc.insets = new Insets(gap, 0, gap, gap);
-        new ContextMenuPanel(new TextContextMenu());
-        this.add(ContextMenuPanel.contextMenuPanel, gbc);
+        this.add(contextMenuPanel, gbc);
 
         MainDisplayPanel mainDisplayPanel = new MainDisplayPanel(0, 0);
         gbc.gridx = 1;
