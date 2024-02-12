@@ -28,7 +28,6 @@ public class ChartContextMenu extends JPanel {
 
         // On some action display PopupMenu
         //this.show(frame, x, y);
-    // }
-
+    }
 
 }

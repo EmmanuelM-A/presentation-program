@@ -53,7 +53,7 @@ public enum GeneralButtons {
     TRANSITIONS("Transitions", "", 32, 32, null),*/
     LICENSE("License", "certificate.png", 32, 32, new LicenseAction()),
     SHORTCUTS("Shortcuts", "shortcuts.png", 32, 32, new ShortcutsAction()),
-    TOGGLE_THEME("Theme", "toggle-theme.png", 32, 32, new ToggleThemeAction());
+    TOGGLE_THEME("Theme", "toggle-theme.png", 32, 32, new ToggleThemeAction()),
     BOLD("Bold", "bold.png", 32, 32, null),
     ITALIC("Italic", "italic.png", 32, 32, null),
     UNDERLINE("UnderLine", "underline.png", 32, 32, null),
