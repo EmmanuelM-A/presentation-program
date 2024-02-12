@@ -54,6 +54,11 @@ public enum GeneralButtons {
     LICENSE("License", "certificate.png", 32, 32, new LicenseAction()),
     SHORTCUTS("Shortcuts", "shortcuts.png", 32, 32, new ShortcutsAction()),
     TOGGLE_THEME("Theme", "toggle-theme.png", 32, 32, new ToggleThemeAction());
+    BOLD("Bold", "bold.png", 32, 32, null),
+    ITALIC("Italic", "italic.png", 32, 32, null),
+    UNDERLINE("UnderLine", "underline.png", 32, 32, null),
+    INCREASE_SIZE("Increase Size", "increase-size.png", 32, 32, null),
+    DECREASE_SIZE("Decrease Size", "decrease-size.png", 32, 32, null);
 
     private final String title; // Button title - will be used for hover text
     private ImageIcon icon; // Button icon - will be used to set the icon of a button
@@ -152,7 +157,7 @@ public enum GeneralButtons {
     public static ImageIcon resizeIcon(Image image, int width, int height) {
 
         // Resize the Image
-        Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_FAST);
+        Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 
         // Return the resized ImageIcon
         return new ImageIcon(resizedImage);

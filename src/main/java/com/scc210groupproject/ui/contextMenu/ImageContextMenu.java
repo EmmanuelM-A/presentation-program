@@ -37,5 +37,6 @@ public class ImageContextMenu extends ContextMenu {
         this.add(lines);
 
         //this.show(frame, x, y);
-    }
+    // }
 }
+
