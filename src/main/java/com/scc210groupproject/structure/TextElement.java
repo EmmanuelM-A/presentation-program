@@ -1,10 +1,8 @@
 package com.scc210groupproject.structure;
 
 import java.awt.Component;
-import java.awt.ComponentOrientation;
 import java.awt.Font;
 import java.io.IOException;
-import java.text.AttributedCharacterIterator.Attribute;
 
 import javax.swing.JTextPane;
 import javax.swing.text.SimpleAttributeSet;
@@ -19,6 +17,7 @@ import com.scc210groupproject.structure.input.InputEmulator.InputState;
 import com.scc210groupproject.structure.input.listeners.IMouseClicked;
 import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
 import com.scc210groupproject.ui.contextMenu.TextContextMenu;
+
 public class TextElement extends ExtendedElement
 {
     JTextPane pane;

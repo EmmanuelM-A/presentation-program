@@ -20,7 +20,7 @@ import java.awt.event.ActionListener;
  *
  * @author madukaag
  * */
-public class TextContextMenu extends ContextMenu {
+public class TextContextMenu extends ContextMenu{
 
     public TextContextMenu(TextElement element)
     {
@@ -32,7 +32,6 @@ public class TextContextMenu extends ContextMenu {
         this.setLayout(boxLayout);
     
         String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-        String[] alignment = {"Left", "Center", "Right", "Justify"};
 
         JComboBox<String> fontList = new JComboBox<>(fonts);
         fontList.setSelectedItem(element.getFontFamily());
@@ -51,13 +50,7 @@ public class TextContextMenu extends ContextMenu {
             }    
         });  
 
-        JButton bold = new JButton(GeneralButtons.BOLD.getIcon());
-        bold.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                element.setBold(true);
-            }    
-        }); 
+        JButton bold = makeContextMenuButton(GeneralButtons.BOLD);
 
         JButton underline = new JButton(GeneralButtons.UNDERLINE.getIcon());
         underline.addActionListener(new ActionListener() {
@@ -115,8 +108,27 @@ public class TextContextMenu extends ContextMenu {
             }
         });
 
+        // JButton justifed = new JButton(GeneralButtons.JUSTIFY.getIcon());
+        // justifed.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         element.setAlignment(Alignment.JUSTIFIED);
+        //     }
+        // });
+
+        // JButton justifed = new JButton(GeneralButtons.JUSTIFY.getIcon());
+        // justifed.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         element.setAlignment(Alignment.JUSTIFIED);
+        //     }
+        // });
+
+
         JPanel optionsPanel = new JPanel();
         {
+            optionsPanel.setLayout(gBagLayout);
+
             gbc.fill = GridBagConstraints.BOTH;
             gbc.gridx = 0;
             gbc.gridy = 0;
@@ -154,23 +166,12 @@ public class TextContextMenu extends ContextMenu {
             gbc.gridx = 3;
             optionsPanel.add(justifed, gbc);
 
-        }
-        this.add(optionsPanel, BoxLayout.Y_AXIS);
-    
-        // gbc.fill = GridBagConstraints.VERTICAL;
-        // gbc.gridx = 0;
-        // gbc.gridy = 1;
-        // this.add(new JButton("Rotate", null), gbc);
-    
-        // gbc.fill = GridBagConstraints.VERTICAL;
-        // gbc.gridx = 0;
-        // gbc.gridy = 1;
-        // this.add(new JButton("Rotate", null), gbc);
+            // gbc.gridx = 0;
+            // gbc.gridy = 3;
+            // optionsPanel.add(, gbc);
 
-        // gbc.fill = GridBagConstraints.VERTICAL;
-        // gbc.gridx = 1;
-        // gbc.gridy = 1;
-        // this.add(new JButton("Move", null), gbc);
+        }
+        this.add(optionsPanel);
 
         // gbc.fill = GridBagConstraints.VERTICAL;
         // gbc.gridx = 2;
@@ -181,17 +182,6 @@ public class TextContextMenu extends ContextMenu {
         // gbc.gridx = 0;
         // gbc.gridy = 3;
         // this.add(new JButton("Border", null), gbc);
-
-        // gbc.fill = GridBagConstraints.VERTICAL;
-        // gbc.gridx = 1;
-        // gbc.gridy = 3;
-        // this.add(new JButton("Text Spacing", null), gbc);
-
-        // gbc.fill = GridBagConstraints.VERTICAL;
-        // gbc.gridx = 0;
-        // gbc.gridy = 4;
-        // gbc.gridwidth = 3;
-        // this.add(new JColorChooser(), gbc);
 
         JPanel panel = new JPanel();
         {
@@ -222,6 +212,6 @@ public class TextContextMenu extends ContextMenu {
             });
             panel.add(area, BorderLayout.CENTER);
         }
-        this.add(panel, BoxLayout.Y_AXIS);
+        this.add(panel);
     }
 }

@@ -1,7 +1,6 @@
 package com.scc210groupproject.ui;
 
 import com.scc210groupproject.action.NewBoxAction;
-import com.scc210groupproject.structure.Presentation;
 
 import javax.swing.*;
 import java.awt.*;

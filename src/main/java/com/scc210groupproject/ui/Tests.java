@@ -4,7 +4,6 @@ import com.scc210groupproject.structure.liveness.IUpdateListener;
 import com.scc210groupproject.structure.liveness.IUpdateProvider;
 import com.scc210groupproject.structure.liveness.UpdateManager;
 import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
-import com.scc210groupproject.ui.contextMenu.TextContextMenu;
 import com.scc210groupproject.ui.menuBarTabs.MenuBarTabs;
 
 import javax.swing.*;

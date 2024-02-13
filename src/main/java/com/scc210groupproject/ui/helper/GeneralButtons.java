@@ -54,16 +54,14 @@ public enum GeneralButtons {
     LICENSE("License", "certificate.png", 32, 32, new LicenseAction()),
     SHORTCUTS("Shortcuts", "shortcuts.png", 32, 32, new ShortcutsAction()),
     TOGGLE_THEME("Theme", "toggle-theme.png", 32, 32, new ToggleThemeAction()),
-    BOLD("Bold", "bold.png", 32, 32, null),
-    ITALIC("Italic", "italic.png", 32, 32, null),
-    UNDERLINE("Underline", "underline.png", 32, 32, null),
-    STRIKETHROUGH("Strikethrough", "strikethrough.png", 32, 32, null),
-    INCREASE_SIZE("Increase Size", "increase-size.png", 32, 32, null),
-    DECREASE_SIZE("Decrease Size", "decrease-size.png", 32, 32, null),
-    ALIGN_LEFT("Align Left", "align-left.png", 32, 32, null),
-    ALIGN_RIGHT("Align Right", "align-right.png", 32, 32, null),
-    ALIGN_CENTRE("Align Centre", "align-centre.png", 32, 32, null),
-    JUSTIFY("Justify", "justify.png", 32, 32, null);
+    BOLD("Bold", "bold.png", 32, 32, new StyleAction("BOLD")),
+    ITALIC("Italic", "italic.png", 32, 32, new StyleAction("ITALIC")),
+    UNDERLINE("Underline", "underline.png", 32, 32, new StyleAction("UNDERLINE")),
+    STRIKETHROUGH("Strikethrough", "strikethrough.png", 32, 32, new StyleAction("STRIKETHROUGH")),
+    ALIGN_LEFT("Align Left", "align-left.png", 32, 32, new StyleAction("ALIGNLEFT")),
+    ALIGN_RIGHT("Align Right", "align-right.png", 32, 32, new StyleAction("ALIGNRIGHT")),
+    ALIGN_CENTRE("Align Centre", "align-centre.png", 32, 32, new StyleAction("ALIGNCENTRE")),
+    JUSTIFY("Justify", "justify.png", 32, 32, new StyleAction("JUSTIFY"));
 
 
     private final String title; // Button title - will be used for hover text

@@ -11,7 +11,6 @@ import com.scc210groupproject.structure.eventListeners.ICreateSlideListener;
 import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;
 import com.scc210groupproject.structure.eventListeners.IUpdateSlideListener;
 import com.scc210groupproject.structure.liveness.IUpdateListener;
-import com.scc210groupproject.ui.helper.ColourPalette;
 import com.scc210groupproject.ui.helper.GeneralButtons;
 import com.scc210groupproject.ui.menuBarTabs.toolBars.SlideMiniToolBar;
 

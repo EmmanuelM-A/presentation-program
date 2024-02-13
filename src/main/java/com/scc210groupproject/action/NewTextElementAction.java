@@ -6,15 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.scc210groupproject.structure.TextElement;
-import com.scc210groupproject.testui.MainDisplayPanel;
 import com.scc210groupproject.ui.SlideManager;
 
 public class NewTextElementAction implements ActionListener
 {
     @Override
-    public void actionPerformed(ActionEvent discard
-    )
-    {
+    public void actionPerformed(ActionEvent discard) {
         TextElement textElement = new TextElement();
 
         // These three lines are for testing purposes
