@@ -56,9 +56,15 @@ public enum GeneralButtons {
     TOGGLE_THEME("Theme", "toggle-theme.png", 32, 32, new ToggleThemeAction()),
     BOLD("Bold", "bold.png", 32, 32, null),
     ITALIC("Italic", "italic.png", 32, 32, null),
-    UNDERLINE("UnderLine", "underline.png", 32, 32, null),
+    UNDERLINE("Underline", "underline.png", 32, 32, null),
+    STRIKETHROUGH("Strikethrough", "strikethrough.png", 32, 32, null),
     INCREASE_SIZE("Increase Size", "increase-size.png", 32, 32, null),
-    DECREASE_SIZE("Decrease Size", "decrease-size.png", 32, 32, null);
+    DECREASE_SIZE("Decrease Size", "decrease-size.png", 32, 32, null),
+    ALIGN_LEFT("Align Left", "align-left.png", 32, 32, null),
+    ALIGN_RIGHT("Align Right", "align-right.png", 32, 32, null),
+    ALIGN_CENTRE("Align Centre", "align-centre.png", 32, 32, null),
+    JUSTIFY("Justify", "justify.png", 32, 32, null);
+
 
     private final String title; // Button title - will be used for hover text
     private ImageIcon icon; // Button icon - will be used to set the icon of a button
@@ -110,7 +116,7 @@ public enum GeneralButtons {
      * @return ImageIcon
      * */
     public static ImageIcon getIconFromFile(String file) {
-        String filePath = "src/main/resources/images/" + file;
+        String filePath = "/home/tloxley/Year2/SCC210/scc210-2324-grp-62/src/main/resources/images/" + file;
         BufferedImage source;
         try {
             source = ImageIO.read(new File(filePath));

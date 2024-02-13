@@ -59,7 +59,6 @@ public class TextElement extends ExtendedElement
         return pane.getText();
     }
 
-
     public void setText(String text) {
         pane.setText(text);
         super.notifyUpdate(this);
@@ -68,27 +67,37 @@ public class TextElement extends ExtendedElement
     public void setFontSize(int size) {
         SimpleAttributeSet attributes = new SimpleAttributeSet(pane.getParagraphAttributes());
         StyleConstants.setFontSize(attributes, size);
-
         applyStyle(attributes);
     }
 
-    private void applyStyle(AttributeSet attributes) {
-        StyledDocument document = pane.getStyledDocument();
-        Element root = document.getDefaultRootElement();
-        document.setParagraphAttributes(root.getStartOffset(), root.getEndOffset() - root.getStartOffset(), attributes, true);
-        super.notifyUpdate(this);
+    public void setBold(Boolean bool) {
+        SimpleAttributeSet attributes = new SimpleAttributeSet(pane.getParagraphAttributes());
+        StyleConstants.setBold(attributes, bool ^ this.getBold());
+        applyStyle(attributes);
     }
 
-    public int getFontSize() {
-        return StyleConstants.getFontSize(pane.getParagraphAttributes());
+    public void setItalic(Boolean bool) {
+        SimpleAttributeSet attributes = new SimpleAttributeSet(pane.getParagraphAttributes());
+        StyleConstants.setItalic(attributes, bool ^ this.getItalic());
+        applyStyle(attributes);
     }
 
-    public static enum Alignment {
-        LEFT,
-        CENTER,
-        JUSTIFIED,
-        RIGHT,
-        UNKNOWN
+    public void setUnderline(Boolean bool) {
+        SimpleAttributeSet attributes = new SimpleAttributeSet(pane.getParagraphAttributes());
+        StyleConstants.setUnderline(attributes, bool ^ this.getUnderline());
+        applyStyle(attributes);
+    }
+
+    public void setStrikeThrough(Boolean bool) {
+        SimpleAttributeSet attributes = new SimpleAttributeSet(pane.getParagraphAttributes());
+        StyleConstants.setUnderline(attributes, bool ^ this.getStrikethrough());
+        applyStyle(attributes);
+    }
+
+    public void setFont(String font) {
+        SimpleAttributeSet attributes = new SimpleAttributeSet(pane.getParagraphAttributes());
+        StyleConstants.setFontFamily(attributes, font);
+        applyStyle(attributes);
     }
 
     public void setAlignment(Alignment alignment) {
@@ -115,6 +124,45 @@ public class TextElement extends ExtendedElement
         }
 
         applyStyle(attributes);
+    }
+
+    private void applyStyle(AttributeSet attributes) {
+        StyledDocument document = pane.getStyledDocument();
+        Element root = document.getDefaultRootElement();
+        document.setParagraphAttributes(root.getStartOffset(), root.getEndOffset() - root.getStartOffset(), attributes, true);
+        super.notifyUpdate(this);
+    }
+
+    public int getFontSize() {
+        return StyleConstants.getFontSize(pane.getParagraphAttributes());
+    }
+
+    public String getFontFamily() {
+        return StyleConstants.getFontFamily(pane.getParagraphAttributes());
+    }
+
+    public boolean getBold() {
+        return StyleConstants.isBold(pane.getParagraphAttributes());
+    }
+
+    public boolean getItalic() {
+        return StyleConstants.isItalic(pane.getParagraphAttributes());
+    }
+
+    public boolean getUnderline() {
+        return StyleConstants.isUnderline(pane.getParagraphAttributes());
+    }
+    
+    public boolean getStrikethrough() {
+        return StyleConstants.isStrikeThrough(pane.getParagraphAttributes());
+    }
+
+    public static enum Alignment {
+        LEFT,
+        CENTER,
+        JUSTIFIED,
+        RIGHT,
+        UNKNOWN
     }
 
     public Alignment getAlignment() throws Exception {
