@@ -29,23 +29,18 @@ public class TextElement extends ExtendedElement
     protected void writeSelf(Writer writer) throws IOException {
         super.writeExtended(writer);
 
-        writer.writeString("text", pane.getText());
-
-        Font font = pane.getFont();
-        writer.writeString("fontname", font.getFontName());
-        writer.writeInt("fontstyle", font.getStyle());
-        writer.writeInt("fontsize", font.getSize());
+        writer.writeString("text", getText());
+        writer.writeInt("textcolor", getTextColor().getRGB());
+        writer.writeInt("fontsize", getFontSize());
+        writer.writeInt("fontalignment", getAlignment().getEncoding());
     }
 
     @Override
     public void readSelf(Reader reader) throws IOException {
-        pane.setText(reader.readString("text"));
-        
-        Font font = new Font(
-            reader.readString("fontname"), 
-            reader.readInt("fontstyle"),
-            reader.readInt("fontsize"));
-        pane.setFont(font);
+        setText(reader.readString("text"));
+        setTextColor(new Color(reader.readInt("textcolor")));
+        setFontSize(reader.readInt("fontsize"));
+        setAlignment(Alignment.fromEncoding(reader.readInt("fontalignment")));
 
         super.readExtended(reader);
     }
@@ -105,6 +100,32 @@ public class TextElement extends ExtendedElement
         super.notifyUpdate(this);
     }
 
+    public static enum Alignment {
+        LEFT(1),
+        CENTER(2),
+        JUSTIFIED(3),
+        RIGHT(4),
+        UNKNOWN(0);
+
+        private static Alignment fromEncoding(int value) {
+            for (Alignment alignment : Alignment.values()) {
+                if (alignment.value == value)
+                    return alignment;
+            }
+
+            return Alignment.UNKNOWN;
+        }
+
+        private int value;
+        public int getEncoding() {
+            return value;
+        }
+        
+        private Alignment(int value) {
+            this.value = value;
+        }
+    }
+
     public void setAlignment(Alignment alignment) {
         SimpleAttributeSet attributes = new SimpleAttributeSet(pane.getParagraphAttributes());
         switch (alignment) {
@@ -162,15 +183,7 @@ public class TextElement extends ExtendedElement
         return StyleConstants.isStrikeThrough(pane.getParagraphAttributes());
     }
 
-    public static enum Alignment {
-        LEFT,
-        CENTER,
-        JUSTIFIED,
-        RIGHT,
-        UNKNOWN
-    }
-
-    public Alignment getAlignment() throws Exception {
+    public Alignment getAlignment() {
         int alignment = StyleConstants.getAlignment(pane.getParagraphAttributes());
         switch (alignment) {
             case StyleConstants.ALIGN_LEFT:
@@ -184,6 +197,17 @@ public class TextElement extends ExtendedElement
             default:
                 return Alignment.UNKNOWN;
         }
+    }
+
+    public void setTextColor(Color color) {     
+        SimpleAttributeSet attributes = new SimpleAttributeSet(pane.getParagraphAttributes());
+        StyleConstants.setForeground(attributes, color);
+
+        applyStyle(attributes);
+    }
+    
+    public Color getTextColor() {
+        return StyleConstants.getForeground(pane.getParagraphAttributes());
     }
 
     @Override
