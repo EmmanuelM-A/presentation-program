@@ -21,7 +21,6 @@ import com.scc210groupproject.structure.input.listeners.IMultiDrag;
 import com.scc210groupproject.ui.MainDisplayPanel;
 import com.scc210groupproject.ui.contextMenu.ArrowContextMenu;
 import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
-import com.scc210groupproject.ui.contextMenu.TextContextMenu;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

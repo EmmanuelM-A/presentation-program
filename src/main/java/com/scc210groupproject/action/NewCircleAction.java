@@ -6,11 +6,11 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.scc210groupproject.structure.BoxElement;
+import com.scc210groupproject.structure.CircleElement;
 import com.scc210groupproject.structure.Slide;
 import com.scc210groupproject.ui.MainDisplayPanel;
 
-public class NewBoxAction implements ActionListener {
+public class NewCircleAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent discard)
@@ -18,21 +18,20 @@ public class NewBoxAction implements ActionListener {
         Slide slide = MainDisplayPanel.instance.getCurrentSlideImage().getSlide();
         Dimension area = slide.asComp().getSize();
 
-        BoxElement element = new BoxElement();
+        CircleElement element = new CircleElement();
 
         element.setBackground(new Color(
             (int)(Math.random() * 255), 
             (int)(Math.random() * 255), 
             (int)(Math.random() * 255)));
 
-        Dimension dimension = new Dimension(
-            (int)(Math.random() * area.width / 2) + area.width / 2, 
-            (int)(Math.random() * area.height / 2) + area.height / 2);
-        element.setSize(dimension);
+        int minSide = area.width < area.height ? area.width : area.height;
+        int size = (int)(Math.random() * minSide / 2) + minSide / 2;
+        element.setSize(new Dimension(size, size));
 
         element.setLocation(new Point(
-            (int)(Math.random() * (area.width - dimension.width)),
-            (int)(Math.random() * (area.height - dimension.height))));
+            (int)(Math.random() * (area.width - size)),
+            (int)(Math.random() * (area.height - size))));
 
         slide.add(element);
     }
