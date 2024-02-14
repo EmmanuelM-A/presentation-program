@@ -54,7 +54,7 @@ public class ImageElement extends ExtendedElement
     @Override
     protected void writeSelf(Writer writer) throws IOException {
         
-        super.writeExtended(writer);
+        super.writeSelfExtended(writer);
 
         String encoded = "none";
         if (image != null) {
@@ -77,7 +77,7 @@ public class ImageElement extends ExtendedElement
             image = ImageIO.read(bi);
         }
 
-        super.readExtended(reader);
+        super.readSelfExtended(reader);
     }
 
     @Override

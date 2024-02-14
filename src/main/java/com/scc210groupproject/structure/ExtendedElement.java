@@ -79,9 +79,9 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
         return manager;
     }
     
-    protected void writeExtended(Writer writer) throws IOException {
+    protected void writeSelfExtended(Writer writer) throws IOException {
         writer.writeObject("manager", manager);
-
+        
         Point p = asComp().getLocation();
         writer.writeInt("x", p.x);
         writer.writeInt("y", p.y);
@@ -93,7 +93,7 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
         writer.writeInt("background", asComp().getBackground().getRGB());
     }
 
-    public void readExtended(Reader reader) throws IOException {
+    public void readSelfExtended(Reader reader) throws IOException {
         manager = (AnchorManager)reader.readObject("manager");
 
         Point p = new Point();
@@ -110,5 +110,4 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
 
         asComp().setBackground(new Color(reader.readInt("background")));
     }
-
 }

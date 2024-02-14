@@ -25,12 +25,12 @@ public class CircleElement extends ExtendedElement {
 
     @Override
     public void writeSelf(Writer writer) throws IOException {
-        super.writeExtended(writer);
+        super.writeSelfExtended(writer);
     }
 
     @Override
     public void readSelf(Reader reader) throws IOException {
-        super.readExtended(reader);
+        super.readSelfExtended(reader);
     }
 
     public CircleElement() {

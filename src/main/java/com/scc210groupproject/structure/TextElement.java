@@ -1,6 +1,5 @@
 package com.scc210groupproject.structure;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.io.IOException;
 
@@ -16,18 +15,14 @@ public class TextElement extends ExtendedElement
 
     @Override
     protected void writeSelf(Writer writer) throws IOException {
-        super.writeExtended(writer);
-
+        super.writeSelfExtended(writer);
         writer.writeString("text", pane.getText());
     }
 
     @Override
     public void readSelf(Reader reader) throws IOException {
-        pane = new JTextPane();
-
         pane.setText(reader.readString("text"));
-
-        super.readExtended(reader);
+        super.readSelfExtended(reader);
     }
 
     @Override
@@ -47,5 +42,6 @@ public class TextElement extends ExtendedElement
 
     public TextElement() {
         super();
+        pane = new JTextPane();
     }
 }

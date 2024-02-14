@@ -2,7 +2,6 @@ package com.scc210groupproject.structure.liveness;
 
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.List;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
@@ -15,12 +14,13 @@ public class DestroyManager implements IJsonSerializable {
         this.owner = owner;
     }
 
-    private List<IDestroyListener> listeners = new LinkedList<>();
+    private LinkedList<IDestroyListener> listeners = new LinkedList<>();
     public void addListener(IDestroyListener listener) { listeners.add(listener); }
     public void removeListener(IDestroyListener listener) { listeners.remove(listener); }
 
+    @SuppressWarnings("unchecked")
     public void notifyDestroy() {
-        for (IDestroyListener listener : listeners)
+        for (IDestroyListener listener : (LinkedList<IDestroyListener>)listeners.clone())
             listener.onDestroy(owner);
     }
 
@@ -39,6 +39,6 @@ public class DestroyManager implements IJsonSerializable {
     @SuppressWarnings("unchecked")
     public void readValue(Reader reader) throws IOException {
         owner = (IDestroyProvider)reader.readObject("owner");
-        listeners = (List<IDestroyListener>)reader.readObjectList("listeners");
+        listeners = (LinkedList<IDestroyListener>)reader.readObjectList("listeners");
     }
 }
