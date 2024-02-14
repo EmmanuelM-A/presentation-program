@@ -21,8 +21,8 @@ import java.awt.event.ActionListener;
  * */
 public class TextContextMenu extends ContextMenu{
 
-    public TextContextMenu(TextElement element)
-    {
+    public TextContextMenu(TextElement element) {
+        
         this.setPreferredSize(new Dimension(300, 350));
         GridBagLayout gBagLayout = new GridBagLayout();
         GridBagConstraints gbc = new GridBagConstraints();

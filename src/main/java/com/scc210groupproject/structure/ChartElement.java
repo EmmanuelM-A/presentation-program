@@ -9,47 +9,38 @@ import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
+import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
+import com.scc210groupproject.ui.contextMenu.TextContextMenu;
+import com.scc210groupproject.ui.contextMenu.ChartContextMenu;
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
+import com.scc210groupproject.structure.input.InputEmulator.InputState;
+import com.scc210groupproject.structure.input.listeners.IMouseClicked;
 
-public class Chart extends ExtendedElement {
+import javafx.scene.chart.BarChart;
+import regexodus.Category;
+
+public class ChartElement extends ExtendedElement {
 
     private JPanel chart;
 
-    public Chart() {
-        createDemoPanel();
+    public ChartElement(String chartType) {
+        ChartElement self = this;
+        super.addInputListener(new IMouseClicked() {
+    
+            @Override
+            public void mouseClicked(Object target, InputState state) {
+                ContextMenuPanel.setMenu(self, new ChartContextMenu(self));
+            }
+        });
     }
-
-    private PieDataset createDataset( ) {
-        DefaultPieDataset dataset = new DefaultPieDataset( );
-        dataset.setValue( "IPhone 5s" , 20 );  
-        dataset.setValue( "SamSung Grand" , 20 );   
-        dataset.setValue( "MotoG" , 40 );    
-        dataset.setValue( "Nokia Lumia" , 10 );  
-        return dataset;         
-    }
-   
-    private JFreeChart createChart( PieDataset dataset ) {
-        JFreeChart chart = ChartFactory.createPieChart(      
-        "Mobile Sales",   // chart title 
-        dataset,          // data    
-        true,             // include legend   
-        true, 
-        false);
-
-        return chart;
-    }
-   
-    private void createDemoPanel() {
-        JFreeChart chart = createChart(createDataset( ) );  
-        this.chart = new ChartPanel(chart);
-        this.chart.setSize(new Dimension(400, 400));
-   }
 
     @Override
     protected void writeSelf(Writer writer) throws IOException {

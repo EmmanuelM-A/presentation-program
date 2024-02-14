@@ -2,7 +2,6 @@ package com.scc210groupproject.structure;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import java.io.IOException;
 
 import javax.swing.JTextPane;
@@ -95,6 +94,13 @@ public class TextElement extends ExtendedElement
         applyStyle(attributes);
     }
 
+    public void setTextColor(Color color) {     
+        SimpleAttributeSet attributes = new SimpleAttributeSet(pane.getParagraphAttributes());
+        StyleConstants.setForeground(attributes, color);
+
+        applyStyle(attributes);
+    }
+
     public void setBackground(Color color) {
         pane.setBackground(color);
         super.notifyUpdate(this);
@@ -183,6 +189,10 @@ public class TextElement extends ExtendedElement
         return StyleConstants.isStrikeThrough(pane.getParagraphAttributes());
     }
 
+    public Color getTextColor() {
+        return StyleConstants.getForeground(pane.getParagraphAttributes());
+    }
+
     public Alignment getAlignment() {
         int alignment = StyleConstants.getAlignment(pane.getParagraphAttributes());
         switch (alignment) {
@@ -197,17 +207,6 @@ public class TextElement extends ExtendedElement
             default:
                 return Alignment.UNKNOWN;
         }
-    }
-
-    public void setTextColor(Color color) {     
-        SimpleAttributeSet attributes = new SimpleAttributeSet(pane.getParagraphAttributes());
-        StyleConstants.setForeground(attributes, color);
-
-        applyStyle(attributes);
-    }
-    
-    public Color getTextColor() {
-        return StyleConstants.getForeground(pane.getParagraphAttributes());
     }
 
     @Override
