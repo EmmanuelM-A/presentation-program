@@ -16,6 +16,9 @@ import com.scc210groupproject.ui.helper.GeneralButtons;
 
 public class ChartContextMenu extends ContextMenu {
 
+    private JTable data;
+    private String[][] tableData;
+
     public ChartContextMenu(ChartElement element) {
 
         this.setPreferredSize(new Dimension(300, 350));
@@ -32,7 +35,7 @@ public class ChartContextMenu extends ContextMenu {
 
         JButton xy = makeContextMenuButton(GeneralButtons.SCATTER);
 
-        JTable data = new JTable();
+        this.data = new JTable();
 
     }
 
@@ -67,15 +70,22 @@ public class ChartContextMenu extends ContextMenu {
         gbc.gridx = 3;
         this.add(scatter, gbc);
 
-        JPanel panel = new JPanel();
-        {
+        JPanel panel = new JPanel(); {
             BorderLayout borderLayout = new BorderLayout();
             panel.setLayout(borderLayout);
             data.setGridColor(Color.BLACK);
             data.setShowGrid(true);
-            panel.add(data, BorderLayout.CENTER);
+            panel.add(this.data, BorderLayout.CENTER);
         }
         gbc.gridx = 0; gbc.gridy = 1; gbc.gridwidth = 4; gbc.weighty = 1;
         this.add(panel, gbc);
+    }
+
+    private void getTableData() {
+        for(int i = 0; i < data.getRowCount(); i++) {
+            for(int j = 0; j < data.getColumnCount(); j++) {
+                tableData[i][j] = (String)data.getValueAt(i, j);
+            }
+        }
     }
 }
