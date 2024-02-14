@@ -1,19 +1,16 @@
 package com.scc210groupproject.ui;
 
 import com.scc210groupproject.action.NewBoxAction;
-import com.scc210groupproject.structure.Presentation;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.JPopupMenu;
+import javax.swing.JMenuItem;
 
 public class ShapesPopup {
 
 
     public static JPopupMenu popupMenu;
 
-    public ShapesPopup(JFrame UI){
+    public ShapesPopup() {
 
         popupMenu = new JPopupMenu("Shapes");
 
