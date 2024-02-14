@@ -89,6 +89,7 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
         protected int lastChangedButton;
 
         protected HashMap<Integer, Boolean> buttons = new HashMap<>();
+        protected boolean altDown, metaDown, shiftDown, ctrlDown, graphDown = false;
         protected Point locationInSlide = new Point();
         protected Dimension mouseDelta = new Dimension();
         protected int clickCount = 0;
@@ -98,6 +99,26 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
         protected int extendedKeyCode = KeyEvent.VK_UNDEFINED;
         protected char keyChar = KeyEvent.CHAR_UNDEFINED;
         protected int keyLocation = KeyEvent.KEY_LOCATION_UNKNOWN;
+
+        public boolean isAltDown() {
+            return altDown;
+        }
+        
+        public boolean isMetaDown() {
+            return metaDown;
+        }
+        
+        public boolean isShiftDown() {
+            return shiftDown;
+        }
+        
+        public boolean isControlDown() {
+            return ctrlDown;
+        }
+        
+        public boolean isAltGraphDown() {
+            return graphDown;
+        }
 
         public int getLastChangedButton() {
             return lastChangedButton;
@@ -154,6 +175,14 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
         active = true;
     }
 
+    private void updateModifier(MouseEvent event) {
+        currentState.altDown = event.isAltDown();
+        currentState.metaDown = event.isMetaDown();
+        currentState.shiftDown = event.isShiftDown();
+        currentState.ctrlDown = event.isControlDown();
+        currentState.graphDown = event.isAltGraphDown();
+    }
+
     private void processMovement(MouseEvent event) {
         if (active == false)
             return;
@@ -198,6 +227,7 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
 
     @Override
     public void mousePressed(MouseEvent e) {
+        updateModifier(e);
         int button = e.getButton();
         currentState.buttons.put(button, true);
         currentState.lastChangedButton = button;
@@ -222,6 +252,7 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        updateModifier(e);
         int button = e.getButton();
         currentState.buttons.put(button, false);
         currentState.lastChangedButton = button;
@@ -240,6 +271,7 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
+        updateModifier(e);
         currentState.wheelDelta = e.getPreciseWheelRotation();
 
         if (currentElement != null)
@@ -248,16 +280,19 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        updateModifier(e);
         tryEnableMovement();
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
+        updateModifier(e);
         disableMovement();
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        updateModifier(e);
         processMovement(e);
 
         for (BaseElement selectedElement : selectedElements)
@@ -273,6 +308,7 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
 
     @Override
     public void mouseMoved(MouseEvent e) {
+        updateModifier(e);
         processMovement(e);
 
         if (currentElement != null)

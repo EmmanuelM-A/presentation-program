@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
+import com.scc210groupproject.structure.input.InputEmulator.InputState;
+import com.scc210groupproject.structure.input.adapters.MouseOccupancyAdapter;
 
 import java.awt.Component;
 import java.awt.Graphics;
@@ -19,7 +21,7 @@ public class CircleElement extends ExtendedElement {
     @Override
     public Component asComp() { return panel; }
 
-    public static BoxElement createEmpty() { return new BoxElement(); }
+    public static CircleElement createEmpty() { return new CircleElement(); }
 
     @Override
     public void writeSelf(Writer writer) throws IOException {
@@ -31,7 +33,31 @@ public class CircleElement extends ExtendedElement {
         super.readExtended(reader);
     }
 
+    public CircleElement() {
+        super.addInputListener(new MouseOccupancyAdapter() {
+            @Override
+            public void mouseEntered(Object target, InputState state) {
+                panel.expanded = true;
+            }
+
+            @Override
+            public void mouseExited(Object target, InputState state) {
+                panel.expanded = false;
+            }
+        });
+    }
+
     private static class CirclePanel extends JPanel {
+
+        public boolean expanded = false;
+        @Override
+        public boolean contains(int x, int y) {
+            if (expanded) 
+                return super.contains(x, y);
+            else
+                return new Ellipse2D.Double(0.0, 0.0, super.getWidth(), super.getHeight()).contains(x, y);
+        }
+
         @Override
         protected void paintComponent(Graphics g) {
             Graphics2D g2d = (Graphics2D)g.create();

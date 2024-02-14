@@ -121,7 +121,15 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
             case 1:
                 if (oldSize.width + delta.width > 20 && oldSize.height - delta.height > 20) {
                     resizable.setLocation(new Point(oldPosition.x, oldPosition.y + delta.height));
-                    resizable.setSize(new Dimension(oldSize.width + delta.width, oldSize.height - delta.height));
+                    if (state.isControlDown()) {
+                        int greater = delta.width > delta.height ? delta.width : delta.height;
+                        double aspect = (double)oldSize.height / (double)oldSize.width;
+                        int width = oldSize.width - greater;
+                        int height = (int)((double)width * aspect);
+                        resizable.setSize(new Dimension(width, height));
+                    }
+                    else
+                        resizable.setSize(new Dimension(oldSize.width + delta.width, oldSize.height - delta.height));
                 }
                 break;
             case 2:
