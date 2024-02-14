@@ -12,11 +12,10 @@ import java.util.Objects;
 
 /**
  * This enum consists of buttons (just its information like title, icons and actions) where its functionality is the same where ever its used.
- * The primary aim of this enum is to store buttons that will be use in more than one place and where is function is not changed
- * (but a new function can always be assigned).
+ * The primary aim of this enum is to store buttons that will be use in more than one place and where is functionality will not be changed
+ * (but more functionality can always be assigned).
  * <p>
  *
- * @author madukaag
  * */
 public enum GeneralButtons {
     NEW("New File", "new-document.png", 32, 32, new NewFileAction()),
