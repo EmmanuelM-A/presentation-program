@@ -36,6 +36,8 @@ public class SnapshotManager {
         Snapshot snapshot = new Snapshot();
         element.writeSnapshot(snapshot);
 
+        System.out.println(element);
+
         if (count >= max) {
             Entry expired = steps.removeLast();
             expired.discard();
@@ -52,9 +54,9 @@ public class SnapshotManager {
             return false;
         count--;
         Entry entry = steps.pop();
+        System.out.println(entry.element);
         
         entry.element.readSnapshot(entry.snapshot);
-        entry.element.notifyUpdate(entry.element);
 
         return true;
     }

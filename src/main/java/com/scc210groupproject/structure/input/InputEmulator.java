@@ -14,8 +14,6 @@ import java.util.LinkedList;
 
 import com.scc210groupproject.structure.BaseElement;
 import com.scc210groupproject.structure.Slide;
-import com.scc210groupproject.structure.input.listeners.IMultSelect;
-import com.scc210groupproject.structure.input.listeners.IMultiDrag;
 import com.scc210groupproject.structure.input.listeners.IKeyPressed;
 import com.scc210groupproject.structure.input.listeners.IKeyReleased;
 import com.scc210groupproject.structure.input.listeners.IKeyTyped;
@@ -27,7 +25,6 @@ import com.scc210groupproject.structure.input.listeners.IMouseMoved;
 import com.scc210groupproject.structure.input.listeners.IMousePressed;
 import com.scc210groupproject.structure.input.listeners.IMouseReleased;
 import com.scc210groupproject.structure.input.listeners.IMouseWheel;
-import com.scc210groupproject.structure.input.listeners.IMultRelease;
 
 public class InputEmulator implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
 
@@ -37,7 +34,6 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
     private BaseElement draggedElement = null;
     private BaseElement focusedElement = null;
     private BaseElement currentElement = null;
-    private LinkedList<BaseElement> selectedElements = new LinkedList<>();
     private InputState currentState = new InputState();
 
     private Point offset = new Point();
@@ -53,10 +49,6 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
 
     public BaseElement getCurrentElement() {
         return currentElement;
-    }
-
-    public LinkedList<BaseElement> getSelectedElements() {
-        return selectedElements;
     }
 
     public void setTargetSlide(Slide slide) {
@@ -232,18 +224,6 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
         currentState.buttons.put(button, true);
         currentState.lastChangedButton = button;
 
-        if (currentElement == null || currentElement instanceof Slide) {
-            for (BaseElement selectedElement : selectedElements)
-                selectedElement.passMouseEvent(IMultRelease.class, selectedElement, currentState);
-            selectedElements.clear();
-        }
-        else if (button == MouseEvent.BUTTON1 && e.isShiftDown()) {
-            if (!selectedElements.contains(currentElement)) {
-                selectedElements.add(currentElement);
-                currentElement.passMouseEvent(IMultSelect.class, currentElement, currentState);
-            }
-        }
-
         if (currentElement != null)
             currentElement.passMouseEvent(IMousePressed.class, currentElement, currentState);
             
@@ -294,9 +274,6 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
     public void mouseDragged(MouseEvent e) {
         updateModifier(e);
         processMovement(e);
-
-        for (BaseElement selectedElement : selectedElements)
-            selectedElement.passMouseEvent(IMultiDrag.class, selectedElement, currentState);
 
         // draggedElement unset by mouseReleased
         if (draggedElement == null)

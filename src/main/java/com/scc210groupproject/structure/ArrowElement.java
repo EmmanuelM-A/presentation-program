@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
+import com.scc210groupproject.structure.adjust.IMultiMover;
+import com.scc210groupproject.structure.adjust.MultiController;
 import com.scc210groupproject.structure.anchors.AnchorReference;
 import com.scc210groupproject.structure.anchors.IAnchorListener;
 import com.scc210groupproject.structure.anchors.IAnchorProvider;
@@ -15,10 +17,8 @@ import com.scc210groupproject.structure.input.listeners.IMouseExited;
 import com.scc210groupproject.structure.input.listeners.IMouseMoved;
 import com.scc210groupproject.structure.input.listeners.IMousePressed;
 import com.scc210groupproject.structure.input.listeners.IMouseReleased;
-import com.scc210groupproject.structure.input.listeners.IMultRelease;
-import com.scc210groupproject.structure.input.listeners.IMultSelect;
-import com.scc210groupproject.structure.input.listeners.IMultiDrag;
 import com.scc210groupproject.structure.state.Snapshot;
+import com.scc210groupproject.structure.state.SnapshotManager;
 import com.scc210groupproject.ui.MainDisplayPanel;
 import com.scc210groupproject.ui.contextMenu.ArrowContextMenu;
 import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
@@ -61,7 +61,7 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
 
     private ArrowElement() {
         panel = new ArrowPanel();
-        addInputListener(new ArrowMover());
+        addInputListener(new ArrowMover(this));
     }
 
     public void setPoint(Side side, Point newPosition) {
@@ -274,6 +274,8 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
         panel.lineWidth = (float)snapshot.readEntry("line Width");
 
         panel.color = (Color)snapshot.readEntry("color");
+
+        notifyUpdate(this);
     }
 
     @Override
@@ -492,68 +494,17 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
         }
     }
 
-    public static class ArrowMover implements  IMousePressed, IMouseReleased, IMouseMoved, IMouseDragged, IMouseEntered, IMouseExited, IMouseClicked, IMultSelect, IMultRelease, IMultiDrag {
+    public static class ArrowMover implements  IMousePressed, IMouseReleased, IMouseMoved, IMouseDragged, IMouseEntered, IMouseExited, IMouseClicked, IMultiMover {
 
-        private Side targetSide = null;
+        private ArrowElement element;
+        private boolean targetSideA = false;
+        private boolean targetSideB = false;
         private double snapDistance = 10;
-        private boolean inMultiSelect = false;
 
-        @Override
-        public void multiDrag(Object target, InputState state) {
-            Dimension delta = state.getMouseDelta();
+        private boolean saveIfMove = false;
 
-            ArrowElement arrow = (ArrowElement)target;
-            if (arrow.anchorA == null) {
-                Point original = arrow.getPoint(Side.A);
-                arrow.setPoint(Side.A, new Point(
-                    original.x + delta.width,
-                    original.y + delta.height
-                ));
-            }
-            
-            if (arrow.anchorB == null) {
-                Point original = arrow.getPoint(Side.B);
-                arrow.setPoint(Side.B, new Point(
-                    original.x + delta.width,
-                    original.y + delta.height
-                ));
-            }
-        }
-
-        @Override
-        public void multiRelease(Object target, InputState state) {
-            inMultiSelect = false;
-            
-            ArrowElement arrow = (ArrowElement)target;
-            arrow.panel.highlightA = false;
-            arrow.panel.highlightB = false;
-            
-        }
-
-        @Override
-        public void multiSelect(Object target, InputState state) {
-            inMultiSelect = true;
-
-            ArrowElement arrow = (ArrowElement)target;
-            arrow.panel.highlightA = true;
-            arrow.panel.highlightB = true;
-            
-            arrow.notifyUpdate(arrow);
-        }
-
-        @Override
-        public void mouseClicked(Object target, InputState state) {
-            // not used, here to block message being taken by another element
-        }
-
-        @Override
-        public void mouseExited(Object target, InputState state) {
-            MainDisplayPanel.instance.setCursor(Cursor.getDefaultCursor());
-        }
-
-        @Override
-        public void mouseEntered(Object target, InputState state) {
-            // not used, here to block message being taken by another element
+        public ArrowMover(ArrowElement element) {
+            this.element = element;
         }
 
         private BaseElement getAnchorProvider(ArrowElement arrow, Point location) {
@@ -571,22 +522,100 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
             
             return null;
         }
+        
+        @Override
+        public void mouseExited(Object target, InputState state) {
+            MainDisplayPanel.instance.setCursor(Cursor.getDefaultCursor());
+            MultiController.evaluateAll(state.isShiftDown());
+        }
 
         @Override
         public void mouseDragged(Object target, InputState state) {
-            if (inMultiSelect)
-                return;
+            MultiController.moveAll(state);
+        }
 
-            if (targetSide == null)
-                return;
+        @Override
+        public void mouseMoved(Object target, InputState state) {
+            MainDisplayPanel.instance.setCursor(new Cursor(Cursor.MOVE_CURSOR));
+        }
+
+        @Override
+        public void mousePressed(Object target, InputState state) {
+            if (!state.isShiftDown() && !MultiController.contains(this))
+                MultiController.clearAll();
+            MultiController.add(this);
+
+            Point mouseLocation = state.getLocationInSlide();
 
             ArrowElement arrow = (ArrowElement)target;
-            Point location = state.getLocationInSlide();
-            BaseElement element = getAnchorProvider(arrow, location);
-            if (element == null)
-                arrow.setPoint(targetSide, location);
+            double distanceA = mouseLocation.distance(arrow.getPoint(Side.A));
+            double distanceB = mouseLocation.distance(arrow.getPoint(Side.B));
+
+            if (!state.isShiftDown()) {
+                targetSideA = false;
+                targetSideB = false;
+            }
+
+            if (distanceA < distanceB) {
+                targetSideA = true;
+                arrow.panel.highlightA = true;
+            }
             else {
-                IAnchorProvider provider = (IAnchorProvider)element;
+                targetSideB = true;
+                arrow.panel.highlightB = true;
+            }
+            
+            arrow.panel.repaint();
+            arrow.notifyUpdate(arrow);
+
+            ContextMenuPanel.setMenu(new ArrowContextMenu());
+        }
+
+        @Override
+        public void move(InputState state) {
+            if (saveIfMove) {
+                SnapshotManager.saveState(element);
+                saveIfMove = false;
+            }
+
+            if (targetSideA && targetSideB || MultiController.hasMultiple())
+                moveBoth(state);
+            else if (targetSideA)
+                moveSide(state, Side.A);
+            else if (targetSideB)
+                moveSide(state, Side.B);
+
+            element.notifyUpdate(element);
+        }
+
+        private void moveBoth(InputState state) {
+            Dimension delta = state.getMouseDelta();
+
+            if (element.anchorA == null && targetSideA) {
+                Point original = element.getPoint(Side.A);
+                element.setPoint(Side.A, new Point(
+                    original.x + delta.width,
+                    original.y + delta.height
+                ));
+            }
+            
+            if (element.anchorB == null && targetSideB) {
+                Point original = element.getPoint(Side.B);
+                element.setPoint(Side.B, new Point(
+                    original.x + delta.width,
+                    original.y + delta.height
+                ));
+            }
+        }
+
+        private void moveSide(InputState state, Side side) {
+
+            Point location = state.getLocationInSlide();
+            BaseElement target = getAnchorProvider(element, location);
+            if (target == null)
+                element.setPoint(side, location);
+            else {
+                IAnchorProvider provider = (IAnchorProvider)target;
 
                 AnchorReference found = null;
                 double minDistance = Double.MAX_VALUE;
@@ -600,59 +629,49 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
                 }
 
                 if (found == null)
-                    arrow.setPoint(targetSide, location);
+                    element.setPoint(side, location);
 
                 if (minDistance * MainDisplayPanel.instance.getInputEmulator().getScale() > snapDistance)
-                    arrow.setPoint(targetSide, location);
+                    element.setPoint(side, location);
 
-                arrow.setAnchor(targetSide, found);
+                element.setAnchor(side, found);
             }
-
-            arrow.notifyUpdate(arrow);
         }
 
         @Override
-        public void mouseMoved(Object target, InputState state) {
-            MainDisplayPanel.instance.setCursor(new Cursor(Cursor.MOVE_CURSOR));
+        public void setSaveIfMove(boolean state) {
+            saveIfMove = state;
+        }
+
+        @Override
+        public void mouseClicked(Object target, InputState state) {
+            // not used, here to block message being taken by another element
+        }
+
+        @Override
+        public void mouseEntered(Object target, InputState state) {
+            // not used, here to block message being taken by another element
         }
 
         @Override
         public void mouseReleased(Object target, InputState state) {
-            if (inMultiSelect)
-                return;
-
-            ArrowElement arrow = (ArrowElement)target;
-            arrow.panel.highlightA = false;
-            arrow.panel.highlightB = false;
-            targetSide = null;
-
-            arrow.notifyUpdate(arrow);
+            // not used, here to block message being taken by another element
         }
 
         @Override
-        public void mousePressed(Object target, InputState state) {
-            if (inMultiSelect)
-                return;
+        public void evaluateState(boolean inSelectionStage) {
 
-            Point mouseLocation = state.getLocationInSlide();
-
-            ArrowElement arrow = (ArrowElement)target;
-            double distanceA = mouseLocation.distance(arrow.getPoint(Side.A));
-            double distanceB = mouseLocation.distance(arrow.getPoint(Side.B));
-
-            if (distanceA < distanceB) {
-                targetSide = Side.A;
-                arrow.panel.highlightA = true;
+            if (!MultiController.contains(this)) {
+                element.panel.highlightA = false;
+                element.panel.highlightB = false;
+                element.notifyUpdate(element);
             }
-            else {
-                targetSide = Side.B;
-                arrow.panel.highlightB = true;
+            else if (!MultiController.hasMultiple() && !inSelectionStage) {
+                element.panel.highlightA = false;
+                element.panel.highlightB = false;
+                element.notifyUpdate(element);
             }
-            
-            arrow.notifyUpdate(arrow);
 
-            ContextMenuPanel.setMenu(new ArrowContextMenu());
         }
-
     }
 }

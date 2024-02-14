@@ -122,5 +122,8 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
         asComp().setLocation((Point)snapshot.readEntry("point"));
         asComp().setSize((Dimension)snapshot.readEntry("dimension"));
         asComp().setBackground((Color)snapshot.readEntry("background"));
+
+        manager.onChangeSize();
+        notifyUpdate(this);
     }
 }
