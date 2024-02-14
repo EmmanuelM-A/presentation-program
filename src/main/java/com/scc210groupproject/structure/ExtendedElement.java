@@ -15,6 +15,7 @@ import com.scc210groupproject.structure.adjust.DragResizer;
 import com.scc210groupproject.structure.adjust.IResizable;
 import com.scc210groupproject.structure.anchors.AnchorManager;
 import com.scc210groupproject.structure.anchors.IAnchorProvider;
+import com.scc210groupproject.structure.state.Snapshot;
 
 public abstract class ExtendedElement extends BaseElement implements IResizable, IAnchorProvider {
 
@@ -79,9 +80,9 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
         return manager;
     }
     
-    protected void writeExtended(Writer writer) throws IOException {
+    protected void writeSelfExtended(Writer writer) throws IOException {
         writer.writeObject("manager", manager);
-
+        
         Point p = asComp().getLocation();
         writer.writeInt("x", p.x);
         writer.writeInt("y", p.y);
@@ -93,7 +94,7 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
         writer.writeInt("background", asComp().getBackground().getRGB());
     }
 
-    public void readExtended(Reader reader) throws IOException {
+    public void readSelfExtended(Reader reader) throws IOException {
         manager = (AnchorManager)reader.readObject("manager");
 
         Point p = new Point();
@@ -111,4 +112,15 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
         asComp().setBackground(new Color(reader.readInt("background")));
     }
 
+    public void writeSnapshotExtended(Snapshot snapshot) {
+        snapshot.addEntry("point", asComp().getLocation());
+        snapshot.addEntry("dimension", asComp().getSize());
+        snapshot.addEntry("background", asComp().getBackground());
+    }
+
+    public void readSnapshotExtended(Snapshot snapshot) {
+        asComp().setLocation((Point)snapshot.readEntry("point"));
+        asComp().setSize((Dimension)snapshot.readEntry("dimension"));
+        asComp().setBackground((Color)snapshot.readEntry("background"));
+    }
 }

@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
+import com.scc210groupproject.structure.state.Snapshot;
 import com.scc210groupproject.ui.helper.GeneralButtons;
 
 public class ImageElement extends ExtendedElement
@@ -54,7 +55,7 @@ public class ImageElement extends ExtendedElement
     @Override
     protected void writeSelf(Writer writer) throws IOException {
         
-        super.writeExtended(writer);
+        super.writeSelfExtended(writer);
 
         String encoded = "none";
         if (image != null) {
@@ -64,6 +65,11 @@ public class ImageElement extends ExtendedElement
         }
 
         writer.writeString("image", encoded);
+    }
+
+    @Override
+    public void writeSnapshot(Snapshot snapshot) {
+        super.writeSnapshotExtended(snapshot);
     }
 
     @Override
@@ -77,7 +83,12 @@ public class ImageElement extends ExtendedElement
             image = ImageIO.read(bi);
         }
 
-        super.readExtended(reader);
+        super.readSelfExtended(reader);
+    }
+
+    @Override
+    public void readSnapshot(Snapshot snapshot) {
+        super.readSnapshotExtended(snapshot);
     }
 
     @Override

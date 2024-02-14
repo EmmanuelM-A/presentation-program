@@ -18,6 +18,7 @@ import com.scc210groupproject.structure.input.listeners.IMouseReleased;
 import com.scc210groupproject.structure.input.listeners.IMultRelease;
 import com.scc210groupproject.structure.input.listeners.IMultSelect;
 import com.scc210groupproject.structure.input.listeners.IMultiDrag;
+import com.scc210groupproject.structure.state.SnapshotManager;
 import com.scc210groupproject.ui.MainDisplayPanel;
 
 public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, IMouseDragged, IMouseEntered, IMouseExited, IMouseClicked, IMultSelect, IMultRelease, IMultiDrag {
@@ -25,6 +26,8 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
     private int operation = -1;
     private SelectionBorder border = new SelectionBorder();
     private boolean inMultSelect = false;
+
+    private boolean firstMove = true;
 
     public static HashMap<BaseElement, DragResizer> instances = new HashMap<>();
 
@@ -55,7 +58,7 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
 
     @Override
     public void mouseReleased(Object target, InputState state) {
-        // not used, here to block message being taken by another element
+        firstMove = true;
     }
 
     @Override
@@ -103,6 +106,11 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
     public void mouseDragged(Object target, InputState state) {
         if (inMultSelect)
             return;
+
+        if (firstMove) {
+            SnapshotManager.saveState((BaseElement)target);
+            firstMove = false;
+        }
             
         IResizable resizable = (IResizable)target;
         Dimension delta = state.getMouseDelta();
@@ -203,6 +211,8 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
         IResizable resizable = (IResizable)target;
         resizable.setBorder(null);
         setMultiSelectMode(false);
+        
+        firstMove = true;
     }
 
     @Override
@@ -214,6 +224,12 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
 
     @Override
     public void multiDrag(Object target, InputState state) {
+        
+        if (firstMove) {
+            SnapshotManager.saveState((BaseElement)target);
+            firstMove = false;
+        }
+
         IResizable resizable = (IResizable)target;
         
         Dimension delta = state.getMouseDelta();

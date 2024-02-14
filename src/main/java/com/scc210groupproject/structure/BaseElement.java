@@ -22,6 +22,7 @@ import com.scc210groupproject.structure.liveness.IDestroyProvider;
 import com.scc210groupproject.structure.liveness.IUpdateListener;
 import com.scc210groupproject.structure.liveness.IUpdateProvider;
 import com.scc210groupproject.structure.liveness.UpdateManager;
+import com.scc210groupproject.structure.state.Snapshot;
 import com.scc210groupproject.readwrite.IJsonSerializable;
 
 /**
@@ -38,6 +39,9 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
 {
     protected abstract void writeSelf(Writer writer) throws IOException;
     protected abstract void readSelf(Reader reader) throws IOException;
+
+    public abstract void writeSnapshot(Snapshot snapshot);
+    public abstract void readSnapshot(Snapshot snapshot);
 
     protected BaseElement parent = null;
     protected List<BaseElement> children = new LinkedList<>();

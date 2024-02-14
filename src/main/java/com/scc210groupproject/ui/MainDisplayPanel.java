@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import com.scc210groupproject.structure.*;
 import com.scc210groupproject.structure.eventListeners.IUpdateSlideListener;
 import com.scc210groupproject.structure.input.InputEmulator;
+import com.scc210groupproject.structure.state.SnapshotManager;
 
 
 /**
@@ -44,6 +45,15 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
         super.addMouseWheelListener(emulator);
         super.addKeyListener(emulator);
         super.setFocusable(true);
+        super.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()), "undo");
+        super.getActionMap().put("undo", new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SnapshotManager.restoreState();
+            }
+            
+        });
 
         Presentation.addUpdateSlideListener(this);
 
