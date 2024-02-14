@@ -7,7 +7,6 @@ import javax.swing.JTextPane;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
-import com.scc210groupproject.structure.state.Snapshot;
 public class TextElement extends ExtendedElement
 {
     JTextPane pane = new JTextPane();
@@ -21,21 +20,9 @@ public class TextElement extends ExtendedElement
     }
 
     @Override
-    public void writeSnapshot(Snapshot snapshot) {
-        super.writeSnapshotExtended(snapshot);
-        snapshot.addEntry("text", pane.getText());
-    }
-
-    @Override
     public void readSelf(Reader reader) throws IOException {
         pane.setText(reader.readString("text"));
         super.readSelfExtended(reader);
-    }
-
-    @Override
-    public void readSnapshot(Snapshot snapshot) {
-        pane.setText((String)snapshot.readEntry("text"));
-        super.readSnapshotExtended(snapshot);
     }
 
     @Override

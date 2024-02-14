@@ -17,7 +17,6 @@ import com.scc210groupproject.structure.input.listeners.IMouseExited;
 import com.scc210groupproject.structure.input.listeners.IMouseMoved;
 import com.scc210groupproject.structure.input.listeners.IMousePressed;
 import com.scc210groupproject.structure.input.listeners.IMouseReleased;
-import com.scc210groupproject.structure.state.Snapshot;
 import com.scc210groupproject.structure.state.SnapshotManager;
 import com.scc210groupproject.ui.MainDisplayPanel;
 import com.scc210groupproject.ui.contextMenu.ArrowContextMenu;
@@ -200,29 +199,6 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
     }
 
     @Override
-    public void writeSnapshot(Snapshot snapshot) {
-        snapshot.addEntry("anchor A", anchorA);
-        snapshot.addEntry("anchor B", anchorB);
-
-        snapshot.addEntry("point A", panel.pointA);
-        snapshot.addEntry("point B", panel.pointB);
-
-        snapshot.addEntry("arrow on A", panel.arrowOnA);
-        snapshot.addEntry("arrow Width A", panel.arrowWidthA);
-        snapshot.addEntry("arrow Length A", panel.arrowLengthA);
-
-        snapshot.addEntry("arrow on B", panel.arrowOnB);
-        snapshot.addEntry("arrow Width B", panel.arrowWidthB);
-        snapshot.addEntry("arrow Length B", panel.arrowLengthB);
-
-        snapshot.addEntry("line Solid", panel.lineSolid);
-        snapshot.addEntry("line Dash Length", panel.lineDashLength);
-        snapshot.addEntry("line Width", panel.lineWidth);
-
-        snapshot.addEntry("color", panel.color);
-    }
-
-    @Override
     public void readSelf(Reader reader) throws IOException {
 
         anchorA = (AnchorReference)reader.readObject("anchor A");
@@ -251,31 +227,6 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
         panel.color = new Color(reader.readInt("color"));
 
         panel.reposition();
-    }
-
-    @Override
-    public void readSnapshot(Snapshot snapshot) {
-        anchorA = (AnchorReference)snapshot.readEntry("anchor A");
-        anchorB = (AnchorReference)snapshot.readEntry("anchor B");
-
-        panel.pointA = (Point)snapshot.readEntry("point A");
-        panel.pointB = (Point)snapshot.readEntry("point B");
-
-        panel.arrowOnA = (boolean)snapshot.readEntry("arrow on A");
-        panel.arrowWidthA = (double)snapshot.readEntry("arrow Width A");
-        panel.arrowLengthA = (double)snapshot.readEntry("arrow Length A");
-
-        panel.arrowOnB = (boolean)snapshot.readEntry("arrow on B");
-        panel.arrowWidthB = (double)snapshot.readEntry("arrow Width B");
-        panel.arrowLengthB = (double)snapshot.readEntry("arrow Length B");
-
-        panel.lineSolid = (boolean)snapshot.readEntry("line Solid");
-        panel.lineDashLength = (float)snapshot.readEntry("line Dash Length");
-        panel.lineWidth = (float)snapshot.readEntry("line Width");
-
-        panel.color = (Color)snapshot.readEntry("color");
-
-        notifyUpdate(this);
     }
 
     @Override
@@ -574,7 +525,7 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
         @Override
         public void move(InputState state) {
             if (saveIfMove) {
-                SnapshotManager.saveState(element);
+                SnapshotManager.saveState();
                 saveIfMove = false;
             }
 

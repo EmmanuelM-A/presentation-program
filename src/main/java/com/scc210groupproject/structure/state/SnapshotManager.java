@@ -1,62 +1,86 @@
 package com.scc210groupproject.structure.state;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Stack;
 
-import com.scc210groupproject.structure.BaseElement;
-import com.scc210groupproject.structure.liveness.IDestroyListener;
+import com.scc210groupproject.readwrite.FileDeserializer.Reader;
+import com.scc210groupproject.readwrite.FileSerializer.Writer;
+import com.scc210groupproject.structure.Presentation;
 
 public class SnapshotManager {
 
-    private static class Entry implements IDestroyListener {
-        public BaseElement element;
-        public Snapshot snapshot;
-
-        public Entry(BaseElement element, Snapshot snapshot) {
-            this.element = element;
-            this.snapshot = snapshot;
-
-            element.addDestroyListener(this);
-        }
-
-        public void discard() {
-            element.removeDestroyListener(this);
-        }
-
-        @Override
-        public void onDestroy(Object object) {
-            steps.remove(this);
-        }
-    }
-
-    private static Stack<Entry> steps = new Stack<>();
+    private static Stack<byte[]> steps = new Stack<>();
     private static int count = 0;
     private static int max = 250;
+    private static Stack<byte[]> redos = new Stack<>();
 
-    public static boolean saveState(BaseElement element) {
-        Snapshot snapshot = new Snapshot();
-        element.writeSnapshot(snapshot);
+    public static boolean saveState() {
+        redos.clear();
 
-        System.out.println(element);
+        Presentation presentation = Presentation.get();
+        if (presentation == null)
+            return false;
 
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            Writer writer = new Writer(outputStream);
+            writer.writeFrom(presentation);
+        } catch (IOException e) {
+            return false;
+        }
+        
         if (count >= max) {
-            Entry expired = steps.removeLast();
-            expired.discard();
+            steps.removeLast();
         }
         else
             count++;
-        steps.push(new Entry(element, snapshot));
+        steps.push(outputStream.toByteArray());
 
         return true;
     }
 
-    public static boolean restoreState() {
-        if (count <= 0)
+    public static boolean restorePriorState() {
+        if (steps.size() <= 0)
             return false;
-        count--;
-        Entry entry = steps.pop();
-        System.out.println(entry.element);
+            
+
+        if (redos.size() <= 0) {
+            saveState();
+            redos.push(steps.pop());
+        }
+
+        byte[] entry = steps.pop();
+        redos.push(entry);
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(entry);
+        try {
+            Reader reader = new Reader(inputStream);
+            Presentation.set((Presentation)reader.loadHierarchy());
+        }
+        catch (IOException e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean restoreAfterState() {
+        if (redos.size() <= 0)
+            return false;
+
+        byte[] entry = redos.pop();
+        steps.push(entry);
         
-        entry.element.readSnapshot(entry.snapshot);
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(entry);
+        try {
+            Reader reader = new Reader(inputStream);
+            Presentation.set((Presentation)reader.loadHierarchy());
+        }
+        catch (IOException e) {
+            return false;
+        }
 
         return true;
     }

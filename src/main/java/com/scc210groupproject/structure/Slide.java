@@ -4,7 +4,6 @@ import javax.swing.JPanel;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
-import com.scc210groupproject.structure.state.Snapshot;
 
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
@@ -63,20 +62,6 @@ public class Slide extends BaseElement
         writer.writeInt("height", d.height);
 
         writer.writeInt("background", panel.getBackground().getRGB());
-    }
-
-    @Override
-    public void writeSnapshot(Snapshot snapshot) {
-        snapshot.addEntry("point", panel.getLocation());
-        snapshot.addEntry("dimension", panel.getSize());
-        snapshot.addEntry("background", panel.getBackground());
-    }
-
-    @Override
-    public void readSnapshot(Snapshot snapshot) {
-        panel.setLocation((Point)snapshot.readEntry("point"));
-        panel.setSize((Dimension)snapshot.readEntry("dimension"));
-        panel.setBackground((Color)snapshot.readEntry("background"));
     }
 
     @Override

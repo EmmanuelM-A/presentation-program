@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.scc210groupproject.structure.TextElement;
-import com.scc210groupproject.testui.MainDisplayPanel;
 import com.scc210groupproject.ui.SlideManager;
 
 public class NewTextElementAction implements ActionListener
@@ -25,7 +24,6 @@ public class NewTextElementAction implements ActionListener
 
 
         SlideManager.slideManager.getCurrentSlide().add(textElement);
-        //MainDisplayPanel.instance.getDisplayedSlide().add(textElement);
     }
     
 }

@@ -6,7 +6,6 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
 import com.scc210groupproject.structure.*;
-import com.scc210groupproject.structure.adjust.MultiController;
 import com.scc210groupproject.structure.eventListeners.IUpdateSlideListener;
 import com.scc210groupproject.structure.input.InputEmulator;
 import com.scc210groupproject.structure.state.SnapshotManager;
@@ -32,6 +31,9 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
     
     private InputEmulator emulator;
 
+    private Dimension slideDimension;
+    private Point newOffset;
+
     public InputEmulator getInputEmulator()
     {
         return emulator;
@@ -49,22 +51,18 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
 
         super.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()), "undo");
         super.getActionMap().put("undo", new AbstractAction() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                SnapshotManager.restoreState();
+                SnapshotManager.restorePriorState();
             }
-            
         });
         
-        super.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "exitselect");
-        super.getActionMap().put("exitselect", new AbstractAction() {
-
+        super.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()), "redo");
+        super.getActionMap().put("redo", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MultiController.clearAll();
+                SnapshotManager.restoreAfterState();
             }
-            
         });
 
         Presentation.addUpdateSlideListener(this);
@@ -165,33 +163,39 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
         int height = this.getHeight();
 
         if (width > 0 && height > 0) {
-            // Calculate slide aspect ratio and display aspect ratio
-            double slideRatio = (double)slideComp.getWidth() / (double)slideComp.getHeight();
-            double displayRatio = (double) width / (double) height;
-
-            // Determine the slide dimension to be used
-            Dimension slideDimension = slideRatio > displayRatio ?
-                    new Dimension(width, (int) ((double) width / slideRatio)) :
-                    new Dimension((int) ((double) height * slideRatio), height);
-
-            // Calculate and set the new offset
-            Point newOffset = new Point(
-                    (super.getWidth() - slideDimension.width) / 2,
-                    (super.getHeight() - slideDimension.height) / 2);
-            currentSlideImage.setOffset(newOffset);
-
-            // Set the new bufferedSlideImage to the newly created buffer image with the new slide dimensions
-            currentSlideImage.setBufferedSlideImage(currentSlideImage.getSlide().createPreview(slideDimension));
-
-            // Calculate and set the new scale
-            double newScale = (double)bufferedSlideImage.getWidth() / (double) slideDimension.width;
-            currentSlideImage.setScale(newScale);
-
+            updateBufferedSlideImage(currentSlideImage, width, height);
             
             emulator.setPositioning(newOffset, (double)slideComp.getWidth() / (double)slideDimension.width);
 
             repaint();
         }
+    }
+
+    public void updateBufferedSlideImage(SlideImage slideImage, int width, int height) {
+
+        Component slideComp = slideImage.getSlide().asComp();
+
+        // Calculate slide aspect ratio and display aspect ratio
+        double slideRatio = (double)slideComp.getWidth() / (double)slideComp.getHeight();
+        double displayRatio = (double) width / (double) height;
+
+        // Determine the slide dimension to be used
+        slideDimension = slideRatio > displayRatio ?
+                new Dimension(width, (int) ((double) width / slideRatio)) :
+                new Dimension((int) ((double) height * slideRatio), height);
+
+        // Calculate and set the new offset
+        newOffset = new Point(
+                (super.getWidth() - slideDimension.width) / 2,
+                (super.getHeight() - slideDimension.height) / 2);
+        slideImage.setOffset(newOffset);
+
+        // Set the new bufferedSlideImage to the newly created buffer image with the new slide dimensions
+        slideImage.setBufferedSlideImage(slideImage.getSlide().createPreview(slideDimension));
+
+        // Calculate and set the new scale
+        double newScale = (double)bufferedSlideImage.getWidth() / (double) slideDimension.width;
+        slideImage.setScale(newScale);
     }
 
     /**

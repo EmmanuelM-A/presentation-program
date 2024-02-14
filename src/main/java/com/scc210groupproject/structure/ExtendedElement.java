@@ -15,7 +15,6 @@ import com.scc210groupproject.structure.adjust.DragResizer;
 import com.scc210groupproject.structure.adjust.IResizable;
 import com.scc210groupproject.structure.anchors.AnchorManager;
 import com.scc210groupproject.structure.anchors.IAnchorProvider;
-import com.scc210groupproject.structure.state.Snapshot;
 
 public abstract class ExtendedElement extends BaseElement implements IResizable, IAnchorProvider {
 
@@ -110,20 +109,5 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
         asComp().setSize(d);
 
         asComp().setBackground(new Color(reader.readInt("background")));
-    }
-
-    public void writeSnapshotExtended(Snapshot snapshot) {
-        snapshot.addEntry("point", asComp().getLocation());
-        snapshot.addEntry("dimension", asComp().getSize());
-        snapshot.addEntry("background", asComp().getBackground());
-    }
-
-    public void readSnapshotExtended(Snapshot snapshot) {
-        asComp().setLocation((Point)snapshot.readEntry("point"));
-        asComp().setSize((Dimension)snapshot.readEntry("dimension"));
-        asComp().setBackground((Color)snapshot.readEntry("background"));
-
-        manager.onChangeSize();
-        notifyUpdate(this);
     }
 }

@@ -581,6 +581,10 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
 
     @Override
     public void onUpdateSlide(int index, Slide slide) {
+        
+        if (index != currentSlideIndex)
+            MainDisplayPanel.instance.updateBufferedSlideImage(slideImages.get(index), 200, 118);
+        
         // Get the slide in the slideViewer at the index
         JButton previewSlide = this.slidesViewer.get(index);
 
@@ -589,5 +593,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
 
         // Reset the image icon of that slide to the new slide image
         previewSlide.setIcon(GeneralButtons.resizeIcon(previewSlideImage, 200, 118));
+
+        //previewSlide.repaint();
     }
 }

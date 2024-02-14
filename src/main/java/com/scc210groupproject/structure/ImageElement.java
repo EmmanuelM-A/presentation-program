@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
-import com.scc210groupproject.structure.state.Snapshot;
 import com.scc210groupproject.ui.helper.GeneralButtons;
 
 public class ImageElement extends ExtendedElement
@@ -68,11 +67,6 @@ public class ImageElement extends ExtendedElement
     }
 
     @Override
-    public void writeSnapshot(Snapshot snapshot) {
-        super.writeSnapshotExtended(snapshot);
-    }
-
-    @Override
     protected void readSelf(Reader reader) throws IOException {
         
         label.addComponentListener(new ResizeListener());
@@ -84,11 +78,6 @@ public class ImageElement extends ExtendedElement
         }
 
         super.readSelfExtended(reader);
-    }
-
-    @Override
-    public void readSnapshot(Snapshot snapshot) {
-        super.readSnapshotExtended(snapshot);
     }
 
     @Override

@@ -59,7 +59,7 @@ public class InputManager {
             listeners.remove(listener);
         }
     
-        public void passEvent(BaseElement element, InputEmulator.InputState state) {
+        public boolean passEvent(BaseElement element, InputEmulator.InputState state) {
             if (listeners.size() > 0) {
                 for (Object l : listeners)
                     try {
@@ -69,11 +69,14 @@ public class InputManager {
                     } catch (InvocationTargetException e) {
                         throw new IllegalArgumentException("\ncheck method used for " + type.getName() + "\nIf you are using DragResizer, make sure the Element it is attached to implements IResizable");
                     }
+                return true;
             }
             else {
                 BaseElement parent = element.getParent();
                 if (parent != null)
-                    parent.getMouseManager().controllers.get(type).passEvent(parent, state);
+                    return parent.getInputManager().controllers.get(type).passEvent(parent, state);
+                else
+                    return false;
             }
         }
     }

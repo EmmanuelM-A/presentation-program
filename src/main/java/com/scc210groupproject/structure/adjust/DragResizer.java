@@ -4,7 +4,6 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
 
-import com.scc210groupproject.structure.BaseElement;
 import com.scc210groupproject.structure.helper.CoordinateUtils;
 import com.scc210groupproject.structure.input.InputEmulator.InputState;
 import com.scc210groupproject.structure.input.listeners.IMouseClicked;
@@ -135,7 +134,7 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
     @Override
     public void move(InputState state) {
         if (saveIfMove) {
-            SnapshotManager.saveState((BaseElement)element);
+            SnapshotManager.saveState();
             saveIfMove = false;
         }
         

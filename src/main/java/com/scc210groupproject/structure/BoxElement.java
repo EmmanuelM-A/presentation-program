@@ -4,7 +4,6 @@ import javax.swing.JPanel;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
-import com.scc210groupproject.structure.state.Snapshot;
 
 import java.awt.Component;
 
@@ -27,20 +26,9 @@ public class BoxElement extends ExtendedElement {
     public void writeSelf(Writer writer) throws IOException {
         super.writeSelfExtended(writer);
     }
-    
-    @Override
-    public void writeSnapshot(Snapshot snapshot) {
-        super.writeSnapshotExtended(snapshot);
-    }
 
     @Override
     public void readSelf(Reader reader) throws IOException {
         super.readSelfExtended(reader);
     }
-
-    @Override
-    public void readSnapshot(Snapshot snapshot) {
-        super.readSnapshotExtended(snapshot);
-    }
-
 }

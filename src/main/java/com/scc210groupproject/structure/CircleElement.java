@@ -6,7 +6,6 @@ import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.structure.input.InputEmulator.InputState;
 import com.scc210groupproject.structure.input.adapters.MouseOccupancyAdapter;
-import com.scc210groupproject.structure.state.Snapshot;
 
 import java.awt.Component;
 import java.awt.Graphics;
@@ -30,18 +29,8 @@ public class CircleElement extends ExtendedElement {
     }
 
     @Override
-    public void writeSnapshot(Snapshot snapshot) {
-        super.writeSnapshotExtended(snapshot);
-    }
-
-    @Override
     public void readSelf(Reader reader) throws IOException {
         super.readSelfExtended(reader);
-    }
-    
-    @Override
-    public void readSnapshot(Snapshot snapshot) {
-        super.readSnapshotExtended(snapshot);
     }
 
     public CircleElement() {
