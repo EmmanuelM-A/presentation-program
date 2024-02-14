@@ -37,6 +37,7 @@ public enum GeneralButtons {
     ADD_VIDEO("Video", "add-video.png", 32, 32, new NewVideoElementAction()),
     ADD_AUDIO("Audio", "add-audio.png", 32, 32, new NewAudioElementAction()),
     ADD_DIAG("Diagrams", "add-diagram.png", 32, 32, new NewDiagramElementAction()),
+    ADD_CHART("Charts", "add-chart.png", 32, 32, new NewChartAction()),
     ADD_LINE("Line", "add-line.png", 32, 32, new NewArrowElementAction()),
     SHAPES("Shapes", "add-shapes.png", 32, 32, new ShapesAction()),
     EXPORT("Export", "export.png", 32, 32, new ExportAction()),
@@ -54,14 +55,14 @@ public enum GeneralButtons {
     LICENSE("License", "certificate.png", 32, 32, new LicenseAction()),
     SHORTCUTS("Shortcuts", "shortcuts.png", 32, 32, new ShortcutsAction()),
     TOGGLE_THEME("Theme", "toggle-theme.png", 32, 32, new ToggleThemeAction()),
-    BOLD("Bold", "bold.png", 32, 32, new StyleAction("BOLD")),
-    ITALIC("Italic", "italic.png", 32, 32, new StyleAction("ITALIC")),
-    UNDERLINE("Underline", "underline.png", 32, 32, new StyleAction("UNDERLINE")),
-    STRIKETHROUGH("Strikethrough", "strikethrough.png", 32, 32, new StyleAction("STRIKETHROUGH")),
-    ALIGN_LEFT("Align Left", "align-left.png", 32, 32, new StyleAction("ALIGNLEFT")),
-    ALIGN_RIGHT("Align Right", "align-right.png", 32, 32, new StyleAction("ALIGNRIGHT")),
-    ALIGN_CENTRE("Align Centre", "align-centre.png", 32, 32, new StyleAction("ALIGNCENTRE")),
-    JUSTIFY("Justify", "justify.png", 32, 32, new StyleAction("JUSTIFY"));
+    BOLD("", "bold.png", 32, 32, new StyleAction("BOLD")),
+    ITALIC("", "italic.png", 32, 32, new StyleAction("ITALIC")),
+    UNDERLINE("", "underline.png", 32, 32, new StyleAction("UNDERLINE")),
+    STRIKETHROUGH("", "strikethrough.png", 32, 32, new StyleAction("STRIKETHROUGH")),
+    ALIGN_LEFT("", "align-left.png", 32, 32, new StyleAction("ALIGNLEFT")),
+    ALIGN_RIGHT("", "align-right.png", 32, 32, new StyleAction("ALIGNRIGHT")),
+    ALIGN_CENTRE("", "align-centre.png", 32, 32, new StyleAction("ALIGNCENTRE")),
+    JUSTIFY("", "justify.png", 32, 32, new StyleAction("JUSTIFY"));
 
 
     private final String title; // Button title - will be used for hover text

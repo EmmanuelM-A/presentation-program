@@ -1,7 +1,6 @@
 package com.scc210groupproject.ui.contextMenu;
 
 import com.scc210groupproject.structure.TextElement;
-import com.scc210groupproject.structure.TextElement.Alignment;
 import com.scc210groupproject.ui.helper.GeneralButtons;
 
 import javax.swing.*;
@@ -26,10 +25,9 @@ public class TextContextMenu extends ContextMenu{
     {
         this.setPreferredSize(new Dimension(300, 350));
         GridBagLayout gBagLayout = new GridBagLayout();
-        BoxLayout boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(3, 3, 3, 3);
-        this.setLayout(boxLayout);
+        this.setLayout(gBagLayout);
     
         String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 
@@ -48,101 +46,45 @@ public class TextContextMenu extends ContextMenu{
             public void stateChanged(ChangeEvent e) {
                 element.setFontSize((int)fontSize.getValue());
             }    
-        });  
+        }); 
+        
+        JColorChooser colorChooser = new JColorChooser();
+        colorChooser.getSelectionModel().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                element.setBackground(colorChooser.getColor());
+            }    
+        }); 
 
         JButton bold = makeContextMenuButton(GeneralButtons.BOLD);
 
-        JButton underline = new JButton(GeneralButtons.UNDERLINE.getIcon());
-        underline.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                element.setUnderline(true);
-            }    
-        });
+        JButton underline = makeContextMenuButton(GeneralButtons.UNDERLINE);
 
-        JButton italic = new JButton(GeneralButtons.ITALIC.getIcon());
-        italic.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                element.setItalic(true);
-            }    
-        }); 
+        JButton italic = makeContextMenuButton(GeneralButtons.ITALIC);
 
-        JButton strikeThrough = new JButton(GeneralButtons.STRIKETHROUGH.getIcon());
-        italic.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                element.setStrikeThrough(true);
-            }    
-        }); 
+        JButton strikeThrough = makeContextMenuButton(GeneralButtons.STRIKETHROUGH);
 
-        JButton left = new JButton(GeneralButtons.ALIGN_LEFT.getIcon());
-            left.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    element.setAlignment(Alignment.LEFT);
-                }
-            });
+        JButton left = makeContextMenuButton(GeneralButtons.ALIGN_LEFT);
         
-        JButton center = new JButton(GeneralButtons.ALIGN_CENTRE.getIcon());
-        center.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                element.setAlignment(Alignment.CENTER);
-            }
-        });
+        JButton centre = makeContextMenuButton(GeneralButtons.ALIGN_CENTRE);
 
-        JButton right = new JButton(GeneralButtons.ALIGN_RIGHT.getIcon());
-        right.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                element.setAlignment(Alignment.RIGHT);
-            }
-        });   
+        JButton right = makeContextMenuButton(GeneralButtons.ALIGN_RIGHT);
 
-        JButton justifed = new JButton(GeneralButtons.JUSTIFY.getIcon());
-        justifed.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                element.setAlignment(Alignment.JUSTIFIED);
-            }
-        });
-
-        // JButton justifed = new JButton(GeneralButtons.JUSTIFY.getIcon());
-        // justifed.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         element.setAlignment(Alignment.JUSTIFIED);
-        //     }
-        // });
-
-        // JButton justifed = new JButton(GeneralButtons.JUSTIFY.getIcon());
-        // justifed.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         element.setAlignment(Alignment.JUSTIFIED);
-        //     }
-        // });
-
+        JButton justifed = makeContextMenuButton(GeneralButtons.JUSTIFY);
 
         JPanel optionsPanel = new JPanel();
         {
             optionsPanel.setLayout(gBagLayout);
 
             gbc.fill = GridBagConstraints.BOTH;
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.gridwidth = 4;
+            gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 4;
             optionsPanel.add(fontList, gbc);
 
-            gbc.gridx = 5;
-            gbc.gridwidth = 1;
+            gbc.gridx = 5; gbc.gridwidth = 1;
             optionsPanel.add(fontSize, gbc);
 
-            gbc.gridx = 0;
-            gbc.gridy = 1;
-            gbc.weightx = 1;
-            optionsPanel.add(bold , gbc);
+            gbc.gridx = 0; gbc.gridy = 1; gbc.weightx = 1;
+            optionsPanel.add(bold, gbc);
 
             gbc.gridx = 1;
             optionsPanel.add(underline, gbc);
@@ -153,12 +95,11 @@ public class TextContextMenu extends ContextMenu{
             gbc.gridx = 3;
             optionsPanel.add(strikeThrough, gbc);
 
-            gbc.gridx = 0;
-            gbc.gridy = 2;
+            gbc.gridx = 0; gbc.gridy = 2;
             optionsPanel.add(left, gbc);
 
             gbc.gridx = 1;
-            optionsPanel.add(center, gbc);
+            optionsPanel.add(centre, gbc);
 
             gbc.gridx = 2;
             optionsPanel.add(right, gbc);
@@ -166,22 +107,11 @@ public class TextContextMenu extends ContextMenu{
             gbc.gridx = 3;
             optionsPanel.add(justifed, gbc);
 
-            // gbc.gridx = 0;
-            // gbc.gridy = 3;
-            // optionsPanel.add(, gbc);
-
+            gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 6; 
+            optionsPanel.add(colorChooser, gbc);
         }
-        this.add(optionsPanel);
-
-        // gbc.fill = GridBagConstraints.VERTICAL;
-        // gbc.gridx = 2;
-        // gbc.gridy = 2;
-        // this.add(new JButton("Change Colour", null), gbc);
-
-        // gbc.fill = GridBagConstraints.VERTICAL;
-        // gbc.gridx = 0;
-        // gbc.gridy = 3;
-        // this.add(new JButton("Border", null), gbc);
+        gbc.gridy = 0; gbc.gridwidth = 1;
+        this.add(optionsPanel, gbc);
 
         JPanel panel = new JPanel();
         {
@@ -212,6 +142,7 @@ public class TextContextMenu extends ContextMenu{
             });
             panel.add(area, BorderLayout.CENTER);
         }
-        this.add(panel);
+        gbc.gridy = 1; gbc.weighty = 1;
+        this.add(panel, gbc);
     }
 }

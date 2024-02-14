@@ -44,7 +44,7 @@ public class StyleAction implements ActionListener
             case "ALIGNRIGHT":
                 element.setAlignment(Alignment.RIGHT);
                 break;
-            case "ALIGN CENTRE":
+            case "ALIGNCENTRE":
                 element.setAlignment(Alignment.CENTER);
                 break;
             case "JUSTIFY":

@@ -1,5 +1,6 @@
 package com.scc210groupproject.structure;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.io.IOException;
@@ -89,7 +90,7 @@ public class TextElement extends ExtendedElement
 
     public void setStrikeThrough(Boolean bool) {
         SimpleAttributeSet attributes = new SimpleAttributeSet(pane.getParagraphAttributes());
-        StyleConstants.setUnderline(attributes, bool ^ this.getStrikethrough());
+        StyleConstants.setStrikeThrough(attributes, bool ^ this.getStrikethrough());
         applyStyle(attributes);
     }
 
@@ -97,6 +98,11 @@ public class TextElement extends ExtendedElement
         SimpleAttributeSet attributes = new SimpleAttributeSet(pane.getParagraphAttributes());
         StyleConstants.setFontFamily(attributes, font);
         applyStyle(attributes);
+    }
+
+    public void setBackground(Color color) {
+        pane.setBackground(color);
+        super.notifyUpdate(this);
     }
 
     public void setAlignment(Alignment alignment) {
