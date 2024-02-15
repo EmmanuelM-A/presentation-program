@@ -17,18 +17,19 @@ public class SlideMiniToolBar extends ToolBar {
         this.setRollover(true);
         this.setName("Slide Mini Toolbar");
         this.setFloatable(false);
-        this.setLayout(new FlowLayout(FlowLayout.LEFT));
-        this.setPreferredSize(new Dimension(400, 80));
+        this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        this.setPreferredSize(new Dimension(390, 74));
 
         newSlide = makeToolbarButton(GeneralButtons.NEW_SLIDE, null);
 
-        insertSlideBefore = makeToolbarButton(null, null);
+        insertSlideBefore = makeToolbarButton(GeneralButtons.INSERT_SLIDE_BEFORE, null);
 
-        insertSlideAfter = makeToolbarButton(null, null);
+        insertSlideAfter = makeToolbarButton(GeneralButtons.INSERT_SLIDE_AFTER, null);
+        insertSlideAfter.setPreferredSize(new Dimension(82, 74));
 
-        deleteSlide = makeToolbarButton(null, null);
+        deleteSlide = makeToolbarButton(GeneralButtons.DELETE_SLIDE, null);
 
-        presentSlide = makeToolbarButton(null, null);
+        presentSlide = makeToolbarButton(GeneralButtons.PRESENT_AT, null);
 
         this.add(newSlide);
         this.add(insertSlideBefore);
@@ -38,36 +39,4 @@ public class SlideMiniToolBar extends ToolBar {
 
     }
 
-    /*private JToolBar miniTextToolbar() {
-        GridBagConstraints gbc = new GridBagConstraints();
-        GridBagLayout layout = new GridBagLayout();
-
-        JToolBar bar = new JToolBar();
-        bar.setLayout(layout);
-        bar.setPreferredSize(new Dimension(300, 60));
-
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 1.0;
-
-        // First Row
-        gbc.gridwidth = 3;
-        makeButton("Fonts", bar, layout, gbc);
-        gbc.gridwidth = 1;
-        makeButton("Sizes", bar, layout, gbc);
-
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        makeButton("Move", bar, layout, gbc);
-
-        // Second Row
-        gbc.gridwidth = 1;
-        makeButton("Bold", bar, layout, gbc);
-        makeButton("Italic", bar, layout, gbc);
-        makeButton("U...", bar, layout, gbc);
-        makeButton("Colour", bar, layout, gbc);
-
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        makeButton("Bucket", bar, layout, gbc);
-
-        return bar;
-    }*/
 }

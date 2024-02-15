@@ -12,11 +12,10 @@ import java.util.Objects;
 
 /**
  * This enum consists of buttons (just its information like title, icons and actions) where its functionality is the same where ever its used.
- * The primary aim of this enum is to store buttons that will be use in more than one place and where is function is not changed
- * (but a new function can always be assigned).
+ * The primary aim of this enum is to store buttons that will be use in more than one place and where is functionality will not be changed
+ * (but more functionality can always be assigned).
  * <p>
  *
- * @author madukaag
  * */
 public enum GeneralButtons {
     NEW("New File", "new-document.png", 32, 32, new NewFileAction()),
@@ -32,6 +31,8 @@ public enum GeneralButtons {
     SPELL_CHECKER("Spell Checker", "search.png", 32, 32, new SpellCheckerAction()),
     HELP("Help", "question.png", 32, 32, new HelpAction()),
     NEW_SLIDE("New Slide", "new-slide.png", 32, 32, new NewSlideAction()),
+    INSERT_SLIDE_BEFORE("Insert Slide Left", "insert-left.png", 32, 32, null),
+    INSERT_SLIDE_AFTER("Insert Slide Right", "insert-right.png", 32, 32, null),
     ADD_TEXT("Text", "add-text.png", 32, 32, new NewTextElementAction()),
     ADD_IMAGE("Image", "add-image.png", 32, 32, new NewImageElementAction()),
     ADD_VIDEO("Video", "add-video.png", 32, 32, new NewVideoElementAction()),
@@ -46,9 +47,9 @@ public enum GeneralButtons {
     PRESENT("Present", "projector-screen.png", 32, 32, new PresentAction()),
     PRESENT_AT("Present From", "present-at.png", 32, 32, new PresentAtAction()),
     DELETE_SLIDE("Delete Slide", "delete-slide.png", 32, 32, null),
-    DELETE_ELEMENT("Delete", "delete-element.png", 32, 32, null),
-    AUTOMATE("Automate Slides", "", 32, 32, null),
-    HIDE_SLIDE("Hide Slides", "", 32, 32, null),
+    DELETE_ELEMENT("Delete Element", "delete-element.png", 32, 32, null),
+    AUTOMATE("Automate Slides", "automate.png", 32, 32, null),
+    HIDE_SLIDE("Hide Slides", "hide.png", 32, 32, null),
     /*ANIMATIONS("Animations", "", 32, 32, null),
     TRANSITIONS("Transitions", "", 32, 32, null),*/
     LICENSE("License", "certificate.png", 32, 32, new LicenseAction()),
