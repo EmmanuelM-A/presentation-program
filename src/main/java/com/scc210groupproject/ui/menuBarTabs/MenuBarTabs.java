@@ -15,7 +15,7 @@ import java.awt.*;
 public class MenuBarTabs extends JTabbedPane {
     private final FileToolBar fileToolBar;
     private final HomeToolBar homeToolBar;
-    private final InsertToolBar insertToolBar;
+    public final InsertToolBar insertToolBar;
     private final ViewToolBar viewToolBar;
     private final ShareToolBar shareToolBar;
     private final AboutToolBar aboutToolBar;

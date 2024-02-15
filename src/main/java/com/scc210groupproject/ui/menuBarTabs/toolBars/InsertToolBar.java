@@ -12,7 +12,8 @@ import javax.swing.*;
  * @author madukaag
  * */
 public class InsertToolBar extends ToolBar {
-    private JButton addText, addImage, addVideo, newSlide, addDiagram, addChart, addShape, addLine, delete, addAudio, help;
+    private JButton addText, addImage, addVideo, newSlide, addDiagram, addChart, addLine, delete, addAudio, help;
+    public JButton addShape;
 
     public InsertToolBar(JFrame frame, ContextMenuPanel c, JPanel recentsPanel) {
         this.setRollover(true);

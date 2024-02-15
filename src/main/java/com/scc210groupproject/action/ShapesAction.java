@@ -11,7 +11,7 @@ public class ShapesAction implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent discard) {
 
-        Point location = UIFrame.instance.getLocationOnScreen();
+        Point location = UIFrame.instance.menuBarTabs.insertToolBar.addShape.getLocationOnScreen();
         ShapesPopup.popupMenu.show(UIFrame.instance, location.x, location.y);
 
     }
