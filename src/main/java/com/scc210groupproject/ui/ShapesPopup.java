@@ -15,8 +15,6 @@ public class ShapesPopup {
 
         popupMenu = new JPopupMenu("Shapes");
 
-        popupMenu.setLocation(200, 200);
-
         JMenuItem square = new JMenuItem("Box");
         square.addActionListener(new NewBoxAction());
         popupMenu.add(square);
