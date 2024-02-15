@@ -38,7 +38,7 @@ public class DeleteSlideAction implements ActionListener, ICreateSlideListener, 
     }
 
     @Override
-    public void actionPerformed(ActionEvent _)
+    public void actionPerformed(ActionEvent discard)
     {
         Presentation p = Presentation.get();
         if (p == null)
