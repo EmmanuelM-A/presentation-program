@@ -1,5 +1,7 @@
 package com.scc210groupproject.ui;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
@@ -10,6 +12,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class PresentationMode extends JFrame /*implements ActionListener*/ {
     /*
@@ -22,9 +25,11 @@ public class PresentationMode extends JFrame /*implements ActionListener*/ {
      * 
      */
 
-    ArrayList<SlideImage> slidesToPresent;
+    private ArrayList<SlideImage> slidesToPresent;
 
     private int currentSlidePresentedIndex = 0;
+
+    private JPanel presentionModePanel = new JPanel(new BorderLayout());
 
     public PresentationMode() {
         this.setTitle("Presentation Mode");
@@ -34,13 +39,20 @@ public class PresentationMode extends JFrame /*implements ActionListener*/ {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
+        presentionModePanel.setPreferredSize(new Dimension(super.getWidth(), super.getHeight()));
+        presentionModePanel.setBackground(Color.BLUE);
+
         populateSlidesToPresent();
+
+        //presentionModePanel.add(slidesToPresent.get(currentSlidePresentedIndex), BorderLayout.CENTER);
 
         //MainDisplayPanel presentationDisplay = MainDisplayPanel.instance;
 
         //presentationDisplay.setPreferredSize(new Dimension(super.getWidth(), super.getHeight()));
 
-        this.addMouseListener(new MouseListener() {
+        //presentionModePanel
+
+        /*this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 nextSlideOnClick();
@@ -65,9 +77,13 @@ public class PresentationMode extends JFrame /*implements ActionListener*/ {
             public void mouseReleased(MouseEvent arg0) {
                 //throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
             }
-        });
+        });*/
 
-        this.add(slidesToPresent.get(currentSlidePresentedIndex));
+        this.add(presentionModePanel);
+
+        //this.add(slidesToPresent.get(currentSlidePresentedIndex));
+        
+        //this.add(presentationDisplay);
 
         setVisible(true);
     }
@@ -98,15 +114,15 @@ public class PresentationMode extends JFrame /*implements ActionListener*/ {
 
     }
 
-    public void populateSlidesToPresent() {
-        slidesToPresent = new ArrayList<>();
+    private void populateSlidesToPresent() {
+        this.slidesToPresent = new ArrayList<>();
 
         for(int i = 0; i < SlideManager.slideManager.getSlideCount(); i++) {
             SlideImage slideToPresent = SlideManager.slideManager.getSlideImageAt(i);
 
-            slideToPresent.setPreferredSize(new Dimension(super.getWidth(), super.getHeight()));
+            slideToPresent.setPreferredSize(new Dimension(presentionModePanel.getWidth(), presentionModePanel.getHeight()));
 
-            slidesToPresent.add(slideToPresent);
+            this.slidesToPresent.add(slideToPresent);
         }
     }
 }
