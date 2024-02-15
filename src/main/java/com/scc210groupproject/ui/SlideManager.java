@@ -3,6 +3,8 @@ package com.scc210groupproject.ui;
 import com.scc210groupproject.action.DeleteSlideAction;
 import com.scc210groupproject.action.NewSlideAction;
 import com.scc210groupproject.action.NextSlideAction;
+import com.scc210groupproject.action.PresentAction;
+import com.scc210groupproject.action.PresentAtAction;
 import com.scc210groupproject.action.PrevSlideAction;
 import com.scc210groupproject.structure.*;
 
@@ -179,10 +181,12 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         this.present = new JButton(GeneralButtons.resizeIcon(
             GeneralButtons.PRESENT.getIcon(), 20, 20));
         this.present.setToolTipText("Present");
+        this.present.addActionListener(new PresentAction());
 
         this.presentAt = new JButton(GeneralButtons.resizeIcon(
             GeneralButtons.PRESENT_AT.getIcon(), 20, 20));
         this.presentAt.setToolTipText("Present From");
+        this.presentAt.addActionListener(new PresentAtAction());
 
         //this.noSlides = new JLabel("Slides: ");
 
