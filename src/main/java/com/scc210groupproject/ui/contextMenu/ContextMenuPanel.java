@@ -15,6 +15,8 @@ public class ContextMenuPanel extends JPanel implements ActionListener {
     
     private static ContextMenuPanel instance = null;
 
+    public static ContextMenu menu = null;
+
     public static Object currentMenuOwner = null;
 
     public static void removeOwner(Object owner) {
@@ -26,6 +28,7 @@ public class ContextMenuPanel extends JPanel implements ActionListener {
     }
 
     public static void setMenu(Object owner, ContextMenu menu) {
+        ContextMenuPanel.menu = menu;
         currentMenuOwner = owner;
 
         instance.removeAll();
@@ -47,19 +50,10 @@ public class ContextMenuPanel extends JPanel implements ActionListener {
         this.revalidate();
     }
 
-    public void setPanel()
-    {
-    }
-
     public static JPanel contextMenuPanel = new JPanel(new BorderLayout());
 
     public ContextMenuPanel(JPanel contextMenu) {
         contextMenuPanel.add(contextMenu, BorderLayout.CENTER);
-    }
-
-    public static void changeContextMenu()
-    {
-        
     }
 
     @Override

@@ -2,44 +2,35 @@ package com.scc210groupproject.ui.contextMenu;
 
 import javax.swing.*;
 import java.awt.*;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.general.PieDataset;
-import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RefineryUtilities;
 
 import com.scc210groupproject.structure.ChartElement;
-import com.scc210groupproject.ui.SlideManager;
 import com.scc210groupproject.ui.helper.GeneralButtons;
 
 public class ChartContextMenu extends ContextMenu {
 
-    private JTable data;
-    private String[][] tableData;
+    private JTable table;
 
     public ChartContextMenu(ChartElement element) {
 
-        this.setPreferredSize(new Dimension(300, 350));
-        GridBagLayout gBagLayout = new GridBagLayout();
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(3, 3, 3, 3);
-        this.setLayout(gBagLayout);
+        this.makeChartContextMenu();
 
-        JButton pie = makeContextMenuButton(GeneralButtons.PIE);
+        String[][] data = element.getData();
 
-        JButton bar = makeContextMenuButton(GeneralButtons.BAR);
-
-        JButton line = makeContextMenuButton(GeneralButtons.LINE);
-
-        JButton xy = makeContextMenuButton(GeneralButtons.SCATTER);
-
-        this.data = new JTable();
-
+        for(int i = 0; i < table.getRowCount(); i++) {
+            for(int j = 0; j < table.getColumnCount(); j++) {
+                if (data[i][j] != null) {
+                    this.table.setValueAt(data[i][j], i, j);
+                }
+            }
+        }
     }
 
     public ChartContextMenu() {
+
+        this.makeChartContextMenu(); 
+    }
+
+    private void makeChartContextMenu() {
 
         this.setPreferredSize(new Dimension(300, 350));
         GridBagLayout gBagLayout = new GridBagLayout();
@@ -55,7 +46,11 @@ public class ChartContextMenu extends ContextMenu {
 
         JButton scatter = makeContextMenuButton(GeneralButtons.SCATTER);
 
-        JTable data = new JTable(40, 4);
+        JButton addColumn = makeContextMenuButton(GeneralButtons.ADDCOLUMN);
+
+        JButton addRow = makeContextMenuButton(GeneralButtons.ADDROW);
+
+        this.table = new JTable(50, 10);
 
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 1;
@@ -70,22 +65,27 @@ public class ChartContextMenu extends ContextMenu {
         gbc.gridx = 3;
         this.add(scatter, gbc);
 
-        JPanel panel = new JPanel(); {
-            BorderLayout borderLayout = new BorderLayout();
-            panel.setLayout(borderLayout);
-            data.setGridColor(Color.BLACK);
-            data.setShowGrid(true);
-            panel.add(this.data, BorderLayout.CENTER);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        this.add(addColumn, gbc);
+
+        gbc.gridx = 2;
+        this.add(addRow, gbc);
+
+        JScrollPane scrollPane = new JScrollPane(); {
+            //BorderLayout borderLayout = new BorderLayout();
+            //scrollPane.setLayout(borderLayout);
+            table.setGridColor(Color.BLACK);
+            table.setShowGrid(true);
+            scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+            scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            scrollPane.setViewportView(this.table);
         }
-        gbc.gridx = 0; gbc.gridy = 1; gbc.gridwidth = 4; gbc.weighty = 1;
-        this.add(panel, gbc);
+        gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 4; gbc.weighty = 1;
+        this.add(scrollPane, gbc);
     }
 
-    private void getTableData() {
-        for(int i = 0; i < data.getRowCount(); i++) {
-            for(int j = 0; j < data.getColumnCount(); j++) {
-                tableData[i][j] = (String)data.getValueAt(i, j);
-            }
-        }
+    public JTable getTable() {
+        return this.table;
     }
 }

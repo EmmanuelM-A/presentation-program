@@ -42,6 +42,8 @@ public enum GeneralButtons {
     BAR("", "bar-chart.png", 32, 32, new NewBarChartAction()),
     LINE("", "line-chart.png", 32, 32, new NewLineChartAction()),
     SCATTER("", "scatter-chart.png", 32, 32, new NewScatterChartAction()),
+    ADDCOLUMN("", "add-column.png", 32, 32, new AddColumnAction()),
+    ADDROW("", "add-row.png", 32, 32, new AddRowAction()),
     ADD_LINE("Line", "add-line.png", 32, 32, new NewArrowElementAction()),
     SHAPES("Shapes", "add-shapes.png", 32, 32, new ShapesAction()),
     EXPORT("Export", "export.png", 32, 32, new ExportAction()),
