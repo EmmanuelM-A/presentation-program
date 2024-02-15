@@ -70,12 +70,14 @@ public abstract class ToolBar extends JToolBar {
         button.setBorderPainted(false);
         button.setFocusPainted(false);
         button.addActionListener(buttonType.getEvent());
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                addToRecents(recents, button);
-            }
-        });
+        if(recents != null) {
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    addToRecents(recents, button);
+                }
+            });
+        }
 
         return button;
     }

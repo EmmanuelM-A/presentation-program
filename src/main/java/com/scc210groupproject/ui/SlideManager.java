@@ -303,6 +303,8 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         ImageIcon previewSlideImage = new ImageIcon(slideImages.get(slideNo - 1).getBufferedSlideImage());
         slide.setIcon(GeneralButtons.resizeIcon(previewSlideImage, 200, 118));
 
+        slide.setToolTipText("Slide " + slideNo);
+
         slide.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -543,7 +545,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         JButton slideInViewer = this.slidesViewer.get(index);
         highlightSlide(slideInViewer);
 
-        System.out.println("New Slide - " + (Presentation.get().getSlideCount()) + "!");
+        //System.out.println("New Slide - " + (Presentation.get().getSlideCount()) + "!");
     }
 
     @Override
