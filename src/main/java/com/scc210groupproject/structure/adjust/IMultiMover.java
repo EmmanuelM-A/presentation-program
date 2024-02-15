@@ -4,6 +4,5 @@ import com.scc210groupproject.structure.input.InputEmulator.InputState;
 
 public interface IMultiMover {
     public void move(InputState state);
-    public void setSaveIfMove(boolean state);
     public void evaluateState(boolean inSelectionStage);
 }

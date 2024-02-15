@@ -3,6 +3,7 @@ package com.scc210groupproject.structure.adjust;
 import java.util.HashSet;
 
 import com.scc210groupproject.structure.input.InputEmulator.InputState;
+import com.scc210groupproject.structure.state.SnapshotManager;
 
 public class MultiController {
     
@@ -32,16 +33,15 @@ public class MultiController {
 
     public static boolean contains(IMultiMover mover) {
         return selected.contains(mover);
-    } 
-
-    public static void setSaveIfMove(boolean state) {
-        for (IMultiMover mover : selected)
-            mover.setSaveIfMove(state);
     }
 
     public static void moveAll(InputState state) {
         for (IMultiMover mover : selected)
             mover.move(state);
+    }
+
+    public static void endMove() {
+        SnapshotManager.saveState();
     }
 
     public static void evaluateAll(boolean stage) {

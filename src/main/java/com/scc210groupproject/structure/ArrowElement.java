@@ -17,7 +17,6 @@ import com.scc210groupproject.structure.input.listeners.IMouseExited;
 import com.scc210groupproject.structure.input.listeners.IMouseMoved;
 import com.scc210groupproject.structure.input.listeners.IMousePressed;
 import com.scc210groupproject.structure.input.listeners.IMouseReleased;
-import com.scc210groupproject.structure.state.SnapshotManager;
 import com.scc210groupproject.ui.MainDisplayPanel;
 import com.scc210groupproject.ui.contextMenu.ArrowContextMenu;
 import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
@@ -452,7 +451,7 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
         private boolean targetSideB = false;
         private double snapDistance = 10;
 
-        private boolean saveIfMove = false;
+        private boolean saveOnRelease = false;
 
         public ArrowMover(ArrowElement element) {
             this.element = element;
@@ -482,6 +481,8 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
 
         @Override
         public void mouseDragged(Object target, InputState state) {
+            saveOnRelease = true;
+
             MultiController.moveAll(state);
         }
 
@@ -520,15 +521,12 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
             arrow.notifyUpdate(arrow);
 
             ContextMenuPanel.setMenu(new ArrowContextMenu());
+
+            saveOnRelease = false;
         }
 
         @Override
         public void move(InputState state) {
-            if (saveIfMove) {
-                SnapshotManager.saveState();
-                saveIfMove = false;
-            }
-
             if (targetSideA && targetSideB || MultiController.hasMultiple())
                 moveBoth(state);
             else if (targetSideA)
@@ -560,7 +558,6 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
         }
 
         private void moveSide(InputState state, Side side) {
-
             Point location = state.getLocationInSlide();
             BaseElement target = getAnchorProvider(element, location);
             if (target == null)
@@ -590,11 +587,6 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
         }
 
         @Override
-        public void setSaveIfMove(boolean state) {
-            saveIfMove = state;
-        }
-
-        @Override
         public void mouseClicked(Object target, InputState state) {
             // not used, here to block message being taken by another element
         }
@@ -606,7 +598,10 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
 
         @Override
         public void mouseReleased(Object target, InputState state) {
-            // not used, here to block message being taken by another element
+            if (saveOnRelease) {
+                MultiController.endMove();
+                saveOnRelease = false;
+            }
         }
 
         @Override

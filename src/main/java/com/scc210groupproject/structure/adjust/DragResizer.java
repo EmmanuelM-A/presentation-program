@@ -23,7 +23,7 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
 
     private IResizable element;
 
-    private boolean saveIfMove = false;
+    private boolean saveOnRelease = false;
 
     public void setMultiSelectMode(boolean multiSelect) {
         if (multiSelect) {
@@ -48,13 +48,16 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
         
         Point local = CoordinateUtils.convertSlideToLocalSpace(state.getLocationInSlide(), resizable.asBaseElement());
         operation = border.findPoint(local.x, local.y);
-        
-        MultiController.setSaveIfMove(true);
+
+        saveOnRelease = false;
     }
 
     @Override
     public void mouseReleased(Object o, InputState state) {
-        // used to block event passing
+        if (saveOnRelease) {
+            MultiController.endMove();
+            saveOnRelease = false;
+        }
     }
 
     @Override
@@ -100,6 +103,7 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
 
     @Override
     public void mouseDragged(Object o, InputState state) {
+        saveOnRelease = true;
         MultiController.moveAll(state);
     }
    
@@ -125,19 +129,9 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
     public void mouseClicked(Object o, InputState state) {
         // not used, here to block message being taken by another element
     }
-
-    @Override
-    public void setSaveIfMove(boolean state) {
-        saveIfMove = state;
-    }
      
     @Override
     public void move(InputState state) {
-        if (saveIfMove) {
-            SnapshotManager.saveState();
-            saveIfMove = false;
-        }
-        
         IResizable resizable = (IResizable)element;
         Dimension delta = state.getMouseDelta();
 

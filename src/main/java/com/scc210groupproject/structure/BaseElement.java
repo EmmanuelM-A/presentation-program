@@ -102,6 +102,8 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
         processNewElement(child);
 
         notifyUpdate(null);
+
+        SnapshotManager.saveState();
     }
     public final void remove(BaseElement child)
     {

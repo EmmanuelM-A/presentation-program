@@ -17,6 +17,7 @@ public class SnapshotManager {
     private static Stack<byte[]> redos = new Stack<>();
 
     public static boolean saveState() {
+        
         redos.clear();
 
         Presentation presentation = Presentation.get();
