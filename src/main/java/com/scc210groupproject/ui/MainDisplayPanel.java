@@ -64,6 +64,23 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
                 SnapshotManager.restoreAfterState();
             }
         });
+        
+        super.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "delete");
+        super.getActionMap().put("delete", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InputEmulator emulator = InputEmulator.instance;
+                if (emulator == null)
+                    return;
+                
+                BaseElement element = emulator.getFocusedElement();
+                if (element == null)
+                    return;
+
+                element.destroy();
+            }
+        });
+
 
         Presentation.addUpdateSlideListener(this);
 
