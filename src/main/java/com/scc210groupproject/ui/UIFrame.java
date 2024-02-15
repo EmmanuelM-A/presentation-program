@@ -80,15 +80,15 @@ public class UIFrame extends JFrame implements IUpdateProvider
         gbc.insets = new Insets(gap, 0, gap, gap);
         this.add(contextMenuPanel, gbc);
 
-        MainDisplayPanel mainDisplayPanel = new MainDisplayPanel(0, 0);
+        MainDisplayPanel.instance = new MainDisplayPanel(0, 0);
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.weightx = 0.8;
         gbc.insets = new Insets(gap, gap, gap, 0);
-        this.add(mainDisplayPanel, gbc);
+        this.add(MainDisplayPanel.instance, gbc);
 
-        SlideManager.slideManager = new SlideManager(mainDisplayPanel);
+        SlideManager.slideManager = new SlideManager(MainDisplayPanel.instance);
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
