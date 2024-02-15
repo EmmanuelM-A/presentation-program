@@ -3,15 +3,13 @@ package com.scc210groupproject.ui.contextMenu;
 import javax.swing.*;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * This class is the where the context menus will be added - STILL IN PROGRESS
  *
  * @author madukaag
  * */
-public class ContextMenuPanel extends JPanel implements ActionListener {
+public class ContextMenuPanel extends JPanel {
     
     private static ContextMenuPanel instance = null;
 
@@ -54,11 +52,5 @@ public class ContextMenuPanel extends JPanel implements ActionListener {
 
     public ContextMenuPanel(JPanel contextMenu) {
         contextMenuPanel.add(contextMenu, BorderLayout.CENTER);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent arg0) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
 }
