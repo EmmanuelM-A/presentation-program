@@ -26,7 +26,7 @@ public class TextElement extends ExtendedElement
 
     @Override
     protected void writeSelf(Writer writer) throws IOException {
-        super.writeExtended(writer);
+        super.writeSelfExtended(writer);
 
         writer.writeString("text", getText());
         writer.writeInt("textcolor", getTextColor().getRGB());
@@ -41,7 +41,7 @@ public class TextElement extends ExtendedElement
         setFontSize(reader.readInt("fontsize"));
         setAlignment(Alignment.fromEncoding(reader.readInt("fontalignment")));
 
-        super.readExtended(reader);
+        super.readSelfExtended(reader);
     }
 
     @Override
