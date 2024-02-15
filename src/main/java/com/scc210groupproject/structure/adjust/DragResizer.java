@@ -13,7 +13,6 @@ import com.scc210groupproject.structure.input.listeners.IMouseExited;
 import com.scc210groupproject.structure.input.listeners.IMouseMoved;
 import com.scc210groupproject.structure.input.listeners.IMousePressed;
 import com.scc210groupproject.structure.input.listeners.IMouseReleased;
-import com.scc210groupproject.structure.state.SnapshotManager;
 import com.scc210groupproject.ui.MainDisplayPanel;
 
 public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, IMouseDragged, IMouseEntered, IMouseExited, IMouseClicked, IMultiMover {

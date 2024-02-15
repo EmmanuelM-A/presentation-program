@@ -1,6 +1,5 @@
 package com.scc210groupproject.ui.menuBarTabs.toolBars;
 
-import com.scc210groupproject.action.NewImageElementAction;
 import com.scc210groupproject.ui.contextMenu.*;
 import com.scc210groupproject.ui.helper.GeneralButtons;
 
@@ -41,8 +40,6 @@ public class InsertToolBar extends ToolBar {
         this.add(newSlide);
 
         separator(this);
-
-        addImage.addActionListener(new NewImageElementAction());
 
         this.add(addText);
         this.add(addImage);
