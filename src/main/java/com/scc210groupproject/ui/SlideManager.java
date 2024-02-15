@@ -85,6 +85,10 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         return this.displayNewSlide;
     }
 
+    public int getSlideCount() {
+        return this.slideImages.size();
+    }
+
     //////////// SETTERS ////////////
 
     /**
@@ -200,6 +204,10 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         presentationSliderPanel.add(bottomSection, BorderLayout.SOUTH);
 
         return presentationSliderPanel;
+    }
+
+    public SlideImage getSlideImageAt(int index) {
+        return this.slideImages.get(index);
     }
 
     /**
