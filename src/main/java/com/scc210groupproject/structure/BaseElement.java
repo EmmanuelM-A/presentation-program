@@ -130,6 +130,9 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
     public final void destroy() {
         destroySelf();
 
+        if (parent != null)
+            parent.remove(this);
+
         for (BaseElement element : children)
             element.removeDestroyListener(this);
 
