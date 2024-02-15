@@ -1,6 +1,9 @@
 package com.scc210groupproject;
 
 
+import java.lang.reflect.InvocationTargetException;
+
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -14,7 +17,7 @@ import com.scc210groupproject.ui.UIFrame;
  * */
 
 public class App {
-    public static void main( String[] args )
+    public static void main( String[] args ) throws InvocationTargetException, InterruptedException
     {
         System.setProperty("flatlaf.useWindowDecorations", "true");
         FlatLaf.registerCustomDefaultsSource("com.scc210groupproject.theme");
@@ -27,8 +30,15 @@ public class App {
         catch (UnsupportedLookAndFeelException e) {
             System.out.println("Falling back to default style");
         }
+        SwingUtilities.invokeAndWait(new Runnable() {
 
-        new UIFrame();
+            @Override
+            public void run() {
+                new UIFrame();
+            }
+            
+        });
+        
     }
 }
 
