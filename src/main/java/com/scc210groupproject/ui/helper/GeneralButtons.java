@@ -38,6 +38,13 @@ public enum GeneralButtons {
     ADD_VIDEO("Video", "add-video.png", 32, 32, new NewVideoElementAction()),
     ADD_AUDIO("Audio", "add-audio.png", 32, 32, new NewAudioElementAction()),
     ADD_DIAG("Diagrams", "add-diagram.png", 32, 32, new NewDiagramElementAction()),
+    ADD_CHART("Charts", "add-chart.png", 32, 32, new NewChartAction()),
+    PIE("", "pie-chart.png", 32, 32, new NewPieChartAction()),
+    BAR("", "bar-chart.png", 32, 32, new NewBarChartAction()),
+    LINE("", "line-chart.png", 32, 32, new NewLineChartAction()),
+    SCATTER("", "scatter-chart.png", 32, 32, new NewScatterChartAction()),
+    ADDCOLUMN("", "add-column.png", 32, 32, new AddColumnAction()),
+    ADDROW("", "add-row.png", 32, 32, new AddRowAction()),
     ADD_LINE("Line", "add-line.png", 32, 32, new NewArrowElementAction()),
     SHAPES("Shapes", "add-shapes.png", 32, 32, new ShapesAction()),
     EXPORT("Export", "export.png", 32, 32, new ExportAction()),
@@ -54,7 +61,16 @@ public enum GeneralButtons {
     TRANSITIONS("Transitions", "", 32, 32, null),*/
     LICENSE("License", "certificate.png", 32, 32, new LicenseAction()),
     SHORTCUTS("Shortcuts", "shortcuts.png", 32, 32, new ShortcutsAction()),
-    TOGGLE_THEME("Theme", "toggle-theme.png", 32, 32, new ToggleThemeAction());
+    TOGGLE_THEME("Theme", "toggle-theme.png", 32, 32, new ToggleThemeAction()),
+    BOLD("", "bold.png", 32, 32, new StyleAction("BOLD")),
+    ITALIC("", "italic.png", 32, 32, new StyleAction("ITALIC")),
+    UNDERLINE("", "underline.png", 32, 32, new StyleAction("UNDERLINE")),
+    STRIKETHROUGH("", "strikethrough.png", 32, 32, new StyleAction("STRIKETHROUGH")),
+    ALIGN_LEFT("", "align-left.png", 32, 32, new StyleAction("ALIGNLEFT")),
+    ALIGN_RIGHT("", "align-right.png", 32, 32, new StyleAction("ALIGNRIGHT")),
+    ALIGN_CENTRE("", "align-centre.png", 32, 32, new StyleAction("ALIGNCENTRE")),
+    JUSTIFY("", "justify.png", 32, 32, new StyleAction("JUSTIFY"));
+
 
     private final String title; // Button title - will be used for hover text
     private ImageIcon icon; // Button icon - will be used to set the icon of a button
@@ -106,7 +122,7 @@ public enum GeneralButtons {
      * @return ImageIcon
      * */
     public static ImageIcon getIconFromFile(String file) {
-        String filePath = "src/main/resources/images/" + file;
+        String filePath = "./src/main/resources/images/" + file;
         BufferedImage source;
         try {
             source = ImageIO.read(new File(filePath));
@@ -153,7 +169,7 @@ public enum GeneralButtons {
     public static ImageIcon resizeIcon(Image image, int width, int height) {
 
         // Resize the Image
-        Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+        Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 
         // Return the resized ImageIcon
         return new ImageIcon(resizedImage);

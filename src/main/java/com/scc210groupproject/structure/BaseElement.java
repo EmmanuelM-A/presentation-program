@@ -175,7 +175,7 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
     }
 
     // mirror java.awt.Container:findComponentAt
-    public BaseElement findElmentAt(Point point) {
+    public BaseElement findElementAt(Point point) {
         Component current = asComp();
 
         if (!current.contains(point.x, point.y))
@@ -201,7 +201,7 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
                 if (zValue > lowest)
                     continue;
 
-                BaseElement contender = element.findElmentAt(
+                BaseElement contender = element.findElementAt(
                     SwingUtilities.convertPoint(container, point, inner));
                 if (contender != null) {
                     result = contender;

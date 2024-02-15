@@ -1,9 +1,7 @@
 package com.scc210groupproject.ui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -12,7 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.scc210groupproject.ui.helper.ColourPalette;
 
 public class Settings extends JFrame {
 

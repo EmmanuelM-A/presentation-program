@@ -3,19 +3,32 @@ package com.scc210groupproject.ui.contextMenu;
 import javax.swing.*;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * This class is the where the context menus will be added - STILL IN PROGRESS
  *
  * @author madukaag
  * */
-public class ContextMenuPanel extends JPanel implements ActionListener {
+public class ContextMenuPanel extends JPanel {
     
     private static ContextMenuPanel instance = null;
 
-    public static void setMenu(ContextMenu menu) {
+    public static ContextMenu menu = null;
+
+    public static Object currentMenuOwner = null;
+
+    public static void removeOwner(Object owner) {
+        if (owner != currentMenuOwner)
+            return;
+        
+        instance.removeAll();
+        instance.revalidate();
+    }
+
+    public static void setMenu(Object owner, ContextMenu menu) {
+        ContextMenuPanel.menu = menu;
+        currentMenuOwner = owner;
+
         instance.removeAll();
 
         if (menu != null)
@@ -35,15 +48,9 @@ public class ContextMenuPanel extends JPanel implements ActionListener {
         this.revalidate();
     }
 
-    public void setPanel()
-    {
+    public static JPanel contextMenuPanel = new JPanel(new BorderLayout());
 
-
+    public ContextMenuPanel(JPanel contextMenu) {
+        contextMenuPanel.add(contextMenu, BorderLayout.CENTER);
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
-
 }

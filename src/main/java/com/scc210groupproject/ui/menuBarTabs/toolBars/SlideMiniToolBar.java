@@ -2,8 +2,6 @@ package com.scc210groupproject.ui.menuBarTabs.toolBars;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
 

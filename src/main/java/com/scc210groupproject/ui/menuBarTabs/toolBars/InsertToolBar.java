@@ -12,7 +12,7 @@ import javax.swing.*;
  * @author madukaag
  * */
 public class InsertToolBar extends ToolBar {
-    private JButton addText, addImage, addVideo, newSlide, addDiagram, addShape, addLine, delete, addAudio, help;
+    private JButton addText, addImage, addVideo, newSlide, addDiagram, addChart, addShape, addLine, delete, addAudio, help;
 
     public InsertToolBar(JFrame frame, ContextMenuPanel c, JPanel recentsPanel) {
         this.setRollover(true);
@@ -26,6 +26,8 @@ public class InsertToolBar extends ToolBar {
         newSlide = makeToolbarButton(GeneralButtons.NEW_SLIDE, recentsPanel);
 
         addDiagram = makeToolbarButton(GeneralButtons.ADD_DIAG, recentsPanel);
+
+        addChart = makeToolbarButton(GeneralButtons.ADD_CHART, recentsPanel);
 
         addShape = makeToolbarButton(GeneralButtons.SHAPES, recentsPanel);
 
@@ -45,6 +47,7 @@ public class InsertToolBar extends ToolBar {
         this.add(addImage);
         this.add(addVideo);
         this.add(addDiagram);
+        this.add(addChart);
         this.add(addAudio);
         this.add(addShape);
         this.add(addLine);

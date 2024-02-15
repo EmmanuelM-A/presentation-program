@@ -246,6 +246,11 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
             anchorB = null;
     }
 
+    @Override
+    public void destroySelf() {
+        ContextMenuPanel.removeOwner(this);
+    }
+
     public static class ArrowPanel extends JPanel {
         private Polygon triangle;
         private Polygon box;
@@ -499,9 +504,8 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
 
             Point mouseLocation = state.getLocationInSlide();
 
-            ArrowElement arrow = (ArrowElement)target;
-            double distanceA = mouseLocation.distance(arrow.getPoint(Side.A));
-            double distanceB = mouseLocation.distance(arrow.getPoint(Side.B));
+            double distanceA = mouseLocation.distance(element.getPoint(Side.A));
+            double distanceB = mouseLocation.distance(element.getPoint(Side.B));
 
             if (!state.isShiftDown()) {
                 targetSideA = false;
@@ -510,17 +514,17 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
 
             if (distanceA < distanceB) {
                 targetSideA = true;
-                arrow.panel.highlightA = true;
+                element.panel.highlightA = true;
             }
             else {
                 targetSideB = true;
-                arrow.panel.highlightB = true;
+                element.panel.highlightB = true;
             }
             
-            arrow.panel.repaint();
-            arrow.notifyUpdate(arrow);
+            element.panel.repaint();
+            element.notifyUpdate(element);
 
-            ContextMenuPanel.setMenu(new ArrowContextMenu());
+            ContextMenuPanel.setMenu(element, new ArrowContextMenu());
 
             saveOnRelease = false;
         }
