@@ -33,8 +33,7 @@ public class SnapshotManager {
         }
         
         if (count >= max) {
-            //steps.removeLast(); was causing errors while running program
-            steps.pop();
+            steps.remove(steps.size() - 1);
         }
         else
             count++;
