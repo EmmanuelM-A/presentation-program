@@ -1,8 +1,7 @@
 package com.scc210groupproject.structure;
 
 import java.awt.Component;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -21,30 +20,17 @@ public class ImageElement extends ExtendedElement
     JLabel label = new JLabel();
     BufferedImage image = null;
 
-    private class ResizeListener extends ComponentAdapter
-    {
-        private void updateIcon() {
-            if (image != null)
-                label.setIcon(GeneralButtons.resizeIcon(image, label.getWidth(), label.getHeight()));
-        }
-
-        public void componentResized(ComponentEvent e) {
-            updateIcon();
-        }
-
-        @Override
-        public void componentShown(ComponentEvent e) {
-            updateIcon();
-        }
-    }
-
     public ImageElement(BufferedImage loaded)
     {
         super();
-
         image = loaded;
+    }
 
-        label.addComponentListener(new ResizeListener());
+    @Override
+    public void setSize(Dimension d) {
+        if (d.width > 0 && d.height > 0)
+            label.setIcon(GeneralButtons.resizeIcon(image, d.width, d.height));
+        super.setSize(d);
     }
 
     private ImageElement() {}
@@ -54,7 +40,7 @@ public class ImageElement extends ExtendedElement
     @Override
     protected void writeSelf(Writer writer) throws IOException {
         
-        super.writeExtended(writer);
+        super.writeSelfExtended(writer);
 
         String encoded = "none";
         if (image != null) {
@@ -68,8 +54,6 @@ public class ImageElement extends ExtendedElement
 
     @Override
     protected void readSelf(Reader reader) throws IOException {
-        
-        label.addComponentListener(new ResizeListener());
 
         String encoded = reader.readString("image");
         if (encoded != "none") {
@@ -77,7 +61,11 @@ public class ImageElement extends ExtendedElement
             image = ImageIO.read(bi);
         }
 
-        super.readExtended(reader);
+        super.readSelfExtended(reader);
+
+        Dimension size = super.getSize();
+        if (size.width > 0 && size.height > 0)
+            label.setIcon(GeneralButtons.resizeIcon(image, size.width, size.height));
     }
 
     @Override

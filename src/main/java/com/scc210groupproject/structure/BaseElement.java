@@ -22,6 +22,7 @@ import com.scc210groupproject.structure.liveness.IDestroyProvider;
 import com.scc210groupproject.structure.liveness.IUpdateListener;
 import com.scc210groupproject.structure.liveness.IUpdateProvider;
 import com.scc210groupproject.structure.liveness.UpdateManager;
+import com.scc210groupproject.structure.state.SnapshotManager;
 import com.scc210groupproject.readwrite.IJsonSerializable;
 
 /**
@@ -88,6 +89,8 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
     }
     public final void add(BaseElement child)
     {
+        SnapshotManager.saveState();
+
         children.add(child);
         child.parent = this;
 
@@ -99,9 +102,13 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
         processNewElement(child);
 
         notifyUpdate(null);
+
+        SnapshotManager.saveState();
     }
     public final void remove(BaseElement child)
     {
+        SnapshotManager.saveState();
+
         prepareRemoveElement(child);
         child.removeDestroyListener(this);
         child.removeUpdateListener(this);
@@ -242,7 +249,7 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
         return order.values();
     }
 
-    public InputManager getMouseManager() {
+    public InputManager getInputManager() {
         return mouseManager;
     }
 }

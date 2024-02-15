@@ -22,7 +22,6 @@ public class NewTextElementAction implements ActionListener
 
 
         SlideManager.slideManager.getCurrentSlide().add(textElement);
-        //MainDisplayPanel.instance.getDisplayedSlide().add(textElement);
     }
     
 }

@@ -52,23 +52,20 @@ public class Slide extends BaseElement
     public Component asComp() { return panel; }
 
     @Override
-    public void writeSelf(Writer write) throws IOException {
+    public void writeSelf(Writer writer) throws IOException {
         Point p = panel.getLocation();
-        write.writeInt("x", p.x);
-        write.writeInt("y", p.y);
+        writer.writeInt("x", p.x);
+        writer.writeInt("y", p.y);
 
         Dimension d = panel.getSize();
-        write.writeInt("width", d.width);
-        write.writeInt("height", d.height);
+        writer.writeInt("width", d.width);
+        writer.writeInt("height", d.height);
 
-        write.writeInt("background", panel.getBackground().getRGB());
+        writer.writeInt("background", panel.getBackground().getRGB());
     }
 
     @Override
     public void readSelf(Reader reader) throws IOException {
-        panel = new JPanel();
-        panel.setLayout(null);
-
         panel.setLocation(new Point(
             reader.readInt("x"),
             reader.readInt("y")));

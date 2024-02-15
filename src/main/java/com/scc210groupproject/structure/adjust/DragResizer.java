@@ -3,9 +3,7 @@ package com.scc210groupproject.structure.adjust;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.util.HashMap;
 
-import com.scc210groupproject.structure.BaseElement;
 import com.scc210groupproject.structure.helper.CoordinateUtils;
 import com.scc210groupproject.structure.input.InputEmulator.InputState;
 import com.scc210groupproject.structure.input.listeners.IMouseClicked;
@@ -15,18 +13,16 @@ import com.scc210groupproject.structure.input.listeners.IMouseExited;
 import com.scc210groupproject.structure.input.listeners.IMouseMoved;
 import com.scc210groupproject.structure.input.listeners.IMousePressed;
 import com.scc210groupproject.structure.input.listeners.IMouseReleased;
-import com.scc210groupproject.structure.input.listeners.IMultRelease;
-import com.scc210groupproject.structure.input.listeners.IMultSelect;
-import com.scc210groupproject.structure.input.listeners.IMultiDrag;
 import com.scc210groupproject.ui.MainDisplayPanel;
 
-public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, IMouseDragged, IMouseEntered, IMouseExited, IMouseClicked, IMultSelect, IMultRelease, IMultiDrag {
+public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, IMouseDragged, IMouseEntered, IMouseExited, IMouseClicked, IMultiMover {
 
     private int operation = -1;
     private SelectionBorder border = new SelectionBorder();
-    private boolean inMultSelect = false;
 
-    public static HashMap<BaseElement, DragResizer> instances = new HashMap<>();
+    private IResizable element;
+
+    private boolean saveOnRelease = false;
 
     public void setMultiSelectMode(boolean multiSelect) {
         if (multiSelect) {
@@ -35,32 +31,37 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
         else {
             border.setState(SelectionBorder.Mode.FULL);
         }
-        inMultSelect = multiSelect;
     }
 
-    public DragResizer(BaseElement element) {
-        instances.put(element, this);
+    public DragResizer(IResizable element) {
+        this.element = element;
     }
 
     @Override
-    public void mousePressed(Object target, InputState state) {
-        if (inMultSelect)
-            return;
+    public void mousePressed(Object o, InputState state) {
+        if (!state.isShiftDown() && !MultiController.contains(this)) 
+            MultiController.clearAll();
+        MultiController.add(this);
         
-        IResizable resizable = (IResizable)target;
+        IResizable resizable = (IResizable)element;
         
         Point local = CoordinateUtils.convertSlideToLocalSpace(state.getLocationInSlide(), resizable.asBaseElement());
         operation = border.findPoint(local.x, local.y);
+
+        saveOnRelease = false;
     }
 
     @Override
-    public void mouseReleased(Object target, InputState state) {
-        // not used, here to block message being taken by another element
+    public void mouseReleased(Object o, InputState state) {
+        if (saveOnRelease) {
+            MultiController.endMove();
+            saveOnRelease = false;
+        }
     }
 
     @Override
-    public void mouseMoved(Object target, InputState state) {
-        IResizable resizable = (IResizable)target;
+    public void mouseMoved(Object o, InputState state) {
+        IResizable resizable = (IResizable)element;
 
         Point local = CoordinateUtils.convertSlideToLocalSpace(state.getLocationInSlide(), resizable.asBaseElement());
 
@@ -100,11 +101,37 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
     }
 
     @Override
-    public void mouseDragged(Object target, InputState state) {
-        if (inMultSelect)
-            return;
-            
-        IResizable resizable = (IResizable)target;
+    public void mouseDragged(Object o, InputState state) {
+        saveOnRelease = true;
+        MultiController.moveAll(state);
+    }
+   
+    @Override
+    public void mouseEntered(Object o, InputState state) {
+        IResizable resizable = (IResizable)element;
+        resizable.setBorder(border);
+    }
+
+    @Override
+    public void mouseExited(Object o, InputState state) {
+        MainDisplayPanel.instance.setCursor(Cursor.getDefaultCursor());
+
+        if (MultiController.contains(this))
+            MultiController.evaluateAll(state.isShiftDown());
+        else {
+            IResizable resizable = (IResizable)element;
+            resizable.setBorder(null);
+        }
+    }
+
+    @Override
+    public void mouseClicked(Object o, InputState state) {
+        // not used, here to block message being taken by another element
+    }
+     
+    @Override
+    public void move(InputState state) {
+        IResizable resizable = (IResizable)element;
         Dimension delta = state.getMouseDelta();
 
         Point oldPosition = resizable.getLocation();
@@ -121,7 +148,15 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
             case 1:
                 if (oldSize.width + delta.width > 20 && oldSize.height - delta.height > 20) {
                     resizable.setLocation(new Point(oldPosition.x, oldPosition.y + delta.height));
-                    resizable.setSize(new Dimension(oldSize.width + delta.width, oldSize.height - delta.height));
+                    if (state.isControlDown()) {
+                        int greater = delta.width > delta.height ? delta.width : delta.height;
+                        double aspect = (double)oldSize.height / (double)oldSize.width;
+                        int width = oldSize.width - greater;
+                        int height = (int)((double)width * aspect);
+                        resizable.setSize(new Dimension(width, height));
+                    }
+                    else
+                        resizable.setSize(new Dimension(oldSize.width + delta.width, oldSize.height - delta.height));
                 }
                 break;
             case 2:
@@ -166,51 +201,19 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
     }
 
     @Override
-    public void mouseEntered(Object target, InputState state) {
-        if (inMultSelect)
-            return;
-            
-        IResizable resizable = (IResizable)target;
-        resizable.setBorder(border);
-    }
-
-    @Override
-    public void mouseExited(Object target, InputState state) {
-        if (inMultSelect)
-            return;
-            
-        MainDisplayPanel.instance.setCursor(Cursor.getDefaultCursor());
-
-        IResizable resizable = (IResizable)target;
-        resizable.setBorder(null);
-    }
-
-    @Override
-    public void mouseClicked(Object target, InputState state) {
-        // not used, here to block message being taken by another element
-    }
-
-    @Override
-    public void multiRelease(Object target, InputState state) {
-        IResizable resizable = (IResizable)target;
-        resizable.setBorder(null);
-        setMultiSelectMode(false);
-    }
-
-    @Override
-    public void multiSelect(Object target, InputState state) {
-        setMultiSelectMode(true);
-        IResizable resizable = (IResizable)target;
-        resizable.setBorder(border);
-    }
-
-    @Override
-    public void multiDrag(Object target, InputState state) {
-        IResizable resizable = (IResizable)target;
-        
-        Dimension delta = state.getMouseDelta();
-        Point oldPosition = resizable.getLocation();
-
-        resizable.setLocation(new Point(oldPosition.x + delta.width, oldPosition.y + delta.height));
+    public void evaluateState(boolean inSelectionStage) {
+        if (!MultiController.contains(this)) {
+            IResizable resizable = (IResizable)element;
+            resizable.setBorder(null);
+            border.setState(SelectionBorder.Mode.FULL);
+        }
+        else if (!MultiController.hasMultiple() && !inSelectionStage) {
+            IResizable resizable = (IResizable)element;
+            resizable.setBorder(null);
+            border.setState(SelectionBorder.Mode.FULL);
+        }
+        else {
+            border.setState(SelectionBorder.Mode.MOVEONLY);
+        }
     }
 }

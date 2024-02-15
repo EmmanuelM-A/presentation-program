@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.scc210groupproject.structure.BaseElement;
-import com.scc210groupproject.structure.input.listeners.IMultSelect;
-import com.scc210groupproject.structure.input.listeners.IMultiDrag;
 import com.scc210groupproject.structure.input.listeners.IKeyPressed;
 import com.scc210groupproject.structure.input.listeners.IKeyReleased;
 import com.scc210groupproject.structure.input.listeners.IKeyTyped;
@@ -20,7 +18,6 @@ import com.scc210groupproject.structure.input.listeners.IMouseMoved;
 import com.scc210groupproject.structure.input.listeners.IMousePressed;
 import com.scc210groupproject.structure.input.listeners.IMouseReleased;
 import com.scc210groupproject.structure.input.listeners.IMouseWheel;
-import com.scc210groupproject.structure.input.listeners.IMultRelease;
 
 public class InputManager {
     public HashMap<Class<?>, InputController> controllers;
@@ -43,10 +40,6 @@ public class InputManager {
         controllers.put(IKeyTyped.class, new InputController(IKeyTyped.class));
         controllers.put(IKeyPressed.class, new InputController(IKeyPressed.class));
         controllers.put(IKeyReleased.class, new InputController(IKeyReleased.class));
-
-        controllers.put(IMultSelect.class, new InputController(IMultSelect.class));
-        controllers.put(IMultRelease.class, new InputController(IMultRelease.class));
-        controllers.put(IMultiDrag.class, new InputController(IMultiDrag.class));
     }
 
     public static class InputController {
@@ -66,7 +59,7 @@ public class InputManager {
             listeners.remove(listener);
         }
     
-        public void passEvent(BaseElement element, InputEmulator.InputState state) {
+        public boolean passEvent(BaseElement element, InputEmulator.InputState state) {
             if (listeners.size() > 0) {
                 for (Object l : listeners)
                     try {
@@ -76,11 +69,14 @@ public class InputManager {
                     } catch (InvocationTargetException e) {
                         throw new IllegalArgumentException("\ncheck method used for " + type.getName() + "\nIf you are using DragResizer, make sure the Element it is attached to implements IResizable");
                     }
+                return true;
             }
             else {
                 BaseElement parent = element.getParent();
                 if (parent != null)
-                    parent.getMouseManager().controllers.get(type).passEvent(parent, state);
+                    return parent.getInputManager().controllers.get(type).passEvent(parent, state);
+                else
+                    return false;
             }
         }
     }

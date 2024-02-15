@@ -22,7 +22,6 @@ import java.util.LinkedList;
 /**
  * This class handles the slides currently being displayed on the screen.
  *
- * @author madukaag
  */
 public class SlideManager implements IChangePresentationListener, ICreateSlideListener, IDiscardSlideListener, IUpdateSlideListener
 {
@@ -304,6 +303,8 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         ImageIcon previewSlideImage = new ImageIcon(slideImages.get(slideNo - 1).getBufferedSlideImage());
         slide.setIcon(GeneralButtons.resizeIcon(previewSlideImage, 200, 118));
 
+        slide.setToolTipText("Slide " + slideNo);
+
         slide.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -544,7 +545,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         JButton slideInViewer = this.slidesViewer.get(index);
         highlightSlide(slideInViewer);
 
-        System.out.println("New Slide - " + (Presentation.get().getSlideCount()) + "!");
+        //System.out.println("New Slide - " + (Presentation.get().getSlideCount()) + "!");
     }
 
     @Override
@@ -565,7 +566,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
 
         int firstSlide = getSlidePosition(getCurrentSlide()) + 1;
         int lastSlide = getSlidePosition(this.slidesViewer.getLast()) + 1;
-
+        // STILL WORKING ON THIS - PROBLEM WITH DELETING
         if(firstSlide != 1) {
             if(showPrevSlide()) {
                 System.out.println("Slide " + + (this.currentSlideIndex + 2) + " deleted - Now displaying previous slide!");
@@ -580,6 +581,10 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
 
     @Override
     public void onUpdateSlide(int index, Slide slide) {
+        
+        if (index != currentSlideIndex)
+            MainDisplayPanel.instance.updateBufferedSlideImage(slideImages.get(index), 200, 118);
+        
         // Get the slide in the slideViewer at the index
         JButton previewSlide = this.slidesViewer.get(index);
 
@@ -588,5 +593,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
 
         // Reset the image icon of that slide to the new slide image
         previewSlide.setIcon(GeneralButtons.resizeIcon(previewSlideImage, 200, 118));
+
+        //previewSlide.repaint();
     }
 }

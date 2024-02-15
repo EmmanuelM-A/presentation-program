@@ -15,11 +15,15 @@ import java.util.Objects;
  */
 public abstract class ToolBar extends JToolBar {
 
-    // Represents the recents panel in the home tab
+    /**
+     * Represents the recents panel in the home tab
+     */
     protected static JPanel recentsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-    // Default size can be changed in settings
-    private int CAPACITY = 10;
+    /**
+     * The max number of buttons allowed in the recents panel
+     */
+    private final int CAPACITY = 10;
 
     ////////////////// Getters //////////////////
 
@@ -41,13 +45,6 @@ public abstract class ToolBar extends JToolBar {
 
     ////////////////// Setters //////////////////
 
-    /**
-     * Set the new capacity of the recents section (panel)
-     * @param newCAPACITY The new max for the number of buttons to be stored at a time
-     */
-    public void setCAPACITY(int newCAPACITY) {
-        this.CAPACITY = newCAPACITY;
-    }
 
     ////////////////// Methods //////////////////
 
@@ -60,11 +57,9 @@ public abstract class ToolBar extends JToolBar {
     protected JButton makeToolbarButton(GeneralButtons buttonType, JPanel recents) {
         ThemeAwareButton button = new ThemeAwareButton(buttonType);
 
-        // For button focus frame colour use Look & Feel to change its focus colour
         button.setPreferredSize(new Dimension(76, 76));
         button.setMaximumSize(new Dimension(76, 76));
         button.setMinimumSize(new Dimension(54, 54));
-        //button.setSize(new Dimension(64, 64));
         button.setFocusable(false);
         button.setHorizontalTextPosition(SwingConstants.CENTER);
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -75,12 +70,14 @@ public abstract class ToolBar extends JToolBar {
         button.setBorderPainted(false);
         button.setFocusPainted(false);
         button.addActionListener(buttonType.getEvent());
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                addToRecents(recents, button);
-            }
-        });
+        if(recents != null) {
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    addToRecents(recents, button);
+                }
+            });
+        }
 
         return button;
     }
@@ -96,9 +93,9 @@ public abstract class ToolBar extends JToolBar {
         separator.setOrientation(JSeparator.VERTICAL);
         separator.setBackground(Color.BLACK);
 
-        toolBar.addSeparator();
         toolBar.add(separator);
         toolBar.addSeparator();
+        toolBar.add(separator);
     }
 
     /**
