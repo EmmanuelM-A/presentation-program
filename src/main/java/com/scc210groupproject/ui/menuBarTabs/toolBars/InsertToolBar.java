@@ -34,8 +34,6 @@ public class InsertToolBar extends ToolBar {
 
         addLine = makeToolbarButton(GeneralButtons.ADD_LINE, recentsPanel);
 
-        delete = makeToolbarButton(GeneralButtons.DELETE_ELEMENT, recentsPanel);
-
         addAudio = makeToolbarButton(GeneralButtons.ADD_AUDIO, recentsPanel);
 
         help = makeToolbarButton(GeneralButtons.HELP, recentsPanel);
@@ -53,10 +51,6 @@ public class InsertToolBar extends ToolBar {
         this.add(addShape);
         this.add(addLine);
 
-        separator(this);
-
-        this.add(delete);
-        
         separator(this);
 
         this.add(help);
