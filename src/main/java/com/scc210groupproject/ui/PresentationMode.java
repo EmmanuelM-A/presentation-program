@@ -1,17 +1,13 @@
 package com.scc210groupproject.ui;
 
-
-import java.awt.Color;
 import java.awt.Dimension;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import com.scc210groupproject.action.NextSlideAction;
 import com.scc210groupproject.action.PrevSlideAction;
@@ -26,6 +22,8 @@ public class PresentationMode extends JFrame {
      * if there are no actions for the current slide move onto the next
      * 
      */
+
+    // SET THE INPUT STATE BACK TO TRUE AFTER WINDOW CLOSE
 
     MainDisplayPanel presentationDisplay = MainDisplayPanel.instance;
 
