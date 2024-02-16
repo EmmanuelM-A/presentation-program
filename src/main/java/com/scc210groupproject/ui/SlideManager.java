@@ -422,7 +422,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
      * @return The index of the slide
      * @param <T> The type of slide
      */
-    private <T> int getSlidePosition(T slide) {
+    /*private <T> int getSlidePosition(T slide) {
         int position = -1;
         if(slide instanceof JButton) {
             position = this.slidesViewer.indexOf(slide);
@@ -432,6 +432,18 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
             position = Presentation.get().getSlides().indexOf(slide);
         }
         return position;
+    }*/
+
+    private int getSlidePosition(JButton slide) {
+        return this.slidesViewer.indexOf(slide);
+    }
+
+    private int getSlidePosition(SlideImage slide) {
+        return this.slideImages.indexOf(slide);
+    }
+
+    private int getSlidePosition(Slide slide) {
+        return Presentation.get().getSlides().indexOf(slide);
     }
 
     /**
@@ -562,6 +574,8 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
 
     @Override
     public void onDiscardSlide(int index, Slide slide) {
+        int slideIndex = getSlidePosition(MainDisplayPanel.instance.getCurrentSlideImage());
+
         // Delete from slide images
         this.slideImages.remove(index);
 
@@ -576,18 +590,20 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         this.viewSliderPanel.revalidate();
         this.viewSliderPanel.repaint();
 
-        int firstSlide = getSlidePosition(getCurrentSlide()) + 1;
-        int lastSlide = getSlidePosition(this.slidesViewer.getLast()) + 1;
         // STILL WORKING ON THIS - PROBLEM WITH DELETING
-        if(firstSlide != 1) {
+        System.out.println("Slide Clicked: " + slideIndex + " Slide size: " + this.slidesViewer.size());
+        if(slideIndex == 0) {
+            displaySlide(this.slideImages.get(0), MainDisplayPanel.instance);
+            highlightSlide(this.slidesViewer.get(0));
+        } else if (slideIndex == this.slidesViewer.size()){
+            displaySlide(this.slideImages.get(this.slidesViewer.size() - 1), MainDisplayPanel.instance);
+            highlightSlide(this.slidesViewer.get(this.slidesViewer.size() - 1));
+        } else {
             if(showPrevSlide()) {
-                System.out.println("Slide " + + (this.currentSlideIndex + 2) + " deleted - Now displaying previous slide!");
+                System.out.println("Slide " + (this.currentSlideIndex + 2) + " deleted - Now displaying previous slide!");
             } else if (showNextSlide()) {
                 System.out.println("Slide " + (this.currentSlideIndex) + " deleted - Now displaying next slide!");
             }
-        } else {
-            displaySlide(this.slideImages.get(0), MainDisplayPanel.instance);
-            highlightSlide(this.slidesViewer.get(0));
         }
     }
 
