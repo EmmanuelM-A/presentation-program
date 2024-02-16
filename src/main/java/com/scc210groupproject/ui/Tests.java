@@ -50,7 +50,7 @@ public class Tests extends JFrame implements IUpdateListener, IUpdateProvider {
 
         // The Toolbar tabs
         {
-            MenuBarTabs menuBarTabs = new MenuBarTabs(this, null, 0, 40);
+            MenuBarTabs menuBarTabs = new MenuBarTabs(0, 40);
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 1;

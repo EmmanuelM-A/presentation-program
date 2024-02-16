@@ -1,6 +1,5 @@
 package com.scc210groupproject.ui.menuBarTabs;
 
-import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
 import com.scc210groupproject.ui.menuBarTabs.toolBars.*;
 
 import javax.swing.*;
@@ -15,12 +14,14 @@ import java.awt.*;
 public class MenuBarTabs extends JTabbedPane {
     private final FileToolBar fileToolBar;
     private final HomeToolBar homeToolBar;
-    public final InsertToolBar insertToolBar;
+    private final InsertToolBar insertToolBar;
     private final ViewToolBar viewToolBar;
     private final ShareToolBar shareToolBar;
     private final AboutToolBar aboutToolBar;
 
-    public MenuBarTabs(JFrame frame, ContextMenuPanel contextMenuPanel, int width, int height) {
+    public static MenuBarTabs instance;
+
+    public MenuBarTabs(int width, int height) {
         this.setPreferredSize(new Dimension(width, height));
         this.setFocusable(false);
 
@@ -28,7 +29,7 @@ public class MenuBarTabs extends JTabbedPane {
 
         this.homeToolBar = new HomeToolBar(ToolBar.getRecentsPanel());
 
-        this.insertToolBar = new InsertToolBar(frame, contextMenuPanel, ToolBar.getRecentsPanel());
+        this.insertToolBar = new InsertToolBar(ToolBar.getRecentsPanel());
 
         this.viewToolBar = new ViewToolBar(ToolBar.getRecentsPanel());
 
@@ -42,5 +43,11 @@ public class MenuBarTabs extends JTabbedPane {
         super.add(this.viewToolBar);
         super.add(this.shareToolBar);
         super.add(this.aboutToolBar);
+
+        instance = this;
+    }
+
+    public InsertToolBar getInsertToolBar() {
+        return this.insertToolBar;
     }
 }

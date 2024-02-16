@@ -1,6 +1,5 @@
 package com.scc210groupproject.ui.menuBarTabs.toolBars;
 
-import com.scc210groupproject.ui.contextMenu.*;
 import com.scc210groupproject.ui.helper.GeneralButtons;
 
 import javax.swing.*;
@@ -12,10 +11,9 @@ import javax.swing.*;
  * @author madukaag
  * */
 public class InsertToolBar extends ToolBar {
-    private JButton addText, addImage, addVideo, newSlide, addDiagram, addChart, addLine, delete, addAudio, help;
-    public JButton addShape;
+    private JButton addText, addImage, addVideo, newSlide, addDiagram, addChart, addShape, addLine, addAudio, help;
 
-    public InsertToolBar(JFrame frame, ContextMenuPanel c, JPanel recentsPanel) {
+    public InsertToolBar(JPanel recentsPanel) {
         this.setRollover(true);
 
         addText = makeToolbarButton(GeneralButtons.ADD_TEXT, recentsPanel);
@@ -57,6 +55,9 @@ public class InsertToolBar extends ToolBar {
 
         this.setName("Insert");
         this.setFloatable(false);
+    }
 
+    public JButton getAddShape() {
+        return this.addShape;
     }
 }
