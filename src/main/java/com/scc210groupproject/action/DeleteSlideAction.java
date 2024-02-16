@@ -45,7 +45,7 @@ public class DeleteSlideAction implements ActionListener, ICreateSlideListener, 
             return;
 
         if (p.getSlideCount() > 1)
-            p.removeSlide(SlideManager.instance.getCurrentSlide());
+            p.removeSlide(SlideManager.slideManager.getCurrentSlide());
     }
 
 
