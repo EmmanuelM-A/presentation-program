@@ -8,16 +8,8 @@ import com.scc210groupproject.ui.SlideManager;
 
 public class PrevSlideAction extends AbstractAction {
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-
-        // SlideManager.instance.getIndex();
-
-        // get the slide manager instance
-        // get index from slide manager
-        // do bound checks
-        // move functionality
-        
-        SlideManager.instance.showPrevSlide();
+    public void actionPerformed(ActionEvent actionEvent) {        
+        SlideManager.slideManager.showPrevSlide();
 
     }
 }
