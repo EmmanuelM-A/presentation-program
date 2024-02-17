@@ -65,7 +65,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
     /**
      * This list represents the slideImages that are painted onto the display
      */
-    private final LinkedList<SlideImage> slideImages = new LinkedList<>();
+    private LinkedList<SlideImage> slideImages = new LinkedList<>();
 
     /**
      * Constructor for the SlideManager
@@ -103,6 +103,14 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
      */
     public int getSlideCount() {
         return this.slideImages.size();
+    }
+
+    /**
+     * Gets the current slideImage's list
+     * @return LinkedList<SlideImage>
+     */
+    public LinkedList<SlideImage> getSlideImages() {
+        return this.slideImages;
     }
 
     /**
@@ -184,6 +192,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
      * @param slide The slideImage you wish to get its index
      * @return int
      */
+    @SuppressWarnings("unused")
     private int getSlidePosition(SlideImage slide) {
         return this.slideImages.indexOf(slide);
     }
@@ -206,6 +215,10 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
      * */
     public void setDisplayNewSlides(Boolean yesOrNo) {
         this.displayNewSlide = yesOrNo;
+    }
+
+    public void setSlideImages(LinkedList<SlideImage> slides) {
+        this.slideImages = slides;
     }
 
     //////////// METHODS ////////////
@@ -387,7 +400,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
      * @param slideToDisplay The slideImage to add to the display
      * @param display The display the slide will be added and removed from
      */
-    private void displaySlide(SlideImage slideToDisplay, MainDisplayPanel display) {
+    public void displaySlide(SlideImage slideToDisplay, MainDisplayPanel display) {
         // Set the slideImage on the main display
         display.setCurrentSlideImage(slideToDisplay);
         // Remove previous slide displayed

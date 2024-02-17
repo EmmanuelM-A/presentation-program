@@ -160,7 +160,7 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
      * Allows you to change the bufferedSlideImage being painted to the display.
      * @param newBufferedSlideImage The bufferImage you wish to paint
      */
-    private void setBufferedSlideImage(BufferedImage newBufferedSlideImage) {
+    public void setBufferedSlideImage(BufferedImage newBufferedSlideImage) {
         this.bufferedSlideImage = newBufferedSlideImage;
     }
 
