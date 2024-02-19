@@ -12,7 +12,7 @@ public class NewLineChartAction implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent arg0) {
         ChartElement element = (ChartElement)ContextMenuPanel.currentMenuOwner;
-        ChartElement tempChartElement = new ChartElement("LINE");
+        ChartElement tempChartElement = new ChartElement();
         tempChartElement.makeLineChart();
 
         if (element == null) {

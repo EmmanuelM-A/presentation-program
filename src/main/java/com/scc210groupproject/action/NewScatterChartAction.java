@@ -12,7 +12,7 @@ public class NewScatterChartAction implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent arg0) {
         ChartElement element = (ChartElement)ContextMenuPanel.currentMenuOwner;
-        ChartElement tempChartElement = new ChartElement("SCATTER");
+        ChartElement tempChartElement = new ChartElement();
         tempChartElement.makeScatterChart();
 
         if (element == null) {

@@ -12,7 +12,7 @@ public class NewBarChartAction implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent arg0) {
         ChartElement element = (ChartElement)ContextMenuPanel.currentMenuOwner;
-        ChartElement tempChartElement = new ChartElement("BAR");
+        ChartElement tempChartElement = new ChartElement();
         tempChartElement.makeBarChart();
 
         if (element == null) {

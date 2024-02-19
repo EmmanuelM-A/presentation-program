@@ -1,6 +1,8 @@
 package com.scc210groupproject.ui.contextMenu;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 
 import com.scc210groupproject.structure.ChartElement;
@@ -9,6 +11,7 @@ import com.scc210groupproject.ui.helper.GeneralButtons;
 public class ChartContextMenu extends ContextMenu {
 
     private JTable table;
+    private DefaultTableModel tableModel;
 
     public ChartContextMenu(ChartElement element) {
 
@@ -50,7 +53,9 @@ public class ChartContextMenu extends ContextMenu {
 
         JButton addRow = makeContextMenuButton(GeneralButtons.ADDROW);
 
-        this.table = new JTable(50, 10);
+        tableModel = new DefaultTableModel();
+        this.table = new JTable(tableModel);
+        this.table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 1;
@@ -73,8 +78,6 @@ public class ChartContextMenu extends ContextMenu {
         this.add(addRow, gbc);
 
         JScrollPane scrollPane = new JScrollPane(); {
-            //BorderLayout borderLayout = new BorderLayout();
-            //scrollPane.setLayout(borderLayout);
             table.setGridColor(Color.BLACK);
             table.setShowGrid(true);
             scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -87,5 +90,9 @@ public class ChartContextMenu extends ContextMenu {
 
     public JTable getTable() {
         return this.table;
+    }
+
+    public DefaultTableModel getTableModel() {
+        return tableModel;
     }
 }

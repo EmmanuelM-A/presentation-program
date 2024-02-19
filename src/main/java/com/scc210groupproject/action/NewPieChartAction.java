@@ -12,7 +12,7 @@ public class NewPieChartAction implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent arg0) {
         ChartElement element = (ChartElement)ContextMenuPanel.currentMenuOwner;
-        ChartElement tempChartElement = new ChartElement("PIE");
+        ChartElement tempChartElement = new ChartElement();
         tempChartElement.makePieChart();
 
         if (element == null) {

@@ -11,7 +11,7 @@ import java.awt.*;
  * */
 public class ContextMenuPanel extends JPanel {
     
-    private static ContextMenuPanel instance = null;
+    public static ContextMenuPanel instance = null;
 
     public static ContextMenu menu = null;
 

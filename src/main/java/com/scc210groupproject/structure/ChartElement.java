@@ -2,7 +2,11 @@ package com.scc210groupproject.structure;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.List;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -26,9 +30,10 @@ import com.scc210groupproject.structure.input.listeners.IMouseClicked;
 public class ChartElement extends ExtendedElement {
 
     private JPanel chart;
-    private String[][]data = new String[1000][1000];
+    private String chartType;
+    private ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
 
-    public ChartElement(String chartType) {
+public ChartElement() {
         ChartElement self = this;
         super.addInputListener(new IMouseClicked() {
     
@@ -37,6 +42,7 @@ public class ChartElement extends ExtendedElement {
                 ContextMenuPanel.setMenu(self, new ChartContextMenu(self));
             }
         });
+        this.chart = new JPanel();
     }
 
     private void parseTable() {
@@ -48,90 +54,70 @@ public class ChartElement extends ExtendedElement {
         }
     }
 
-    public void makePieChart() {
-        JTable table = ((ChartContextMenu)ContextMenuPanel.menu).getTable();
-        DefaultPieDataset dataset = new DefaultPieDataset();
-        this.parseTable();
-        for(int i = 0; i < table.getRowCount(); i++) {
-            if (this.data[i][0] != null && this.data[i][1] != null) {
-                try {
-                    dataset.setValue(data[i][0], Double.parseDouble(data[i][1]));
-                } catch (NumberFormatException e) {
-                    dataset.setValue(data[i][1], 0);
+    private void makeChart(String chartType, Boolean load) {
+        if (!load) { this.parseTable(); }
+
+        JFreeChart chart;
+
+        switch (chartType) {
+            case "PIE":
+                DefaultPieDataset pieDataset = new DefaultPieDataset();
+
+                for(int i = 0; i < this.data[0].length; i++) {
+                    if (this.data[i][0] != null && this.data[i][1] != null) {
+                        try {
+                            pieDataset.setValue(data[i][0], Double.parseDouble(data[i][1]));
+                        } catch (NumberFormatException e) {
+                            pieDataset.setValue(data[i][1], 0);
+                        }
+                    } 
                 }
-            }
+
+                chart = ChartFactory.createPieChart("Chart1", pieDataset, true, true, false);
+                break;
+
+            case "LINE":  
+            case "BAR":
+                DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
+                
+                for(int j = 1; j < table.getColumnCount(); j++) {
+                    for(int i = 0; i < table.getRowCount(); i++) {
+                        if (this.data[i][j] != null) {
+                            try {
+                                dataset.addValue(Double.parseDouble(data[i][j]), "series" + j, data[i][0]);
+                            } catch (NumberFormatException e) {
+                                dataset.addValue(0, "Series" + j, data[i][0]);
+                            }
+                        }
+                    }
+                }
             
-        }
-        JFreeChart chart = ChartFactory.createPieChart("Chart1", dataset, true, true, false);
+                chart = ChartFactory.createLineChart("Chart1", "x", "y", categoryDataset,
+                 PlotOrientation.VERTICAL, true, true, false);
+                break;
 
-        this.chart = new ChartPanel(chart);
-        this.chart.setSize(new Dimension(400, 400));
-    }
+            case "SCATTER":
+                XYSeries series = new XYSeries("Series1");
 
-    public void makeLineChart() {
-        JTable table = ((ChartContextMenu)ContextMenuPanel.menu).getTable();
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        this.parseTable();
-        for(int j = 1; j < table.getColumnCount(); j++) {
-            for(int i = 0; i < table.getRowCount(); i++) {
-                if (this.data[i][j] != null) {
-                    try {
-                        dataset.addValue(Double.parseDouble(data[i][j]), "series" + j, data[i][0]);
-                    } catch (NumberFormatException e) {
-                        dataset.addValue(0, "Series" + j, data[i][0]);
+                for(int j = 0; j < table.getColumnCount(); j++) {
+                    for(int i = 0; i < table.getRowCount(); i++) {
+                        if (this.data[i][j] != null && this.data[i][j+1] != null) {
+                            try {
+                                series.add(Double.parseDouble(data[i][j]), Double.parseDouble(data[i][j+1]));
+                            } catch (NumberFormatException e) {
+                                series.add(0, 0);
+                            }
+                        }
                     }
                 }
-            }
+
+                XYSeriesCollection xyDataset = new XYSeriesCollection();
+                xyDataset.addSeries(series);
+                chart = ChartFactory.createXYLineChart("Chart1", "x", "y", xyDataset,
+                 PlotOrientation.VERTICAL, true, true, false);
+                break;
         }
-        JFreeChart chart = ChartFactory.createLineChart("Chart1", "x", "y", dataset, 
-        PlotOrientation.VERTICAL, true, true, false);
-
-        this.chart = new ChartPanel(chart);
-        this.chart.setSize(new Dimension(400, 400));
-    }
-
-    public void makeBarChart() {
-        JTable table = ((ChartContextMenu)ContextMenuPanel.menu).getTable();
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        this.parseTable();
-        for(int j = 1; j < table.getColumnCount(); j++) {
-            for(int i = 0; i < table.getRowCount(); i++) {
-                if (this.data[i][j] != null) {
-                    try {
-                        dataset.addValue(Double.parseDouble(data[i][j]), "series" + j, data[i][0]);
-                    } catch (NumberFormatException e) {
-                        dataset.addValue(0, "Series" + j, data[i][0]);
-                    }
-                }
-            }
-        }
-        JFreeChart chart = ChartFactory.createBarChart("Chart1", "x", "y", dataset, 
-        PlotOrientation.VERTICAL, true, true, false);
-
-        this.chart = new ChartPanel(chart);
-        this.chart.setSize(new Dimension(400, 400));
-    }
-
-    public void makeScatterChart() {
-        JTable table = ((ChartContextMenu)ContextMenuPanel.menu).getTable();
-        XYSeries series = new XYSeries("Series1");
-        this.parseTable();
-        for(int j = 0; j < table.getColumnCount(); j++) {
-            for(int i = 0; i < table.getRowCount(); i++) {
-                if (this.data[i][j] != null && this.data[i][j+1] != null) {
-                    try {
-                        series.add(Double.parseDouble(data[i][j]), Double.parseDouble(data[i][j+1]));
-                    } catch (NumberFormatException e) {
-                        series.add(0, 0);
-                    }
-                }
-            }
-        }
-        XYSeriesCollection  dataset = new XYSeriesCollection();
-        dataset.addSeries(series);
-        JFreeChart chart = ChartFactory.createXYLineChart("Chart1", "x", "y", dataset, 
-        PlotOrientation.VERTICAL, true, true, false);
-
+            
         this.chart = new ChartPanel(chart);
         this.chart.setSize(new Dimension(400, 400));
     }
@@ -140,16 +126,46 @@ public class ChartElement extends ExtendedElement {
         return data;
     }
 
+    public static ChartElement createEmpty() { return new ChartElement(); }
+
     @Override
     protected void writeSelf(Writer writer) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'writeSelf'");
+        super.writeSelfExtended(writer);
+
+        writer.writeString("data", Arrays.deepToString(getData()));
+        writer.writeString("chartType", this.chartType);
+
     }
 
     @Override
     protected void readSelf(Reader reader) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'readSelf'");
+
+        String[] rows = reader.readString("data").split("],");
+
+        for(int i = 0; i < rows.length; i++){
+            rows[i] = rows[i].replace("[\\[]", "");
+            String[] rowValues = rows[i].split(",");
+
+            for(int j = 0; j < rowValues.length; j++) {
+                this.data[i][j] = rowValues[j];
+            }
+        }
+
+        switch(reader.readString("chartType")) {
+            case ("PIE"):
+                this.makePieChart();
+                break;
+            case ("LINE"):
+                this.makeLineChart();
+                break;
+            case ("BAR"):
+                this.makeBarChart();
+                break;
+            case ("SCATTER"):
+                this.makeScatterChart();
+                break;
+        }
+        super.readSelfExtended(reader);
     }
 
     @Override

@@ -10,8 +10,15 @@ public class AddColumnAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        ChartContextMenu chartContextMenu = (ChartContextMenu)ContextMenuPanel.menu;
-        chartContextMenu.getTable().addColumn(null);
+        ChartContextMenu menu = (ChartContextMenu)ContextMenuPanel.menu;
+        Object[] columns = new Object[menu.getTable().getRowCount()];
+        for(int i = 0; i < columns.length; i++) {
+            columns[i] = "cheese";
+        }
+        menu.getTableModel().addColumn(columns);
+
+        ContextMenuPanel.instance.revalidate();
+
     }
 
 }
