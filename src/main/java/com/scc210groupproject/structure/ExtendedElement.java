@@ -1,12 +1,18 @@
 package com.scc210groupproject.structure;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 
 import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
@@ -15,6 +21,7 @@ import com.scc210groupproject.structure.adjust.DragResizer;
 import com.scc210groupproject.structure.adjust.IResizable;
 import com.scc210groupproject.structure.anchors.AnchorManager;
 import com.scc210groupproject.structure.anchors.IAnchorProvider;
+import com.scc210groupproject.ui.menuBarTabs.toolBars.ElementMiniToolBar;
 
 public abstract class ExtendedElement extends BaseElement implements IResizable, IAnchorProvider {
 
@@ -109,5 +116,22 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
         asComp().setSize(d);
 
         asComp().setBackground(new Color(reader.readInt("background")));
+        System.out.println("AFter here!");
     }
+
+    /*public void displayElementMiniToolBar() {
+        System.out.println("Clicked extend element!");
+        asComp().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(SwingUtilities.isRightMouseButton(e)) {
+                    System.out.println("Clicked extend element!");
+                    JPopupMenu popupMenu = new JPopupMenu();
+                    popupMenu.add(new ElementMiniToolBar());
+
+                    popupMenu.show(asComp(), e.getX(), e.getY());
+                }
+            }
+        });
+    }*/
 }

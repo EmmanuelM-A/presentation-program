@@ -638,7 +638,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         highlightSlide(this.slidesViewer.get(index));
     }
 
-    //////////// INTERFACE FUNCTIONS ////////////
+    //////////// INTERFACE METHODS ////////////
 
     @Override
     public void onChangePresentation(Presentation current, Presentation discarded) {
