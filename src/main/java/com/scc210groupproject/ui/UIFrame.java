@@ -17,9 +17,6 @@ public class UIFrame extends JFrame implements IUpdateProvider
 
     public UpdateManager manager = new UpdateManager(this);
 
-    public MenuBarTabs menuBarTabs;
-
-
     /*
      * Gets the dimensions of the screen the program is run on. Allows for the program dimensions
      * to be set to the size of the screen no matter the computer.
@@ -31,7 +28,7 @@ public class UIFrame extends JFrame implements IUpdateProvider
         instance = this;
 
         this.setTitle("Presentation Program");
-        //this.setSize((int)size.getWidth(), (int)size.getHeight());
+        this.setSize((int)size.getWidth(), (int)size.getHeight());
         this.setMinimumSize(new Dimension(1080, 720));
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -63,7 +60,7 @@ public class UIFrame extends JFrame implements IUpdateProvider
          * Application Window Components and their position on the frame
          * */
 
-        menuBarTabs = new MenuBarTabs(this, null, 0, 40);
+        MenuBarTabs.instance = new MenuBarTabs(0, 40);
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -71,7 +68,7 @@ public class UIFrame extends JFrame implements IUpdateProvider
         gbc.weightx = 1.0;
         gbc.weighty = 0.2;
         gbc.insets = new Insets(0, 0, gap, 0);
-        this.add(menuBarTabs, gbc);
+        this.add(MenuBarTabs.instance, gbc);
 
         ContextMenuPanel contextMenuPanel = new ContextMenuPanel(0, 0);
         gbc.gridx = 0;

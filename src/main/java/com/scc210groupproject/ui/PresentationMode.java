@@ -1,20 +1,18 @@
 package com.scc210groupproject.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
-public class PresentationMode extends JFrame /*implements ActionListener*/ {
+import com.scc210groupproject.action.NextSlideAction;
+import com.scc210groupproject.action.PrevSlideAction;
+
+public class PresentationMode extends JFrame {
     /*
      * Open a new frame
      * copy the functionality of the main display panel but have so it covers the whole screen instead
@@ -25,11 +23,9 @@ public class PresentationMode extends JFrame /*implements ActionListener*/ {
      * 
      */
 
-    private ArrayList<SlideImage> slidesToPresent;
+    // SET THE INPUT STATE BACK TO TRUE AFTER WINDOW CLOSE
 
-    private int currentSlidePresentedIndex = 0;
-
-    private JPanel presentionModePanel = new JPanel(new BorderLayout());
+    MainDisplayPanel presentationDisplay = MainDisplayPanel.instance;
 
     public PresentationMode() {
         this.setTitle("Presentation Mode");
@@ -39,23 +35,14 @@ public class PresentationMode extends JFrame /*implements ActionListener*/ {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
-        presentionModePanel.setPreferredSize(new Dimension(super.getWidth(), super.getHeight()));
-        presentionModePanel.setBackground(Color.BLUE);
+        presentationDisplay.setPreferredSize(new Dimension(super.getWidth(), super.getHeight()));
 
-        populateSlidesToPresent();
+        presentationDisplay.setInputState(false);
 
-        //presentionModePanel.add(slidesToPresent.get(currentSlidePresentedIndex), BorderLayout.CENTER);
-
-        //MainDisplayPanel presentationDisplay = MainDisplayPanel.instance;
-
-        //presentationDisplay.setPreferredSize(new Dimension(super.getWidth(), super.getHeight()));
-
-        //presentionModePanel
-
-        /*this.addMouseListener(new MouseListener() {
+        presentationDisplay.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                nextSlideOnClick();
+                new NextSlideAction();
             }
 
             @Override
@@ -77,15 +64,28 @@ public class PresentationMode extends JFrame /*implements ActionListener*/ {
             public void mouseReleased(MouseEvent arg0) {
                 //throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
             }
-        });*/
+        });
 
-        this.add(presentionModePanel);
+        // Next slide displayed on right arrow click
+        presentationDisplay.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).
+            put(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT,0), "next");
+        presentationDisplay.getActionMap().put("next", new NextSlideAction());
 
-        //this.add(slidesToPresent.get(currentSlidePresentedIndex));
+        // Previous slide displayed on left arrow click
+        presentationDisplay.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).
+                put(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_LEFT,0), "previous");
+        presentationDisplay.getActionMap().put("previous", new PrevSlideAction());
         
-        //this.add(presentationDisplay);
+        this.add(presentationDisplay);
 
         setVisible(true);
+    }
+
+    protected void processWindowEvent(WindowEvent e) {
+        super.processWindowEvent(e);
+        if(e.getID() == WindowEvent.WINDOW_CLOSING) {
+            presentationDisplay.setInputState(true);
+        }
     }
 
     /*
@@ -95,34 +95,27 @@ public class PresentationMode extends JFrame /*implements ActionListener*/ {
      */
 
     public void nextSlideOnClick() {
-        //SlideManager.slideManager.showNextSlide();
-        if(currentSlidePresentedIndex <= SlideManager.slideManager.getSlideCount()) {
-            this.removeAll();
-
-            currentSlidePresentedIndex++;
-
-            this.add(this.slidesToPresent.get(currentSlidePresentedIndex));
-        }
-
+        SlideManager.slideManager.showNextSlide();
     }
 
-    public void previousSlideOnClick() {
-
+    public void prevSlideOnClick() {
+        SlideManager.slideManager.showPrevSlide();
     }
 
+    /*
+     * Check if slide has actions
+     * If so get those actions
+     * On click run first action is actions
+     * then incrment to the next action
+     * If run again, run the next action in actions
+     * keep track of current action
+     */
     public void runAction() {
-
-    }
-
-    private void populateSlidesToPresent() {
-        this.slidesToPresent = new ArrayList<>();
-
-        for(int i = 0; i < SlideManager.slideManager.getSlideCount(); i++) {
-            SlideImage slideToPresent = SlideManager.slideManager.getSlideImageAt(i);
-
-            slideToPresent.setPreferredSize(new Dimension(presentionModePanel.getWidth(), presentionModePanel.getHeight()));
-
-            this.slidesToPresent.add(slideToPresent);
+        if(presentationDisplay.getCurrentSlideImage().getActions().size() > 0) {
+            for(Integer action : presentationDisplay.getCurrentSlideImage().getActions()) {
+                System.out.println("Action " + action + " completed!");
+            }
         }
     }
+
 }

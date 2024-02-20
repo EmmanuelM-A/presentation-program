@@ -31,6 +31,8 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
     
     private InputEmulator emulator;
 
+    private boolean emulatorActive;
+
     private Dimension slideDimension;
     private Point newOffset;
 
@@ -42,11 +44,9 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
     public MainDisplayPanel(int width, int height)
     {
         emulator = new InputEmulator();
-
-        super.addMouseListener(emulator);
-        super.addMouseMotionListener(emulator);
-        super.addMouseWheelListener(emulator);
-        super.addKeyListener(emulator);
+        emulatorActive = false;
+        setInputState(true);
+        
         super.setFocusable(true);
 
         super.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()), "undo");
@@ -213,6 +213,23 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
         // Calculate and set the new scale
         double newScale = (double)bufferedSlideImage.getWidth() / (double) slideDimension.width;
         slideImage.setScale(newScale);
+    }
+
+    public void setInputState(boolean truthy) {
+        if (truthy && !emulatorActive) {
+            super.addMouseListener(emulator);
+            super.addMouseMotionListener(emulator);
+            super.addMouseWheelListener(emulator);
+            super.addKeyListener(emulator);
+            return;
+        }
+        if (!truthy && emulatorActive) {
+            super.removeMouseListener(emulator);
+            super.removeMouseMotionListener(emulator);
+            super.removeMouseWheelListener(emulator);
+            super.removeKeyListener(emulator);
+            return;
+        }
     }
 
     /**

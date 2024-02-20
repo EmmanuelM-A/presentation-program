@@ -3,6 +3,8 @@ package com.scc210groupproject.ui;
 import com.scc210groupproject.action.DeleteSlideAction;
 import com.scc210groupproject.action.NewSlideAction;
 import com.scc210groupproject.action.NextSlideAction;
+import com.scc210groupproject.action.PresentAction;
+import com.scc210groupproject.action.PresentAtAction;
 import com.scc210groupproject.action.PrevSlideAction;
 import com.scc210groupproject.structure.*;
 
@@ -20,44 +22,55 @@ import java.awt.event.*;
 import java.util.LinkedList;
 
 /**
- * This class handles the slides currently being displayed on the screen.
- *
+ * This class handles the slides currently being displayed on the screen as well as in the slide viwer.
  */
 public class SlideManager implements IChangePresentationListener, ICreateSlideListener, IDiscardSlideListener, IUpdateSlideListener
 {
+    /**
+     * The instance of the slideMnaager class
+     */
     public static SlideManager slideManager;
-
-    // This list represents the slides on the slide view slider
+    /**
+     * This list represents the slides in the slide view slider
+     */
     private final LinkedList<JButton> slidesViewer = new LinkedList<>();
-
-    // Determines if a new slide added should be displayed or not
+    /**
+     * Determines if a new slide added should be displayed or not
+     */
     private boolean displayNewSlide = true;
-
-    // The current index of the slide being displayed (starts from zero)
+    /**
+     * The current index of the slide being displayed (starts from zero)
+     */
     private int currentSlideIndex;
-
-    // This JPanel will be slide viewer for all the slides in the presentation
+    /**
+     * This JPanel will be slide viewer for all the slides in the presentation
+     */
     private final JPanel viewSliderPanel;
-
-    // The actual presentation slider
+    /**
+     * The actual presentation slider
+     */
     private final JScrollPane presentationSlider;
-
+    /**
+     * The buttons that will be used manipulate and traverse slides 
+     */
     private JButton prevSlide, nextSlide, addNewSlide, deleteSlide, present, presentAt;
-
+    /**
+     * This reperesents the number of slides added as well as the current slide being displayed
+     */
     //private JLabel noSlides;
-
-    // Used as a temp variable to store previously highlighted slides
+    /**
+     * Used as a temp variable to store previously highlighted slides
+     */
     private JButton prevHighlightedSlide = null;
-
-    public static SlideManager instance;
-
-    // This list represents the slideImages that are painted onto the display
+    /**
+     * This list represents the slideImages that are painted onto the display
+     */
     private final LinkedList<SlideImage> slideImages = new LinkedList<>();
 
     /**
      * Constructor for the SlideManager
      *
-     * @param mainDisplay The main display panel of the ui frame
+     * @param mainDisplay The instance of the main display panel that is being used in the ui frame
      */
     public SlideManager(MainDisplayPanel mainDisplay) {
         // The index of the current slide being displayed
@@ -72,7 +85,6 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         Presentation.addDiscardSlideListener(this);
         Presentation.addChangePresentationListener(this);
 
-        instance = this;
     }
 
     //////////// GETTERS ////////////
@@ -85,8 +97,104 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         return this.displayNewSlide;
     }
 
+    /**
+     * Returns the number of slideImages
+     * @return int
+     */
     public int getSlideCount() {
         return this.slideImages.size();
+    }
+
+    /**
+     * Returns the slideImage at a given index
+     * @param index The index of the slideImage
+     * @return SlideImage
+     */
+    public SlideImage getSlideImageAt(int index) {
+        return this.slideImages.get(index);
+    }
+
+    /**
+     * Gets the slide's slideImage before the selected slide. If there is none it returns null.
+     * @param slide The current/selected slide
+     * @return SlideImage
+     */
+    private SlideImage getPrevSlide(Slide slide) {
+        int indexOfSelectedSlide = Presentation.get().getSlides().indexOf(slide);
+        int indexOfPrevSlide = indexOfSelectedSlide - 1;
+        //System.out.println("On slide " + this.currentSlide + " - Was on slide " + (this.currentSlide + 1));
+
+        if(indexOfPrevSlide >= 0) {
+            return this.slideImages.get(indexOfPrevSlide);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gets the slideImage after the selected slide. If there is none it will return null.
+     * @param slide The current/selected slide
+     * @return SlideImage
+     */
+    private SlideImage getNextSlide(Slide slide) {
+        int indexOfSelectedSlide = Presentation.get().getSlides().indexOf(slide);
+        int indexOfNextSlide = indexOfSelectedSlide + 1;
+        //System.out.println("On slide " + this.currentSlide + " - Was on slide " + (this.currentSlide - 1));
+
+        if(indexOfNextSlide <= Presentation.get().getSlideCount()) {
+            return this.slideImages.get(indexOfNextSlide);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Returns the current slide being displayed
+     * @return Slide
+     * */
+    public Slide getCurrentSlide() {
+        if(this.currentSlideIndex >= 0 && this.currentSlideIndex < Presentation.get().getSlideCount()) {
+            return Presentation.get().getSlideAtIndex(this.currentSlideIndex);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gets the selected slide's slideImage.
+     * @param slide The slide in the slide viewer
+     * @return The slide's slideImage at the same index
+     */
+    private SlideImage getSelectedSlide(JButton slide) {
+        int position = getSlidePosition(slide);
+        return this.slideImages.get(position);
+    }
+
+    /**
+     * Gets the index of the slide in its slide list.
+     * @param slide The slide (JButton) you wish to get its index
+     * @return int
+     */
+    private int getSlidePosition(JButton slide) {
+        return this.slidesViewer.indexOf(slide);
+    }
+
+    /**
+     * Gets the index of the slide in its slide list.
+     * @param slide The slideImage you wish to get its index
+     * @return int
+     */
+    private int getSlidePosition(SlideImage slide) {
+        return this.slideImages.indexOf(slide);
+    }
+
+    /**
+     * Gets the index of the slide in its slide list.
+     * @param slide The slide instance you wish to get its index
+     * @return int
+     */
+    private int getSlidePosition(Slide slide) {
+        return Presentation.get().getSlides().indexOf(slide);
     }
 
     //////////// SETTERS ////////////
@@ -179,10 +287,12 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         this.present = new JButton(GeneralButtons.resizeIcon(
             GeneralButtons.PRESENT.getIcon(), 20, 20));
         this.present.setToolTipText("Present");
+        this.present.addActionListener(new PresentAction());
 
         this.presentAt = new JButton(GeneralButtons.resizeIcon(
             GeneralButtons.PRESENT_AT.getIcon(), 20, 20));
         this.presentAt.setToolTipText("Present From");
+        this.presentAt.addActionListener(new PresentAtAction());
 
         //this.noSlides = new JLabel("Slides: ");
 
@@ -204,10 +314,6 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         presentationSliderPanel.add(bottomSection, BorderLayout.SOUTH);
 
         return presentationSliderPanel;
-    }
-
-    public SlideImage getSlideImageAt(int index) {
-        return this.slideImages.get(index);
     }
 
     /**
@@ -295,20 +401,27 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         display.updateBufferedSlideImage();
     }
 
-
     /**
      * Creates a slide for the slides viewer
      * @param slideNo The slide number to assign it to
+     * @param setPreview Determines weither a preview should set or just be white
      * @return JButton
      * */
-    private JButton createSlideForViewer(int slideNo) {
+    private JButton createSlideForViewer(int slideNo, boolean setPreview) {
         JButton slide = new JButton();
 
         slide.setPreferredSize(new Dimension(200, 118));
 
         slide.setFocusable(false);
 
-        ImageIcon previewSlideImage = new ImageIcon(slideImages.get(slideNo - 1).getBufferedSlideImage());
+        ImageIcon previewSlideImage;
+
+        if(setPreview == true) {
+            previewSlideImage = new ImageIcon(slideImages.get(slideNo - 1).getBufferedSlideImage());
+        } else {
+            previewSlideImage = new ImageIcon(MainDisplayPanel.instance.getBufferedSlideImage());
+        }
+
         slide.setIcon(GeneralButtons.resizeIcon(previewSlideImage, 200, 118));
 
         slide.setToolTipText("Slide " + slideNo);
@@ -324,69 +437,71 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         });
 
         return slide;
-
     }
 
     /**
-     * Adds new slides ot the slide viewer
+     * Adds a new slide to the slide viewer at given index. If the index is -1 it will add it onto the
+     * end of the slide viewer instead.
+     * @param index The index to add the new slide in the slide viewer
      */
-    private void addSlideToViewer() {
-        int slideNum = this.slidesViewer.size() + 1;
+    private void addSlideToViewer(int index) {
+        if(index == -1) {
+            int slideNum = this.slidesViewer.size() + 1;
 
-        JButton slide = createSlideForViewer(slideNum);
-        //System.out.println("Slide " + slideNum + " has been added!");
+            JButton slide = createSlideForViewer(slideNum, true);
 
-        this.slidesViewer.add(slide);
+            this.slidesViewer.add(slide);
+            this.viewSliderPanel.add(slide);
 
-        this.viewSliderPanel.add(slide);
+            this.viewSliderPanel.revalidate();
 
-        this.viewSliderPanel.revalidate();
+            highlightSlide(slide);
+        } else if(index >= 0 && index <= this.slidesViewer.size()){
+            JButton slide = createSlideForViewer(index, false);
 
-        highlightSlide(slide);
-    }
-    /**
-     * Gets the slide's slideImage before the selected slide. If there is none it returns null.
-     * @param slide The current/selected slide
-     * @return SlideImage
-     */
-    private SlideImage getPrevSlide(Slide slide) {
-        int indexOfSelectedSlide = Presentation.get().getSlides().indexOf(slide);
-        int indexOfPrevSlide = indexOfSelectedSlide - 1;
-        //System.out.println("On slide " + this.currentSlide + " - Was on slide " + (this.currentSlide + 1));
+            this.slidesViewer.add(index, slide);
+            this.viewSliderPanel.add(slide, index);
 
-        if(indexOfPrevSlide >= 0) {
-            return this.slideImages.get(indexOfPrevSlide);
-        } else {
-            return null;
+            this.viewSliderPanel.revalidate();
+
+            highlightSlide(slide);
         }
     }
 
-    /**
-     * Gets the slideImage after the selected slide. If there is none it will return null.
-     * @param slide The current/selected slide
-     * @return SlideImage
-     */
-    private SlideImage getNextSlide(Slide slide) {
-        int indexOfSelectedSlide = Presentation.get().getSlides().indexOf(slide);
-        int indexOfNextSlide = indexOfSelectedSlide + 1;
-        //System.out.println("On slide " + this.currentSlide + " - Was on slide " + (this.currentSlide - 1));
+    public void addNewSlideAt(int index) {
+        // Create a slide
+        Slide slide = new Slide(new Dimension(1920, 1080));
 
-        if(indexOfNextSlide <= Presentation.get().getSlideCount()) {
-            return this.slideImages.get(indexOfNextSlide);
-        } else {
-            return null;
+        // Set the slide colour
+        slide.setBackground(Color.WHITE);
+
+        // Add slide to slides at index
+        Presentation.get().getSlides().add(index, slide);
+
+        // Add update listener
+        slide.addUpdateListener(Presentation.get());
+
+        // Keeps track of the slide currently being displayed
+        this.currentSlideIndex = index;
+
+        // Create a new slide image of the slide
+        SlideImage newSlideImage = new SlideImage(slide, MainDisplayPanel.instance);
+
+        // Add to slide images list
+        this.slideImages.add(index, newSlideImage);
+
+        // The code below will display the new slide added to the main display panel if displayNewSlide equals true
+        if(this.displayNewSlide) {
+            // Display new slide
+            displaySlide(newSlideImage, MainDisplayPanel.instance);
         }
-    }
 
-    /**
-     * Returns the current slide being displayed
-     * @return Slide
-     * */
-    public Slide getCurrentSlide() {
-        if(this.currentSlideIndex >= 0 && this.currentSlideIndex < Presentation.get().getSlideCount()) {
-            return Presentation.get().getSlideAtIndex(this.currentSlideIndex);
-        } else {
-            return null;
+        // Add slide to presentation slider
+        addSlideToViewer(index);
+
+        // Update
+        for(int i = 0; i < this.slidesViewer.size(); i++) {
+            this.slidesViewer.get(i).setToolTipText("Slide " + (i + 1));
         }
     }
 
@@ -394,40 +509,28 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
      * Add a slide after the selected slide
      * @param selectedSlide The selected slide
      * */
-    private void addSlideAfter(Slide selectedSlide) {}
+    public void addSlideAfter() {
+        int index = getSlidePosition(getCurrentSlide());
+        //System.out.println("Slide " + index + " Clicked!");
 
-    /**
-     * Add a slide before the selected slide
-     * @param selectedSlide The selected slide
-     * */
-    private void addSlideBefore(Slide selectedSlide) {}
-
-    /**
-     * Gets the selected slide's slideImage
-     * @param slide The slide in the slide viewer
-     * @return The slide's slideImage at the same index
-     */
-    private SlideImage getSelectedSlide(JButton slide) {
-        int position = getSlidePosition(slide);
-        return this.slideImages.get(position);
+        addNewSlideAt(index + 1);
     }
 
     /**
-     * Gets the index position of a slide
-     * @param slide A slide
-     * @return The index of the slide
-     * @param <T> The type of slide
-     */
-    private <T> int getSlidePosition(T slide) {
-        int position = -1;
-        if(slide instanceof JButton) {
-            position = this.slidesViewer.indexOf(slide);
-        } else if (slide instanceof SlideImage) {
-            position = this.slideImages.indexOf(slide);
-        } else if (slide instanceof Slide) {
-            position = Presentation.get().getSlides().indexOf(slide);
-        }
-        return position;
+     * Add a slide before the selected/current slide
+     * @param selectedSlide The selected slide
+     * */
+    public void addSlideBefore() {
+        int index = getSlidePosition(getCurrentSlide());
+        //System.out.println("Slide " + index + " Clicked!");
+
+        addNewSlideAt(index);
+    }
+
+    
+
+    private void setSelectedSlide(JButton slide) {
+        this.currentSlideIndex = getSlidePosition(slide);
     }
 
     /**
@@ -440,6 +543,9 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
 
         // Highlight new slide
         slide.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
+
+        // Set the highlighted slide as the selected slide
+        setSelectedSlide(slide);
 
         // Set the previous highlighted slide to the new slide
         this.prevHighlightedSlide = slide;
@@ -456,6 +562,9 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
 
             // Highlight new slide
             slide.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
+
+            // Set the highlighted slide as the selected slide
+            setSelectedSlide(slide);
 
             // Set the previous highlighted slide to the new slide
             this.prevHighlightedSlide = slide;
@@ -516,6 +625,8 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         highlightSlide(this.slidesViewer.get(index));
     }
 
+    //////////// INTERFACE FUNCTIONS ////////////
+
     @Override
     public void onChangePresentation(Presentation current, Presentation discarded) {
 
@@ -547,11 +658,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         }
 
         // Add slide to presentation slider
-        addSlideToViewer();
-
-        // Changes highlighting to slides added
-        JButton slideInViewer = this.slidesViewer.get(index);
-        highlightSlide(slideInViewer);
+        addSlideToViewer(-1);
 
         //System.out.println("New Slide - " + (Presentation.get().getSlideCount()) + "!");
     }
@@ -572,18 +679,22 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         this.viewSliderPanel.revalidate();
         this.viewSliderPanel.repaint();
 
-        int firstSlide = getSlidePosition(getCurrentSlide()) + 1;
-        int lastSlide = getSlidePosition(this.slidesViewer.getLast()) + 1;
-        // STILL WORKING ON THIS - PROBLEM WITH DELETING
-        if(firstSlide != 1) {
-            if(showPrevSlide()) {
-                System.out.println("Slide " + + (this.currentSlideIndex + 2) + " deleted - Now displaying previous slide!");
-            } else if (showNextSlide()) {
-                System.out.println("Slide " + (this.currentSlideIndex) + " deleted - Now displaying next slide!");
-            }
-        } else {
+        if(index  == 0) {
             displaySlide(this.slideImages.get(0), MainDisplayPanel.instance);
             highlightSlide(this.slidesViewer.get(0));
+        } else if (index == this.slidesViewer.size()){
+            displaySlide(this.slideImages.get(this.slidesViewer.size() - 1), MainDisplayPanel.instance);
+            highlightSlide(this.slidesViewer.get(this.slidesViewer.size() - 1));
+        } else {
+            if (showNextSlide()) {
+                System.out.println("Slide " + (this.currentSlideIndex) + " deleted - Now displaying next slide!");
+            } else if(showPrevSlide()) {
+                System.out.println("Slide " + (this.currentSlideIndex + 2) + " deleted - Now displaying previous slide!");
+            }
+        }
+
+        for(int i = 0; i < this.slidesViewer.size(); i++) {
+            this.slidesViewer.get(i).setToolTipText("Slide " + (i + 1));
         }
     }
 
@@ -602,6 +713,5 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         // Reset the image icon of that slide to the new slide image
         previewSlide.setIcon(GeneralButtons.resizeIcon(previewSlideImage, 200, 118));
 
-        //previewSlide.repaint();
     }
 }

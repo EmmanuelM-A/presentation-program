@@ -5,6 +5,7 @@ import com.scc210groupproject.structure.Slide;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /**
  * This class converts slides into images and handles the painting of the slides.
@@ -22,6 +23,9 @@ public class SlideImage extends JPanel {
     // The scale
     private double scale;
 
+    // Actions for this slide EXAMPLE FOR NOW
+    private ArrayList<Integer> actions;
+
     // Default slide dimensions (changed later once displayed)
     private Dimension slideDimension = new Dimension(1000, 600);
 
@@ -32,6 +36,8 @@ public class SlideImage extends JPanel {
      */
     public SlideImage(Slide slide, MainDisplayPanel display) {
         this.slide = slide;
+
+        this.actions = new ArrayList<>();
 
         this.setLayout(null);
         this.setBackground(UIManager.getColor("Main.Area"));
@@ -83,6 +89,13 @@ public class SlideImage extends JPanel {
         return scale;
     }
     /**
+     * Gets the actions that can occur on this slide
+     * @return
+     */
+    public ArrayList<Integer> getActions() {
+        return this.actions;
+    }
+    /**
      * Gets the (default) slide dimension.
      * @return Dimension
      */
@@ -118,6 +131,22 @@ public class SlideImage extends JPanel {
      */
     public void setScale(double scale) {
         this.scale = scale;
+    }
+
+    /**
+     * Adds an action to the actions list
+     * @param action
+     */
+    public void addAction(Integer action) {
+        this.actions.add(action);
+    }
+
+    /**
+     * Removes an action from the actions list
+     * @param action
+     */
+    public void removeAction(Integer action) {
+        this.actions.remove(action);
     }
 
     /**
