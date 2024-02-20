@@ -13,12 +13,9 @@ public class AddRowAction implements ActionListener{
         ChartContextMenu menu = (ChartContextMenu)ContextMenuPanel.menu;
         Object[] rows = new Object[menu.getTable().getColumnCount()];
         for(int i = 0; i < rows.length; i++) {
-            rows[i] = "cheese";
+            rows[i] = null;
         }
         menu.getTableModel().addRow(rows);
-        System.out.println(menu.getTableModel().getRowCount());
-        System.out.println(menu.getTableModel().getColumnCount());
-        // System.out.println(menu.getTable());
 
         ContextMenuPanel.instance.revalidate();
 

@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 import com.scc210groupproject.structure.ChartElement;
 import com.scc210groupproject.ui.helper.GeneralButtons;
@@ -17,12 +18,30 @@ public class ChartContextMenu extends ContextMenu {
 
         this.makeChartContextMenu();
 
-        String[][] data = element.getData();
+        ArrayList<ArrayList<String>> data = element.getData();
+
+        int max = 0;
+
+        for(int i = 0; i < data.size(); i++) {
+            if (data.get(i).size() > max) {
+                max = data.get(i).size();
+            }
+        }
+        for(int i = 0; i < max; i++) {
+            tableModel.addColumn("#" + i);
+        }
+        Object[] rows = new Object[table.getColumnCount()];
+        for(int i = 0; i < rows.length; i++) {
+            rows[i] = null;
+        }
+        for(int i = 0; i < data.size(); i++) {
+            tableModel.addRow(rows);
+        }
 
         for(int i = 0; i < table.getRowCount(); i++) {
             for(int j = 0; j < table.getColumnCount(); j++) {
-                if (data[i][j] != null) {
-                    this.table.setValueAt(data[i][j], i, j);
+                if (data.get(i).get(j) != null) {
+                    this.table.setValueAt(data.get(i).get(j), i, j);
                 }
             }
         }

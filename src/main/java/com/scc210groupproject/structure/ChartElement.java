@@ -48,13 +48,15 @@ public ChartElement() {
     private void parseTable() {
         JTable table = ((ChartContextMenu)ContextMenuPanel.menu).getTable();
         for(int i = 0; i < table.getRowCount(); i++) {
+            ArrayList<String> tempArrayList = new ArrayList<String>();
             for(int j = 0; j < table.getColumnCount(); j++) {
-                this.data[i][j] = (String)table.getValueAt(i, j);
+                tempArrayList.add((String)table.getValueAt(i, j));
             }
+            data.add(tempArrayList);
         }
     }
 
-    private void makeChart(String chartType, Boolean load) {
+    public void makeChart(String chartType, Boolean load) {
         if (!load) { this.parseTable(); }
 
         JFreeChart chart;
@@ -63,12 +65,12 @@ public ChartElement() {
             case "PIE":
                 DefaultPieDataset pieDataset = new DefaultPieDataset();
 
-                for(int i = 0; i < this.data[0].length; i++) {
-                    if (this.data[i][0] != null && this.data[i][1] != null) {
+                for(int i = 0; i < data.size(); i++) {
+                    if (data.get(i).get(0) != null && data.get(i).get(1) != null) {
                         try {
-                            pieDataset.setValue(data[i][0], Double.parseDouble(data[i][1]));
+                            pieDataset.setValue(data.get(i).get(0), Double.parseDouble(data.get(i).get(1)));
                         } catch (NumberFormatException e) {
-                            pieDataset.setValue(data[i][1], 0);
+                            pieDataset.setValue(data.get(i).get(0), 0);
                         }
                     } 
                 }
@@ -76,34 +78,39 @@ public ChartElement() {
                 chart = ChartFactory.createPieChart("Chart1", pieDataset, true, true, false);
                 break;
 
-            case "LINE":  
+            case "LINE":
             case "BAR":
                 DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
                 
-                for(int j = 1; j < table.getColumnCount(); j++) {
-                    for(int i = 0; i < table.getRowCount(); i++) {
-                        if (this.data[i][j] != null) {
+                for(int i = 0; i < data.size(); i++) {
+                    for(int j = 0; j < data.get(i).size(); j++) {
+                        if (this.data.get(i).get(j) != null) {
                             try {
-                                dataset.addValue(Double.parseDouble(data[i][j]), "series" + j, data[i][0]);
+                                categoryDataset.addValue(Double.parseDouble(data.get(i).get(j)), "series" + j, data.get(i).get(0));
                             } catch (NumberFormatException e) {
-                                dataset.addValue(0, "Series" + j, data[i][0]);
+                                categoryDataset.addValue(0, "Series" + j, data.get(i).get(0));
                             }
                         }
                     }
                 }
-            
-                chart = ChartFactory.createLineChart("Chart1", "x", "y", categoryDataset,
-                 PlotOrientation.VERTICAL, true, true, false);
+                
+                if(chartType == "LINE") {
+                    chart = ChartFactory.createLineChart("Chart1", "x", "y", categoryDataset,
+                     PlotOrientation.VERTICAL, true, true, false);
+                } else {
+                    chart = ChartFactory.createBarChart("Chart1", "x", "y", categoryDataset,
+                    PlotOrientation.VERTICAL, true, true, false);
+                }
                 break;
 
             case "SCATTER":
                 XYSeries series = new XYSeries("Series1");
 
-                for(int j = 0; j < table.getColumnCount(); j++) {
-                    for(int i = 0; i < table.getRowCount(); i++) {
-                        if (this.data[i][j] != null && this.data[i][j+1] != null) {
+                for(int i = 0; i < data.size(); i++) {
+                    for(int j = 0; j < data.get(i).size(); j++) {
+                        if (data.get(i).get(j) != null && data.get(i).get(j+1) != null) {
                             try {
-                                series.add(Double.parseDouble(data[i][j]), Double.parseDouble(data[i][j+1]));
+                                series.add(Double.parseDouble(data.get(i).get(j)), Double.parseDouble(data.get(i).get(j+1)));
                             } catch (NumberFormatException e) {
                                 series.add(0, 0);
                             }
@@ -116,13 +123,15 @@ public ChartElement() {
                 chart = ChartFactory.createXYLineChart("Chart1", "x", "y", xyDataset,
                  PlotOrientation.VERTICAL, true, true, false);
                 break;
+            default:
+                return;
         }
             
         this.chart = new ChartPanel(chart);
         this.chart.setSize(new Dimension(400, 400));
     }
 
-    public String[][] getData() {
+    public ArrayList<ArrayList<String>> getData() {
         return data;
     }
 
@@ -132,39 +141,23 @@ public ChartElement() {
     protected void writeSelf(Writer writer) throws IOException {
         super.writeSelfExtended(writer);
 
-        writer.writeString("data", Arrays.deepToString(getData()));
-        writer.writeString("chartType", this.chartType);
+        // writer.writeString("data", Arrays.deepToString(getData()));
+        // writer.writeString("chartType", this.chartType);
 
     }
 
     @Override
     protected void readSelf(Reader reader) throws IOException {
 
-        String[] rows = reader.readString("data").split("],");
+        // String[] rows = reader.readString("data").split("],");
 
-        for(int i = 0; i < rows.length; i++){
-            rows[i] = rows[i].replace("[\\[]", "");
-            String[] rowValues = rows[i].split(",");
+        // for(int i = 0; i < rows.length; i++){
+        //     rows[i] = rows[i].replace("[\\[]", "");
+        //     String[] rowValues = rows[i].split(",");
+        //     data.add(new ArrayList<String>(Arrays.asList(rowValues))) ;
+        // }
+        // this.makeChart(chartType, true);
 
-            for(int j = 0; j < rowValues.length; j++) {
-                this.data[i][j] = rowValues[j];
-            }
-        }
-
-        switch(reader.readString("chartType")) {
-            case ("PIE"):
-                this.makePieChart();
-                break;
-            case ("LINE"):
-                this.makeLineChart();
-                break;
-            case ("BAR"):
-                this.makeBarChart();
-                break;
-            case ("SCATTER"):
-                this.makeScatterChart();
-                break;
-        }
         super.readSelfExtended(reader);
     }
 

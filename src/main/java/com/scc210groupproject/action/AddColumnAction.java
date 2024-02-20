@@ -13,9 +13,9 @@ public class AddColumnAction implements ActionListener {
         ChartContextMenu menu = (ChartContextMenu)ContextMenuPanel.menu;
         Object[] columns = new Object[menu.getTable().getRowCount()];
         for(int i = 0; i < columns.length; i++) {
-            columns[i] = "cheese";
+            columns[i] = null;
         }
-        menu.getTableModel().addColumn(columns);
+        menu.getTableModel().addColumn("#" + menu.getTable().getColumnCount());
 
         ContextMenuPanel.instance.revalidate();
 
