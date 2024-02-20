@@ -51,4 +51,8 @@ public class App {
     - shortcuts windows
     - slide manager fix errors DELETE
     - presenetation mode
+    - Color chooser dialog for text, shapes, arrow
+    - Video element
+    - Audio element
+    - Export to pdf
 */

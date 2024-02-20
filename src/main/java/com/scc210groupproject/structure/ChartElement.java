@@ -2,9 +2,7 @@ package com.scc210groupproject.structure;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.List;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -164,7 +162,7 @@ public ChartElement() {
         this.chartType = reader.readString("chartType");
 
         for(int i = 0; i < rows.length; i++){
-            rows[i] = rows[i].replace("[\\[]", "");
+            rows[i] = rows[i].replaceAll("[\\[\\]\\s]", "");
             String[] rowValues = rows[i].split(",");
             data.add(new ArrayList<String>(Arrays.asList(rowValues))) ;
         }
