@@ -59,6 +59,8 @@ public ChartElement() {
     public void makeChart(String chartType, Boolean load) {
         if (!load) { this.parseTable(); }
 
+        this.chartType = chartType;
+
         JFreeChart chart;
 
         switch (chartType) {
@@ -107,10 +109,10 @@ public ChartElement() {
                 XYSeries series = new XYSeries("Series1");
 
                 for(int i = 0; i < data.size(); i++) {
-                    for(int j = 0; j < data.get(i).size(); j++) {
-                        if (data.get(i).get(j) != null && data.get(i).get(j+1) != null) {
+                    for(int j = 1; j < data.get(i).size(); j++) {
+                        if (data.get(i).get(0) != null & data.get(i).get(j) != null) {
                             try {
-                                series.add(Double.parseDouble(data.get(i).get(j)), Double.parseDouble(data.get(i).get(j+1)));
+                                series.add(Double.parseDouble(data.get(i).get(0)), Double.parseDouble(data.get(i).get(j)));
                             } catch (NumberFormatException e) {
                                 series.add(0, 0);
                             }
@@ -141,22 +143,33 @@ public ChartElement() {
     protected void writeSelf(Writer writer) throws IOException {
         super.writeSelfExtended(writer);
 
-        // writer.writeString("data", Arrays.deepToString(getData()));
-        // writer.writeString("chartType", this.chartType);
+        String[][] dataArray = new String[getData().size()][];
+
+        for(int i = 0; i < getData().size(); i++) {
+            dataArray[i] = Arrays.copyOf(getData().get(i).toArray(), getData().get(i).size(),String[].class);
+        }
+
+        System.out.println(Arrays.deepToString(dataArray));
+
+        writer.writeString("data", Arrays.deepToString(dataArray));
+        writer.writeString("chartType", this.chartType);
 
     }
 
     @Override
     protected void readSelf(Reader reader) throws IOException {
 
-        // String[] rows = reader.readString("data").split("],");
+        System.out.println("before" + reader.readString("data"));
+        String[] rows = reader.readString("data").split("],");
+        this.chartType = reader.readString("chartType");
 
-        // for(int i = 0; i < rows.length; i++){
-        //     rows[i] = rows[i].replace("[\\[]", "");
-        //     String[] rowValues = rows[i].split(",");
-        //     data.add(new ArrayList<String>(Arrays.asList(rowValues))) ;
-        // }
-        // this.makeChart(chartType, true);
+        for(int i = 0; i < rows.length; i++){
+            rows[i] = rows[i].replace("[\\[]", "");
+            String[] rowValues = rows[i].split(",");
+            data.add(new ArrayList<String>(Arrays.asList(rowValues))) ;
+        }
+        System.out.println("Data" + data);
+        this.makeChart(chartType, true);
 
         super.readSelfExtended(reader);
     }
