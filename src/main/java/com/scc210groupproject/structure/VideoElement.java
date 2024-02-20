@@ -2,10 +2,10 @@ package com.scc210groupproject.structure;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 
-import javax.print.attribute.standard.Media;
 import javax.swing.JPanel;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
@@ -18,17 +18,17 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
 
-class VideoElement extends ExtendedElement {
+public class VideoElement extends ExtendedElement {
 
+    private JPanel videoPanel;
     private final JFXPanel jfxPanel = new JFXPanel();
     private MediaPlayer mediaPlayer;
     private File videoFile;
 
     public VideoElement(File videoFile, int height, int width) {
         this.videoFile = videoFile;
-        setLayout(new BorderLayout());
-        add(jfxPanel, BorderLayout.CENTER);
-        setPreferredSize(new Dimension(height, width));
+        videoPanel = new JPanel(new BorderLayout());
+        videoPanel.add(jfxPanel, BorderLayout.CENTER);;
         initializePlayer();
     }
 
@@ -40,7 +40,8 @@ class VideoElement extends ExtendedElement {
 
             jfxPanel.setScene(new javafx.scene.Scene(new javafx.scene.Group(mediaView)));
 
-            //mediaPlayer.play();
+            mediaPlayer.play();
+            mediaPlayer.setAutoPlay(true);
         });
     }
 
@@ -72,26 +73,23 @@ class VideoElement extends ExtendedElement {
     }
 
     public JPanel getPanel() {
-        return this;
+        return videoPanel;
     }
-}
+
 
     @Override
     protected void writeSelf(Writer writer) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'writeSelf'");
+        super.writeSelfExtended(writer);
     }
 
     @Override
     protected void readSelf(Reader reader) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'readSelf'");
+        super.readSelfExtended(reader);
     }
 
     @Override
     public Component asComp() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'asComp'");
+        return videoPanel;
     }
     
 }
