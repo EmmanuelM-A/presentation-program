@@ -5,17 +5,10 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.JPopupMenu;
-import javax.swing.SwingUtilities;
 
 import com.scc210groupproject.structure.BoxElement;
 import com.scc210groupproject.structure.Slide;
 import com.scc210groupproject.ui.MainDisplayPanel;
-import com.scc210groupproject.ui.menuBarTabs.toolBars.ElementMiniToolBar;
 
 public class NewBoxAction implements ActionListener {
 
@@ -27,20 +20,7 @@ public class NewBoxAction implements ActionListener {
 
         BoxElement element = new BoxElement();
 
-        element.asComp().addMouseListener(new MouseAdapter() {
-        
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("Clicked extend element 1 !");
-                if(SwingUtilities.isRightMouseButton(e)) {
-                    System.out.println("Clicked extend element 2!");
-                    JPopupMenu popupMenu = new JPopupMenu();
-                    popupMenu.add(new ElementMiniToolBar());
-
-                    popupMenu.show(element.asComp(), e.getX(), e.getY());
-                }
-            }
-        });
+        //System.out.println(element.asComp());
 
         element.setBackground(new Color(
             (int)(Math.random() * 255), 

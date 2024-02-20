@@ -4,12 +4,16 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.HashMap;
+
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 
 import com.scc210groupproject.structure.BaseElement;
 import com.scc210groupproject.structure.Slide;
@@ -25,6 +29,7 @@ import com.scc210groupproject.structure.input.listeners.IMouseMoved;
 import com.scc210groupproject.structure.input.listeners.IMousePressed;
 import com.scc210groupproject.structure.input.listeners.IMouseReleased;
 import com.scc210groupproject.structure.input.listeners.IMouseWheel;
+import com.scc210groupproject.ui.menuBarTabs.toolBars.ElementMiniToolBar;
 
 public class InputEmulator implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
 
