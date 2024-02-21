@@ -20,27 +20,39 @@ import com.scc210groupproject.ui.UIFrame;
 
 public class AudioElement extends ExtendedElement {
 
-    private JButton button= new JButton(new ImageIcon("src/main/resources/images/audio.png"));
-    private AudioInputStream audio;
+    private JButton button = new JButton(new ImageIcon("src/main/resources/images/audio.png"));
+    private File file;
+    private Clip clip;
 
     public AudioElement(File file) {
+        this.file = file;
         try {
-            audio = AudioSystem.getAudioInputStream(file);
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(UIFrame.instance,e, "Alert", JOptionPane.WARNING_MESSAGE);
+            clip = AudioSystem.getClip();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(UIFrame.instance, e, "Alert", JOptionPane.WARNING_MESSAGE);
         }
 
+        AudioElement self = this;
         super.addInputListener(new IMouseClicked() {
 
             @Override
             public void mouseClicked(Object target, InputState state) {
+                AudioInputStream audio = null;
                 try {
-                    Clip clip = AudioSystem.getClip();
-                    clip.open(audio);
-                    clip.start();
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(UIFrame.instance,e, "Alert", JOptionPane.WARNING_MESSAGE);
+                    audio = AudioSystem.getAudioInputStream(self.file);
+                } catch (Exception e){
+                    JOptionPane.showMessageDialog(UIFrame.instance, e, "Alert", JOptionPane.WARNING_MESSAGE);
                 }
+
+                clip.stop();
+                try {
+                    clip.close();
+                    clip.open(audio);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(UIFrame.instance, e, "Alert", JOptionPane.WARNING_MESSAGE);
+                }
+                clip.setFramePosition(0);
+                clip.start();
             }
         });
     }
