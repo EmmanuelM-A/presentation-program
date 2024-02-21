@@ -11,7 +11,6 @@ import javax.swing.SwingUtilities;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
-import com.scc210groupproject.ui.UIFrame;
 
 import org.jcodec.api.FrameGrab;
 import org.jcodec.api.JCodecException;
