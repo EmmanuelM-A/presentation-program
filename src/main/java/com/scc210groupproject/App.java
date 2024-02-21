@@ -53,6 +53,5 @@ public class App {
     - presentation mode
     - Color chooser dialog for text, shapes, arrow
     - Video element
-    - Audio element
     - Export to pdf
 */

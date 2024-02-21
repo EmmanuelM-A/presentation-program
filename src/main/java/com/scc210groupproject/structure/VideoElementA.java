@@ -3,12 +3,15 @@ package com.scc210groupproject.structure;
 import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
+import com.scc210groupproject.ui.UIFrame;
 
 import org.jcodec.api.FrameGrab;
 import org.jcodec.api.JCodecException;
@@ -42,11 +45,19 @@ public class VideoElementA extends ExtendedElement {
                 try {
                     while ((picture = grab.getNativeFrame()) != null) {
                         label.setIcon(new ImageIcon(AWTUtil.toBufferedImage(picture)));
-                        self.notifyUpdate(self);
+                        SwingUtilities.invokeAndWait(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                self.notifyUpdate(self);
+                            }
+                            
+                        });
+                        
                         Thread.sleep(17);
                     }
                 }
-                catch (IOException | InterruptedException e) {
+                catch (IOException | InterruptedException | InvocationTargetException e) {
 
                 }
             }
