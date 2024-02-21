@@ -60,38 +60,6 @@
       <artifactId>jfreechart</artifactId>
       <version>1.0.19</version>
     </dependency>
-
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-controls</artifactId>
-      <version>${javafx.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-fxml</artifactId>
-      <version>${javafx.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-graphics</artifactId>
-      <version>${javafx.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-media</artifactId>
-      <version>${javafx.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-web</artifactId>
-      <version>${javafx.version}</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-swing -->
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-swing</artifactId>
-      <version>${javafx.version}</version>
-    </dependency>
     <dependency>
       <groupId>org.jcodec</groupId>
       <artifactId>jcodec</artifactId>

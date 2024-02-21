@@ -13,6 +13,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -20,6 +21,7 @@ import java.util.TreeSet;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
@@ -351,7 +353,16 @@ public class VideoElement extends ExtendedElement {
 
             Dimension size = element.getSize();
             ((JLabel)element.asComp()).setIcon(GeneralButtons.resizeIcon(current.image, size.width, size.height));
-            element.notifyUpdate(element);
+            try {
+                SwingUtilities.invokeAndWait(new Runnable() {
+    
+                    @Override
+                    public void run() {
+                        element.notifyUpdate(element);
+                    }
+                    
+                });
+            } catch (InterruptedException | InvocationTargetException e) {}
 
             return true;
         }
