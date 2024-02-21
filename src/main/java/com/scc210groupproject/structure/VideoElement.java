@@ -41,7 +41,6 @@ public class VideoElement extends ExtendedElement {
 
     private PlayerPanel label;
     private File file;
-    private FrameGrab grab;
 
     private PlayerThread player = null;
 
@@ -66,7 +65,7 @@ public class VideoElement extends ExtendedElement {
     }
 
     private void setup() {
-        player = new PlayerThread(this, grab);
+        player = new PlayerThread(this);
         player.start();
 
         addInputListener(new IMouseClicked() {
@@ -121,9 +120,6 @@ public class VideoElement extends ExtendedElement {
         this();
 
         file = video;
-        try {
-            grab = FrameGrab.createFrameGrab(NIOUtils.readableChannel(file));
-        } catch(IOException | JCodecException e) {}
 
         setup();
     }
@@ -144,9 +140,6 @@ public class VideoElement extends ExtendedElement {
     @Override
     protected void readSelf(Reader reader) throws IOException {
         file = reader.readFile("video");
-        try {
-            grab = FrameGrab.createFrameGrab(NIOUtils.readableChannel(file));
-        } catch(IOException | JCodecException e) {}
 
         super.readSelfExtended(reader);
         
@@ -243,6 +236,7 @@ public class VideoElement extends ExtendedElement {
         private Object lock;
 
         public VideoElement element;
+        private FrameGrab grab;
         public Entry[] entries;
 
         public long start;
@@ -283,10 +277,13 @@ public class VideoElement extends ExtendedElement {
             }
         }
 
-        public PlayerThread(VideoElement owner, FrameGrab grab) {
-            lock = new Object();
-            element = owner;
-            
+        private void load() {
+            if (grab == null) {
+                try {
+                    grab = FrameGrab.createFrameGrab(NIOUtils.readableChannel(element.file));
+                } catch(IOException | JCodecException e) {}
+            }
+
             SortedSet<Entry> tree = new TreeSet<>(new Comparator<Entry>() {
 
                 @Override
@@ -307,6 +304,11 @@ public class VideoElement extends ExtendedElement {
             catch (IOException e) {}
 
             entries = tree.toArray(new Entry[tree.size()]);
+        }
+
+        public PlayerThread(VideoElement owner) {
+            lock = new Object();
+            element = owner;
         }
 
         @Override
@@ -337,6 +339,10 @@ public class VideoElement extends ExtendedElement {
         }
 
         private boolean updateFrame() {
+            if (entries == null) {
+                load();
+            }
+
             double target = (double)(System.currentTimeMillis() - start) / 1000d;
 
             Entry current;

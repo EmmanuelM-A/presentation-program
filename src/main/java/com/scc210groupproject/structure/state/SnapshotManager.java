@@ -26,7 +26,7 @@ public class SnapshotManager {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            Writer writer = new Writer(outputStream);
+            Writer writer = new Writer(outputStream, true);
             writer.writeFrom(presentation);
         } catch (IOException e) {
             return false;
@@ -57,7 +57,7 @@ public class SnapshotManager {
 
         ByteArrayInputStream inputStream = new ByteArrayInputStream(entry);
         try {
-            Reader reader = new Reader(inputStream);
+            Reader reader = new Reader(inputStream, true);
             Presentation.set((Presentation)reader.loadHierarchy());
         }
         catch (IOException e) {
@@ -76,7 +76,7 @@ public class SnapshotManager {
         
         ByteArrayInputStream inputStream = new ByteArrayInputStream(entry);
         try {
-            Reader reader = new Reader(inputStream);
+            Reader reader = new Reader(inputStream, true);
             Presentation.set((Presentation)reader.loadHierarchy());
         }
         catch (IOException e) {

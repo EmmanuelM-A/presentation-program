@@ -61,6 +61,7 @@ public class FileSerializer {
     public static class Writer {
 
         private JsonGenerator generator;
+        private boolean linkMode;
 
         // not constraint by int max but will return wrong value for size() if beyond
         // max
@@ -70,7 +71,13 @@ public class FileSerializer {
         private LinkedList<IJsonSerializable> queuedObjects;
 
         public Writer(OutputStream stream) throws IOException {
+            this(stream, false);
+        }
+        
+        public Writer(OutputStream stream, boolean linkMode) throws IOException {
             this();
+            this.linkMode = linkMode;
+
             generator = new JsonFactory().createGenerator(stream);
             generator.useDefaultPrettyPrinter();
         }
@@ -102,9 +109,13 @@ public class FileSerializer {
         }
 
         public void writeFile(String name, File value) throws IOException {
-            FileInputStream stream = new FileInputStream(value);
-            generator.writeStringField(name, Base64.getEncoder().encodeToString(stream.readAllBytes()));
-            stream.close();
+            if (linkMode)
+                generator.writeStringField(name, value.getAbsolutePath());
+            else {
+                FileInputStream stream = new FileInputStream(value);
+                generator.writeStringField(name, Base64.getEncoder().encodeToString(stream.readAllBytes()));
+                stream.close();
+            }
         }
 
         private BigInteger updateObjectLists(IJsonSerializable object) {

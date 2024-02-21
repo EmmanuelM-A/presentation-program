@@ -64,13 +64,19 @@ public class FileDeserializer {
 
         private ObjectMapper mapper;
         private JsonNode root;
+        private boolean linkMode;
 
         private HashMap<String, IJsonSerializable> resolvedObjects;
 
         private JsonNode current;
 
         public Reader(InputStream stream) throws IOException {
+            this(stream, false);
+        }
+
+        public Reader(InputStream stream, boolean linkMode) throws IOException {
             this();
+            this.linkMode = linkMode;
             mapper = new ObjectMapper();
             root = mapper.readTree(stream);
         }
@@ -104,16 +110,20 @@ public class FileDeserializer {
         }
         
         public File readFile(String name) throws IOException {
-
-            String encoded = current.get(name).asText();
-
-            File file = File.createTempFile("image" + System.currentTimeMillis(), "tmp");
-
-            FileOutputStream stream = new FileOutputStream(file);
-            stream.write(Base64.getDecoder().decode(encoded));
-            stream.close();
-
-            return file;
+            if (linkMode) {
+                return new File(current.get(name).asText());
+            }
+            else {
+                String encoded = current.get(name).asText();
+    
+                File file = File.createTempFile("image" + System.currentTimeMillis(), "tmp");
+    
+                FileOutputStream stream = new FileOutputStream(file);
+                stream.write(Base64.getDecoder().decode(encoded));
+                stream.close();
+    
+                return file;
+            }
         }
 
         public IJsonSerializable readObject(String name) throws IOException, IllegalArgumentException {
