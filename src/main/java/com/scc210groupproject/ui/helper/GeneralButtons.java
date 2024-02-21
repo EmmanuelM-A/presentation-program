@@ -1,5 +1,6 @@
 package com.scc210groupproject.ui.helper;
 
+import com.scc210groupproject.App;
 import com.scc210groupproject.action.*;
 
 import javax.imageio.ImageIO;
@@ -122,10 +123,10 @@ public enum GeneralButtons {
      * @return ImageIcon
      * */
     public static ImageIcon getIconFromFile(String file) {
-        String filePath = "src/main/resources/images/" + file;
+        String filePath = "/images/" + file;
         BufferedImage source;
         try {
-            source = ImageIO.read(new File(filePath));
+            source = ImageIO.read(App.class.getResource(filePath));
         } catch (Exception e) {
             System.out.println("Could not load icons: " + filePath);
             source = null;
