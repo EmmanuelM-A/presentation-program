@@ -2,7 +2,6 @@ package com.scc210groupproject.structure;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 
@@ -25,7 +24,7 @@ public class VideoElement extends ExtendedElement {
     private MediaPlayer mediaPlayer;
     private File videoFile;
 
-    public VideoElement(File videoFile, int height, int width) {
+    public VideoElement(File videoFile) {
         this.videoFile = videoFile;
         videoPanel = new JPanel(new BorderLayout());
         videoPanel.add(jfxPanel, BorderLayout.CENTER);;

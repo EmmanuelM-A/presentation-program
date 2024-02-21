@@ -17,8 +17,8 @@ import com.scc210groupproject.ui.helper.GeneralButtons;
 
 public class ImageElement extends ExtendedElement
 {
-    JLabel label = new JLabel();
-    BufferedImage image = null;
+    private JLabel label = new JLabel();
+    private BufferedImage image = null;
 
     public ImageElement(BufferedImage loaded)
     {

@@ -20,7 +20,7 @@ import com.scc210groupproject.ui.contextMenu.TextContextMenu;
 
 public class TextElement extends ExtendedElement
 {
-    JTextPane pane;
+    private JTextPane pane;
     
     public static TextElement createEmpty() { return new TextElement(); }
 

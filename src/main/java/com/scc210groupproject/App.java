@@ -50,7 +50,7 @@ public class App {
     - drag feature to slides
     - shortcuts windows
     - slide manager fix errors DELETE
-    - presenetation mode
+    - presentation mode
     - Color chooser dialog for text, shapes, arrow
     - Video element
     - Audio element

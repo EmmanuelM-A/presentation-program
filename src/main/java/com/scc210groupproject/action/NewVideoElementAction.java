@@ -24,9 +24,9 @@ public class NewVideoElementAction implements ActionListener {
 
         String path = fileChooser.getSelectedFile().getAbsolutePath();
     
-        VideoElement VideoElement = new VideoElement(new File(path), 400, 400);
-        VideoElement.setSize(new Dimension(400, 400));
-        SlideManager.slideManager.getCurrentSlide().add(VideoElement);
+        VideoElement videoElement = new VideoElement(new File(path));
+        videoElement.setSize(new Dimension(400, 400));
+        SlideManager.slideManager.getCurrentSlide().add(videoElement);
 
     }
 }

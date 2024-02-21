@@ -8,7 +8,6 @@ import javax.swing.JMenuItem;
 
 public class ShapesPopup {
 
-
     public static JPopupMenu popupMenu;
 
     public ShapesPopup() {
