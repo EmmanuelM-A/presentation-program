@@ -52,6 +52,5 @@ public class App {
     - slide manager fix errors DELETE
     - presentation mode
     - Color chooser dialog for text, shapes, arrow
-    - Video element
     - Export to pdf
 */
