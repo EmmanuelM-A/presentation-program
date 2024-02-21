@@ -10,6 +10,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
+
+
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -98,6 +101,19 @@ public class FileDeserializer {
 
         public boolean readBoolean(String name) throws IOException {
             return current.get(name).asBoolean();
+        }
+        
+        public File readFile(String name) throws IOException {
+
+            String encoded = current.get(name).asText();
+
+            File file = File.createTempFile("image" + System.currentTimeMillis(), "tmp");
+
+            FileOutputStream stream = new FileOutputStream(file);
+            stream.write(Base64.getDecoder().decode(encoded));
+            stream.close();
+
+            return file;
         }
 
         public IJsonSerializable readObject(String name) throws IOException, IllegalArgumentException {

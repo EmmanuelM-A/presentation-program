@@ -3,10 +3,8 @@ package com.scc210groupproject.structure;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
-import java.util.Base64;
 
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
@@ -18,12 +16,16 @@ import com.scc210groupproject.ui.helper.GeneralButtons;
 public class ImageElement extends ExtendedElement
 {
     private JLabel label = new JLabel();
+    private File file = null;
     private BufferedImage image = null;
 
-    public ImageElement(BufferedImage loaded)
+    public ImageElement(File loaded)
     {
         super();
-        image = loaded;
+        file = loaded;
+        try {
+            image = ImageIO.read(file);
+        } catch (IOException e) {}
     }
 
     @Override
@@ -42,24 +44,14 @@ public class ImageElement extends ExtendedElement
         
         super.writeSelfExtended(writer);
 
-        String encoded = "none";
-        if (image != null) {
-            ByteArrayOutputStream bo = new ByteArrayOutputStream();
-            ImageIO.write(image, "png", bo);
-            encoded = Base64.getEncoder().encodeToString(bo.toByteArray());
-        }
-
-        writer.writeString("image", encoded);
+        writer.writeFile("image", file);
     }
 
     @Override
     protected void readSelf(Reader reader) throws IOException {
 
-        String encoded = reader.readString("image");
-        if (encoded != "none") {
-            ByteArrayInputStream bi = new ByteArrayInputStream(Base64.getDecoder().decode(encoded));
-            image = ImageIO.read(bi);
-        }
+        file = reader.readFile("image");
+        image = ImageIO.read(file);
 
         super.readSelfExtended(reader);
 

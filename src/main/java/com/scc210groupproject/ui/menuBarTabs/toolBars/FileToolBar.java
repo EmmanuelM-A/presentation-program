@@ -11,7 +11,7 @@ import javax.swing.*;
  * @author madukaag
  * */
 public class FileToolBar extends ToolBar {
-    private JButton newFile, openFile, saveFile, export, format, print, help;
+    private JButton newFile, openFile, saveFile, saveAsFile, export, format, print, help;
 
     public FileToolBar(JPanel recentsPanel) {
         this.setRollover(true);
@@ -21,6 +21,8 @@ public class FileToolBar extends ToolBar {
         openFile = makeToolbarButton(GeneralButtons.OPEN, recentsPanel);
 
         saveFile = makeToolbarButton(GeneralButtons.SAVE, recentsPanel);
+
+        saveAsFile = makeToolbarButton(GeneralButtons.SAVE_AS, recentsPanel);
 
         export = makeToolbarButton(GeneralButtons.EXPORT, recentsPanel);
 
@@ -33,6 +35,7 @@ public class FileToolBar extends ToolBar {
         this.add(newFile);
         this.add(openFile);
         this.add(saveFile);
+        this.add(saveAsFile);
 
         separator(this);
 

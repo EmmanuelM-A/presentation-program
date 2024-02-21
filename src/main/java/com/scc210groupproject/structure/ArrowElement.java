@@ -9,6 +9,7 @@ import com.scc210groupproject.structure.adjust.MultiController;
 import com.scc210groupproject.structure.anchors.AnchorReference;
 import com.scc210groupproject.structure.anchors.IAnchorListener;
 import com.scc210groupproject.structure.anchors.IAnchorProvider;
+import com.scc210groupproject.structure.helper.CoordinateUtils;
 import com.scc210groupproject.structure.input.InputEmulator.InputState;
 import com.scc210groupproject.structure.input.listeners.IMouseClicked;
 import com.scc210groupproject.structure.input.listeners.IMouseDragged;
@@ -335,15 +336,6 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
             return false;
         }
 
-        private Shape getTransformed(Shape original, double tx, double ty, double r, double sx, double sy) {
-            transform.setToScale(sx, sy);
-            Shape scaled = transform.createTransformedShape(original);
-            transform.setToRotation(r);
-            Shape rotated = transform.createTransformedShape(scaled);
-            transform.setToTranslation(tx, ty);
-            return transform.createTransformedShape(rotated);
-        }
-
         @Override
         public void paintComponent(Graphics g)
         {
@@ -394,7 +386,7 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
 
             if (arrowOnA)
             {
-                triangleA = getTransformed(triangle, xA, yA, radian + Math.PI, arrowWidthA / 2.0, arrowLengthA);
+                triangleA = CoordinateUtils.getTransformed(triangle, transform, xA, yA, radian + Math.PI, arrowWidthA / 2.0, arrowLengthA);
 
                 g2d.fill(triangleA);
             }
@@ -403,7 +395,7 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
 
             if (arrowOnB)
             {
-                triangleB = getTransformed(triangle, xB, yB, radian, arrowWidthB / 2.0, arrowLengthB);
+                triangleB = CoordinateUtils.getTransformed(triangle, transform, xB, yB, radian, arrowWidthB / 2.0, arrowLengthB);
 
                 g2d.fill(triangleB);
             }
@@ -416,7 +408,7 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
                     new BasicStroke((float)lineWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{ lineDashLength }, 0);
                 Line2D line = new Line2D.Double(xA, yA, xB, yB);
 
-                boxLine = getTransformed(box, xA, yA, radian, lineWidth / 2.0, length);
+                boxLine = CoordinateUtils.getTransformed(box, transform, xA, yA, radian, lineWidth / 2.0, length);
 
                 g2d.setStroke(stroke);
                 g2d.draw(line);
@@ -430,7 +422,7 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
                     if (triangleA != null)
                         g2d.draw(triangleA);
                     else {
-                        Shape transformed = getTransformed(circle, xA, yA, 0.0, 10.0, 10.0);
+                        Shape transformed = CoordinateUtils.getTransformed(circle, transform, xA, yA, 0.0, 10.0, 10.0);
                         g2d.draw(transformed);
                     }
                 }
@@ -439,7 +431,7 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
                     if (triangleB != null)
                         g2d.draw(triangleB);
                     else {
-                        Shape transformed = getTransformed(circle, xB, yB, 0.0, 10.0, 10.0);
+                        Shape transformed = CoordinateUtils.getTransformed(circle, transform, xB, yB, 0.0, 10.0, 10.0);
                         g2d.draw(transformed);
                     }
                 }

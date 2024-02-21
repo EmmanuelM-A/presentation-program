@@ -2,6 +2,8 @@ package com.scc210groupproject.structure.helper;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Shape;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import com.scc210groupproject.structure.BaseElement;
@@ -53,5 +55,14 @@ public class CoordinateUtils {
         Point offset = convertLocalToSlideSpace(new Point(0, 0), element);
 
         return new Point(global.x - offset.x, global.y - offset.y);
+    }
+    
+    public static Shape getTransformed(Shape original, AffineTransform transform, double tx, double ty, double r, double sx, double sy) {
+        transform.setToScale(sx, sy);
+        Shape scaled = transform.createTransformedShape(original);
+        transform.setToRotation(r);
+        Shape rotated = transform.createTransformedShape(scaled);
+        transform.setToTranslation(tx, ty);
+        return transform.createTransformedShape(rotated);
     }
 }

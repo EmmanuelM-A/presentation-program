@@ -6,6 +6,7 @@ import com.scc210groupproject.structure.Presentation;
 
 import java.io.*;
 import java.math.BigInteger;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -98,6 +99,12 @@ public class FileSerializer {
 
         public void writeBoolean(String name, boolean value) throws IOException {
             generator.writeBooleanField(name, value);
+        }
+
+        public void writeFile(String name, File value) throws IOException {
+            FileInputStream stream = new FileInputStream(value);
+            generator.writeStringField(name, Base64.getEncoder().encodeToString(stream.readAllBytes()));
+            stream.close();
         }
 
         private BigInteger updateObjectLists(IJsonSerializable object) {
