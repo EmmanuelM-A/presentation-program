@@ -11,6 +11,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.font.TextAttribute;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,9 +20,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
@@ -29,7 +33,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
-import com.scc210groupproject.App;
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.structure.helper.CoordinateUtils;
@@ -40,7 +43,6 @@ import com.scc210groupproject.ui.helper.GeneralButtons;
 import org.jcodec.api.FrameGrab;
 import org.jcodec.api.JCodecException;
 import org.jcodec.api.PictureWithMetadata;
-import org.jcodec.api.awt.AWTSequenceEncoder;
 import org.jcodec.common.DemuxerTrackMeta.Orientation;
 import org.jcodec.common.io.NIOUtils;
 import org.jcodec.common.model.Picture;
@@ -57,20 +59,34 @@ public class VideoElement extends ExtendedElement {
     public void play() {
         player.play();
         label.playing = true;
+        label.loading = false;
     }
     
     public void pause() {
         player.pause();
         label.playing = false;
+        label.loading = false;
     }
 
     public void cont() {
         player.cont();
         label.playing = true;
+        label.loading = false;
+    }
+
+    private void onResume() {
+        label.playing = true;
+        label.loading = false;
+    }
+
+    private void onBuffer() {
+        label.loading = true;
+        notifyUpdate(this);
     }
 
     private void onEnd() {
         label.playing = false;
+        label.loading = false;
         notifyUpdate(this);
     }
 
@@ -82,9 +98,11 @@ public class VideoElement extends ExtendedElement {
 
             @Override
             public void mouseClicked(Object target, InputState state) {
-                if (player.position == 0) 
+                if (label.loading) 
+                    return;
+                if (!player.started) 
                     play();
-                else if (player.position >= player.entries.length)
+                else if (player.ended)
                     play();
                 else if (player.shouldPlay)
                     pause();
@@ -172,6 +190,7 @@ public class VideoElement extends ExtendedElement {
     private static class PlayerPanel extends JLabel {
 
         public boolean playing = false;
+        public boolean loading = false;
 
         private Polygon triangle = null;
         private Polygon boxL = null;
@@ -219,18 +238,28 @@ public class VideoElement extends ExtendedElement {
             super.paintComponent(g);
             
             g2d.setColor(Color.WHITE);
-            if (playing) {
-                pauseA = CoordinateUtils.getTransformed(boxL, transform, size.width / 2, size.height / 2, 0d, 20d, 20d);
-                pauseB = CoordinateUtils.getTransformed(boxR, transform, size.width / 2, size.height / 2, 0d, 20d, 20d);
-                g2d.fill(pauseA);
-                g2d.fill(pauseB);
-                play = null;
+
+            if (!loading) {
+                if (playing) {
+                    pauseA = CoordinateUtils.getTransformed(boxL, transform, size.width / 2, size.height / 2, 0d, 20d, 20d);
+                    pauseB = CoordinateUtils.getTransformed(boxR, transform, size.width / 2, size.height / 2, 0d, 20d, 20d);
+                    g2d.fill(pauseA);
+                    g2d.fill(pauseB);
+                    play = null;
+                }
+                else {
+                    play = CoordinateUtils.getTransformed(triangle, transform, size.width / 2, size.height / 2, 0d, 20d, 40d);
+                    g2d.fill(play);
+                    pauseA = null;
+                    pauseB = null;
+                }
             }
             else {
-                play = CoordinateUtils.getTransformed(triangle, transform, size.width / 2, size.height / 2, 0d, 20d, 40d);
-                g2d.fill(play);
-                pauseA = null;
-                pauseB = null;
+                Map<TextAttribute, Object> attributes = new HashMap<>();
+                attributes.put(TextAttribute.SIZE, 40);
+                attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD);
+                g2d.setFont(g.getFont().deriveFont(attributes));
+                g2d.drawString("buffering", size.width / 2 - 90, size.height / 2);
             }
 
         }
@@ -246,19 +275,26 @@ public class VideoElement extends ExtendedElement {
         private Object lock;
 
         public VideoElement element;
-        private FrameGrab grab;
-        public Entry[] entries;
+        private ConcurrentSkipListSet<Entry> tree = null;
+        private Iterator<Entry> it = null;
 
         public long start;
         public long pause;
-        public int position;
         public boolean shouldPlay;
         public boolean exit;
 
+        public boolean fullyloaded = false;
+
+        public boolean started = false;
+        public boolean ended = false;
+
         public void play() {
+            started = true;
+            ended = false;
+
             shouldPlay = true;
             start = System.currentTimeMillis();
-            position = 0;
+            it = tree.iterator();
             
             synchronized (lock) {
                 lock.notifyAll();
@@ -282,7 +318,7 @@ public class VideoElement extends ExtendedElement {
         public void exit() {
             exit = true;
 
-            for (Entry entry : entries) {
+            for (Entry entry : tree) {
                 entry.image.delete();
             }
             
@@ -291,15 +327,9 @@ public class VideoElement extends ExtendedElement {
             }
         }
 
-        private void load() {
-            if (grab == null) {
-                try {
-                    grab = FrameGrab.createFrameGrab(NIOUtils.readableChannel(element.file));
-                } catch(IOException | JCodecException e) {}
-            }
-
-            SortedSet<Entry> tree = new TreeSet<>(new Comparator<Entry>() {
-
+        public void load() {
+            tree = new ConcurrentSkipListSet<>(new Comparator<Entry>() {
+        
                 @Override
                 public int compare(Entry o1, Entry o2) {
                     return Double.compare(o1.time, o2.time);
@@ -307,35 +337,49 @@ public class VideoElement extends ExtendedElement {
                 
             });
 
-            try {
-                LinkedList<Thread> threads = new LinkedList<>();
-
-                PictureWithMetadata frame;
-                while ((frame = grab.getNativeFrameWithMetadata()) != null) {
-
-                    double time = frame.getTimestamp();
-                    Picture picture = frame.getPicture().cloneCropped();
-                    Orientation orientation = frame.getOrientation();
-                    
-                    WriteThread thread = new WriteThread(time, picture, orientation, tree);
-
-                    thread.start();
-
-                    threads.add(thread);
-                }
-
-                for (Thread thread : threads) {
+            Thread loader = new Thread() {
+                @Override
+                public void run() {
+                    FrameGrab grab = null;
                     try {
-                        thread.join();
-                    } catch (InterruptedException e) {
-                        System.out.println("x");
+                        grab = FrameGrab.createFrameGrab(NIOUtils.readableChannel(element.file));
+                    } catch(IOException | JCodecException e) {
+                        return;
                     }
+        
+                    try {
+                        LinkedList<Thread> threads = new LinkedList<>();
+        
+                        PictureWithMetadata frame;
+                        while ((frame = grab.getNativeFrameWithMetadata()) != null) {
+        
+                            double time = frame.getTimestamp();
+                            Picture picture = frame.getPicture().cloneCropped();
+                            Orientation orientation = frame.getOrientation();
+                            
+                            WriteThread thread = new WriteThread(time, picture, orientation, tree);
+        
+                            thread.start();
+        
+                            threads.add(thread);
+                        }
+        
+                        for (Thread thread : threads) {
+                            try {
+                                thread.join();
+                            } catch (InterruptedException e) {
+                                System.out.println("x");
+                            }
+                        }
+                    }
+                    catch (IOException e) {}
+        
+                    fullyloaded = true;
                 }
-            }
-            catch (IOException e) {
-                System.out.println("y");}
+            };
 
-            entries = tree.toArray(new Entry[tree.size()]);
+            loader.start();
+            
         }
 
         private static class WriteThread extends Thread {
@@ -377,12 +421,13 @@ public class VideoElement extends ExtendedElement {
         public PlayerThread(VideoElement owner) {
             lock = new Object();
             element = owner;
+
+            load();
         }
 
         @Override
         public void run() {
             shouldPlay = false;
-            position = 0;
 
             while (!exit) {
                 while (true) {
@@ -390,7 +435,31 @@ public class VideoElement extends ExtendedElement {
                         break;
                     
                     if (!updateFrame()) {
-                        element.onEnd();
+                        if (fullyloaded) {
+                            started = false;
+                            ended = true;
+                            element.onEnd();
+                        }
+                        else {
+                            long buffer = System.currentTimeMillis();
+                            element.onBuffer();
+                            Thread delay = new Thread() {
+                                public void run() {
+                                    try {
+                                        Thread.sleep(5000);
+                                    } catch (InterruptedException e) {}
+                                    start += System.currentTimeMillis() - buffer;
+                                    element.onResume();
+
+                                    it = tree.iterator();
+                                    shouldPlay = true;
+                                    synchronized (lock) {
+                                        lock.notifyAll();
+                                    }
+                                };
+                            };
+                            delay.start();
+                        }
                         break;
                     }
 
@@ -407,24 +476,24 @@ public class VideoElement extends ExtendedElement {
         }
 
         private boolean updateFrame() {
-            if (entries == null) {
-                long offset = System.currentTimeMillis();
-                load();
-                start += System.currentTimeMillis() - offset;
-            }
+            if (tree == null)
+                return false;
+
+            if (it == null)
+                return false;
 
             double target = (double)(System.currentTimeMillis() - start) / 1000d;
-
+            
             Entry current;
-            while (true) {
-                if (position >= entries.length)
-                    return false;
-
-                current = entries[position];
-                if (current.time >= target)
-                    break;
-                
-                position++;
+            synchronized (tree) {
+                while (true) {
+                    if (!it.hasNext())
+                        return false;
+    
+                    current = it.next();
+                    if (current.time >= target)
+                        break;
+                }
             }
 
             Dimension size = element.getSize();
