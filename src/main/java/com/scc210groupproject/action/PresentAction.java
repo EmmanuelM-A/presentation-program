@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import com.scc210groupproject.ui.SlideManager;
 import com.scc210groupproject.ui.presentations.PresentationModeOne;
 import com.scc210groupproject.ui.presentations.PresentationModeTwo;
+import com.scc210groupproject.ui.presentations.p;
 
 public class PresentAction implements ActionListener{
     
@@ -14,7 +15,8 @@ public class PresentAction implements ActionListener{
         
         // Needs to be implemented
         //new PresentationModeOne();
-        new PresentationModeTwo(0);
+        //new PresentationModeTwo(0);
+        new p();
 
     }
 
