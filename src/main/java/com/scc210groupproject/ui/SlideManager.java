@@ -517,7 +517,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         // Add slide to presentation slider
         addSlideToViewer(index);
 
-        // Update
+        // Update slide numbers
         for(int i = 0; i < this.slidesViewer.size(); i++) {
             this.slidesViewer.get(i).setToolTipText("Slide " + (i + 1));
         }

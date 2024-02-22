@@ -10,10 +10,6 @@ public class PresentAtAction implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent discard){
-        
-        // Needs to be Implemented
-        //new PresentationModeOne();
         new PresentationMode(SlideManager.slideManager.getCurrentSlideIndex());
     }
-
 }
