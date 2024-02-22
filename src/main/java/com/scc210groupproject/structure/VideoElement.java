@@ -19,6 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -28,6 +29,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
+import com.scc210groupproject.App;
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.structure.helper.CoordinateUtils;
@@ -39,7 +41,9 @@ import org.jcodec.api.FrameGrab;
 import org.jcodec.api.JCodecException;
 import org.jcodec.api.PictureWithMetadata;
 import org.jcodec.api.awt.AWTSequenceEncoder;
+import org.jcodec.common.DemuxerTrackMeta.Orientation;
 import org.jcodec.common.io.NIOUtils;
+import org.jcodec.common.model.Picture;
 import org.jcodec.scale.AWTUtil;
 
 
@@ -234,7 +238,7 @@ public class VideoElement extends ExtendedElement {
 
     private static class PlayerThread extends Thread {
 
-        private class Entry {
+        private static class Entry {
             public double time;
             public File image;
         }
@@ -302,26 +306,71 @@ public class VideoElement extends ExtendedElement {
                 }
                 
             });
-            PictureWithMetadata frame;
+
             try {
+                LinkedList<Thread> threads = new LinkedList<>();
+
+                PictureWithMetadata frame;
                 while ((frame = grab.getNativeFrameWithMetadata()) != null) {
+
+                    double time = frame.getTimestamp();
+                    Picture picture = frame.getPicture().cloneCropped();
+                    Orientation orientation = frame.getOrientation();
+                    
+                    WriteThread thread = new WriteThread(time, picture, orientation, tree);
+
+                    thread.start();
+
+                    threads.add(thread);
+                }
+
+                for (Thread thread : threads) {
                     try {
-                        Entry entry = new Entry();
-                        entry.time = frame.getTimestamp();
-
-                        Path path = Files.createTempFile("videoimage" + System.currentTimeMillis(), "tmp");
-                        entry.image = path.toFile();
-
-                        FileOutputStream out = new FileOutputStream(entry.image);
-                        ImageIO.write(AWTUtil.toBufferedImage(frame.getPicture(), frame.getOrientation()), "bmp", out);
-                        
-                        tree.add(entry);
-                    } catch (IOException e) {}
+                        thread.join();
+                    } catch (InterruptedException e) {
+                        System.out.println("x");
+                    }
                 }
             }
-            catch (IOException e) {}
+            catch (IOException e) {
+                System.out.println("y");}
 
             entries = tree.toArray(new Entry[tree.size()]);
+        }
+
+        private static class WriteThread extends Thread {
+
+            double time;
+            Picture picture;
+            Orientation orientation;
+            SortedSet<Entry> set;
+
+            public WriteThread(double time, Picture picture, Orientation orientation, SortedSet<Entry> set) {
+                this.time = time;
+                this.picture = picture;
+                this.orientation = orientation;
+                this.set = set;
+            }
+
+            @Override
+            public void run() {
+                try {
+
+                    Entry entry = new Entry();
+                    entry.time = time;
+
+                    Path path = Files.createTempFile("videoimage" + System.currentTimeMillis(), "bmp");
+                    entry.image = path.toFile();
+
+                    FileOutputStream out = new FileOutputStream(entry.image);
+                    ImageIO.write(AWTUtil.toBufferedImage(picture, orientation), "bmp", out);
+                    
+                    synchronized (set) {
+                        set.add(entry);
+                    }
+        
+                } catch (IOException e) {}
+            }
         }
 
         public PlayerThread(VideoElement owner) {
