@@ -359,12 +359,12 @@ public class VideoElement extends ExtendedElement {
                     Entry entry = new Entry();
                     entry.time = time;
 
-                    Path path = Files.createTempFile("videoimage" + System.currentTimeMillis(), "bmp");
+                    Path path = Files.createTempFile("videoimage" + System.currentTimeMillis(), "tmp");
                     entry.image = path.toFile();
                     entry.image.deleteOnExit();
 
                     FileOutputStream out = new FileOutputStream(entry.image);
-                    ImageIO.write(AWTUtil.toBufferedImage(picture, orientation), "bmp", out);
+                    ImageIO.write(AWTUtil.toBufferedImage(picture, orientation), "jpg", out);
                     
                     synchronized (set) {
                         set.add(entry);

@@ -116,7 +116,8 @@ public class FileDeserializer {
             else {
                 String encoded = current.get(name).asText();
     
-                File file = File.createTempFile("image" + System.currentTimeMillis(), "tmp");
+                File file = File.createTempFile("embedfile" + System.currentTimeMillis(), "tmp");
+                file.deleteOnExit();
     
                 FileOutputStream stream = new FileOutputStream(file);
                 stream.write(Base64.getDecoder().decode(encoded));
