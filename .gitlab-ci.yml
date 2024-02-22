@@ -6,4 +6,4 @@ build:
     paths:
     - target/*.jar
   script:
-    - mvn clean package
+    - mvn clean install
