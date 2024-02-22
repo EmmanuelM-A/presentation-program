@@ -20,7 +20,7 @@ import com.scc210groupproject.ui.UIFrame;
 
 public class AudioElement extends ExtendedElement {
 
-    private JButton button = new JButton(new ImageIcon("src/main/resources/images/audio.png"));
+    private JButton button = new JButton(new ImageIcon("/images/audio.png"));
     private File file;
     private Clip clip;
 

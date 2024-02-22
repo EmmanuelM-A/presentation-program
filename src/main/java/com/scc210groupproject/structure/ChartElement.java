@@ -147,8 +147,6 @@ public ChartElement() {
             dataArray[i] = Arrays.copyOf(getData().get(i).toArray(), getData().get(i).size(),String[].class);
         }
 
-        System.out.println(Arrays.deepToString(dataArray));
-
         writer.writeString("data", Arrays.deepToString(dataArray));
         writer.writeString("chartType", this.chartType);
 
@@ -157,7 +155,6 @@ public ChartElement() {
     @Override
     protected void readSelf(Reader reader) throws IOException {
 
-        System.out.println("before" + reader.readString("data"));
         String[] rows = reader.readString("data").split("],");
         this.chartType = reader.readString("chartType");
 
@@ -166,7 +163,6 @@ public ChartElement() {
             String[] rowValues = rows[i].split(",");
             data.add(new ArrayList<String>(Arrays.asList(rowValues))) ;
         }
-        System.out.println("Data" + data);
         this.makeChart(chartType, true);
 
         super.readSelfExtended(reader);

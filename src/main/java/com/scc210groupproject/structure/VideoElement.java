@@ -29,7 +29,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
-import com.scc210groupproject.App;
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.structure.helper.CoordinateUtils;
@@ -40,7 +39,6 @@ import com.scc210groupproject.ui.helper.GeneralButtons;
 import org.jcodec.api.FrameGrab;
 import org.jcodec.api.JCodecException;
 import org.jcodec.api.PictureWithMetadata;
-import org.jcodec.api.awt.AWTSequenceEncoder;
 import org.jcodec.common.DemuxerTrackMeta.Orientation;
 import org.jcodec.common.io.NIOUtils;
 import org.jcodec.common.model.Picture;
