@@ -109,7 +109,7 @@
           <configuration>
             <archive>
               <manifest>
-                <addClassPath>true</addClassPath>
+                <addClasspath>true</addClasspath>
                 <mainClass>com.scc210groupproject.App</mainClass>
               </manifest>
             </archive>
