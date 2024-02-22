@@ -7,7 +7,6 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
@@ -22,7 +21,6 @@ import com.scc210groupproject.structure.input.listeners.IMouseMoved;
 import com.scc210groupproject.structure.input.listeners.IMousePressed;
 import com.scc210groupproject.structure.input.listeners.IMouseReleased;
 import com.scc210groupproject.ui.MainDisplayPanel;
-import com.scc210groupproject.ui.menuBarTabs.toolBars.ElementMiniToolBar;
 import com.scc210groupproject.ui.menuBarTabs.toolBars.SlideMiniToolBar;
 
 public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, IMouseDragged, IMouseEntered, IMouseExited, IMouseClicked, IMultiMover {
@@ -137,18 +135,6 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
     @Override
     public void mouseClicked(Object o, InputState state) {
         // not used, here to block message being taken by another element
-        System.out.println("Object clicked! " + element.asBaseElement().asComp());
-        /*JPopupMenu popupMenu = new JPopupMenu();
-        popupMenu.add(new ElementMiniToolBar());
-
-        popupMenu.show(element.asBaseElement().asComp(), 0, 0);*/
-
-        if(o instanceof BoxElement) {
-            BoxElement t = (BoxElement)o;
-            System.out.println("Second check" + t.asComp());
-        }
-
-        //x(element.asBaseElement().asComp());
     }
 
     public void x(Component element) {

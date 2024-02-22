@@ -96,6 +96,11 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
     public Boolean getDisplayNewSlides() {
         return this.displayNewSlide;
     }
+    
+
+    public int getCurrentSlideIndex() {
+        return this.currentSlideIndex;
+    }
 
     /**
      * Returns the number of slideImages

@@ -1,4 +1,4 @@
-package com.scc210groupproject.ui.presentationMode.animations;
+package com.scc210groupproject.ui.presentations.animations;
 
 import java.awt.Dimension;
 import java.awt.Point;

@@ -34,7 +34,7 @@ public class SlideImage extends JPanel {
      * @param slide A slide
      * @param display An instance of the main display panel
      */
-    public SlideImage(Slide slide, MainDisplayPanel display) {
+    public SlideImage(Slide slide, JPanel display) {
         this.slide = slide;
 
         this.actions = new ArrayList<>();
@@ -57,7 +57,6 @@ public class SlideImage extends JPanel {
         this.offset = new Point(
                 (super.getWidth() - this.slideDimension.width) / 2,
                 (super.getHeight() - this.slideDimension.height) / 2);
-
     }
 
     /**
@@ -131,22 +130,6 @@ public class SlideImage extends JPanel {
      */
     public void setScale(double scale) {
         this.scale = scale;
-    }
-
-    /**
-     * Adds an action to the actions list
-     * @param action
-     */
-    public void addAction(Integer action) {
-        this.actions.add(action);
-    }
-
-    /**
-     * Removes an action from the actions list
-     * @param action
-     */
-    public void removeAction(Integer action) {
-        this.actions.remove(action);
     }
 
     /**
