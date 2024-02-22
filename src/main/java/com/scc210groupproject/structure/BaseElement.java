@@ -102,13 +102,12 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
         processNewElement(child);
 
         notifyUpdate(null);
-
+        
         SnapshotManager.saveState();
     }
+    
     public final void remove(BaseElement child)
     {
-        SnapshotManager.saveState();
-
         prepareRemoveElement(child);
         child.removeDestroyListener(this);
         child.removeUpdateListener(this);
@@ -128,6 +127,12 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
 
     protected void destroySelf() {}
     public final void destroy() {
+        destroy(true);
+    }
+    public final void destroy(boolean save) {
+        if (save)
+            SnapshotManager.saveState();
+
         destroySelf();
 
         if (parent != null)
@@ -158,7 +163,7 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
         processDestroy(object);
 
         if (object == parent)
-            destroy();
+            destroy(false);
         else if (children.contains(object))
             remove((BaseElement)object);
     }

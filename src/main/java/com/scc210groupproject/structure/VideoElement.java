@@ -11,6 +11,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.font.TextAttribute;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,9 +20,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
@@ -55,20 +58,34 @@ public class VideoElement extends ExtendedElement {
     public void play() {
         player.play();
         label.playing = true;
+        label.loading = false;
     }
     
     public void pause() {
         player.pause();
         label.playing = false;
+        label.loading = false;
     }
 
     public void cont() {
         player.cont();
         label.playing = true;
+        label.loading = false;
+    }
+
+    private void onResume() {
+        label.playing = true;
+        label.loading = false;
+    }
+
+    private void onBuffer() {
+        label.loading = true;
+        notifyUpdate(this);
     }
 
     private void onEnd() {
         label.playing = false;
+        label.loading = false;
         notifyUpdate(this);
     }
 
@@ -80,9 +97,11 @@ public class VideoElement extends ExtendedElement {
 
             @Override
             public void mouseClicked(Object target, InputState state) {
-                if (player.position == 0) 
+                if (label.loading) 
+                    return;
+                if (!player.started) 
                     play();
-                else if (player.position >= player.entries.length)
+                else if (player.ended)
                     play();
                 else if (player.shouldPlay)
                     pause();
@@ -170,6 +189,7 @@ public class VideoElement extends ExtendedElement {
     private static class PlayerPanel extends JLabel {
 
         public boolean playing = false;
+        public boolean loading = false;
 
         private Polygon triangle = null;
         private Polygon boxL = null;
@@ -217,18 +237,28 @@ public class VideoElement extends ExtendedElement {
             super.paintComponent(g);
             
             g2d.setColor(Color.WHITE);
-            if (playing) {
-                pauseA = CoordinateUtils.getTransformed(boxL, transform, size.width / 2, size.height / 2, 0d, 20d, 20d);
-                pauseB = CoordinateUtils.getTransformed(boxR, transform, size.width / 2, size.height / 2, 0d, 20d, 20d);
-                g2d.fill(pauseA);
-                g2d.fill(pauseB);
-                play = null;
+
+            if (!loading) {
+                if (playing) {
+                    pauseA = CoordinateUtils.getTransformed(boxL, transform, size.width / 2, size.height / 2, 0d, 20d, 20d);
+                    pauseB = CoordinateUtils.getTransformed(boxR, transform, size.width / 2, size.height / 2, 0d, 20d, 20d);
+                    g2d.fill(pauseA);
+                    g2d.fill(pauseB);
+                    play = null;
+                }
+                else {
+                    play = CoordinateUtils.getTransformed(triangle, transform, size.width / 2, size.height / 2, 0d, 20d, 40d);
+                    g2d.fill(play);
+                    pauseA = null;
+                    pauseB = null;
+                }
             }
             else {
-                play = CoordinateUtils.getTransformed(triangle, transform, size.width / 2, size.height / 2, 0d, 20d, 40d);
-                g2d.fill(play);
-                pauseA = null;
-                pauseB = null;
+                Map<TextAttribute, Object> attributes = new HashMap<>();
+                attributes.put(TextAttribute.SIZE, 40);
+                attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD);
+                g2d.setFont(g.getFont().deriveFont(attributes));
+                g2d.drawString("buffering", size.width / 2 - 90, size.height / 2);
             }
 
         }
@@ -242,21 +272,31 @@ public class VideoElement extends ExtendedElement {
         }
 
         private Object lock;
+        private Path folder;
 
-        public VideoElement element;
-        private FrameGrab grab;
-        public Entry[] entries;
+        private VideoElement element;
+        private ConcurrentSkipListSet<Entry> tree = null;
+        private Iterator<Entry> it = null;
 
         public long start;
         public long pause;
-        public int position;
         public boolean shouldPlay;
         public boolean exit;
 
+        public boolean fullyloaded = false;
+
+        public boolean started = false;
+        public boolean ended = false;
+
+        private LinkedList<Thread> threads = new LinkedList<>();
+
         public void play() {
+            started = true;
+            ended = false;
+
             shouldPlay = true;
             start = System.currentTimeMillis();
-            position = 0;
+            it = tree.iterator();
             
             synchronized (lock) {
                 lock.notifyAll();
@@ -280,24 +320,44 @@ public class VideoElement extends ExtendedElement {
         public void exit() {
             exit = true;
 
-            for (Entry entry : entries) {
-                entry.image.delete();
-            }
+            Thread cleanup = new Thread() {
+                @Override
+                public void run() {
+                    while (true) {
+
+                        boolean outstanding;
+                        synchronized (threads) {
+                            outstanding = threads.size() > 0;
+                        }
+
+                        if (outstanding)
+                            yield();
+                        else 
+                            break;
+                    }
+                    
+                    synchronized (tree) {
+                        for (Entry entry : tree) {
+                            entry.image.delete();
+                        }
+                    }
+                    
+                    synchronized (lock) {
+                        lock.notifyAll();
+                    }
+                    
+                    if (folder != null)
+                        folder.toFile().delete();
+                }
+            };
+
+            cleanup.start();
             
-            synchronized (lock) {
-                lock.notifyAll();
-            }
         }
 
-        private void load() {
-            if (grab == null) {
-                try {
-                    grab = FrameGrab.createFrameGrab(NIOUtils.readableChannel(element.file));
-                } catch(IOException | JCodecException e) {}
-            }
-
-            SortedSet<Entry> tree = new TreeSet<>(new Comparator<Entry>() {
-
+        public void load() {
+            tree = new ConcurrentSkipListSet<>(new Comparator<Entry>() {
+        
                 @Override
                 public int compare(Entry o1, Entry o2) {
                     return Double.compare(o1.time, o2.time);
@@ -305,82 +365,119 @@ public class VideoElement extends ExtendedElement {
                 
             });
 
-            try {
-                LinkedList<Thread> threads = new LinkedList<>();
+            CoordinateThread loader = new CoordinateThread();
 
-                PictureWithMetadata frame;
-                while ((frame = grab.getNativeFrameWithMetadata()) != null) {
-
-                    double time = frame.getTimestamp();
-                    Picture picture = frame.getPicture().cloneCropped();
-                    Orientation orientation = frame.getOrientation();
-                    
-                    WriteThread thread = new WriteThread(time, picture, orientation, tree);
-
-                    thread.start();
-
-                    threads.add(thread);
-                }
-
-                for (Thread thread : threads) {
-                    try {
-                        thread.join();
-                    } catch (InterruptedException e) {
-                        System.out.println("x");
-                    }
-                }
-            }
-            catch (IOException e) {
-                System.out.println("y");}
-
-            entries = tree.toArray(new Entry[tree.size()]);
+            loader.start();
+            
         }
 
-        private static class WriteThread extends Thread {
+        private class CoordinateThread extends Thread {
+            @Override
+            public void run() {
+                FrameGrab grab = null;
+                try {
+                    grab = FrameGrab.createFrameGrab(NIOUtils.readableChannel(element.file));
+                } catch(IOException | JCodecException e) {
+                    return;
+                }
+    
+                try {
+
+                    folder = Files.createTempDirectory("imagecache-" + System.currentTimeMillis());
+    
+                    PictureWithMetadata frame;
+                    while ((frame = grab.getNativeFrameWithMetadata()) != null) {
+
+                        if (exit)
+                            return;
+
+                        while (threads.size() > 50)
+                            yield();
+    
+                        double time = frame.getTimestamp();
+                        Picture picture = frame.getPicture().cloneCropped();
+                        Orientation orientation = frame.getOrientation();
+                        
+                        WriteThread thread = new WriteThread(time, picture, orientation, folder);
+    
+                        synchronized (threads) {
+                            threads.add(thread);
+                        }
+
+                        thread.start();
+                    }
+
+                    while (true) {
+
+                        boolean outstanding;
+                        synchronized (threads) {
+                            outstanding = threads.size() > 0;
+                        }
+
+                        if (outstanding)
+                            yield();
+                        else 
+                            break;
+                    }
+                }
+                catch (IOException e) {}
+    
+                fullyloaded = true;
+            }
+        }
+
+        private class WriteThread extends Thread {
 
             double time;
             Picture picture;
             Orientation orientation;
-            SortedSet<Entry> set;
+            Path folder;
 
-            public WriteThread(double time, Picture picture, Orientation orientation, SortedSet<Entry> set) {
+            public WriteThread(double time, Picture picture, Orientation orientation, Path folder) {
                 this.time = time;
                 this.picture = picture;
                 this.orientation = orientation;
-                this.set = set;
+                this.folder = folder;
             }
 
             @Override
             public void run() {
+
                 try {
 
                     Entry entry = new Entry();
                     entry.time = time;
 
-                    Path path = Files.createTempFile("videoimage" + System.currentTimeMillis(), "tmp");
+                    Path path = Files.createTempFile(folder, System.currentTimeMillis() + "", ".tmp");
                     entry.image = path.toFile();
-                    entry.image.deleteOnExit();
 
                     FileOutputStream out = new FileOutputStream(entry.image);
                     ImageIO.write(AWTUtil.toBufferedImage(picture, orientation), "jpg", out);
+                    out.close();
                     
-                    synchronized (set) {
-                        set.add(entry);
+                    synchronized (tree) {
+                        tree.add(entry);
                     }
         
                 } catch (IOException e) {}
+                
+
+                synchronized (threads) {
+                    threads.remove(this);
+                } 
             }
         }
 
         public PlayerThread(VideoElement owner) {
             lock = new Object();
             element = owner;
+
+            load();
         }
 
         @Override
         public void run() {
             shouldPlay = false;
-            position = 0;
 
             while (!exit) {
                 while (true) {
@@ -388,7 +485,31 @@ public class VideoElement extends ExtendedElement {
                         break;
                     
                     if (!updateFrame()) {
-                        element.onEnd();
+                        if (fullyloaded) {
+                            started = false;
+                            ended = true;
+                            element.onEnd();
+                        }
+                        else {
+                            long buffer = System.currentTimeMillis();
+                            element.onBuffer();
+                            Thread delay = new Thread() {
+                                public void run() {
+                                    try {
+                                        Thread.sleep(5000);
+                                    } catch (InterruptedException e) {}
+                                    start += System.currentTimeMillis() - buffer;
+                                    element.onResume();
+
+                                    it = tree.iterator();
+                                    shouldPlay = true;
+                                    synchronized (lock) {
+                                        lock.notifyAll();
+                                    }
+                                };
+                            };
+                            delay.start();
+                        }
                         break;
                     }
 
@@ -405,47 +526,51 @@ public class VideoElement extends ExtendedElement {
         }
 
         private boolean updateFrame() {
-            if (entries == null) {
-                long offset = System.currentTimeMillis();
-                load();
-                start += System.currentTimeMillis() - offset;
-            }
+            if (tree == null)
+                return false;
+
+            if (it == null)
+                return false;
 
             double target = (double)(System.currentTimeMillis() - start) / 1000d;
-
-            Entry current;
-            while (true) {
-                if (position >= entries.length)
-                    return false;
-
-                current = entries[position];
-                if (current.time >= target)
-                    break;
-                
-                position++;
-            }
-
-            Dimension size = element.getSize();
-            try {
-                FileInputStream in = new FileInputStream(current.image);
-                BufferedImage image = ImageIO.read(in);
-                ((JLabel)element.asComp()).setIcon(GeneralButtons.resizeIcon(image, size.width, size.height));
-            } catch (IOException e) {
-                return false;
-            }
             
-            try {
-                SwingUtilities.invokeAndWait(new Runnable() {
+            synchronized (tree) {
+                Entry current;
+
+                while (true) {
+                    if (!it.hasNext())
+                        return false;
     
-                    @Override
-                    public void run() {
-                        element.notifyUpdate(element);
-                    }
-                    
-                });
-            } catch (InterruptedException | InvocationTargetException e) {
-                return false;
+                    current = it.next();
+                    if (current.time >= target)
+                        break;
+                }
+                
+                Dimension size = element.getSize();
+                try {
+                    FileInputStream in = new FileInputStream(current.image);
+                    BufferedImage image = ImageIO.read(in);
+                    ((JLabel)element.asComp()).setIcon(GeneralButtons.resizeIcon(image, size.width, size.height));
+                    in.close();
+                } catch (IOException e) {
+                    return false;
+                }
+                
+                try {
+                    SwingUtilities.invokeAndWait(new Runnable() {
+        
+                        @Override
+                        public void run() {
+                            element.notifyUpdate(element);
+                        }
+                        
+                    });
+                } catch (InterruptedException | InvocationTargetException e) {
+                    return false;
+                }
             }
+
+            
 
             return true;
         }

@@ -4,6 +4,7 @@ import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.readwrite.IJsonSerializable;
 import com.scc210groupproject.structure.liveness.IUpdateListener;
+import com.scc210groupproject.structure.state.SnapshotManager;
 import com.scc210groupproject.structure.eventListeners.IChangePresentationListener;
 import com.scc210groupproject.structure.eventListeners.ICreateSlideListener;
 import com.scc210groupproject.structure.eventListeners.IDiscardSlideListener;
@@ -45,6 +46,8 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
         }
     }
 
+
+    private static Thread shutdown = null;
     /**
      * Return the current presentation (create a new one if not available)
      * @return current presentation
@@ -117,6 +120,15 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
         slides = new LinkedList<>();
 
         newSlide(false);
+
+        if (shutdown == null) {
+            shutdown = new Thread() {
+                public void run() {
+                    current.destroy(false);
+                };
+            };
+            Runtime.getRuntime().addShutdownHook(shutdown);
+        }
     }
 
     /**
@@ -187,5 +199,17 @@ public class Presentation implements IJsonSerializable, IUpdateListener {
     @SuppressWarnings("unchecked")
     public void readValue(Reader reader) throws IOException {
         slides = (List<Slide>)reader.readObjectList("slides");
+    }
+
+    public void destroy() {
+        destroy(true);
+    }
+    
+    public void destroy(boolean save) {
+        if (save)
+            SnapshotManager.saveState();
+        
+        for (Slide slide : slides)
+            slide.destroy(false);
     }
 }
