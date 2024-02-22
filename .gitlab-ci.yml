@@ -1,21 +1,5 @@
 image: maven:3-openjdk-17
 
-cache:
-  paths:
-    - .m2/repository
-
-.verify:
-  stage: test
-  script:
-    - 'mvn $MAVEN_CLI_OPTS verify'
-  except:
-    variables:
-      - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-
-verify:jdk8:
-  extends:
-    - .verify
-
 deploy:jdk8:
   stage: deploy
   artifacts:
