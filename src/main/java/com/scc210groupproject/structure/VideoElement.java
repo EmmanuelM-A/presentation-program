@@ -12,12 +12,17 @@ import java.awt.event.ComponentListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -33,6 +38,7 @@ import com.scc210groupproject.ui.helper.GeneralButtons;
 import org.jcodec.api.FrameGrab;
 import org.jcodec.api.JCodecException;
 import org.jcodec.api.PictureWithMetadata;
+import org.jcodec.api.awt.AWTSequenceEncoder;
 import org.jcodec.common.io.NIOUtils;
 import org.jcodec.scale.AWTUtil;
 
@@ -230,7 +236,7 @@ public class VideoElement extends ExtendedElement {
 
         private class Entry {
             public double time;
-            public BufferedImage image;
+            public File image;
         }
 
         private Object lock;
@@ -271,6 +277,10 @@ public class VideoElement extends ExtendedElement {
 
         public void exit() {
             exit = true;
+
+            for (Entry entry : entries) {
+                entry.image.delete();
+            }
             
             synchronized (lock) {
                 lock.notifyAll();
@@ -295,10 +305,18 @@ public class VideoElement extends ExtendedElement {
             PictureWithMetadata frame;
             try {
                 while ((frame = grab.getNativeFrameWithMetadata()) != null) {
-                    Entry entry = new Entry();
-                    entry.time = frame.getTimestamp();
-                    entry.image = AWTUtil.toBufferedImage(frame.getPicture(), frame.getOrientation());
-                    tree.add(entry);
+                    try {
+                        Entry entry = new Entry();
+                        entry.time = frame.getTimestamp();
+
+                        Path path = Files.createTempFile("videoimage" + System.currentTimeMillis(), "tmp");
+                        entry.image = path.toFile();
+
+                        FileOutputStream out = new FileOutputStream(entry.image);
+                        ImageIO.write(AWTUtil.toBufferedImage(frame.getPicture(), frame.getOrientation()), "bmp", out);
+                        
+                        tree.add(entry);
+                    } catch (IOException e) {}
                 }
             }
             catch (IOException e) {}
@@ -340,7 +358,9 @@ public class VideoElement extends ExtendedElement {
 
         private boolean updateFrame() {
             if (entries == null) {
+                long offset = System.currentTimeMillis();
                 load();
+                start += System.currentTimeMillis() - offset;
             }
 
             double target = (double)(System.currentTimeMillis() - start) / 1000d;
@@ -358,7 +378,14 @@ public class VideoElement extends ExtendedElement {
             }
 
             Dimension size = element.getSize();
-            ((JLabel)element.asComp()).setIcon(GeneralButtons.resizeIcon(current.image, size.width, size.height));
+            try {
+                FileInputStream in = new FileInputStream(current.image);
+                BufferedImage image = ImageIO.read(in);
+                ((JLabel)element.asComp()).setIcon(GeneralButtons.resizeIcon(image, size.width, size.height));
+            } catch (IOException e) {
+                return false;
+            }
+            
             try {
                 SwingUtilities.invokeAndWait(new Runnable() {
     
@@ -368,7 +395,9 @@ public class VideoElement extends ExtendedElement {
                     }
                     
                 });
-            } catch (InterruptedException | InvocationTargetException e) {}
+            } catch (InterruptedException | InvocationTargetException e) {
+                return false;
+            }
 
             return true;
         }
