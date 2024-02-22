@@ -109,11 +109,11 @@
       <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.0.2</version>
-        
+
         <configuration>
             <archive>
               <manifest>
-                <addClassPath>true</addClassPath>
+                <addClasspath>true</addClasspath>
                 <mainClass>com.scc210groupproject.App</mainClass>
               </manifest>
             </archive>
