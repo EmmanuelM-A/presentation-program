@@ -111,13 +111,13 @@
         <version>3.0.2</version>
 
         <configuration>
-            <archive>
-              <manifest>
-                <addClasspath>true</addClasspath>
-                <mainClass>com.scc210groupproject.App</mainClass>
-              </manifest>
-            </archive>
-          </configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>com.scc210groupproject.App</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
 
       </plugin>
       <plugin>
@@ -128,6 +128,12 @@
           <descriptorRefs>
             <descriptorRef>jar-with-dependencies</descriptorRef>
           </descriptorRefs>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>com.scc210groupproject.App</mainClass>
+            </manifest>
+          </archive>
         </configuration>
 
         <executions>
