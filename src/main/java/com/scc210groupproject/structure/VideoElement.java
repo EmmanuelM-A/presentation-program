@@ -272,6 +272,7 @@ public class VideoElement extends ExtendedElement {
         }
 
         private Object lock;
+        private Path folder;
 
         private VideoElement element;
         private ConcurrentSkipListSet<Entry> tree = null;
@@ -340,11 +341,13 @@ public class VideoElement extends ExtendedElement {
                             entry.image.delete();
                         }
                     }
-
                     
                     synchronized (lock) {
                         lock.notifyAll();
                     }
+                    
+                    if (folder != null)
+                        folder.toFile().delete();
                 }
             };
 
@@ -380,7 +383,7 @@ public class VideoElement extends ExtendedElement {
     
                 try {
 
-                    Path folder = Files.createTempDirectory("imagecache-" + System.currentTimeMillis());
+                    folder = Files.createTempDirectory("imagecache-" + System.currentTimeMillis());
     
                     PictureWithMetadata frame;
                     while ((frame = grab.getNativeFrameWithMetadata()) != null) {
@@ -450,6 +453,7 @@ public class VideoElement extends ExtendedElement {
 
                     FileOutputStream out = new FileOutputStream(entry.image);
                     ImageIO.write(AWTUtil.toBufferedImage(picture, orientation), "jpg", out);
+                    out.close();
                     
                     synchronized (tree) {
                         tree.add(entry);
@@ -530,8 +534,9 @@ public class VideoElement extends ExtendedElement {
 
             double target = (double)(System.currentTimeMillis() - start) / 1000d;
             
-            Entry current;
             synchronized (tree) {
+                Entry current;
+
                 while (true) {
                     if (!it.hasNext())
                         return false;
@@ -540,29 +545,32 @@ public class VideoElement extends ExtendedElement {
                     if (current.time >= target)
                         break;
                 }
+                
+                Dimension size = element.getSize();
+                try {
+                    FileInputStream in = new FileInputStream(current.image);
+                    BufferedImage image = ImageIO.read(in);
+                    ((JLabel)element.asComp()).setIcon(GeneralButtons.resizeIcon(image, size.width, size.height));
+                    in.close();
+                } catch (IOException e) {
+                    return false;
+                }
+                
+                try {
+                    SwingUtilities.invokeAndWait(new Runnable() {
+        
+                        @Override
+                        public void run() {
+                            element.notifyUpdate(element);
+                        }
+                        
+                    });
+                } catch (InterruptedException | InvocationTargetException e) {
+                    return false;
+                }
             }
 
-            Dimension size = element.getSize();
-            try {
-                FileInputStream in = new FileInputStream(current.image);
-                BufferedImage image = ImageIO.read(in);
-                ((JLabel)element.asComp()).setIcon(GeneralButtons.resizeIcon(image, size.width, size.height));
-            } catch (IOException e) {
-                return false;
-            }
             
-            try {
-                SwingUtilities.invokeAndWait(new Runnable() {
-    
-                    @Override
-                    public void run() {
-                        element.notifyUpdate(element);
-                    }
-                    
-                });
-            } catch (InterruptedException | InvocationTargetException e) {
-                return false;
-            }
 
             return true;
         }
