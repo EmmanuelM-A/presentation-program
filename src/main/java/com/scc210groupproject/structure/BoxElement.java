@@ -6,7 +6,6 @@ import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
 
 import java.awt.Component;
-
 import java.io.IOException;
 
 /**

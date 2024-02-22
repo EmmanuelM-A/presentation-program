@@ -46,7 +46,6 @@ public class App {
     TODO LIST:
     - Do animations and transistions check discord
     - Settings windows
-    - mini toolbar - implement the remaining buttons
     - drag feature to slides
     - shortcuts windows
     - slide manager fix errors DELETE

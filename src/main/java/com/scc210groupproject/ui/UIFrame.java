@@ -28,7 +28,7 @@ public class UIFrame extends JFrame implements IUpdateProvider
         instance = this;
 
         this.setTitle("Presentation Program");
-        this.setSize((int)size.getWidth(), (int)size.getHeight());
+        //this.setSize((int)size.getWidth(), (int)size.getHeight());
         this.setMinimumSize(new Dimension(1080, 720));
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

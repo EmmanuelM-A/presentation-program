@@ -65,7 +65,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
     /**
      * This list represents the slideImages that are painted onto the display
      */
-    private final LinkedList<SlideImage> slideImages = new LinkedList<>();
+    private LinkedList<SlideImage> slideImages = new LinkedList<>();
 
     /**
      * Constructor for the SlideManager
@@ -96,6 +96,11 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
     public Boolean getDisplayNewSlides() {
         return this.displayNewSlide;
     }
+    
+
+    public int getCurrentSlideIndex() {
+        return this.currentSlideIndex;
+    }
 
     /**
      * Returns the number of slideImages
@@ -103,6 +108,14 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
      */
     public int getSlideCount() {
         return this.slideImages.size();
+    }
+
+    /**
+     * Gets the current slideImage's list
+     * @return LinkedList<SlideImage>
+     */
+    public LinkedList<SlideImage> getSlideImages() {
+        return this.slideImages;
     }
 
     /**
@@ -184,6 +197,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
      * @param slide The slideImage you wish to get its index
      * @return int
      */
+    @SuppressWarnings("unused")
     private int getSlidePosition(SlideImage slide) {
         return this.slideImages.indexOf(slide);
     }
@@ -206,6 +220,10 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
      * */
     public void setDisplayNewSlides(Boolean yesOrNo) {
         this.displayNewSlide = yesOrNo;
+    }
+
+    public void setSlideImages(LinkedList<SlideImage> slides) {
+        this.slideImages = slides;
     }
 
     //////////// METHODS ////////////
@@ -387,7 +405,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
      * @param slideToDisplay The slideImage to add to the display
      * @param display The display the slide will be added and removed from
      */
-    private void displaySlide(SlideImage slideToDisplay, MainDisplayPanel display) {
+    public void displaySlide(SlideImage slideToDisplay, MainDisplayPanel display) {
         // Set the slideImage on the main display
         display.setCurrentSlideImage(slideToDisplay);
         // Remove previous slide displayed
@@ -499,7 +517,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         // Add slide to presentation slider
         addSlideToViewer(index);
 
-        // Update
+        // Update slide numbers
         for(int i = 0; i < this.slidesViewer.size(); i++) {
             this.slidesViewer.get(i).setToolTipText("Slide " + (i + 1));
         }
@@ -625,7 +643,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         highlightSlide(this.slidesViewer.get(index));
     }
 
-    //////////// INTERFACE FUNCTIONS ////////////
+    //////////// INTERFACE METHODS ////////////
 
     @Override
     public void onChangePresentation(Presentation current, Presentation discarded) {

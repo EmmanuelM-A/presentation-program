@@ -3,10 +3,12 @@ package com.scc210groupproject.structure;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
@@ -78,6 +80,10 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
     public AnchorManager getAnchorManager() {
         return manager;
     }
+
+    public void addMouseListener(JPanel object, MouseListener listener) {
+        object.addMouseListener(listener);
+    }
     
     protected void writeSelfExtended(Writer writer) throws IOException {
         writer.writeObject("manager", manager);
@@ -109,5 +115,6 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
         asComp().setSize(d);
 
         asComp().setBackground(new Color(reader.readInt("background")));
+        System.out.println("AFter here!");
     }
 }

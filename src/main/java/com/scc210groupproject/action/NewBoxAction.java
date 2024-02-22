@@ -20,6 +20,8 @@ public class NewBoxAction implements ActionListener {
 
         BoxElement element = new BoxElement();
 
+        //System.out.println(element.asComp());
+
         element.setBackground(new Color(
             (int)(Math.random() * 255), 
             (int)(Math.random() * 255), 

@@ -1,9 +1,16 @@
 package com.scc210groupproject.structure.adjust;
 
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
+
+import com.scc210groupproject.structure.BoxElement;
 import com.scc210groupproject.structure.helper.CoordinateUtils;
 import com.scc210groupproject.structure.input.InputEmulator.InputState;
 import com.scc210groupproject.structure.input.listeners.IMouseClicked;
@@ -14,6 +21,7 @@ import com.scc210groupproject.structure.input.listeners.IMouseMoved;
 import com.scc210groupproject.structure.input.listeners.IMousePressed;
 import com.scc210groupproject.structure.input.listeners.IMouseReleased;
 import com.scc210groupproject.ui.MainDisplayPanel;
+import com.scc210groupproject.ui.menuBarTabs.toolBars.SlideMiniToolBar;
 
 public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, IMouseDragged, IMouseEntered, IMouseExited, IMouseClicked, IMultiMover {
 
@@ -127,6 +135,20 @@ public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, 
     @Override
     public void mouseClicked(Object o, InputState state) {
         // not used, here to block message being taken by another element
+    }
+
+    public void x(Component element) {
+        element.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(SwingUtilities.isRightMouseButton(e)) {
+                    JPopupMenu popupMenu = new JPopupMenu();
+                    popupMenu.add(new SlideMiniToolBar());
+
+                    popupMenu.show(element, e.getX(), e.getY());
+                }
+            }
+        });
     }
      
     @Override

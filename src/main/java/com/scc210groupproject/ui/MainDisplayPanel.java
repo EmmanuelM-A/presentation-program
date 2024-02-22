@@ -31,9 +31,8 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
     
     private InputEmulator emulator;
 
-    private boolean emulatorActive;
-
     private Dimension slideDimension;
+    
     private Point newOffset;
 
     public InputEmulator getInputEmulator()
@@ -44,7 +43,6 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
     public MainDisplayPanel(int width, int height)
     {
         emulator = new InputEmulator();
-        emulatorActive = false;
         setInputState(true);
         
         super.setFocusable(true);
@@ -160,7 +158,7 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
      * Allows you to change the bufferedSlideImage being painted to the display.
      * @param newBufferedSlideImage The bufferImage you wish to paint
      */
-    private void setBufferedSlideImage(BufferedImage newBufferedSlideImage) {
+    public void setBufferedSlideImage(BufferedImage newBufferedSlideImage) {
         this.bufferedSlideImage = newBufferedSlideImage;
     }
 
@@ -216,19 +214,16 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
     }
 
     public void setInputState(boolean truthy) {
-        if (truthy && !emulatorActive) {
+        if(truthy) {
             super.addMouseListener(emulator);
             super.addMouseMotionListener(emulator);
             super.addMouseWheelListener(emulator);
             super.addKeyListener(emulator);
-            return;
-        }
-        if (!truthy && emulatorActive) {
+        } else {
             super.removeMouseListener(emulator);
             super.removeMouseMotionListener(emulator);
             super.removeMouseWheelListener(emulator);
             super.removeKeyListener(emulator);
-            return;
         }
     }
 
