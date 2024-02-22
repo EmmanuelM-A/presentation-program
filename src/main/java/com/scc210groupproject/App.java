@@ -20,7 +20,7 @@ public class App {
     public static void main( String[] args ) throws InvocationTargetException, InterruptedException
     {
         System.setProperty("flatlaf.useWindowDecorations", "true");
-        FlatLaf.registerCustomDefaultsSource("com.scc210groupproject.theme");
+        FlatLaf.registerCustomDefaultsSource("themes");
         FlatLightLaf.setup();
         FlatDarkLaf.setup();
 
