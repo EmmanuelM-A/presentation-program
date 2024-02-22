@@ -9,7 +9,3 @@ deploy:jdk8:
   script:
     - mvn install
     - mvn package -U
-
-  only:
-    variables:
-      - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
