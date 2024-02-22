@@ -106,6 +106,14 @@
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
+          <configuration>
+            <archive>
+              <manifest>
+                <addClassPath>true</addClassPath>
+                <mainClass>com.scc210groupproject.App</mainClass>
+              </manifest>
+            </archive>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
@@ -126,19 +134,5 @@
         </plugin>
       </plugins>
     </pluginManagement>
-      <plugins>
-          <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-compiler-plugin</artifactId>
-              <configuration>
-                <archive>
-                  <manifest>
-                    <addClassPath>true</addClassPath>
-                    <mainClass>com.scc210groupproject.App</mainClass>
-                  </manifest>
-                </archive>
-              </configuration>
-          </plugin>
-      </plugins>
   </build>
 </project>
