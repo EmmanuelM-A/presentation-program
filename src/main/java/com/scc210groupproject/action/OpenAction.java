@@ -12,18 +12,21 @@ import com.scc210groupproject.readwrite.FileDeserializer;
 
 public class OpenAction implements ActionListener {
 
-    FileFilter plainFilter = new FileNameExtensionFilter("Debug Presentation File", ".pjson");
-    FileFilter compressedFilter = new FileNameExtensionFilter("Compressed Presentation File", ".pcomp");
+    FileFilter plainFilter = new FileNameExtensionFilter("Debug Presentation File", "pjson");
+    FileFilter compressedFilter = new FileNameExtensionFilter("Compressed Presentation File", "pcomp");
 
     @Override
     public void actionPerformed(ActionEvent discard) {
         JWindow fileWindow = new JWindow();
 
         JFileChooser chooser = new JFileChooser();
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.setDialogType(JFileChooser.OPEN_DIALOG);
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setFileFilter(compressedFilter);
+        chooser.addChoosableFileFilter(plainFilter);
         chooser.addChoosableFileFilter(compressedFilter);
-        chooser.addChoosableFileFilter(compressedFilter);
-        int result = chooser.showSaveDialog(fileWindow);
+        int result = chooser.showOpenDialog(fileWindow);
 
         if (result != JFileChooser.APPROVE_OPTION)
             return;

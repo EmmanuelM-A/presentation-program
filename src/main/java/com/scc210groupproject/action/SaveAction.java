@@ -13,8 +13,8 @@ import com.scc210groupproject.readwrite.FileSerializer;
 
 public class SaveAction implements ActionListener {
 
-    FileFilter plainFilter = new FileNameExtensionFilter("Debug Presentation File", ".pjson");
-    FileFilter compressedFilter = new FileNameExtensionFilter("Compressed Presentation File", ".pcomp");
+    FileFilter plainFilter = new FileNameExtensionFilter("Debug Presentation File", "pjson");
+    FileFilter compressedFilter = new FileNameExtensionFilter("Compressed Presentation File", "pcomp");
 
     String path = null;
 

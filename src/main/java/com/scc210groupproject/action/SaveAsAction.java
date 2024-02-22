@@ -12,8 +12,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class SaveAsAction implements ActionListener{
     
-    FileFilter plainFilter = new FileNameExtensionFilter("Debug Presentation File", ".pjson");
-    FileFilter compressedFilter = new FileNameExtensionFilter("Compressed Presentation File", ".pcomp");
+    FileFilter plainFilter = new FileNameExtensionFilter("Debug Presentation File", "pjson");
+    FileFilter compressedFilter = new FileNameExtensionFilter("Compressed Presentation File", "pcomp");
 
     @Override
     public void actionPerformed(ActionEvent discard) {
@@ -29,16 +29,16 @@ public class SaveAsAction implements ActionListener{
         chooser.addChoosableFileFilter(compressedFilter);
         int result = chooser.showSaveDialog(fileWindow);
 
-        if (result != JFileChooser.APPROVE_OPTION)
+        if (result != JFileChooser.APPROVE_OPTION) {
             return;
+        }
 
         String path = chooser.getSelectedFile().getAbsolutePath();
         String extension = ((FileNameExtensionFilter) chooser.getFileFilter()).getExtensions()[0];
 
-        if (!path.endsWith(extension))
+        if (!path.endsWith(extension)) {
             path += extension;
-
-
+        }
 
         try {
             FileSerializer.writeToPath(path);

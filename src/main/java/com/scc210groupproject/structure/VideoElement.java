@@ -404,6 +404,7 @@ public class VideoElement extends ExtendedElement {
             
         }
 
+        // Coordinate loading all frames 
         private class CoordinateThread extends Thread {
             @Override
             public void run() {
@@ -459,6 +460,7 @@ public class VideoElement extends ExtendedElement {
             }
         }
 
+        // Write one frame to file 
         private class WriteThread extends Thread {
 
             double time;

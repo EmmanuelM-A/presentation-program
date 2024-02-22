@@ -8,7 +8,6 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -17,10 +16,11 @@ import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.structure.input.InputEmulator.InputState;
 import com.scc210groupproject.structure.input.listeners.IMouseClicked;
 import com.scc210groupproject.ui.UIFrame;
+import com.scc210groupproject.ui.helper.GeneralButtons;
 
 public class AudioElement extends ExtendedElement {
 
-    private JButton button = new JButton(new ImageIcon("/images/audio.png"));
+    private JButton button = new JButton(GeneralButtons.getIconFromFile("audio.png"));
     private File file;
     private Clip clip;
 
