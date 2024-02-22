@@ -25,7 +25,7 @@ public class PresentationModeTwo extends JFrame {
 
         this.getContentPane().add(presentationDisplay);
 
-        PresentationManager pm = new PresentationManager(this, presentationDisplay, startIndex);
+        PresentationManager presentationManager = new PresentationManager(this, presentationDisplay, startIndex);
 
         setVisible(true);
     }

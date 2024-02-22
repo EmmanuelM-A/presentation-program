@@ -1,8 +1,5 @@
 package com.scc210groupproject.ui.presentations;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
@@ -11,10 +8,10 @@ import javax.swing.JFrame;
 
 import com.scc210groupproject.ui.MainDisplayPanel;
 
-public class p extends JFrame {
+public class PresentationMode extends JFrame {
     private MainDisplayPanel presentationDisplay;
 
-    public p() {
+    public PresentationMode(int startIndex) {
         this.setTitle("Presentation Mode");
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
         this.setLocationRelativeTo(null);
@@ -22,10 +19,7 @@ public class p extends JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLayout(new GridBagLayout());
 
-        System.out.println(super.getSize());
-
         this.presentationDisplay = new MainDisplayPanel(super.getSize().width, super.getSize().height);
-        presentationDisplay.setBackground(Color.BLUE);
         {
             GridBagConstraints c = new GridBagConstraints();
             c.gridx = 0;
@@ -37,7 +31,7 @@ public class p extends JFrame {
             this.getContentPane().add(presentationDisplay, c);
         }
 
-        System.out.println(presentationDisplay.getWidth());
+        PresentationManager2 presentationManager2 = new PresentationManager2(this, this.presentationDisplay, startIndex);
 
         this.setVisible(true);
     }

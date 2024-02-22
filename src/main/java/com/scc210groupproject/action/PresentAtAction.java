@@ -4,8 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.scc210groupproject.ui.SlideManager;
-import com.scc210groupproject.ui.presentations.PresentationModeOne;
-import com.scc210groupproject.ui.presentations.PresentationModeTwo;
+import com.scc210groupproject.ui.presentations.PresentationMode;
 
 public class PresentAtAction implements ActionListener{
     
@@ -14,7 +13,7 @@ public class PresentAtAction implements ActionListener{
         
         // Needs to be Implemented
         //new PresentationModeOne();
-        new PresentationModeTwo(SlideManager.slideManager.getCurrentSlideIndex());
+        new PresentationMode(SlideManager.slideManager.getCurrentSlideIndex());
     }
 
 }
