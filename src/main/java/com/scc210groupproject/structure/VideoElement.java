@@ -80,13 +80,35 @@ public class VideoElement extends ExtendedElement {
 
     private void onBuffer() {
         label.loading = true;
-        notifyUpdate(this);
+        try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+
+                @Override
+                public void run() {
+                    notifyUpdate(this);
+                }
+                
+            });
+        } catch (InterruptedException | InvocationTargetException e) {
+            System.err.println(e);
+        } 
     }
 
     private void onEnd() {
         label.playing = false;
         label.loading = false;
-        notifyUpdate(this);
+        try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+
+                @Override
+                public void run() {
+                    notifyUpdate(this);
+                }
+                
+            });
+        } catch (InterruptedException | InvocationTargetException e) {
+            System.err.println(e);
+        } 
     }
 
     private void setup() {
@@ -172,7 +194,18 @@ public class VideoElement extends ExtendedElement {
         
         setup();
 
-        notifyUpdate(this);
+        try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+
+                @Override
+                public void run() {
+                    notifyUpdate(this);
+                }
+                
+            });
+        } catch (InterruptedException | InvocationTargetException e) {
+            System.err.println(e);
+        } 
     }
 
     @Override
