@@ -20,18 +20,10 @@ public class NewCircleAction implements ActionListener {
 
         CircleElement element = new CircleElement();
 
-        element.setBackground(new Color(
-            (int)(Math.random() * 255), 
-            (int)(Math.random() * 255), 
-            (int)(Math.random() * 255)));
-
         int minSide = area.width < area.height ? area.width : area.height;
         int size = (int)(Math.random() * minSide / 2) + minSide / 2;
         element.setSize(new Dimension(size, size));
 
-        element.setLocation(new Point(
-            (int)(Math.random() * (area.width - size)),
-            (int)(Math.random() * (area.height - size))));
 
         slide.add(element);
     }

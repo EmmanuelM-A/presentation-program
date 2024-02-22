@@ -364,7 +364,7 @@ public class VideoElement extends ExtendedElement {
                         }
 
                         if (outstanding)
-                            yield();
+                            super.yield();
                         else 
                             break;
                     }
@@ -426,7 +426,7 @@ public class VideoElement extends ExtendedElement {
                             return;
 
                         while (threads.size() > 50)
-                            yield();
+                            super.yield();
     
                         double time = frame.getTimestamp();
                         Picture picture = frame.getPicture().cloneCropped();
@@ -449,7 +449,7 @@ public class VideoElement extends ExtendedElement {
                         }
 
                         if (outstanding)
-                            yield();
+                            super.yield();
                         else 
                             break;
                     }
