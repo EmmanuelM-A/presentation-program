@@ -6,12 +6,23 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
-import com.scc210groupproject.ui.MainDisplayPanel;
 
 public class PresentationMode extends JFrame {
-    private MainDisplayPanel presentationDisplay;
+    private PresentationDisplayPanel presentationDisplay;
 
-    public PresentationMode(int startIndex) {
+    private int startIndex;
+
+    private JFrame frame;
+
+    public static PresentationMode instance;
+
+    public PresentationMode() {
+        //this.presentationDisplay = new PresentationDisplayPanel();
+        frame = this;
+        instance = this;
+    }
+
+    public void createAndShowUI(PresentationDisplayPanel presentationDisplay) {
         this.setTitle("Presentation Mode");
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
         this.setLocationRelativeTo(null);
@@ -19,7 +30,8 @@ public class PresentationMode extends JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLayout(new GridBagLayout());
 
-        this.presentationDisplay = new MainDisplayPanel(super.getSize().width, super.getSize().height);
+        //this.startIndex = startIndex;
+
         {
             GridBagConstraints c = new GridBagConstraints();
             c.gridx = 0;
@@ -31,8 +43,26 @@ public class PresentationMode extends JFrame {
             this.getContentPane().add(presentationDisplay, c);
         }
 
-        PresentationManager presentationManager = new PresentationManager(this, this.presentationDisplay, startIndex);
-
         this.setVisible(true);
     }
+
+    public int getStartIndex() {
+        return this.startIndex;
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public PresentationDisplayPanel getPresentationDisplay() {
+        return this.presentationDisplay;
+    }
+
+    public void setPresentationDisplay(PresentationDisplayPanel setPresentatioDisplay) {
+        this.presentationDisplay = setPresentatioDisplay;
+    }
+
+    /*public void setStartIndex(int newStartIndex) {
+        this.startIndex = newStartIndex;
+    }*/
 }
