@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.SortedSet;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import javax.imageio.ImageIO;
@@ -274,7 +273,7 @@ public class VideoElement extends ExtendedElement {
 
         private Object lock;
 
-        public VideoElement element;
+        private VideoElement element;
         private ConcurrentSkipListSet<Entry> tree = null;
         private Iterator<Entry> it = null;
 
@@ -287,6 +286,8 @@ public class VideoElement extends ExtendedElement {
 
         public boolean started = false;
         public boolean ended = false;
+
+        private LinkedList<Thread> threads = new LinkedList<>();
 
         public void play() {
             started = true;
@@ -318,13 +319,37 @@ public class VideoElement extends ExtendedElement {
         public void exit() {
             exit = true;
 
-            for (Entry entry : tree) {
-                entry.image.delete();
-            }
+            Thread cleanup = new Thread() {
+                @Override
+                public void run() {
+                    while (true) {
+
+                        boolean outstanding;
+                        synchronized (threads) {
+                            outstanding = threads.size() > 0;
+                        }
+
+                        if (outstanding)
+                            yield();
+                        else 
+                            break;
+                    }
+                    
+                    synchronized (tree) {
+                        for (Entry entry : tree) {
+                            entry.image.delete();
+                        }
+                    }
+
+                    
+                    synchronized (lock) {
+                        lock.notifyAll();
+                    }
+                }
+            };
+
+            cleanup.start();
             
-            synchronized (lock) {
-                lock.notifyAll();
-            }
         }
 
         public void load() {
@@ -337,84 +362,105 @@ public class VideoElement extends ExtendedElement {
                 
             });
 
-            Thread loader = new Thread() {
-                @Override
-                public void run() {
-                    FrameGrab grab = null;
-                    try {
-                        grab = FrameGrab.createFrameGrab(NIOUtils.readableChannel(element.file));
-                    } catch(IOException | JCodecException e) {
-                        return;
-                    }
-        
-                    try {
-                        LinkedList<Thread> threads = new LinkedList<>();
-        
-                        PictureWithMetadata frame;
-                        while ((frame = grab.getNativeFrameWithMetadata()) != null) {
-        
-                            double time = frame.getTimestamp();
-                            Picture picture = frame.getPicture().cloneCropped();
-                            Orientation orientation = frame.getOrientation();
-                            
-                            WriteThread thread = new WriteThread(time, picture, orientation, tree);
-        
-                            thread.start();
-        
-                            threads.add(thread);
-                        }
-        
-                        for (Thread thread : threads) {
-                            try {
-                                thread.join();
-                            } catch (InterruptedException e) {
-                                System.out.println("x");
-                            }
-                        }
-                    }
-                    catch (IOException e) {}
-        
-                    fullyloaded = true;
-                }
-            };
+            CoordinateThread loader = new CoordinateThread();
 
             loader.start();
             
         }
 
-        private static class WriteThread extends Thread {
+        private class CoordinateThread extends Thread {
+            @Override
+            public void run() {
+                FrameGrab grab = null;
+                try {
+                    grab = FrameGrab.createFrameGrab(NIOUtils.readableChannel(element.file));
+                } catch(IOException | JCodecException e) {
+                    return;
+                }
+    
+                try {
+
+                    Path folder = Files.createTempDirectory("imagecache-" + System.currentTimeMillis());
+    
+                    PictureWithMetadata frame;
+                    while ((frame = grab.getNativeFrameWithMetadata()) != null) {
+
+                        if (exit)
+                            return;
+
+                        while (threads.size() > 50)
+                            yield();
+    
+                        double time = frame.getTimestamp();
+                        Picture picture = frame.getPicture().cloneCropped();
+                        Orientation orientation = frame.getOrientation();
+                        
+                        WriteThread thread = new WriteThread(time, picture, orientation, folder);
+    
+                        synchronized (threads) {
+                            threads.add(thread);
+                        }
+
+                        thread.start();
+                    }
+
+                    while (true) {
+
+                        boolean outstanding;
+                        synchronized (threads) {
+                            outstanding = threads.size() > 0;
+                        }
+
+                        if (outstanding)
+                            yield();
+                        else 
+                            break;
+                    }
+                }
+                catch (IOException e) {}
+    
+                fullyloaded = true;
+            }
+        }
+
+        private class WriteThread extends Thread {
 
             double time;
             Picture picture;
             Orientation orientation;
-            SortedSet<Entry> set;
+            Path folder;
 
-            public WriteThread(double time, Picture picture, Orientation orientation, SortedSet<Entry> set) {
+            public WriteThread(double time, Picture picture, Orientation orientation, Path folder) {
                 this.time = time;
                 this.picture = picture;
                 this.orientation = orientation;
-                this.set = set;
+                this.folder = folder;
             }
 
             @Override
             public void run() {
+
                 try {
 
                     Entry entry = new Entry();
                     entry.time = time;
 
-                    Path path = Files.createTempFile("videoimage" + System.currentTimeMillis(), "tmp");
+                    Path path = Files.createTempFile(folder, System.currentTimeMillis() + "", ".tmp");
                     entry.image = path.toFile();
-                    entry.image.deleteOnExit();
 
                     FileOutputStream out = new FileOutputStream(entry.image);
                     ImageIO.write(AWTUtil.toBufferedImage(picture, orientation), "jpg", out);
                     
-                    synchronized (set) {
-                        set.add(entry);
+                    synchronized (tree) {
+                        tree.add(entry);
                     }
         
                 } catch (IOException e) {}
+                
+
+                synchronized (threads) {
+                    threads.remove(this);
+                } 
             }
         }
 

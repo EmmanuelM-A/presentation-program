@@ -58,6 +58,7 @@ public class SnapshotManager {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(entry);
         try {
             Reader reader = new Reader(inputStream, true);
+            Presentation.get().destroy(false);
             Presentation.set((Presentation)reader.loadHierarchy());
         }
         catch (IOException e) {
