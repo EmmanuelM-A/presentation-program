@@ -11,6 +11,7 @@ import com.scc210groupproject.structure.BaseElement;
 import com.scc210groupproject.structure.BoxElement;
 import com.scc210groupproject.structure.Slide;
 import com.scc210groupproject.ui.MainDisplayPanel;
+import com.scc210groupproject.ui.SlideImage;
 
 public class SlideIn {
     /**
@@ -45,6 +46,10 @@ public class SlideIn {
     public SlideIn(BoxElement object) {
         this.object = object;
         this.targetPoint = object.getLocation();
+
+        this.startingPoint = calculateStartingPoint(object);
+
+        System.out.println(startingPoint);
     }
 
     public void doAnimation() {
@@ -70,16 +75,19 @@ public class SlideIn {
     public Point calculateStartingPoint(BoxElement object) {
         Point point = new Point();
 
-        int delta = 0;
-
         /*
          * Get the size of the slide
          * get the size of the object
          * set the starting point so that whole object is not in the view
          */
 
-        Slide slide = MainDisplayPanel.instance.getCurrentSlideImage().getSlide();
-        Dimension slideDimension = slide.asComp().getSize();
+        SlideImage slide = MainDisplayPanel.instance.getCurrentSlideImage();
+
+        Dimension slideDimension = slide.getSlide().asComp().getSize();
+
+        point.x = (slide.getX() + slideDimension.width) * -1;
+
+        point.y = slide.getY();
         
         return point;
     }
