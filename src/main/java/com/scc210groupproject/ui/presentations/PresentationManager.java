@@ -46,7 +46,7 @@ public class PresentationManager {
         presentationDisplay.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                nextSlideOnClick();
+                nextSlideOnClick(e);
             }
         });
 
@@ -114,11 +114,12 @@ public class PresentationManager {
         display.updateBufferedSlideImage();
     }
 
-    public void nextSlideOnClick() {
+    public void nextSlideOnClick(MouseEvent e) {
         if(currentImageIndex < (slidesToPresent.size() - 1)) {
             currentImageIndex++;
             displaySlide(slidesToPresent.get(currentImageIndex), presentationDisplay);
-        } else {
+        } else if (e.getClickCount() == 2 && !e.isConsumed()){
+            e.consume();
             this.frame.dispose();
         }
     }
