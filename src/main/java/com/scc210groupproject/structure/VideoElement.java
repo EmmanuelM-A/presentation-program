@@ -361,6 +361,7 @@ public class VideoElement extends ExtendedElement {
 
                     Path path = Files.createTempFile("videoimage" + System.currentTimeMillis(), "bmp");
                     entry.image = path.toFile();
+                    entry.image.deleteOnExit();
 
                     FileOutputStream out = new FileOutputStream(entry.image);
                     ImageIO.write(AWTUtil.toBufferedImage(picture, orientation), "bmp", out);
