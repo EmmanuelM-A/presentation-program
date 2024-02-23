@@ -48,7 +48,6 @@ public class App {
     - Settings windows
     - drag feature to slides
     - shortcuts windows
-    - slide manager fix errors DELETE
     - presentation mode
     - Color chooser dialog for text, shapes, arrow
 */
