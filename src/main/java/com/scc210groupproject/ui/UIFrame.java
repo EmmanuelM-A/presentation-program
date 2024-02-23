@@ -7,6 +7,8 @@ import com.scc210groupproject.structure.liveness.UpdateManager;
 import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
 import com.scc210groupproject.ui.helper.ColourPalette;
 import com.scc210groupproject.ui.menuBarTabs.MenuBarTabs;
+import com.scc210groupproject.ui.presentations.PresentationManager;
+import com.scc210groupproject.ui.presentations.PresentationMode;
 
 import javax.swing.*;
 import java.awt.*;
@@ -97,6 +99,12 @@ public class UIFrame extends JFrame implements IUpdateProvider
         this.add(SlideManager.slideManager.createPresentationSlider(), gbc);
 
         new ShapesPopup();
+
+        PresentationMode.instance = new PresentationMode();
+
+        PresentationManager.instance = new PresentationManager(PresentationMode.instance.getFrame());
+
+        //MainDisplayPanel presentationDisplay = new MainDisplayPanel(0, 0);
 
         setVisible(true);
 
