@@ -12,7 +12,9 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JFrame;
 
-import com.scc210groupproject.structure.BaseElement;
+import com.itextpdf.kernel.pdf.annot.da.ExtendedAnnotationFont;
+import com.scc210groupproject.structure.ExtendedElement;
+import com.scc210groupproject.structure.ExtendedElement;
 import com.scc210groupproject.ui.SlideImage;
 import com.scc210groupproject.ui.SlideManager;
 
@@ -37,7 +39,7 @@ public class PresentationManager {
      */
     private PresentationDisplayPanel presentationDisplay;
 
-    private BaseElement selectedElement = null;
+    private ExtendedElement selectedElement = null;
 
     public static PresentationManager instance;
 
@@ -107,7 +109,7 @@ public class PresentationManager {
         displaySlide(slidesToPresent.get(currentImageIndex), presentationDisplay);
     }
 
-    public BaseElement getSelectedElement() {
+    public ExtendedElement getSelectedElement() {
         return this.selectedElement;
     }
 
@@ -115,8 +117,8 @@ public class PresentationManager {
         return this.presentationDisplay;
     }
 
-    public void setSelectedElement(BaseElement newSelectedElement) {
-        this.selectedElement = (BaseElement) newSelectedElement;
+    public void setSelectedElement(ExtendedElement newSelectedElement) {
+        this.selectedElement = (ExtendedElement) newSelectedElement;
         //System.out.println("The selected element is " + newSelectedElement);
     }
 

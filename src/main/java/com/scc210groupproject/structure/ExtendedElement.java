@@ -17,8 +17,37 @@ import com.scc210groupproject.structure.adjust.DragResizer;
 import com.scc210groupproject.structure.adjust.IResizable;
 import com.scc210groupproject.structure.anchors.AnchorManager;
 import com.scc210groupproject.structure.anchors.IAnchorProvider;
+import com.scc210groupproject.ui.presentations.animations.Animation;
 
 public abstract class ExtendedElement extends BaseElement implements IResizable, IAnchorProvider {
+
+    private boolean isSelected = false;
+
+    private Animation animation = null;
+
+    public boolean getIsSelected() {
+        return this.isSelected;
+    }
+
+    public Animation getAnimation() {
+        return this.animation;
+    }
+
+    public boolean hasAnimation() {
+        if(this.animation == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void setIsSelected(boolean truthy) {
+        this.isSelected = truthy;
+    }
+
+    public void setAnimation(Animation newAnimation) {
+        this.animation = newAnimation;
+    }
 
     protected AnchorManager manager = new AnchorManager(
         this,

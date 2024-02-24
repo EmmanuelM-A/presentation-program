@@ -1,9 +1,16 @@
 package com.scc210groupproject.ui.menuBarTabs.toolBars;
 
+import com.scc210groupproject.structure.BaseElement;
+import com.scc210groupproject.structure.ExtendedElement;
 import com.scc210groupproject.ui.helper.GeneralButtons;
+import com.scc210groupproject.ui.presentations.PresentationManager;
+import com.scc210groupproject.ui.presentations.animations.Animation;
+import com.scc210groupproject.ui.presentations.animations.SlideIn;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * This class extends ToolBar and contains all the buttons and components that will be displayed on the
@@ -40,13 +47,13 @@ public class ViewToolBar extends ToolBar {
 
         help = makeToolbarButton(GeneralButtons.HELP, recentsPanel);
 
-        addButtonsToAnimations("Animation 1");
-        addButtonsToAnimations("Animation 2");
+        addButtonsToAnimations("Slide In", new SlideIn());
+        /*addButtonsToAnimations("Animation 2");
         addButtonsToAnimations("Animation 3");
         addButtonsToAnimations("Animation 4");
         addButtonsToAnimations("Animation 5");
         addButtonsToAnimations("Animation 6");
-        addButtonsToAnimations("Animation 7");
+        addButtonsToAnimations("Animation 7");*/
 
         addButtonsToTransition("Transition 1");
         addButtonsToTransition("Transition 2");
@@ -89,14 +96,52 @@ public class ViewToolBar extends ToolBar {
         transistionsPanel.add(button);
     }
 
-    private void addButtonsToAnimations(String title) {
+    private void addButtonsToAnimations(String title, Animation animation) {
+        // Create button and assign its title
         JButton button = new JButton("<html> " + title + "</html>");
+        
+        // Does the formating/design of the button
+        formatButton(button);
+
+        // Adds an animation to the selected element
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                addAnimationToElement(animation);
+            }
+        });
+
+        // Adds the button directly to the panel
+        animationsPanel.add(button);
+    }
+
+    private void addAnimationToElement(Animation animation) {
+        // Get the selected element
+        ExtendedElement selectedElement = PresentationManager.instance.getSelectedElement();
+
+
+        /*
+         * If the selected element is not null set the elmenent's animation to the animation passed in
+         * and then run that animation just to show users what it looks like.
+         */
+        if(selectedElement != null) {
+            animation.setSelectedElement(selectedElement);
+
+            selectedElement.setAnimation(animation);
+
+            animation.doAnimation();
+            System.out.println("This animation has been assigned to the selected element!");
+        } else {
+            // Open a dialog box to show users that an element has not be selected
+            System.out.println("No element has been selected!");
+        }
+    }
+
+    private void formatButton(JButton button) {
         button.setPreferredSize(new Dimension(76, 76));
         button.setFocusable(false);
         button.setHorizontalTextPosition(SwingConstants.CENTER);
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
         button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-
-        animationsPanel.add(button);
     }
 }

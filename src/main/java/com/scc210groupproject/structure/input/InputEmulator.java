@@ -12,6 +12,7 @@ import java.awt.event.MouseWheelListener;
 import java.util.HashMap;
 
 import com.scc210groupproject.structure.BaseElement;
+import com.scc210groupproject.structure.ExtendedElement;
 import com.scc210groupproject.structure.Slide;
 import com.scc210groupproject.structure.adjust.MultiController;
 import com.scc210groupproject.structure.input.listeners.IKeyPressed;
@@ -25,6 +26,7 @@ import com.scc210groupproject.structure.input.listeners.IMouseMoved;
 import com.scc210groupproject.structure.input.listeners.IMousePressed;
 import com.scc210groupproject.structure.input.listeners.IMouseReleased;
 import com.scc210groupproject.structure.input.listeners.IMouseWheel;
+import com.scc210groupproject.ui.menuBarTabs.MenuBarTabs;
 import com.scc210groupproject.ui.presentations.PresentationManager;
 
 public class InputEmulator implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
@@ -305,7 +307,8 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
     @Override
     public void mouseClicked(MouseEvent e) {
         // not used
-        PresentationManager.instance.setSelectedElement(getCurrentElement());
+        PresentationManager.instance.setSelectedElement((ExtendedElement)getCurrentElement());
+        MenuBarTabs.instance.setSelectedIndex(3);
     }
 
     @Override

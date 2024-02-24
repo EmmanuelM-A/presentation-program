@@ -23,6 +23,7 @@ import com.scc210groupproject.structure.liveness.IUpdateListener;
 import com.scc210groupproject.structure.liveness.IUpdateProvider;
 import com.scc210groupproject.structure.liveness.UpdateManager;
 import com.scc210groupproject.structure.state.SnapshotManager;
+import com.scc210groupproject.ui.presentations.animations.Animation;
 import com.scc210groupproject.readwrite.IJsonSerializable;
 
 /**
@@ -46,6 +47,34 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
     private UpdateManager updateManager = new UpdateManager(this);
     private DestroyManager destroyManager = new DestroyManager(this);
     private InputManager mouseManager = new InputManager();
+
+    /*private boolean isSelected = false;
+
+    private Animation animation = null;
+
+    public boolean getIsSelected() {
+        return this.isSelected;
+    }
+
+    public Animation getAnimation() {
+        return this.animation;
+    }
+
+    public boolean hasAnimation() {
+        if(this.animation == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void setIsSelected(boolean truthy) {
+        this.isSelected = truthy;
+    }
+
+    public void setAnimation(Animation newAnimation) {
+        this.animation = newAnimation;
+    }*/
 
     @Override
     public void writeValue(Writer writer) throws IOException {
