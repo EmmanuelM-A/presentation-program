@@ -129,7 +129,7 @@ public class PresentationManager {
     }
 
     public void nextSlideOnClick(MouseEvent e) {
-        runAnimations();
+        //runAnimations();
         if(currentImageIndex < (slidesToPresent.size() - 1)) {
             currentImageIndex++;
             displaySlide(slidesToPresent.get(currentImageIndex), presentationDisplay);
@@ -152,15 +152,32 @@ public class PresentationManager {
     Action nextSlideOnClick = new AbstractAction() {
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            runAnimations();
-            if(currentImageIndex < (slidesToPresent.size() - 1)) {
-                //runAnimations();
+            //runAnimations();
+            ArrayList<Animation> animations = presentationDisplay.getCurrentSlideImage().getSlide().getElementAnimations();
+
+                // Check if there are elements present
+                if(animations.size() != 0) {
+                    // If so run each element's animation if they have one until all have run 
+                    for(Animation animation : animations) {
+                        animation.doAnimation();
+                    }
+                }
+            /*if(currentImageIndex < (slidesToPresent.size() - 1)) {
+                ArrayList<Animation> animations = presentationDisplay.getCurrentSlideImage().getSlide().getElementAnimations();
+
+                // Check if there are elements present
+                if(animations.size() != 0) {
+                    // If so run each element's animation if they have one until all have run 
+                    for(Animation animation : animations) {
+                        animation.doAnimation();
+                    }
+                }
                 currentImageIndex++;
                 //runAnimations();
                 displaySlide(slidesToPresent.get(currentImageIndex), presentationDisplay);
             } else {
                 frame.dispose();
-            }
+            }*/
         }
     };
 

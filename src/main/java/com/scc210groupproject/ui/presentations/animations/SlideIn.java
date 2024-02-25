@@ -3,7 +3,6 @@ package com.scc210groupproject.ui.presentations.animations;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.Timer;
 
 /*import java.util.Timer;
@@ -18,8 +17,6 @@ public class SlideIn extends Animation {
      * 
      */
     private Timer timer;
-
-    //private TimerTask animationTask;
 
     private long duration;
     
@@ -49,7 +46,7 @@ public class SlideIn extends Animation {
      */
     public SlideIn() {
 
-        this.duration = 5;
+        this.duration = 10;
     }
 
     @Override
@@ -61,6 +58,8 @@ public class SlideIn extends Animation {
 
             selectedElement.setLocation(startingPoint);
 
+            int delta = this.startingPoint.x * -1;
+
             //System.out.println("Starting point: " + startingPoint + " - Target point: " + targetPoint);
 
             this.timer = new Timer(50, new ActionListener() {
@@ -70,14 +69,16 @@ public class SlideIn extends Animation {
                 }
             });
 
-            /*this.timer.schedule(new TimerTask() {
+            /*timer = new Timer();
+
+            this.timer.schedule(new TimerTask() {
 
                 @Override
                 public void run() {
                     moveObject(startingPoint, targetPoint);
                 }
                 
-            })*/
+            }, 0, duration);*/
             timer.start();
         } else {
             System.out.println("Element has no animation!");

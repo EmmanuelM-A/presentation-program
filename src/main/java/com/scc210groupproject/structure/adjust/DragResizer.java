@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
-import com.scc210groupproject.structure.BaseElement;
 import com.scc210groupproject.structure.helper.CoordinateUtils;
 import com.scc210groupproject.structure.input.InputEmulator.InputState;
 import com.scc210groupproject.structure.input.listeners.IMouseClicked;
@@ -22,7 +21,6 @@ import com.scc210groupproject.structure.input.listeners.IMousePressed;
 import com.scc210groupproject.structure.input.listeners.IMouseReleased;
 import com.scc210groupproject.ui.MainDisplayPanel;
 import com.scc210groupproject.ui.menuBarTabs.toolBars.SlideMiniToolBar;
-import com.scc210groupproject.ui.presentations.PresentationManager;
 
 public class DragResizer implements IMousePressed, IMouseReleased, IMouseMoved, IMouseDragged, IMouseEntered, IMouseExited, IMouseClicked, IMultiMover {
 

@@ -3,6 +3,7 @@ package com.scc210groupproject.structure;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
@@ -48,33 +49,9 @@ public abstract class BaseElement implements IJsonSerializable, IUpdateProvider,
     private DestroyManager destroyManager = new DestroyManager(this);
     private InputManager mouseManager = new InputManager();
 
-    /*private boolean isSelected = false;
-
-    private Animation animation = null;
-
-    public boolean getIsSelected() {
-        return this.isSelected;
+    public void addMouseListener(MouseAdapter mouseAdapter) {
+        asComp().addMouseListener(mouseAdapter);
     }
-
-    public Animation getAnimation() {
-        return this.animation;
-    }
-
-    public boolean hasAnimation() {
-        if(this.animation == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public void setIsSelected(boolean truthy) {
-        this.isSelected = truthy;
-    }
-
-    public void setAnimation(Animation newAnimation) {
-        this.animation = newAnimation;
-    }*/
 
     @Override
     public void writeValue(Writer writer) throws IOException {
