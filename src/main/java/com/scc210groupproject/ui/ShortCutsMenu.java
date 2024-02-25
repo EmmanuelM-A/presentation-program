@@ -9,12 +9,12 @@ import javax.swing.KeyStroke;
 
 public class ShortCutsMenu extends JPopupMenu {
     public ShortCutsMenu() {
-        makeMenuItem("File Tab", KeyEvent.VK_F);
-        makeMenuItem("Home Tab", KeyEvent.VK_H);
-        makeMenuItem("Insert Tab", KeyEvent.VK_I);
-        makeMenuItem("View Tab", KeyEvent.VK_V);
-        makeMenuItem("Share Tab", KeyEvent.VK_S);
-        makeMenuItem("ABout Tab", KeyEvent.VK_A);
+        makeMenuItem("<html><u>F</u>ile Tab</html>");
+        makeMenuItem("<html><u>H</u>ome Tab</html>");
+        makeMenuItem("<html><u>I</u>nsert Tab</html>");
+        makeMenuItem("<html><u>V</u>iew Tab</html>");
+        makeMenuItem("<html><u>S</u>hare Tab</html>");
+        makeMenuItem("<html><u>A</u>bout Tab</html>");
 
         
     }
@@ -27,10 +27,9 @@ public class ShortCutsMenu extends JPopupMenu {
         this.add(item);
     }
 
-    public void makeMenuItem(String title, int key) {
-        JMenuItem item = new JMenuItem(title);
 
-        item.setMnemonic(key);
+    public void makeMenuItem(String title) {
+        JMenuItem item = new JMenuItem(title);
 
         this.add(item);
     }
