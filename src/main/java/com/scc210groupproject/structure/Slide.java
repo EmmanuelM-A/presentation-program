@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
+import com.scc210groupproject.ui.presentations.animations.Animation;
 
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
@@ -15,6 +16,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * @author wonge1
@@ -25,6 +27,12 @@ public class Slide extends BaseElement
 {
     private JPanel panel;
 
+    private ArrayList<Animation> elementAnimations;
+
+    public ArrayList<Animation> getElementAnimations() {
+        return this.elementAnimations;
+    }
+
     public Slide(Dimension dimension) {
         this();
 
@@ -32,6 +40,7 @@ public class Slide extends BaseElement
     }
 
     Slide() {
+        elementAnimations = new ArrayList<>();
         panel = new JPanel();
         panel.setEnabled(true);
         panel.setLayout(null);

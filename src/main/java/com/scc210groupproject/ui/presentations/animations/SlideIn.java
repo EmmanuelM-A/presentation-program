@@ -1,22 +1,27 @@
 package com.scc210groupproject.ui.presentations.animations;
 
-import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
+/*import java.util.Timer;
+import java.util.TimerTask;*/
+
+
 import com.scc210groupproject.structure.ExtendedElement;
-import com.scc210groupproject.structure.ExtendedElement;
-import com.scc210groupproject.ui.MainDisplayPanel;
-import com.scc210groupproject.ui.SlideImage;
+import com.scc210groupproject.ui.presentations.PresentationManager;
 
 public class SlideIn extends Animation {
     /**
      * 
      */
     private Timer timer;
+
+    //private TimerTask animationTask;
+
+    private long duration;
     
     /**
      * The calculated starting point for the animation
@@ -43,26 +48,41 @@ public class SlideIn extends Animation {
      * The constructor of the SlideIn class
      */
     public SlideIn() {
+
+        this.duration = 5;
     }
 
     @Override
     public void doAnimation() {
-        this.startingPoint = calculateStartingPoint(selectedElement);
+        if(selectedElement.hasAnimation()) {
+            this.startingPoint = calculateStartingPoint(selectedElement);
 
-        this.targetPoint = selectedElement.getLocation();
+            this.targetPoint = selectedElement.getLocation();
 
-        selectedElement.setLocation(startingPoint);
+            selectedElement.setLocation(startingPoint);
 
-        //System.out.println("Starting point: " + startingPoint + " - Target point: " + targetPoint);
+            //System.out.println("Starting point: " + startingPoint + " - Target point: " + targetPoint);
 
-        this.timer = new Timer(50, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                moveObject(startingPoint, targetPoint);
-            }
-        });
-        
-        this.timer.start();
+            this.timer = new Timer(50, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent arg0) {
+                    moveObject(startingPoint, targetPoint);
+                }
+            });
+
+            /*this.timer.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    moveObject(startingPoint, targetPoint);
+                }
+                
+            })*/
+            timer.start();
+        } else {
+            System.out.println("Element has no animation!");
+        }
+        //PresentationManager.instance.getPresentationDisplay().setInputState(false);
     }
 
     @Override
@@ -72,6 +92,8 @@ public class SlideIn extends Animation {
             selectedElement.setLocation(new Point(startingPoint.x, startingPoint.y));
             selectedElement.asComp().repaint();
         } else {
+            /*timer.cancel();
+            timer.purge();*/
             timer.stop();
         }
     }

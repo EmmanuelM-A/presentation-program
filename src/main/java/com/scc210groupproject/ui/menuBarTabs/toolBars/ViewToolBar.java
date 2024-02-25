@@ -2,6 +2,7 @@ package com.scc210groupproject.ui.menuBarTabs.toolBars;
 
 import com.scc210groupproject.structure.BaseElement;
 import com.scc210groupproject.structure.ExtendedElement;
+import com.scc210groupproject.ui.MainDisplayPanel;
 import com.scc210groupproject.ui.helper.GeneralButtons;
 import com.scc210groupproject.ui.presentations.PresentationManager;
 import com.scc210groupproject.ui.presentations.animations.Animation;
@@ -47,6 +48,7 @@ public class ViewToolBar extends ToolBar {
 
         help = makeToolbarButton(GeneralButtons.HELP, recentsPanel);
 
+        addButtonsToAnimations("Remove Animation", null);
         addButtonsToAnimations("Slide In", new SlideIn());
         /*addButtonsToAnimations("Animation 2");
         addButtonsToAnimations("Animation 3");
@@ -107,7 +109,10 @@ public class ViewToolBar extends ToolBar {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                addAnimationToElement(animation);
+                if(animation != null) 
+                    addAnimationToElement(animation);
+                else
+                    removeAnimationFromElement();
             }
         });
 
@@ -125,12 +130,38 @@ public class ViewToolBar extends ToolBar {
          * and then run that animation just to show users what it looks like.
          */
         if(selectedElement != null) {
+
+            MainDisplayPanel.instance.getCurrentSlideImage().getSlide().getElementAnimations().add(animation);
+
             animation.setSelectedElement(selectedElement);
 
             selectedElement.setAnimation(animation);
 
             animation.doAnimation();
-            System.out.println("This animation has been assigned to the selected element!");
+            //System.out.println("This animation has been assigned to the selected element!");
+        } else {
+            // Open a dialog box to show users that an element has not be selected
+            System.out.println("No element has been selected!");
+        }
+    }
+
+    private void removeAnimationFromElement() {
+        ExtendedElement selectedElement = PresentationManager.instance.getSelectedElement();
+
+
+        /*
+         * If the selected element is not null set the elmenent's animation to the animation passed in
+         * and then run that animation just to show users what it looks like.
+         */
+        if(selectedElement != null) {
+            selectedElement.getAnimation().setSelectedElement(null);
+
+            selectedElement.setAnimation(null);
+
+            System.out.println("Animation removed from element");
+
+            //animation.doAnimation();
+            //System.out.println("This animation has been assigned to the selected element!");
         } else {
             // Open a dialog box to show users that an element has not be selected
             System.out.println("No element has been selected!");
