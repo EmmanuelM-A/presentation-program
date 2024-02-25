@@ -47,7 +47,27 @@ public class MenuBarTabs extends JTabbedPane {
         instance = this;
     }
 
+    public FileToolBar getFileToolBar() {
+        return this.fileToolBar;
+    }
+
+    public HomeToolBar getHomeToolBar() {
+        return this.homeToolBar;
+    }
+
     public InsertToolBar getInsertToolBar() {
         return this.insertToolBar;
+    }
+
+    public ViewToolBar getViewToolBar() {
+        return this.viewToolBar;
+    }
+
+    public ShareToolBar getShareToolBar() {
+        return this.shareToolBar;
+    }
+
+    public AboutToolBar getAboutToolBar() {
+        return this.aboutToolBar;
     }
 }

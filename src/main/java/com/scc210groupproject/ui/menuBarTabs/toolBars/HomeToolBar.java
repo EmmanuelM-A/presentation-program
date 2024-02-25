@@ -15,10 +15,15 @@ import java.awt.*;
  * @author madukaag
  */
 public class HomeToolBar extends ToolBar {
+    /**
+     * The buttons for this toolbar
+     */
+    private final JButton newSlide, newFile, openFile, saveFile, clipboard, select, copy, paste, settings, spellChecker, help, toggleMode;
 
-    private JButton newSlide, newFile, openFile, saveFile, clipboard, select, copy, paste, settings, spellChecker, help,
-            toggleMode;
-
+    /**
+     * The constructor for the HomeToolBar - Creates the file toolbar and adds all of its buttons to its toolbar
+     * @param recentsPanel The recents panel on the home tab
+     */
     public HomeToolBar(JPanel recentsPanel) {
         this.setRollover(true);
 
@@ -95,6 +100,38 @@ public class HomeToolBar extends ToolBar {
 
         this.setName("Home");
         this.setFloatable(false);
-
     }
+
+    /**
+     * Gets the new file button from the file toolbar
+     * @return JButton
+     */
+    public JButton getNewFile() {
+        return newFile;
+    }
+
+    /**
+     * Gets the new file button from the file toolbar
+     * @return JButton
+     */
+    public JButton getOpenFile() {
+        return openFile;
+    }
+
+    /**
+     * Gets the save file button from the file toolbar
+     * @return JButton
+     */
+    public JButton getSaveFile() {
+        return saveFile;
+    }
+
+    /**
+     * Gets the clipboard button from the file toolbar
+     * @return JButton
+     */
+    public JButton getClipboard() {
+        return clipboard;
+    }
+
 }

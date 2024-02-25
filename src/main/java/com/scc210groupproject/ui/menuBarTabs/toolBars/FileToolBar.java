@@ -11,8 +11,15 @@ import javax.swing.*;
  * @author madukaag
  * */
 public class FileToolBar extends ToolBar {
-    private JButton newFile, openFile, saveFile, saveAsFile, export, format, print, help;
+    /**
+     * The buttons for this toolbar
+     */
+    private final JButton newFile, openFile, saveFile, saveAsFile, export, format, print, help;
 
+    /**
+     * The constructor for the FileToolBar - Creates the file toolbar and adds all of its buttons to its toolbar
+     * @param recentsPanel The recents panel on the home tab
+     */
     public FileToolBar(JPanel recentsPanel) {
         this.setRollover(true);
 
@@ -49,5 +56,69 @@ public class FileToolBar extends ToolBar {
 
         this.setName("File");
         this.setFloatable(false);
+    }
+
+    /**
+     * Gets the new file button from the file toolbar
+     * @return JButton
+     */
+    public JButton getNewFile() {
+        return newFile;
+    }
+
+    /**
+     * Gets the open file button from the file toolbar
+     * @return JButton
+     */
+    public JButton getOpenFile() {
+        return openFile;
+    }
+
+    /**
+     * Gets the save button from the file toolbar
+     * @return JButton
+     */
+    public JButton getSaveFile() {
+        return saveFile;
+    }
+
+    /**
+     * Gets the save as button from the file toolbar
+     * @return JButton
+     */
+    public JButton getSaveAsFile() {
+        return saveAsFile;
+    }
+
+    /**
+     * Gets the export button from the file toolbar
+     * @return JButton
+     */
+    public JButton getExport() {
+        return export;
+    }
+
+    /**
+     * Gets the format button from the file toolbar
+     * @return JButton
+     */
+    public JButton getFormat() {
+        return format;
+    }
+
+    /**
+     * Gets the print button from the file toolbar
+     * @return JButton
+     */
+    public JButton getPrint() {
+        return print;
+    }
+
+    /**
+     * Gets the help button from the file toolbar
+     * @return JButton
+     */
+    public JButton getHelp() {
+        return help;
     }
 }
