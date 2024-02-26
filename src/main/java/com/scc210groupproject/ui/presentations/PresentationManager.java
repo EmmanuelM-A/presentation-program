@@ -6,15 +6,20 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JFrame;
 
-import com.scc210groupproject.structure.BaseElement;
+import com.itextpdf.kernel.pdf.annot.da.ExtendedAnnotationFont;
+import com.scc210groupproject.structure.ExtendedElement;
+import com.scc210groupproject.structure.ExtendedElement;
 import com.scc210groupproject.ui.SlideImage;
 import com.scc210groupproject.ui.SlideManager;
+import com.scc210groupproject.ui.presentations.animations.Animation;
 
 public class PresentationManager {
     /**
@@ -37,7 +42,7 @@ public class PresentationManager {
      */
     private PresentationDisplayPanel presentationDisplay;
 
-    private BaseElement selectedElement = null;
+    private ExtendedElement selectedElement = null;
 
     public static PresentationManager instance;
 
@@ -69,30 +74,7 @@ public class PresentationManager {
             }
         });
 
-        frame.addWindowListener(new WindowListener() {
-
-            @Override
-            public void windowActivated(WindowEvent arg0) {}
-
-            @Override
-            public void windowClosed(WindowEvent arg0) { presentationDisplay.setInputState(true); }
-
-            @Override
-            public void windowClosing(WindowEvent arg0) {}
-
-            @Override
-            public void windowDeactivated(WindowEvent arg0) { presentationDisplay.setInputState(true); }
-
-            @Override
-            public void windowDeiconified(WindowEvent arg0) {}
-
-            @Override
-            public void windowIconified(WindowEvent arg0) { }
-
-            @Override
-            public void windowOpened(WindowEvent arg0) { presentationDisplay.setInputState(false); }
-            
-        });
+        this.presentationDisplay.setInputState(false);
 
         // Next slide to present displayed on right arrow click
         presentationDisplay.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).
@@ -107,7 +89,7 @@ public class PresentationManager {
         displaySlide(slidesToPresent.get(currentImageIndex), presentationDisplay);
     }
 
-    public BaseElement getSelectedElement() {
+    public ExtendedElement getSelectedElement() {
         return this.selectedElement;
     }
 
@@ -115,8 +97,8 @@ public class PresentationManager {
         return this.presentationDisplay;
     }
 
-    public void setSelectedElement(BaseElement newSelectedElement) {
-        this.selectedElement = (BaseElement) newSelectedElement;
+    public void setSelectedElement(ExtendedElement newSelectedElement) {
+        this.selectedElement = (ExtendedElement) newSelectedElement;
         //System.out.println("The selected element is " + newSelectedElement);
     }
 
@@ -147,6 +129,7 @@ public class PresentationManager {
     }
 
     public void nextSlideOnClick(MouseEvent e) {
+        //runAnimations();
         if(currentImageIndex < (slidesToPresent.size() - 1)) {
             currentImageIndex++;
             displaySlide(slidesToPresent.get(currentImageIndex), presentationDisplay);
@@ -169,25 +152,44 @@ public class PresentationManager {
     Action nextSlideOnClick = new AbstractAction() {
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            if(currentImageIndex < (slidesToPresent.size() - 1)) {
+            //runAnimations();
+            ArrayList<Animation> animations = presentationDisplay.getCurrentSlideImage().getSlide().getElementAnimations();
+
+                // Check if there are elements present
+                if(animations.size() != 0) {
+                    // If so run each element's animation if they have one until all have run 
+                    for(Animation animation : animations) {
+                        animation.doAnimation();
+                    }
+                }
+            /*if(currentImageIndex < (slidesToPresent.size() - 1)) {
+                ArrayList<Animation> animations = presentationDisplay.getCurrentSlideImage().getSlide().getElementAnimations();
+
+                // Check if there are elements present
+                if(animations.size() != 0) {
+                    // If so run each element's animation if they have one until all have run 
+                    for(Animation animation : animations) {
+                        animation.doAnimation();
+                    }
+                }
                 currentImageIndex++;
+                //runAnimations();
                 displaySlide(slidesToPresent.get(currentImageIndex), presentationDisplay);
             } else {
                 frame.dispose();
-            }
+            }*/
         }
     };
 
-    // Check if slide has actions
-    // If so get those actions
-    // On click run first action is actions
-    // then incrment to the next action
-    // If run again, run the next action in actions
-    // keep track of current action
-    public void runAction() {
-        if(presentationDisplay.getCurrentSlideImage().getActions().size() > 0) {
-            for(Integer action : presentationDisplay.getCurrentSlideImage().getActions()) {
-                System.out.println("Action " + action + " completed!");
+    public void runAnimations() {
+        // Get elements on the current slide being presented
+        ArrayList<Animation> animations = presentationDisplay.getCurrentSlideImage().getSlide().getElementAnimations();
+
+        // Check if there are elements present
+        if(animations.size() != 0) {
+            // If so run each element's animation if they have one until all have run 
+            for(Animation animation : animations) {
+                animation.doAnimation();
             }
         }
     }

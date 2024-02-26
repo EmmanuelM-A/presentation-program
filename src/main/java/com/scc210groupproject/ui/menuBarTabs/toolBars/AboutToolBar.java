@@ -11,7 +11,15 @@ import javax.swing.*;
  * @author madukaag
  * */
 public class AboutToolBar extends ToolBar {
-    private JButton license, shortcuts, help;
+    /**
+     * The buttons for this toolbar
+     */
+    private final JButton license, shortcuts, help;
+
+    /**
+     * The constructor for the AboutToolBar - Creates the file toolbar and adds all of its buttons to its toolbar
+     * @param recentsPanel The recents panel on the home tab
+     */
     public AboutToolBar(JPanel recentsPanel) {
         this.setRollover(true);
 
@@ -33,5 +41,29 @@ public class AboutToolBar extends ToolBar {
     
         this.setName("About");
         this.setFloatable(false);
+    }
+
+    /**
+     * Gets the licence button from the about toolbar
+     * @return JButton
+     */
+    public JButton getLicense() {
+        return this.license;
+    }
+
+    /**
+     * Gets the shorcuts button from the about toolbar
+     * @return JButton
+     */
+    public JButton getShortcuts() {
+        return this.shortcuts;
+    }
+
+    /**
+     * Gets the help button from the about toolbar
+     * @return JButton
+     */
+    public JButton getHelp() {
+        return help;
     }
 }
