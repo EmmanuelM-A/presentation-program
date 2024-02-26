@@ -12,6 +12,9 @@ import java.awt.*;
  * @author madukaag 
  * */
 public class MenuBarTabs extends JTabbedPane {
+    /**
+     * Represent each toolbar in the menu bar tab
+     */
     private final FileToolBar fileToolBar;
     private final HomeToolBar homeToolBar;
     private final InsertToolBar insertToolBar;
@@ -19,8 +22,16 @@ public class MenuBarTabs extends JTabbedPane {
     private final ShareToolBar shareToolBar;
     private final AboutToolBar aboutToolBar;
 
+    /**
+     * An instance of this class
+     */
     public static MenuBarTabs instance;
 
+    /**
+     * The construtor for the menu bar tabs - Adds each toolbar to the menu bar tabs
+     * @param width The width of the menu bar tabs 
+     * @param height The height of the menu bar tabs
+     */
     public MenuBarTabs(int width, int height) {
         this.setPreferredSize(new Dimension(width, height));
         this.setFocusable(false);
@@ -47,26 +58,50 @@ public class MenuBarTabs extends JTabbedPane {
         instance = this;
     }
 
+    /**
+     * Get the file toolbar 
+     * @return ToolBar
+     */
     public FileToolBar getFileToolBar() {
         return this.fileToolBar;
     }
 
+    /**
+     * Get the home toolbar 
+     * @return ToolBar
+     */
     public HomeToolBar getHomeToolBar() {
         return this.homeToolBar;
     }
 
+    /**
+     * Get the insert toolbar 
+     * @return ToolBar
+     */
     public InsertToolBar getInsertToolBar() {
         return this.insertToolBar;
     }
 
+    /**
+     * Get the view toolbar 
+     * @return ToolBar
+     */
     public ViewToolBar getViewToolBar() {
         return this.viewToolBar;
     }
 
+    /**
+     * Get the share toolbar 
+     * @return ToolBar
+     */
     public ShareToolBar getShareToolBar() {
         return this.shareToolBar;
     }
 
+    /**
+     * Get the about toolbar 
+     * @return ToolBar
+     */
     public AboutToolBar getAboutToolBar() {
         return this.aboutToolBar;
     }

@@ -21,7 +21,7 @@ public class HomeToolBar extends ToolBar {
     private final JButton newSlide, newFile, openFile, saveFile, clipboard, select, copy, paste, settings, spellChecker, help, toggleMode;
 
     /**
-     * The constructor for the HomeToolBar - Creates the file toolbar and adds all of its buttons to its toolbar
+     * The constructor for the HomeToolBar - Creates the home toolbar and adds all of its buttons to its toolbar
      * @param recentsPanel The recents panel on the home tab
      */
     public HomeToolBar(JPanel recentsPanel) {
