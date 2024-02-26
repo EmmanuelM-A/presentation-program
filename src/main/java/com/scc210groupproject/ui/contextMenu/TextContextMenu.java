@@ -13,12 +13,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * This class extends the JPopupMenu and contains the context menus relevant information and
- * JElements. STILL IN PROGRESS
- *
- * @author madukaag
- * */
 public class TextContextMenu extends ContextMenu{
 
     public TextContextMenu(TextElement element) {
@@ -72,6 +66,10 @@ public class TextContextMenu extends ContextMenu{
 
         JButton justifed = makeContextMenuButton(GeneralButtons.JUSTIFY);
 
+        JButton textColour = makeContextMenuButton(GeneralButtons.TEXTCOLOUR);
+
+        JButton backgroundColour = makeContextMenuButton(GeneralButtons.BACKGROUNDCOLOUR);
+
         JPanel optionsPanel = new JPanel();
         {
             optionsPanel.setLayout(gBagLayout);
@@ -107,7 +105,13 @@ public class TextContextMenu extends ContextMenu{
             gbc.gridx = 3;
             optionsPanel.add(justifed, gbc);
 
-            gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 6; 
+            gbc.gridx = 0; gbc.gridy = 3;
+            optionsPanel.add(textColour, gbc);
+
+            gbc.gridx = 1;
+            optionsPanel.add(backgroundColour, gbc);
+
+            gbc.gridx = 0; gbc.gridy = 4; gbc.gridwidth = 6; 
             optionsPanel.add(colorChooser, gbc);
         }
         gbc.gridy = 0; gbc.gridwidth = 1;
@@ -118,6 +122,7 @@ public class TextContextMenu extends ContextMenu{
             BorderLayout borderLayout = new BorderLayout();
             panel.setLayout(borderLayout);
             JTextArea area = new JTextArea();
+            JScrollPane scrollPane = new JScrollPane(area);
 
             area.setLineWrap(true);
             area.setWrapStyleWord(true);
@@ -140,7 +145,7 @@ public class TextContextMenu extends ContextMenu{
                 }
                 
             });
-            panel.add(area, BorderLayout.CENTER);
+            panel.add(scrollPane, BorderLayout.CENTER);
         }
         gbc.gridy = 1; gbc.weighty = 1;
         this.add(panel, gbc);

@@ -62,6 +62,8 @@ public enum GeneralButtons {
     LICENSE("License", "certificate.png", 32, 32, new LicenseAction()),
     SHORTCUTS("Shortcuts", "shortcuts.png", 32, 32, new ShortcutsAction()),
     TOGGLE_THEME("Theme", "toggle-theme.png", 32, 32, new ToggleThemeAction()),
+    TEXTCOLOUR("", "text-colour.png", 32, 32, null),
+    BACKGROUNDCOLOUR("", "background-colour.png", 32, 32, null),
     BOLD("", "bold.png", 32, 32, new StyleAction("BOLD")),
     ITALIC("", "italic.png", 32, 32, new StyleAction("ITALIC")),
     UNDERLINE("", "underline.png", 32, 32, new StyleAction("UNDERLINE")),
