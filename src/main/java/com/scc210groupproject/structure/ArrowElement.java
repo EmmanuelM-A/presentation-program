@@ -99,7 +99,19 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
 
     }
 
-    public void toggleArrow(Side side, boolean enabled) {
+    public void toggleArrow(Side side) {
+        switch (side) {
+            case A:
+                panel.arrowOnA = !panel.arrowOnA;
+                break;
+
+            case B:
+                panel.arrowOnB = !panel.arrowOnB;
+                break;
+        }
+    }
+
+    public void setArrow(Side side, boolean enabled) {
         switch (side) {
             case A:
                 panel.arrowOnA = enabled;
@@ -112,7 +124,7 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
     }
 
     public void setArrow(Side side, boolean enabled, double arrowWidth, double arrowLength) {
-        toggleArrow(side, enabled);
+        setArrow(side, enabled);
 
         switch (side) {
             case A:
@@ -129,12 +141,14 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
         panel.reposition();
     }
 
-    public void setLine(boolean isSolid, float width, float dotLength) {
-        panel.lineSolid = isSolid;
-        panel.lineWidth = width;
-        panel.lineDashLength = dotLength;
+    public void toggleLine() {
+        panel.lineSolid = !panel.lineSolid;
 
         panel.reposition();
+    }
+
+    public Boolean getLineType() {
+        return panel.lineSolid;
     }
 
     public void setColor(Color color) {
@@ -516,7 +530,7 @@ public class ArrowElement extends BaseElement implements IAnchorListener {
             element.panel.repaint();
             element.notifyUpdate(element);
 
-            ContextMenuPanel.setMenu(element, new ArrowContextMenu());
+            ContextMenuPanel.setMenu(element, new ArrowContextMenu(element));
 
             saveOnRelease = false;
         }

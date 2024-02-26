@@ -5,8 +5,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import com.scc210groupproject.ui.MainDisplayPanel;
-import com.scc210groupproject.ui.ShapesPopup;
 import com.scc210groupproject.ui.ShortCutsMenu;
 import com.scc210groupproject.ui.menuBarTabs.MenuBarTabs;
 

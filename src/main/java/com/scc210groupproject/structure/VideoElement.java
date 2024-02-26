@@ -194,18 +194,7 @@ public class VideoElement extends ExtendedElement {
         
         setup();
 
-        try {
-            SwingUtilities.invokeAndWait(new Runnable() {
-
-                @Override
-                public void run() {
-                    notifyUpdate(this);
-                }
-                
-            });
-        } catch (InterruptedException | InvocationTargetException e) {
-            System.err.println(e);
-        } 
+        notifyUpdate(this);
     }
 
     @Override

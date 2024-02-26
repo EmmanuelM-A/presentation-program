@@ -16,8 +16,7 @@ public class NewArrowElementAction implements ActionListener {
         ArrowElement arrowElement = new ArrowElement(new Point(20, 20), new Point(100, 200));
         arrowElement.setArrow(ArrowElement.Side.A, true, 20, 20);
         arrowElement.setArrow(ArrowElement.Side.B, true, 30, 30);
-        arrowElement.setColor(Color.GREEN);
-        arrowElement.setLine(false, 5, 5);
+        arrowElement.setColor(Color.GREEN);;
         MainDisplayPanel.instance.getCurrentSlideImage().getSlide().add(arrowElement);
     }
     

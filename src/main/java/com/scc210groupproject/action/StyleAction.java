@@ -3,9 +3,11 @@ package com.scc210groupproject.action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.itextpdf.layout.element.Text;
 import com.scc210groupproject.structure.TextElement;
 import com.scc210groupproject.structure.TextElement.Alignment;
 import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
+import com.scc210groupproject.ui.contextMenu.TextContextMenu;
 
 public class StyleAction implements ActionListener
 {
@@ -49,6 +51,12 @@ public class StyleAction implements ActionListener
                 break;
             case "JUSTIFY":
                 element.setAlignment(Alignment.JUSTIFIED);
+                break;
+            case "BACKGROUNDCOLOUR":
+                element.setBackground(((TextContextMenu)ContextMenuPanel.menu).getColour());
+                break;
+            case "TEXTCOLOUR":
+                element.setTextColor(((TextContextMenu)ContextMenuPanel.menu).getColour());
                 break;
         } } };
 

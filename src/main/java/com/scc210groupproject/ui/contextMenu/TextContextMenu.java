@@ -15,6 +15,8 @@ import java.awt.event.ActionListener;
 
 public class TextContextMenu extends ContextMenu{
 
+    private Color colour;
+
     public TextContextMenu(TextElement element) {
         
         this.setPreferredSize(new Dimension(300, 350));
@@ -46,7 +48,7 @@ public class TextContextMenu extends ContextMenu{
         colorChooser.getSelectionModel().addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                element.setBackground(colorChooser.getColor());
+                colour = colorChooser.getColor();
             }    
         }); 
 
@@ -149,5 +151,9 @@ public class TextContextMenu extends ContextMenu{
         }
         gbc.gridy = 1; gbc.weighty = 1;
         this.add(panel, gbc);
+    }
+
+    public Color getColour() {
+        return this.colour;
     }
 }

@@ -323,8 +323,8 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
     @Override
     public void mouseClicked(MouseEvent e) {
         // not used
-        PresentationManager.instance.setSelectedElement((ExtendedElement)getCurrentElement());
-        MenuBarTabs.instance.setSelectedIndex(3);
+        // PresentationManager.instance.setSelectedElement((ExtendedElement)getCurrentElement());
+        // MenuBarTabs.instance.setSelectedIndex(3);
 
         /*JPopupMenu popupMenu = new JPopupMenu();
         popupMenu.add(new ElementMiniToolBar());

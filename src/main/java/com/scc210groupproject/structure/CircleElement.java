@@ -6,6 +6,10 @@ import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.structure.input.InputEmulator.InputState;
 import com.scc210groupproject.structure.input.adapters.MouseOccupancyAdapter;
+import com.scc210groupproject.structure.input.listeners.IMouseClicked;
+import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
+import com.scc210groupproject.ui.contextMenu.ShapeContextMenu;
+import com.scc210groupproject.ui.contextMenu.TextContextMenu;
 
 import java.awt.Component;
 import java.awt.Graphics;
@@ -34,6 +38,17 @@ public class CircleElement extends ExtendedElement {
     }
 
     public CircleElement() {
+
+        CircleElement self = this;
+        super.addInputListener(new IMouseClicked() {
+
+            @Override
+            public void mouseClicked(Object target, InputState state) {
+                ContextMenuPanel.setMenu(self, new ShapeContextMenu(self));
+            }
+            
+        });
+        
         super.addInputListener(new MouseOccupancyAdapter() {
             @Override
             public void mouseEntered(Object target, InputState state) {

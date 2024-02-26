@@ -4,11 +4,6 @@ import javax.swing.*;
 
 import java.awt.*;
 
-/**
- * This class is the where the context menus will be added - STILL IN PROGRESS
- *
- * @author madukaag
- * */
 public class ContextMenuPanel extends JPanel {
     
     public static ContextMenuPanel instance = null;
