@@ -4,9 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -14,8 +11,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JFrame;
 
-import com.itextpdf.kernel.pdf.annot.da.ExtendedAnnotationFont;
-import com.scc210groupproject.structure.ExtendedElement;
 import com.scc210groupproject.structure.ExtendedElement;
 import com.scc210groupproject.ui.SlideImage;
 import com.scc210groupproject.ui.SlideManager;

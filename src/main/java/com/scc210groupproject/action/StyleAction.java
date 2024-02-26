@@ -3,7 +3,6 @@ package com.scc210groupproject.action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.itextpdf.layout.element.Text;
 import com.scc210groupproject.structure.TextElement;
 import com.scc210groupproject.structure.TextElement.Alignment;
 import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;

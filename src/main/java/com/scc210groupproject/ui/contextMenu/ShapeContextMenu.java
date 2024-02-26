@@ -1,7 +1,5 @@
 package com.scc210groupproject.ui.contextMenu;
 
-import java.awt.Color;
-
 import javax.swing.JColorChooser;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;

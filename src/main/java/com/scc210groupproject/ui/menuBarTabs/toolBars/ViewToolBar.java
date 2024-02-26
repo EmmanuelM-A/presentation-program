@@ -1,6 +1,5 @@
 package com.scc210groupproject.ui.menuBarTabs.toolBars;
 
-import com.scc210groupproject.structure.BaseElement;
 import com.scc210groupproject.structure.ExtendedElement;
 import com.scc210groupproject.ui.MainDisplayPanel;
 import com.scc210groupproject.ui.helper.GeneralButtons;

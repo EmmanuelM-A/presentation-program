@@ -9,7 +9,6 @@ import com.scc210groupproject.structure.input.adapters.MouseOccupancyAdapter;
 import com.scc210groupproject.structure.input.listeners.IMouseClicked;
 import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
 import com.scc210groupproject.ui.contextMenu.ShapeContextMenu;
-import com.scc210groupproject.ui.contextMenu.TextContextMenu;
 
 import java.awt.Component;
 import java.awt.Graphics;
