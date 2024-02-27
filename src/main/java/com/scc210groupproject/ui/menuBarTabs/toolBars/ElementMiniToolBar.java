@@ -17,6 +17,7 @@ public class ElementMiniToolBar extends ToolBar {
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         this.setPreferredSize(new Dimension(226, 74));
 
+        // Ignore icons for now
         addAnimation = makeToolbarButton(GeneralButtons.ADD_DIAG, null);
 
         deleteAnimation = makeToolbarButton(GeneralButtons.ADD_IMAGE, null);

@@ -19,7 +19,7 @@ import java.awt.event.ActionListener;
  * @author madukaag
  * */
 public class ViewToolBar extends ToolBar {
-    private JButton present, presentAt, help;
+    private JButton present, presentAt;
     //private JTextField presentAt;
     private JScrollPane animations, transistions;
 
@@ -45,8 +45,6 @@ public class ViewToolBar extends ToolBar {
         transistions.setToolTipText("Transitions");
         transistions.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        help = makeToolbarButton(GeneralButtons.HELP, recentsPanel);
-
         addButtonsToAnimations("Remove Animation", null);
         addButtonsToAnimations("Slide In", new SlideIn());
 
@@ -58,9 +56,6 @@ public class ViewToolBar extends ToolBar {
         addButtonsToTransition("Transition 6");
         addButtonsToTransition("Transition 7");
 
-
-        help = makeToolbarButton(GeneralButtons.HELP, recentsPanel);
-
         this.add(present);
         this.add(presentAt);
 
@@ -71,10 +66,6 @@ public class ViewToolBar extends ToolBar {
         separator(this);
 
         this.add(transistions);
-
-        separator(this);
-
-        this.add(help);
 
         this.setName("View");
         this.setFloatable(false);
@@ -116,12 +107,9 @@ public class ViewToolBar extends ToolBar {
     private void addAnimationToElement(Animation animation) {
         // Get the selected element
         ExtendedElement selectedElement = PresentationManager.instance.getSelectedElement();
-        //ExtendedElement selectedElement = (ExtendedElement) MainDisplayPanel.instance.getInputEmulator().getCurrentElement();
 
         // Check if an element has been selected
         if(selectedElement != null) {
-
-            //MainDisplayPanel.instance.getCurrentSlideImage().getSlide().getElementAnimations().add(animation);
             // Set the animations assigned element to the selected element
             animation.setSelectedElement(selectedElement);
 
@@ -130,6 +118,9 @@ public class ViewToolBar extends ToolBar {
 
             // Runs the passed in animation's animation once as a preview
             animation.doAnimation();
+
+            // Set the prestentation manager's current selected element to null - allows new elements to be selected
+            PresentationManager.instance.setSelectedElement(null);
         } else {
             JOptionPane.showMessageDialog(null, "To add an animation to an element, an element must be selected first!", "No selected element", JOptionPane.ERROR_MESSAGE);
         }
@@ -145,7 +136,7 @@ public class ViewToolBar extends ToolBar {
 
             selectedElement.setAnimation(null);
         } else {
-            JOptionPane.showMessageDialog(null, "To remove an animation from an elemetn, an element must be selected first!", "No selected element", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "To remove an animation from an element, an element must be selected first!", "No selected element", JOptionPane.ERROR_MESSAGE);
         }
     }
 

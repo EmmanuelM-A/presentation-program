@@ -80,7 +80,9 @@ public class HomeToolBar extends ToolBar {
 
         separator(this);
 
-        this.add(clipboard);
+        this.add(toggleMode);
+
+        /*this.add(clipboard);
         this.add(select);
         this.add(copy);
         this.add(paste);
@@ -94,9 +96,7 @@ public class HomeToolBar extends ToolBar {
 
         this.add(help);
 
-        separator(this);
-
-        this.add(toggleMode);
+        separator(this);*/
 
         this.setName("Home");
         this.setFloatable(false);
