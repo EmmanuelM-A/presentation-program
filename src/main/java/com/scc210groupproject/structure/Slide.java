@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
 import com.scc210groupproject.ui.presentations.animations.Animation;
+import com.scc210groupproject.ui.presentations.transistions.Transition;
 
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
@@ -27,10 +28,38 @@ public class Slide extends BaseElement
 {
     private JPanel panel;
 
-    private ArrayList<Animation> elementAnimations;
+    /**
+     * Represent the current transition applied to this slide
+     */
+    private Transition transition;
 
-    public ArrayList<Animation> getElementAnimations() {
-        return this.elementAnimations;
+    /**
+     * Represents the elements currently on this slide
+     */
+    private ArrayList<ExtendedElement> elements;
+
+    /**
+     * Gets the list of elements that have been added to this slide
+     * @return ArrayList<BaseElement>
+     */
+    public ArrayList<ExtendedElement> getElements() {
+        return this.elements;
+    }
+
+    /**
+     * Get the transition that has been applied to this slide
+     * @return Transition
+     */
+    public Transition getTransition() {
+        return this.transition;
+    }
+
+    /**
+     * Sets the slide transition to a new value
+     * @param newTransition The new transition for this slide 
+     */
+    public void setTransition(Transition newTransition) {
+        this.transition = newTransition;
     }
 
     public Slide(Dimension dimension) {
@@ -40,10 +69,11 @@ public class Slide extends BaseElement
     }
 
     Slide() {
-        elementAnimations = new ArrayList<>();
         panel = new JPanel();
         panel.setEnabled(true);
         panel.setLayout(null);
+        elements = new ArrayList<>();
+        transition = null;
     }
 
     public void setDimension(Dimension dimension) {

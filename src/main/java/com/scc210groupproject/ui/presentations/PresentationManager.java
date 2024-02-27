@@ -10,8 +10,13 @@ import java.util.LinkedList;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
+import com.itextpdf.kernel.pdf.annot.da.ExtendedAnnotationFont;
+import com.scc210groupproject.structure.BaseElement;
 import com.scc210groupproject.structure.ExtendedElement;
+import com.scc210groupproject.structure.ExtendedElement;
+import com.scc210groupproject.ui.MainDisplayPanel;
 import com.scc210groupproject.ui.SlideImage;
 import com.scc210groupproject.ui.SlideManager;
 import com.scc210groupproject.ui.presentations.animations.Animation;
@@ -33,10 +38,13 @@ public class PresentationManager {
     private JFrame frame;
 
     /**
-     * The presention mode display
+     * The presention mode display panel
      */
     private PresentationDisplayPanel presentationDisplay;
 
+    /**
+     * The current selected element
+     */
     private ExtendedElement selectedElement = null;
 
     public static PresentationManager instance;
@@ -65,7 +73,19 @@ public class PresentationManager {
         presentationDisplay.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                nextSlideOnClick(e);
+                new Thread() {
+                    @Override
+                    public void run() {
+                        nextSlideOnClick(e);
+                    }
+                }.start();
+
+                new Thread() {
+                    @Override
+                    public void run() {
+                        nextSlide(e);
+                    }
+                }.start();
             }
         });
 
@@ -92,9 +112,8 @@ public class PresentationManager {
         return this.presentationDisplay;
     }
 
-    public void setSelectedElement(ExtendedElement newSelectedElement) {
+    public void setSelectedElement(BaseElement newSelectedElement) {
         this.selectedElement = (ExtendedElement) newSelectedElement;
-        //System.out.println("The selected element is " + newSelectedElement);
     }
 
     public LinkedList<SlideImage> populteSlidesToPresent(LinkedList<SlideImage> list) {
@@ -109,6 +128,11 @@ public class PresentationManager {
         return slideImages;
     }
 
+    /**
+     * Display a slide image to the display
+     * @param slideToDisplay The slide to add/draw onto the display
+     * @param display The display that slide images will be added/drawn on
+     */
     public void displaySlide(SlideImage slideToDisplay, PresentationDisplayPanel display) {
         // Set the slideImage on the main display
         display.setCurrentSlideImage(slideToDisplay);
@@ -122,9 +146,45 @@ public class PresentationManager {
         // Update slideImage dimension on frame resize
         display.updateBufferedSlideImage();
     }
+    
+    /**
+     * Allows the user to move onto the next slide on mouse click or exit presentation mode on double click
+     * @param e The mouse event
+     */
+    synchronized public void nextSlideOnClick(MouseEvent e) {
+        // Get the elements on the presented slide
+        ArrayList<ExtendedElement> elements = presentationDisplay.getCurrentSlideImage().getSlide().getElements();
 
-    public void nextSlideOnClick(MouseEvent e) {
-        //runAnimations();
+        // Makes sure that the left mouse is clicked
+        //if(SwingUtilities.isLeftMouseButton(e)) {
+            // Run the element animations if there are elements present on the screen
+            if(elements.size() != 0) {
+                for(ExtendedElement element : elements) {
+                    if(element.hasAnimation() == true) {
+                        element.getAnimation().doAnimation();
+                        try {
+                            wait();
+                        } catch (InterruptedException err) {
+                            err.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            // Move to the next slide or exit the presentation mode on double click
+            /*if(currentImageIndex < (slidesToPresent.size() - 1)) {
+                currentImageIndex++;
+                displaySlide(slidesToPresent.get(currentImageIndex), presentationDisplay);
+            } else if (e.getClickCount() == 2 && !e.isConsumed()){
+                e.consume();
+                this.frame.dispose();
+            }*/
+            
+
+        //}
+    }
+
+    synchronized public void nextSlide(MouseEvent e) {
         if(currentImageIndex < (slidesToPresent.size() - 1)) {
             currentImageIndex++;
             displaySlide(slidesToPresent.get(currentImageIndex), presentationDisplay);
@@ -132,11 +192,18 @@ public class PresentationManager {
             e.consume();
             this.frame.dispose();
         }
+        notify();
     }
 
+    /**
+     * Used to go to the previous slide to present on the click of the left arrow button
+     */
     Action prevSlideOnClick = new AbstractAction() {
         @Override
-        public void actionPerformed(ActionEvent arg0) {
+        public void actionPerformed(ActionEvent e) {
+            runAnimations();            
+
+            // Move to the previous slide
             if(currentImageIndex > 0) {
                 currentImageIndex--;
                 displaySlide(slidesToPresent.get(currentImageIndex), presentationDisplay);
@@ -144,47 +211,45 @@ public class PresentationManager {
         }
     };
 
+    /**
+     * Used to go to the next slide to present on the click of the right arrow button
+     */
     Action nextSlideOnClick = new AbstractAction() {
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            //runAnimations();
-            ArrayList<Animation> animations = presentationDisplay.getCurrentSlideImage().getSlide().getElementAnimations();
+            runAnimations();
 
-                // Check if there are elements present
-                if(animations.size() != 0) {
-                    // If so run each element's animation if they have one until all have run 
-                    for(Animation animation : animations) {
-                        animation.doAnimation();
-                    }
-                }
-            /*if(currentImageIndex < (slidesToPresent.size() - 1)) {
-                ArrayList<Animation> animations = presentationDisplay.getCurrentSlideImage().getSlide().getElementAnimations();
-
-                // Check if there are elements present
-                if(animations.size() != 0) {
-                    // If so run each element's animation if they have one until all have run 
-                    for(Animation animation : animations) {
-                        animation.doAnimation();
-                    }
-                }
+            /**
+             * Go to the next slide or exit presentation mode
+             */
+            if(currentImageIndex < (slidesToPresent.size() - 1)) {
                 currentImageIndex++;
-                //runAnimations();
                 displaySlide(slidesToPresent.get(currentImageIndex), presentationDisplay);
             } else {
                 frame.dispose();
-            }*/
+            }
         }
     };
 
+    /**
+     * Runs the elements' animations if there are elements present on the slide
+     */
     public void runAnimations() {
-        // Get elements on the current slide being presented
-        ArrayList<Animation> animations = presentationDisplay.getCurrentSlideImage().getSlide().getElementAnimations();
+        // Get the elements on the presented slide
+        ArrayList<ExtendedElement> elements = presentationDisplay.getCurrentSlideImage().getSlide().getElements();
 
-        // Check if there are elements present
-        if(animations.size() != 0) {
-            // If so run each element's animation if they have one until all have run 
-            for(Animation animation : animations) {
-                animation.doAnimation();
+        // Run the element animations if there are elements present on the screen
+        if(elements.size() != 0) {
+            for(ExtendedElement element : elements) {
+                if(element.hasAnimation() == true) {
+                    element.getAnimation().doAnimation();
+                    /*try {
+                        wait();
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }*/
+                }
             }
         }
     }

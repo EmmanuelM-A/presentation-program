@@ -25,6 +25,8 @@ import com.scc210groupproject.structure.input.listeners.IMouseMoved;
 import com.scc210groupproject.structure.input.listeners.IMousePressed;
 import com.scc210groupproject.structure.input.listeners.IMouseReleased;
 import com.scc210groupproject.structure.input.listeners.IMouseWheel;
+import com.scc210groupproject.ui.menuBarTabs.MenuBarTabs;
+import com.scc210groupproject.ui.presentations.PresentationManager;
 
 public class InputEmulator implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
 
@@ -313,15 +315,8 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
     @Override
     public void mouseClicked(MouseEvent e) {
         // not used
-        // PresentationManager.instance.setSelectedElement((ExtendedElement)getCurrentElement());
-        // MenuBarTabs.instance.setSelectedIndex(3);
-
-        /*JPopupMenu popupMenu = new JPopupMenu();
-        popupMenu.add(new ElementMiniToolBar());
-        if(getCurrentElement() != null/*instanceof ExtendedElement) {
-            popupMenu.show((ExtendedElement)getCurrentElement().asComp(), 0, 0);
-            System.out.println("Print!");
-        }*/
+        PresentationManager.instance.setSelectedElement(getCurrentElement());
+        MenuBarTabs.instance.setSelectedIndex(3);
     }
 
     @Override

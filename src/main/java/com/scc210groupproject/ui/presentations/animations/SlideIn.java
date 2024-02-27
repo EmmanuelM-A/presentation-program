@@ -3,6 +3,8 @@ package com.scc210groupproject.ui.presentations.animations;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JPanel;
 import javax.swing.Timer;
 
 /*import java.util.Timer;
@@ -10,6 +12,7 @@ import java.util.TimerTask;*/
 
 
 import com.scc210groupproject.structure.ExtendedElement;
+import com.scc210groupproject.ui.presentations.PresentationDisplayPanel;
 import com.scc210groupproject.ui.presentations.PresentationManager;
 
 public class SlideIn extends Animation {
@@ -40,17 +43,17 @@ public class SlideIn extends Animation {
      */
     //protected ExtendedElement element;
 
-
     /**
      * The constructor of the SlideIn class
      */
     public SlideIn() {
-
         this.duration = 10;
     }
 
     @Override
     public void doAnimation() {
+        setDisplay((JPanel)selectedElement.getParent().asComp());
+        
         if(selectedElement.hasAnimation()) {
             this.startingPoint = calculateStartingPoint(selectedElement);
 
@@ -91,6 +94,7 @@ public class SlideIn extends Animation {
         if(startingPoint.x < targetPoint.x) {
             startingPoint.x += speed;
             selectedElement.setLocation(new Point(startingPoint.x, startingPoint.y));
+            
             selectedElement.asComp().repaint();
         } else {
             /*timer.cancel();

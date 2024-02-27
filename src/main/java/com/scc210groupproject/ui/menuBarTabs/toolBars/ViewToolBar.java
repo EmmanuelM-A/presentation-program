@@ -49,12 +49,6 @@ public class ViewToolBar extends ToolBar {
 
         addButtonsToAnimations("Remove Animation", null);
         addButtonsToAnimations("Slide In", new SlideIn());
-        /*addButtonsToAnimations("Animation 2");
-        addButtonsToAnimations("Animation 3");
-        addButtonsToAnimations("Animation 4");
-        addButtonsToAnimations("Animation 5");
-        addButtonsToAnimations("Animation 6");
-        addButtonsToAnimations("Animation 7");*/
 
         addButtonsToTransition("Transition 1");
         addButtonsToTransition("Transition 2");
@@ -87,7 +81,7 @@ public class ViewToolBar extends ToolBar {
     }
 
     private void addButtonsToTransition(String title) {
-        JButton button = new JButton("<html> " + title + "</html>");
+        JButton button = new JButton("<html>" + title + "</html>");
         button.setPreferredSize(new Dimension(76, 76));
         button.setFocusable(false);
         button.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -99,7 +93,7 @@ public class ViewToolBar extends ToolBar {
 
     private void addButtonsToAnimations(String title, Animation animation) {
         // Create button and assign its title
-        JButton button = new JButton("<html> " + title + "</html>");
+        JButton button = new JButton("<html>" + title + "</html>");
         
         // Does the formating/design of the button
         formatButton(button);
@@ -122,48 +116,36 @@ public class ViewToolBar extends ToolBar {
     private void addAnimationToElement(Animation animation) {
         // Get the selected element
         ExtendedElement selectedElement = PresentationManager.instance.getSelectedElement();
+        //ExtendedElement selectedElement = (ExtendedElement) MainDisplayPanel.instance.getInputEmulator().getCurrentElement();
 
-
-        /*
-         * If the selected element is not null set the elmenent's animation to the animation passed in
-         * and then run that animation just to show users what it looks like.
-         */
+        // Check if an element has been selected
         if(selectedElement != null) {
 
-            MainDisplayPanel.instance.getCurrentSlideImage().getSlide().getElementAnimations().add(animation);
-
+            //MainDisplayPanel.instance.getCurrentSlideImage().getSlide().getElementAnimations().add(animation);
+            // Set the animations assigned element to the selected element
             animation.setSelectedElement(selectedElement);
 
+            // Set the selected element's animation as the animation passed in
             selectedElement.setAnimation(animation);
 
+            // Runs the passed in animation's animation once as a preview
             animation.doAnimation();
-            //System.out.println("This animation has been assigned to the selected element!");
         } else {
-            // Open a dialog box to show users that an element has not be selected
-            System.out.println("No element has been selected!");
+            JOptionPane.showMessageDialog(null, "To add an animation to an element, an element must be selected first!", "No selected element", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void removeAnimationFromElement() {
+        // Get the selected element
         ExtendedElement selectedElement = PresentationManager.instance.getSelectedElement();
 
-
-        /*
-         * If the selected element is not null set the elmenent's animation to the animation passed in
-         * and then run that animation just to show users what it looks like.
-         */
+        // Check if an element has been selected
         if(selectedElement != null) {
             selectedElement.getAnimation().setSelectedElement(null);
 
             selectedElement.setAnimation(null);
-
-            System.out.println("Animation removed from element");
-
-            //animation.doAnimation();
-            //System.out.println("This animation has been assigned to the selected element!");
         } else {
-            // Open a dialog box to show users that an element has not be selected
-            System.out.println("No element has been selected!");
+            JOptionPane.showMessageDialog(null, "To remove an animation from an elemetn, an element must be selected first!", "No selected element", JOptionPane.ERROR_MESSAGE);
         }
     }
 
