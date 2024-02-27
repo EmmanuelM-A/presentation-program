@@ -7,10 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.scc210groupproject.structure.BoxElement;
-import com.scc210groupproject.structure.ExtendedElement;
 import com.scc210groupproject.structure.Slide;
 import com.scc210groupproject.ui.MainDisplayPanel;
-import com.scc210groupproject.ui.presentations.PresentationManager;
 
 public class NewBoxAction implements ActionListener {
 
@@ -37,8 +35,6 @@ public class NewBoxAction implements ActionListener {
             (int)(Math.random() * (area.height - dimension.height))));
 
         slide.add(element);
-
-        MainDisplayPanel.instance.getCurrentSlideImage().getSlide().getElements().add(element);
     }
 
 }

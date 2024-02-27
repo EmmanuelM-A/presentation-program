@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
-import com.scc210groupproject.ui.presentations.animations.Animation;
+import com.scc210groupproject.ui.presentations.PresentationActions;
 import com.scc210groupproject.ui.presentations.transistions.Transition;
 
 import java.awt.Point;
@@ -17,7 +17,8 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author wonge1
@@ -32,19 +33,6 @@ public class Slide extends BaseElement
      * Represent the current transition applied to this slide
      */
     private Transition transition;
-
-    /**
-     * Represents the elements currently on this slide
-     */
-    private ArrayList<ExtendedElement> elements;
-
-    /**
-     * Gets the list of elements that have been added to this slide
-     * @return ArrayList<BaseElement>
-     */
-    public ArrayList<ExtendedElement> getElements() {
-        return this.elements;
-    }
 
     /**
      * Get the transition that has been applied to this slide
@@ -62,6 +50,12 @@ public class Slide extends BaseElement
         this.transition = newTransition;
     }
 
+    private List<PresentationActions> actions;
+
+    public List<PresentationActions> getActions() {
+        return this.actions;
+    }
+
     public Slide(Dimension dimension) {
         this();
 
@@ -72,7 +66,7 @@ public class Slide extends BaseElement
         panel = new JPanel();
         panel.setEnabled(true);
         panel.setLayout(null);
-        elements = new ArrayList<>();
+        actions = new LinkedList<>();
         transition = null;
     }
 

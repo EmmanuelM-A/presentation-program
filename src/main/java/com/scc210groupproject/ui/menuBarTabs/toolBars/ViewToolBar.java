@@ -3,7 +3,7 @@ package com.scc210groupproject.ui.menuBarTabs.toolBars;
 import com.scc210groupproject.structure.ExtendedElement;
 import com.scc210groupproject.ui.MainDisplayPanel;
 import com.scc210groupproject.ui.helper.GeneralButtons;
-import com.scc210groupproject.ui.presentations.animations.Animation;
+import com.scc210groupproject.ui.presentations.PresentationActions;
 import com.scc210groupproject.ui.presentations.animations.FadeIn;
 import com.scc210groupproject.ui.presentations.animations.SlideIn;
 
@@ -34,7 +34,7 @@ public class ViewToolBar extends ToolBar {
 
         presentAt = makeToolbarButton(GeneralButtons.PRESENT_AT, recentsPanel);
 
-        animationsPanel.setBackground(Color.WHITE);
+        /*animationsPanel.setBackground(Color.WHITE);
         animations = new JScrollPane(animationsPanel);
         animations.setMaximumSize(new Dimension(500, 90));
         animations.setToolTipText("Animations");
@@ -48,7 +48,7 @@ public class ViewToolBar extends ToolBar {
 
         addButtonsToAnimations("Remove Animation", null);
         addButtonsToAnimations("Slide In", new SlideIn(90));
-        addButtonsToAnimations("Fade In", new FadeIn(100));
+        addButtonsToAnimations("Fade In", new FadeIn(10));
 
         addButtonsToTransition("Transition 1");
         addButtonsToTransition("Transition 2");
@@ -56,18 +56,18 @@ public class ViewToolBar extends ToolBar {
         addButtonsToTransition("Transition 4");
         addButtonsToTransition("Transition 5");
         addButtonsToTransition("Transition 6");
-        addButtonsToTransition("Transition 7");
+        addButtonsToTransition("Transition 7");*/
 
         this.add(present);
         this.add(presentAt);
 
-        separator(this);
+        /*separator(this);
 
         this.add(animations);
 
         separator(this);
 
-        this.add(transistions);
+        this.add(transistions);*/
 
         this.setName("View");
         this.setFloatable(false);
@@ -84,7 +84,7 @@ public class ViewToolBar extends ToolBar {
         transistionsPanel.add(button);
     }
 
-    private void addButtonsToAnimations(String title, Animation animation) {
+    private void addButtonsToAnimations(String title, PresentationActions animation) {
         // Create button and assign its title
         JButton button = new JButton("<html>" + title + "</html>");
         
@@ -106,25 +106,31 @@ public class ViewToolBar extends ToolBar {
         animationsPanel.add(button);
     }
 
-    private void addAnimationToElement(Animation animation) {
+    private void addAnimationToElement(PresentationActions animation) {
         // Get the selected element
         ExtendedElement selectedElement = MainDisplayPanel.instance.getCurrentSelectedElement();
 
-        // Check if an element has been selected
-        if(selectedElement != null) {
-            // Set the animations assigned element to the selected element
-            animation.setSelectedElement(selectedElement);
-
-            // Set the selected element's animation as the animation passed in
-            selectedElement.setAnimation(animation);
-
-            // Runs the passed in animation's animation once as a preview
-            animation.doAnimation();
-
-            // Set the prestentation manager's current selected element to null - allows new elements to be selected
-            MainDisplayPanel.instance.setCurrentSelectedElement(null);
+        if(MainDisplayPanel.instance.getCurrentSlideImage().getSlide().getActions().contains(animation)) {
+            JOptionPane.showMessageDialog(null, "The element already has already been assigned this animation!", "Element Animation", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "To add an animation to an element, an element must be selected first!", "No selected element", JOptionPane.ERROR_MESSAGE);
+            // Check if an element has been selected
+            if(selectedElement != null) {
+                // Set the animations assigned element to the selected element
+                animation.setSelectedElement(selectedElement);
+
+                // Set the selected element's animation as the animation passed in
+                selectedElement.setAnimation(animation);
+
+                MainDisplayPanel.instance.getCurrentSlideImage().getSlide().getActions().add(animation);
+
+                // Runs the passed in animation's animation once as a preview
+                animation.doAction();
+
+                // Set the prestentation manager's current selected element to null - allows new elements to be selected
+                MainDisplayPanel.instance.setCurrentSelectedElement(null);
+            } else {
+                JOptionPane.showMessageDialog(null, "To add an animation to an element, an element must be selected first!", "No selected element", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
@@ -134,6 +140,8 @@ public class ViewToolBar extends ToolBar {
 
         // Check if an element has been selected
         if(selectedElement != null) {
+            MainDisplayPanel.instance.getCurrentSlideImage().getSlide().getActions().remove(selectedElement.getAnimation());
+
             selectedElement.getAnimation().setSelectedElement(null);
 
             selectedElement.setAnimation(null);

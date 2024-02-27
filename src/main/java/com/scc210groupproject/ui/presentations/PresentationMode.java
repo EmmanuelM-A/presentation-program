@@ -17,7 +17,6 @@ public class PresentationMode extends JFrame {
     public static PresentationMode instance;
 
     public PresentationMode() {
-        //this.presentationDisplay = new PresentationDisplayPanel();
         frame = this;
         instance = this;
     }
@@ -29,8 +28,6 @@ public class PresentationMode extends JFrame {
         //this.setResizable(false);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLayout(new GridBagLayout());
-
-        //this.startIndex = startIndex;
 
         {
             GridBagConstraints c = new GridBagConstraints();
@@ -61,8 +58,4 @@ public class PresentationMode extends JFrame {
     public void setPresentationDisplay(PresentationDisplayPanel setPresentatioDisplay) {
         this.presentationDisplay = setPresentatioDisplay;
     }
-
-    /*public void setStartIndex(int newStartIndex) {
-        this.startIndex = newStartIndex;
-    }*/
 }

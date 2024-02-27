@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,14 +12,8 @@ import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import com.itextpdf.kernel.pdf.annot.da.ExtendedAnnotationFont;
-import com.scc210groupproject.structure.BaseElement;
-import com.scc210groupproject.structure.ExtendedElement;
-import com.scc210groupproject.structure.ExtendedElement;
-import com.scc210groupproject.ui.MainDisplayPanel;
 import com.scc210groupproject.ui.SlideImage;
 import com.scc210groupproject.ui.SlideManager;
-import com.scc210groupproject.ui.presentations.animations.Animation;
 
 public class PresentationManager {
     /**
@@ -44,10 +37,8 @@ public class PresentationManager {
     private PresentationDisplayPanel presentationDisplay;
 
     /**
-     * The current selected element
+     * An instance of this class
      */
-    private ExtendedElement selectedElement = null;
-
     public static PresentationManager instance;
 
     /**
@@ -93,16 +84,9 @@ public class PresentationManager {
         displaySlide(slidesToPresent.get(currentImageIndex), presentationDisplay);
     }
 
-    public ExtendedElement getSelectedElement() {
-        return this.selectedElement;
-    }
 
     public PresentationDisplayPanel getPresentationDisplay() {
         return this.presentationDisplay;
-    }
-
-    public void setSelectedElement(BaseElement newSelectedElement) {
-        this.selectedElement = (ExtendedElement) newSelectedElement;
     }
 
     public LinkedList<SlideImage> populteSlidesToPresent(LinkedList<SlideImage> list) {
@@ -143,24 +127,27 @@ public class PresentationManager {
     public void nextSlideOnClick(MouseEvent e) {
         // Makes sure that the left mouse is clicked
         if(SwingUtilities.isLeftMouseButton(e)) {
+            runActions(currentImageIndex);
             // Move to the next slide or exit the presentation mode on double click
             if(currentImageIndex < (slidesToPresent.size() - 1)) {
                 currentImageIndex++;
                 displaySlide(slidesToPresent.get(currentImageIndex), presentationDisplay);
-            } else if (e.getClickCount() == 2 && !e.isConsumed()){
-                e.consume();
+            } else /*if (e.getClickCount() == 2 && !e.isConsumed())*/{
+                //e.consume();
                 this.frame.dispose();
             }
         }
+
+        System.out.println(currentImageIndex);
     }
 
     /**
-     * Used to go to the previous slide to present on the click of the left arrow button
+     * Used to go to the previous slide in presentation mode on the click of the left arrow button
      */
     Action prevSlideOnClick = new AbstractAction() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            //runAnimations();            
+            runActions(currentImageIndex);            
 
             // Move to the previous slide
             if(currentImageIndex > 0) {
@@ -171,12 +158,12 @@ public class PresentationManager {
     };
 
     /**
-     * Used to go to the next slide to present on the click of the right arrow button
+     * Used to go to the next slide in presentation mode on the click of the right arrow button
      */
     Action nextSlideOnClick = new AbstractAction() {
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            //runAnimations();
+            runActions(currentImageIndex);
 
             /**
              * Go to the next slide or exit presentation mode
@@ -193,17 +180,15 @@ public class PresentationManager {
     /**
      * Runs the elements' animations if there are elements present on the slide
      */
-    /*public void runAnimations() {
-        // Get the elements on the presented slide
-        List<BaseElement> elements = presentationDisplay.getCurrentSlideImage().getSlide().getElements();
+    public void runActions(int index) {
+        List<PresentationActions> actions = this.slidesToPresent.get(index).getSlide().getActions();
 
+        //System.out.println(actions);
         // Run the element animations if there are elements present on the screen
-        if(elements.size() != 0) {
-            for(BaseElement element : elements) {
-                if(element.hasAnimation() == true) {
-                    element.getAnimation().doAnimation();
-                }
+        if(actions.size() != 0) {
+            for(PresentationActions action: actions) {
+                action.doAction();
             }
         }
-    }*/
+    }
 }

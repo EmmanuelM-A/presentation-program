@@ -3,12 +3,12 @@ package com.scc210groupproject.ui.presentations.animations;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.Timer;
 
-public class FadeIn extends Animation {
+import com.scc210groupproject.ui.presentations.PresentationActions;
+
+public class FadeIn extends PresentationActions {
     private int interval;
 
     private int alpha;
@@ -22,38 +22,24 @@ public class FadeIn extends Animation {
     }
 
     @Override
-    public void doAnimation() {
+    public void doAction() {
+        // Get the colour of the element selected
         Color colour = selectedElement.getBackground();
-        /*timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if(alpha > 255) alpha = 255;
-
-                selectedElement.setBackground(new Color(colour.getRed(), colour.getGreen(), colour.getBlue(), alpha));
-                selectedElement.asComp().repaint();
-
-                alpha += 15;
-
-                if(alpha > 255) {
-                    timer.purge();
-                }
-            }
-        }, 0, interval);*/
 
         timer = new Timer(interval, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                if(alpha > 255) alpha = 255;
-
                 selectedElement.setBackground(new Color(colour.getRed(), colour.getGreen(), colour.getBlue(), alpha));
                 selectedElement.asComp().repaint();
 
-                alpha += 15;
+                alpha += 5;
 
                 if(alpha >= 255) {
                     timer.stop();
                 }
+
+                if(alpha >= 255) alpha = 255;
             }
         });
 

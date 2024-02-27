@@ -3,12 +3,10 @@ package com.scc210groupproject.structure;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
@@ -17,19 +15,13 @@ import com.scc210groupproject.structure.adjust.DragResizer;
 import com.scc210groupproject.structure.adjust.IResizable;
 import com.scc210groupproject.structure.anchors.AnchorManager;
 import com.scc210groupproject.structure.anchors.IAnchorProvider;
-import com.scc210groupproject.ui.presentations.animations.Animation;
+import com.scc210groupproject.ui.presentations.PresentationActions;
 
 public abstract class ExtendedElement extends BaseElement implements IResizable, IAnchorProvider {
 
-    private boolean isSelected = false;
+    private PresentationActions animation = null;
 
-    private Animation animation = null;
-
-    public boolean getIsSelected() {
-        return this.isSelected;
-    }
-
-    public Animation getAnimation() {
+    public PresentationActions getAnimation() {
         return this.animation;
     }
 
@@ -41,11 +33,7 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
         }
     }
 
-    public void setIsSelected(boolean truthy) {
-        this.isSelected = truthy;
-    }
-
-    public void setAnimation(Animation newAnimation) {
+    public void setAnimation(PresentationActions newAnimation) {
         this.animation = newAnimation;
     }
 
@@ -108,10 +96,6 @@ public abstract class ExtendedElement extends BaseElement implements IResizable,
     @Override
     public AnchorManager getAnchorManager() {
         return manager;
-    }
-
-    public void addMouseListener(JPanel object, MouseListener listener) {
-        object.addMouseListener(listener);
     }
     
     protected void writeSelfExtended(Writer writer) throws IOException {
