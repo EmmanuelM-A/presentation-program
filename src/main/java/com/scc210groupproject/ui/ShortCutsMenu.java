@@ -25,33 +25,33 @@ public class ShortCutsMenu extends JPopupMenu {
         makeMenuItem("----------------------------------------"); 
         // Sectioning the menu so that it's clearer to read
 
-        makeMenuItem("<html><u>S</u>ave</html>", KeyStroke.getKeyStroke(KeyEvent.VK_S,
-        InputEvent.CTRL_DOWN_MASK));
-        makeMenuItem("<html><u>L</u>oad</html>", KeyStroke.getKeyStroke(KeyEvent.VK_L,
-        InputEvent.CTRL_DOWN_MASK));
-        makeMenuItem("<html><u>E</u>xport</html>", KeyStroke.getKeyStroke(KeyEvent.VK_E,
-        InputEvent.CTRL_DOWN_MASK));
-        makeMenuItem("<html><u>P</u>rint</html>", KeyStroke.getKeyStroke(KeyEvent.VK_P,
-        InputEvent.CTRL_DOWN_MASK));
-        makeMenuItem("<html><u>T</u>heme</html>", KeyStroke.getKeyStroke(KeyEvent.VK_T,
-        InputEvent.CTRL_DOWN_MASK));
-        makeMenuItem("<html><u>N</u>ew slide</html>", KeyStroke.getKeyStroke(KeyEvent.VK_N,
-        InputEvent.CTRL_DOWN_MASK));
+        // makeMenuItem("<html><u>S</u>ave</html>", KeyStroke.getKeyStroke(KeyEvent.VK_S,
+        // InputEvent.ALT_DOWN_MASK));
+        // makeMenuItem("<html><u>L</u>oad</html>", KeyStroke.getKeyStroke(KeyEvent.VK_L,
+        // InputEvent.ALT_DOWN_MASK));
+        // makeMenuItem("<html><u>E</u>xport</html>", KeyStroke.getKeyStroke(KeyEvent.VK_E,
+        // InputEvent.ALT_DOWN_MASK));
+        // makeMenuItem("<html><u>P</u>rint</html>", KeyStroke.getKeyStroke(KeyEvent.VK_P,
+        // InputEvent.ALT_DOWN_MASK));
+        // makeMenuItem("<html><u>T</u>heme</html>", KeyStroke.getKeyStroke(KeyEvent.VK_T,
+        // InputEvent.ALT_DOWN_MASK));
+        // makeMenuItem("<html><u>N</u>ew slide</html>", KeyStroke.getKeyStroke(KeyEvent.VK_N,
+        // InputEvent.ALT_DOWN_MASK));
 
-        makeMenuItem("----------------------------------------"); 
+        // makeMenuItem("----------------------------------------"); 
 
-        makeMenuItem("<html><u>T</u>ext</html>", KeyStroke.getKeyStroke(KeyEvent.VK_T,InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
-        makeMenuItem("<html><u>I</u>mage</html>", KeyStroke.getKeyStroke(KeyEvent.VK_I,InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
-        makeMenuItem("<html><u>V</u>ideo</html>", KeyStroke.getKeyStroke(KeyEvent.VK_V,InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
-        makeMenuItem("<html><u>C</u>hart</html>", KeyStroke.getKeyStroke(KeyEvent.VK_C,InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
-        makeMenuItem("<html><u>A</u>udio</html>", KeyStroke.getKeyStroke(KeyEvent.VK_A,InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
-        makeMenuItem("<html><u>S</u>hape</html>", KeyStroke.getKeyStroke(KeyEvent.VK_S,InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
-        makeMenuItem("<html><u>L</u>ine</html>", KeyStroke.getKeyStroke(KeyEvent.VK_L,InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
+        // makeMenuItem("<html><u>T</u>ext</html>", KeyStroke.getKeyStroke(KeyEvent.VK_T,InputEvent.ALT_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
+        // makeMenuItem("<html><u>I</u>mage</html>", KeyStroke.getKeyStroke(KeyEvent.VK_I,InputEvent.ALT_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
+        // makeMenuItem("<html><u>V</u>ideo</html>", KeyStroke.getKeyStroke(KeyEvent.VK_V,InputEvent.ALT_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
+        // makeMenuItem("<html><u>C</u>hart</html>", KeyStroke.getKeyStroke(KeyEvent.VK_C,InputEvent.ALT_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
+        // makeMenuItem("<html><u>A</u>udio</html>", KeyStroke.getKeyStroke(KeyEvent.VK_A,InputEvent.ALT_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
+        // makeMenuItem("<html><u>S</u>hape</html>", KeyStroke.getKeyStroke(KeyEvent.VK_S,InputEvent.ALT_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
+        // makeMenuItem("<html><u>L</u>ine</html>", KeyStroke.getKeyStroke(KeyEvent.VK_L,InputEvent.ALT_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
 
-        makeMenuItem("----------------------------------------"); 
+        // makeMenuItem("----------------------------------------"); 
 
-        makeMenuItem("<html>Present from Beginning</html>", KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
-        makeMenuItem("<html>Present from Current</html>", KeyStroke.getKeyStroke(KeyEvent.VK_F5,InputEvent.SHIFT_DOWN_MASK));
+        makeMenuItem("<html>Present from Beginning</html>", KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.ALT_DOWN_MASK));
+        makeMenuItem("<html>Present from Current</html>", KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_DOWN_MASK));
 
         
     }

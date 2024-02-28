@@ -306,11 +306,13 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
             GeneralButtons.PRESENT.getIcon(), 20, 20));
         this.present.setToolTipText("Present");
         this.present.addActionListener(new PresentAction());
+        this.present.setMnemonic(KeyEvent.VK_5);
 
         this.presentAt = new JButton(GeneralButtons.resizeIcon(
             GeneralButtons.PRESENT_AT.getIcon(), 20, 20));
         this.presentAt.setToolTipText("Present From");
         this.presentAt.addActionListener(new PresentAtAction());
+        this.presentAt.setMnemonic(KeyEvent.VK_6);
 
         //this.noSlides = new JLabel("Slides: ");
 

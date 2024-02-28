@@ -6,6 +6,8 @@ import com.scc210groupproject.ui.helper.GeneralButtons;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 
 /**
  * This class extends ToolBar and contains all the buttons and components that
@@ -47,6 +49,7 @@ public class HomeToolBar extends ToolBar {
         newFile = makeToolbarButton(GeneralButtons.NEW, recentsPanel);
 
         openFile = makeToolbarButton(GeneralButtons.OPEN, recentsPanel);
+        openFile.setMnemonic(KeyEvent.VK_O);
 
         saveFile = makeToolbarButton(GeneralButtons.SAVE, recentsPanel);
 
