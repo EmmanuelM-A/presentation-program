@@ -1,4 +1,4 @@
-package com.scc210groupproject.homeDisplay;
+package com.scc210groupproject;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -9,9 +9,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import com.scc210groupproject.homeDisplay.homeDisplay;
 
 
-public class runHome {
+public class presentationApp {
 
 
     public static void main(String[] args) throws InvocationTargetException, InterruptedException
