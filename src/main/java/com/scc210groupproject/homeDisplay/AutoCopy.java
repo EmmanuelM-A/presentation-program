@@ -9,20 +9,16 @@ import java.nio.file.StandardCopyOption;
 /**
  * Makes a copy of the preset a user selects on the home screen
  * and automatically saves it to a usercopy directory then opens this copy in main
- * 
  */
-public class autoCopy {
+public class AutoCopy {
   
-
-
     /**
-     * 
      * @param sourceFilePath The Path of the presentation file being coppied
      * @throws IOException   Can not find valid presentation file at given directory
      */
         public static void copyPreset(String sourceFilePath) throws IOException {
             Path sourcePath = Paths.get(sourceFilePath);
-            Path destinationDirectory = Paths.get("src/main/presets/userCopyDefaultFile/");
+            Path destinationDirectory = Paths.get("resources/presets/userCopyDefaultFile/");
             
             String fileName = sourcePath.getFileName().toString();
             Path destinationPath = destinationDirectory.resolve(fileName);

@@ -9,10 +9,11 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import com.scc210groupproject.homeDisplay.homeDisplay;
+import com.scc210groupproject.homeDisplay.HomeDisplay;
+import com.scc210groupproject.ui.UIFrame;
 
 
-public class presentationApp {
+public class PresentationApp {
 
 
     public static void main(String[] args) throws InvocationTargetException, InterruptedException
@@ -35,8 +36,7 @@ public class presentationApp {
 
             @Override
             public void run() {
-              //  new UIFrame();
-               new homeDisplay();
+               new UIFrame();
             }
             
         });            

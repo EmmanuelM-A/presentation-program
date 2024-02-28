@@ -12,9 +12,8 @@ import com.scc210groupproject.readwrite.FileDeserializer;
 /**
  * Allow user to set folder opresets should be displayed from 
  */
-public class updatePresetDirectory  implements ActionListener{
+public class UpdatePresetDirectory  implements ActionListener{
 
-    
 @Override
     public void actionPerformed(ActionEvent b) {
         JWindow fileWindow = new JWindow();
