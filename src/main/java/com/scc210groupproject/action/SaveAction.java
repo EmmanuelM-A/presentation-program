@@ -13,8 +13,7 @@ import com.scc210groupproject.readwrite.FileSerializer;
 
 public class SaveAction implements ActionListener {
 
-    FileFilter plainFilter = new FileNameExtensionFilter("Debug Presentation File", "pjson");
-    FileFilter compressedFilter = new FileNameExtensionFilter("Compressed Presentation File", "pcomp");
+    FileFilter compressedFilter = new FileNameExtensionFilter("Compressed Presentation File", ".pcomp");
 
     String path = null;
 
@@ -30,7 +29,6 @@ public class SaveAction implements ActionListener {
             chooser.setDialogType(JFileChooser.SAVE_DIALOG);
             chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             chooser.setFileFilter(compressedFilter);
-            chooser.addChoosableFileFilter(plainFilter);
             chooser.addChoosableFileFilter(compressedFilter);
             int result = chooser.showSaveDialog(fileWindow);
 

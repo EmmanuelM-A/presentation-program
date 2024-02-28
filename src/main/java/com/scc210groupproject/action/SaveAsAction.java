@@ -12,8 +12,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class SaveAsAction implements ActionListener{
     
-    FileFilter plainFilter = new FileNameExtensionFilter("Debug Presentation File", "pjson");
-    FileFilter compressedFilter = new FileNameExtensionFilter("Compressed Presentation File", "pcomp");
+    FileFilter compressedFilter = new FileNameExtensionFilter("Compressed Presentation File", ".pcomp");
 
     @Override
     public void actionPerformed(ActionEvent discard) {
@@ -25,7 +24,6 @@ public class SaveAsAction implements ActionListener{
         chooser.setDialogType(JFileChooser.SAVE_DIALOG);
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         chooser.setFileFilter(compressedFilter);
-        chooser.addChoosableFileFilter(plainFilter);
         chooser.addChoosableFileFilter(compressedFilter);
         int result = chooser.showSaveDialog(fileWindow);
 
