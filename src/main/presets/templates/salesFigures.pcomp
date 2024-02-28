@@ -1,0 +1,477 @@
+{
+  "0" : {
+    "type" : "com.scc210groupproject.structure.Presentation",
+    "slides" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "1", "2" ]
+    }
+  },
+  "1" : {
+    "type" : "com.scc210groupproject.structure.Slide",
+    "x" : 0,
+    "y" : 0,
+    "width" : 1920,
+    "height" : 1080,
+    "background" : -1,
+    "parent" : "-1",
+    "update manager" : "3",
+    "destroy manager" : "4",
+    "children" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "5", "6", "7" ]
+    }
+  },
+  "2" : {
+    "type" : "com.scc210groupproject.structure.Slide",
+    "x" : 0,
+    "y" : 0,
+    "width" : 1920,
+    "height" : 1080,
+    "background" : -1,
+    "parent" : "-1",
+    "update manager" : "8",
+    "destroy manager" : "9",
+    "children" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "10", "11", "12" ]
+    }
+  },
+  "3" : {
+    "type" : "com.scc210groupproject.structure.liveness.UpdateManager",
+    "owner" : "1",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "0", "5", "6", "7" ]
+    }
+  },
+  "4" : {
+    "type" : "com.scc210groupproject.structure.liveness.DestroyManager",
+    "owner" : "1",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "5", "6", "7" ]
+    }
+  },
+  "5" : {
+    "type" : "com.scc210groupproject.structure.ChartElement",
+    "manager" : "13",
+    "x" : 996,
+    "y" : 37,
+    "width" : 869,
+    "height" : 979,
+    "background" : -13618636,
+    "data" : "[]",
+    "chartType" : "SCATTER",
+    "parent" : "1",
+    "update manager" : "14",
+    "destroy manager" : "15",
+    "children" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ ]
+    }
+  },
+  "6" : {
+    "type" : "com.scc210groupproject.structure.TextElement",
+    "manager" : "16",
+    "x" : 128,
+    "y" : 32,
+    "width" : 818,
+    "height" : 96,
+    "background" : -1,
+    "text" : "Sales Presentation Template",
+    "textcolor" : -16777216,
+    "fontsize" : 50,
+    "fontalignment" : 2,
+    "parent" : "1",
+    "update manager" : "17",
+    "destroy manager" : "18",
+    "children" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ ]
+    }
+  },
+  "7" : {
+    "type" : "com.scc210groupproject.structure.TextElement",
+    "manager" : "19",
+    "x" : 58,
+    "y" : 199,
+    "width" : 667,
+    "height" : 780,
+    "background" : -1,
+    "text" : "[Key point 1 ]\n\n[Key point  2]\n\n[Key point 3 ]  \n \n[Key point 4 ]\n\n[Key point 5 ]",
+    "textcolor" : -16777216,
+    "fontsize" : 32,
+    "fontalignment" : 1,
+    "parent" : "1",
+    "update manager" : "20",
+    "destroy manager" : "21",
+    "children" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ ]
+    }
+  },
+  "8" : {
+    "type" : "com.scc210groupproject.structure.liveness.UpdateManager",
+    "owner" : "2",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "0", "10", "11", "12" ]
+    }
+  },
+  "9" : {
+    "type" : "com.scc210groupproject.structure.liveness.DestroyManager",
+    "owner" : "2",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "10", "11", "12" ]
+    }
+  },
+  "10" : {
+    "type" : "com.scc210groupproject.structure.TextElement",
+    "manager" : "22",
+    "x" : 890,
+    "y" : 209,
+    "width" : 708,
+    "height" : 870,
+    "background" : -1,
+    "text" : "Possible Solutions\n\n*[Insert Solution]\n\n*[Insert Solution]\n\n*[Insert Solution]\n\n*[Insert Solution]\n\n*[Insert Solution]",
+    "textcolor" : -16777216,
+    "fontsize" : 50,
+    "fontalignment" : 2,
+    "parent" : "2",
+    "update manager" : "23",
+    "destroy manager" : "24",
+    "children" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ ]
+    }
+  },
+  "11" : {
+    "type" : "com.scc210groupproject.structure.TextElement",
+    "manager" : "25",
+    "x" : 622,
+    "y" : -5,
+    "width" : 603,
+    "height" : 176,
+    "background" : -1,
+    "text" : "Issues Resolution ",
+    "textcolor" : -16777216,
+    "fontsize" : 79,
+    "fontalignment" : 2,
+    "parent" : "2",
+    "update manager" : "26",
+    "destroy manager" : "27",
+    "children" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ ]
+    }
+  },
+  "12" : {
+    "type" : "com.scc210groupproject.structure.TextElement",
+    "manager" : "28",
+    "x" : 132,
+    "y" : 204,
+    "width" : 669,
+    "height" : 854,
+    "background" : -1,
+    "text" : "Key Issues \n\n*[Insert issue]\n\n*[Insert issue]\n\n*[Insert issue]\n\n*[Insert issue]\n\n*[Insert issue]",
+    "textcolor" : -16777216,
+    "fontsize" : 50,
+    "fontalignment" : 2,
+    "parent" : "2",
+    "update manager" : "29",
+    "destroy manager" : "30",
+    "children" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ ]
+    }
+  },
+  "13" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorManager",
+    "element" : "5",
+    "anchors" : {
+      "type" : "java.util.ArrayList",
+      "values" : [ "31", "32", "33", "34" ]
+    }
+  },
+  "14" : {
+    "type" : "com.scc210groupproject.structure.liveness.UpdateManager",
+    "owner" : "5",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "1" ]
+    }
+  },
+  "15" : {
+    "type" : "com.scc210groupproject.structure.liveness.DestroyManager",
+    "owner" : "5",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "13", "1" ]
+    }
+  },
+  "16" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorManager",
+    "element" : "6",
+    "anchors" : {
+      "type" : "java.util.ArrayList",
+      "values" : [ "35", "36", "37", "38" ]
+    }
+  },
+  "17" : {
+    "type" : "com.scc210groupproject.structure.liveness.UpdateManager",
+    "owner" : "6",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "1" ]
+    }
+  },
+  "18" : {
+    "type" : "com.scc210groupproject.structure.liveness.DestroyManager",
+    "owner" : "6",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "16", "1" ]
+    }
+  },
+  "19" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorManager",
+    "element" : "7",
+    "anchors" : {
+      "type" : "java.util.ArrayList",
+      "values" : [ "39", "40", "41", "42" ]
+    }
+  },
+  "20" : {
+    "type" : "com.scc210groupproject.structure.liveness.UpdateManager",
+    "owner" : "7",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "1" ]
+    }
+  },
+  "21" : {
+    "type" : "com.scc210groupproject.structure.liveness.DestroyManager",
+    "owner" : "7",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "19", "1" ]
+    }
+  },
+  "22" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorManager",
+    "element" : "10",
+    "anchors" : {
+      "type" : "java.util.ArrayList",
+      "values" : [ "43", "44", "45", "46" ]
+    }
+  },
+  "23" : {
+    "type" : "com.scc210groupproject.structure.liveness.UpdateManager",
+    "owner" : "10",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "2" ]
+    }
+  },
+  "24" : {
+    "type" : "com.scc210groupproject.structure.liveness.DestroyManager",
+    "owner" : "10",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "22", "2" ]
+    }
+  },
+  "25" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorManager",
+    "element" : "11",
+    "anchors" : {
+      "type" : "java.util.ArrayList",
+      "values" : [ "47", "48", "49", "50" ]
+    }
+  },
+  "26" : {
+    "type" : "com.scc210groupproject.structure.liveness.UpdateManager",
+    "owner" : "11",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "2" ]
+    }
+  },
+  "27" : {
+    "type" : "com.scc210groupproject.structure.liveness.DestroyManager",
+    "owner" : "11",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "25", "2" ]
+    }
+  },
+  "28" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorManager",
+    "element" : "12",
+    "anchors" : {
+      "type" : "java.util.ArrayList",
+      "values" : [ "51", "52", "53", "54" ]
+    }
+  },
+  "29" : {
+    "type" : "com.scc210groupproject.structure.liveness.UpdateManager",
+    "owner" : "12",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "2" ]
+    }
+  },
+  "30" : {
+    "type" : "com.scc210groupproject.structure.liveness.DestroyManager",
+    "owner" : "12",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "28", "2" ]
+    }
+  },
+  "31" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.0,
+    "y" : 0.5,
+    "manager" : "13"
+  },
+  "32" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.5,
+    "y" : 1.0,
+    "manager" : "13"
+  },
+  "33" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 1.0,
+    "y" : 0.5,
+    "manager" : "13"
+  },
+  "34" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.5,
+    "y" : 0.0,
+    "manager" : "13"
+  },
+  "35" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.0,
+    "y" : 0.5,
+    "manager" : "16"
+  },
+  "36" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.5,
+    "y" : 1.0,
+    "manager" : "16"
+  },
+  "37" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 1.0,
+    "y" : 0.5,
+    "manager" : "16"
+  },
+  "38" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.5,
+    "y" : 0.0,
+    "manager" : "16"
+  },
+  "39" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.0,
+    "y" : 0.5,
+    "manager" : "19"
+  },
+  "40" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.5,
+    "y" : 1.0,
+    "manager" : "19"
+  },
+  "41" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 1.0,
+    "y" : 0.5,
+    "manager" : "19"
+  },
+  "42" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.5,
+    "y" : 0.0,
+    "manager" : "19"
+  },
+  "43" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.0,
+    "y" : 0.5,
+    "manager" : "22"
+  },
+  "44" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.5,
+    "y" : 1.0,
+    "manager" : "22"
+  },
+  "45" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 1.0,
+    "y" : 0.5,
+    "manager" : "22"
+  },
+  "46" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.5,
+    "y" : 0.0,
+    "manager" : "22"
+  },
+  "47" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.0,
+    "y" : 0.5,
+    "manager" : "25"
+  },
+  "48" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.5,
+    "y" : 1.0,
+    "manager" : "25"
+  },
+  "49" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 1.0,
+    "y" : 0.5,
+    "manager" : "25"
+  },
+  "50" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.5,
+    "y" : 0.0,
+    "manager" : "25"
+  },
+  "51" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.0,
+    "y" : 0.5,
+    "manager" : "28"
+  },
+  "52" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.5,
+    "y" : 1.0,
+    "manager" : "28"
+  },
+  "53" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 1.0,
+    "y" : 0.5,
+    "manager" : "28"
+  },
+  "54" : {
+    "type" : "com.scc210groupproject.structure.anchors.AnchorReference",
+    "x" : 0.5,
+    "y" : 0.0,
+    "manager" : "28"
+  }
+}

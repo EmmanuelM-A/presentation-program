@@ -1,0 +1,40 @@
+{
+  "0" : {
+    "type" : "com.scc210groupproject.structure.Presentation",
+    "slides" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "1" ]
+    }
+  },
+  "1" : {
+    "type" : "com.scc210groupproject.structure.Slide",
+    "x" : 0,
+    "y" : 0,
+    "width" : 1920,
+    "height" : 1080,
+    "background" : -1,
+    "parent" : "-1",
+    "update manager" : "2",
+    "destroy manager" : "3",
+    "children" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ ]
+    }
+  },
+  "2" : {
+    "type" : "com.scc210groupproject.structure.liveness.UpdateManager",
+    "owner" : "1",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ "0" ]
+    }
+  },
+  "3" : {
+    "type" : "com.scc210groupproject.structure.liveness.DestroyManager",
+    "owner" : "1",
+    "listeners" : {
+      "type" : "java.util.LinkedList",
+      "values" : [ ]
+    }
+  }
+}
