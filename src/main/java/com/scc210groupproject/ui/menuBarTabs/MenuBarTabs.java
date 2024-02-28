@@ -4,6 +4,7 @@ import com.scc210groupproject.ui.menuBarTabs.toolBars.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 /**
  * This class contains the menu toolbar where all the different tabs and their corresponding toolbars
@@ -55,7 +56,18 @@ public class MenuBarTabs extends JTabbedPane {
         super.add(this.shareToolBar);
         super.add(this.aboutToolBar);
 
+        // Sets the shortcuts for the menu bar tab
+
+        this.setMnemonicAt(0, KeyEvent.VK_F);
+        this.setMnemonicAt(1, KeyEvent.VK_H);
+        this.setMnemonicAt(2, KeyEvent.VK_I);
+        this.setMnemonicAt(3, KeyEvent.VK_V);
+        this.setMnemonicAt(4, KeyEvent.VK_S);
+        this.setMnemonicAt(5, KeyEvent.VK_A);
+
         instance = this;
+
+
     }
 
     /**
