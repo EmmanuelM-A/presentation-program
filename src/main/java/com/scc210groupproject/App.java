@@ -1,6 +1,5 @@
 package com.scc210groupproject;
 
-
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.SwingUtilities;
@@ -41,11 +40,3 @@ public class App {
         
     }
 }
-
-/*
-    TODO LIST:
-    - Do animations and transistions check discord
-    - Settings windows
-    - shortcuts windows
-    - presentation mode
-*/

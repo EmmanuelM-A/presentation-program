@@ -18,7 +18,7 @@ public class HomeToolBar extends ToolBar {
     /**
      * The buttons for this toolbar
      */
-    private final JButton newSlide, newFile, openFile, saveFile, clipboard, select, copy, paste, settings, spellChecker, help, toggleMode;
+    private final JButton newSlide, newFile, openFile, saveFile, clipboard, /*select, copy, paste, settings, spellChecker, help,*/ toggleMode;
 
     /**
      * The constructor for the HomeToolBar - Creates the home toolbar and adds all of its buttons to its toolbar
@@ -52,17 +52,17 @@ public class HomeToolBar extends ToolBar {
 
         clipboard = makeToolbarButton(GeneralButtons.CLIPBOARD, recentsPanel);
 
-        select = makeToolbarButton(GeneralButtons.SELECT, recentsPanel);
+        // select = makeToolbarButton(GeneralButtons.SELECT, recentsPanel);
 
-        copy = makeToolbarButton(GeneralButtons.COPY, recentsPanel);
+        // copy = makeToolbarButton(GeneralButtons.COPY, recentsPanel);
 
-        paste = makeToolbarButton(GeneralButtons.PASTE, recentsPanel);
+        // paste = makeToolbarButton(GeneralButtons.PASTE, recentsPanel);
 
-        settings = makeToolbarButton(GeneralButtons.SETTINGS, recentsPanel);
+        // settings = makeToolbarButton(GeneralButtons.SETTINGS, recentsPanel);
 
-        spellChecker = makeToolbarButton(GeneralButtons.SPELL_CHECKER, recentsPanel);
+        // spellChecker = makeToolbarButton(GeneralButtons.SPELL_CHECKER, recentsPanel);
 
-        help = makeToolbarButton(GeneralButtons.HELP, recentsPanel);
+        // help = makeToolbarButton(GeneralButtons.HELP, recentsPanel);
 
         toggleMode = makeToolbarButton(GeneralButtons.TOGGLE_THEME, recentsPanel);
 
