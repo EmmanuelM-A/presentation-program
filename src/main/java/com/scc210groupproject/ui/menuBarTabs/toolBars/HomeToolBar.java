@@ -6,7 +6,6 @@ import com.scc210groupproject.ui.helper.GeneralButtons;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 /**
