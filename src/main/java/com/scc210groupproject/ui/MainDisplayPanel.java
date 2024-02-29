@@ -28,6 +28,8 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
 
     // The current presentation being viewed/used in the program
     private Presentation currentPresentation;
+
+    private ExtendedElement currentSelectedElement;
     
     private InputEmulator emulator;
 
@@ -67,7 +69,6 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
         super.getActionMap().put("delete", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                InputEmulator emulator = InputEmulator.instance;
                 if (emulator == null)
                     return;
                 
@@ -87,7 +88,7 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
 
         this.currentPresentation = null;
 
-
+        this.currentSelectedElement = null;
         
         addComponentListener(new ComponentListener() {
             @Override
@@ -109,7 +110,7 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
             public void componentHidden(ComponentEvent componentEvent) {
 
             }
-        });
+        }); 
 
         instance = this;
     }
@@ -139,6 +140,10 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
         return this.currentPresentation;
     }
 
+    public ExtendedElement getCurrentSelectedElement() {
+        return this.currentSelectedElement;
+    }
+
     /**
      * Allows you to change the slideImage as well as set the bufferedSlideImage.
      * @param newslideImage The newSlideImage you wish to change to
@@ -160,6 +165,11 @@ public class MainDisplayPanel extends JPanel implements IUpdateSlideListener
      */
     public void setBufferedSlideImage(BufferedImage newBufferedSlideImage) {
         this.bufferedSlideImage = newBufferedSlideImage;
+    }
+
+    public void setCurrentSelectedElement(BaseElement newSelectedElement) {
+        this.currentSelectedElement = (ExtendedElement) newSelectedElement;
+        //System.out.println(newSelectedElement + " has been selected!");
     }
 
     /**

@@ -13,36 +13,43 @@ import com.scc210groupproject.readwrite.FileSerializer;
 
 public class SaveAction implements ActionListener {
 
-    FileFilter plainFilter = new FileNameExtensionFilter("Debug Presentation File", "pjson");
-    FileFilter compressedFilter = new FileNameExtensionFilter("Compressed Presentation File", "pcomp");
+    private static FileFilter anyFilter = new FileNameExtensionFilter("Any Presentation File", "pcomp", "pjson");
+    private static FileFilter plainFilter = new FileNameExtensionFilter("Plain Text Presentation File", "pjson");
+    private static FileFilter compressedFilter = new FileNameExtensionFilter("Compressed Presentation File", "pcomp");
 
-    String path = null;
+    public static String path = null;
 
-    @Override
-    public void actionPerformed(ActionEvent discard
-    ) {
-
-        if (path == null) {
+    public static void save(boolean changePath) {
+        
+        if (path == null || changePath) {
             JWindow fileWindow = new JWindow();
 
             JFileChooser chooser = new JFileChooser();
             chooser.setAcceptAllFileFilterUsed(false);
             chooser.setDialogType(JFileChooser.SAVE_DIALOG);
             chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            chooser.setFileFilter(compressedFilter);
-            chooser.addChoosableFileFilter(plainFilter);
+            chooser.setFileFilter(anyFilter);
+            chooser.addChoosableFileFilter(anyFilter);
             chooser.addChoosableFileFilter(compressedFilter);
+            chooser.addChoosableFileFilter(plainFilter);
             int result = chooser.showSaveDialog(fileWindow);
 
             if (result != JFileChooser.APPROVE_OPTION)
                 return;
 
             path = chooser.getSelectedFile().getAbsolutePath();
-            String extension = ((FileNameExtensionFilter) chooser.getFileFilter()).getExtensions()[0];
 
-            if (!path.endsWith(extension))
-                path += extension;
-
+            String[] extensions = ((FileNameExtensionFilter) chooser.getFileFilter()).getExtensions();
+            boolean found = false;
+            for (String extension : extensions) {
+                if (path.endsWith("." + extension)) {
+                    found = true;
+                    break;
+                }
+            }
+    
+            if (!found)
+                path += "." + extensions[0];
         }
 
         try {
@@ -50,6 +57,12 @@ public class SaveAction implements ActionListener {
         } catch (IOException e) {
             return;
         }
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent discard) {
+        save(false);
     }
 
 }

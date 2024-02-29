@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
-import com.scc210groupproject.structure.BoxElement;
 import com.scc210groupproject.structure.helper.CoordinateUtils;
 import com.scc210groupproject.structure.input.InputEmulator.InputState;
 import com.scc210groupproject.structure.input.listeners.IMouseClicked;

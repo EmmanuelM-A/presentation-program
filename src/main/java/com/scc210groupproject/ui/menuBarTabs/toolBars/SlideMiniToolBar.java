@@ -7,10 +7,21 @@ import javax.swing.JButton;
 
 import com.scc210groupproject.ui.helper.GeneralButtons;
 
+/**
+ * This class extends ToolBar and contains all the buttons and components that will be displayed on the mini toolbar on right click
+ * of the slides in the slide viewer 
+ *
+ * @author madukaag
+ */
 public class SlideMiniToolBar extends ToolBar {
+    /**
+     * The buttons for this toolbar
+     */
+    private final JButton newSlide, insertSlideBefore, insertSlideAfter, deleteSlide, presentSlide;
 
-    private JButton newSlide, insertSlideBefore, insertSlideAfter, deleteSlide, presentSlide;
-
+    /**
+     * The constructor for the SlideMiniToolBar - Creates the slides mini toolbar and adds all of its buttons to its toolbar
+     */
     public SlideMiniToolBar() {
         this.setRollover(true);
         this.setName("Slide Mini Toolbar");
@@ -34,7 +45,10 @@ public class SlideMiniToolBar extends ToolBar {
         this.add(insertSlideAfter);
         this.add(deleteSlide);
         this.add(presentSlide);
+    }
 
+    public JButton getNewSlide() {
+        return this.newSlide;
     }
 
 }

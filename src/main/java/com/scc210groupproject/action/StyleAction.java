@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import com.scc210groupproject.structure.TextElement;
 import com.scc210groupproject.structure.TextElement.Alignment;
 import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
+import com.scc210groupproject.ui.contextMenu.TextContextMenu;
 
 public class StyleAction implements ActionListener
 {
@@ -49,6 +50,12 @@ public class StyleAction implements ActionListener
                 break;
             case "JUSTIFY":
                 element.setAlignment(Alignment.JUSTIFIED);
+                break;
+            case "BACKGROUNDCOLOUR":
+                element.setBackground(((TextContextMenu)ContextMenuPanel.menu).getColour());
+                break;
+            case "TEXTCOLOUR":
+                element.setTextColor(((TextContextMenu)ContextMenuPanel.menu).getColour());
                 break;
         } } };
 

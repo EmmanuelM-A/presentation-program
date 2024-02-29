@@ -6,6 +6,7 @@ import com.scc210groupproject.ui.helper.GeneralButtons;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 /**
  * This class extends ToolBar and contains all the buttons and components that
@@ -15,10 +16,15 @@ import java.awt.*;
  * @author madukaag
  */
 public class HomeToolBar extends ToolBar {
+    /**
+     * The buttons for this toolbar
+     */
+    private final JButton newSlide, newFile, openFile, saveFile, clipboard, /*select, copy, paste, settings, spellChecker, help,*/ toggleMode;
 
-    private JButton newSlide, newFile, openFile, saveFile, clipboard, select, copy, paste, settings, spellChecker, help,
-            toggleMode;
-
+    /**
+     * The constructor for the HomeToolBar - Creates the home toolbar and adds all of its buttons to its toolbar
+     * @param recentsPanel The recents panel on the home tab
+     */
     public HomeToolBar(JPanel recentsPanel) {
         this.setRollover(true);
 
@@ -42,22 +48,23 @@ public class HomeToolBar extends ToolBar {
         newFile = makeToolbarButton(GeneralButtons.NEW, recentsPanel);
 
         openFile = makeToolbarButton(GeneralButtons.OPEN, recentsPanel);
+        openFile.setMnemonic(KeyEvent.VK_O);
 
         saveFile = makeToolbarButton(GeneralButtons.SAVE, recentsPanel);
 
         clipboard = makeToolbarButton(GeneralButtons.CLIPBOARD, recentsPanel);
 
-        select = makeToolbarButton(GeneralButtons.SELECT, recentsPanel);
+        // select = makeToolbarButton(GeneralButtons.SELECT, recentsPanel);
 
-        copy = makeToolbarButton(GeneralButtons.COPY, recentsPanel);
+        // copy = makeToolbarButton(GeneralButtons.COPY, recentsPanel);
 
-        paste = makeToolbarButton(GeneralButtons.PASTE, recentsPanel);
+        // paste = makeToolbarButton(GeneralButtons.PASTE, recentsPanel);
 
-        settings = makeToolbarButton(GeneralButtons.SETTINGS, recentsPanel);
+        // settings = makeToolbarButton(GeneralButtons.SETTINGS, recentsPanel);
 
-        spellChecker = makeToolbarButton(GeneralButtons.SPELL_CHECKER, recentsPanel);
+        // spellChecker = makeToolbarButton(GeneralButtons.SPELL_CHECKER, recentsPanel);
 
-        help = makeToolbarButton(GeneralButtons.HELP, recentsPanel);
+        // help = makeToolbarButton(GeneralButtons.HELP, recentsPanel);
 
         toggleMode = makeToolbarButton(GeneralButtons.TOGGLE_THEME, recentsPanel);
 
@@ -75,7 +82,9 @@ public class HomeToolBar extends ToolBar {
 
         separator(this);
 
-        this.add(clipboard);
+        this.add(toggleMode);
+
+        /*this.add(clipboard);
         this.add(select);
         this.add(copy);
         this.add(paste);
@@ -89,12 +98,42 @@ public class HomeToolBar extends ToolBar {
 
         this.add(help);
 
-        separator(this);
-
-        this.add(toggleMode);
+        separator(this);*/
 
         this.setName("Home");
         this.setFloatable(false);
-
     }
+
+    /**
+     * Gets the new file button from the file toolbar
+     * @return JButton
+     */
+    public JButton getNewFile() {
+        return newFile;
+    }
+
+    /**
+     * Gets the new file button from the file toolbar
+     * @return JButton
+     */
+    public JButton getOpenFile() {
+        return openFile;
+    }
+
+    /**
+     * Gets the save file button from the file toolbar
+     * @return JButton
+     */
+    public JButton getSaveFile() {
+        return saveFile;
+    }
+
+    /**
+     * Gets the clipboard button from the file toolbar
+     * @return JButton
+     */
+    public JButton getClipboard() {
+        return clipboard;
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.scc210groupproject;
 
-
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.SwingUtilities;
@@ -10,7 +9,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import com.scc210groupproject.ui.UIFrame;
+import com.scc210groupproject.homeDisplay.HomeDisplay;
 
 /**
  * This where the program is run
@@ -34,21 +33,10 @@ public class App {
 
             @Override
             public void run() {
-                new UIFrame();
+                new HomeDisplay();
             }
             
         });
         
     }
 }
-
-/*
-    TODO LIST:
-    - Do animations and transistions check discord
-    - Settings windows
-    - drag feature to slides
-    - shortcuts windows
-    - slide manager fix errors DELETE
-    - presentation mode
-    - Color chooser dialog for text, shapes, arrow
-*/

@@ -39,12 +39,6 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
     private Point offset = new Point();
     private double scale = 1f;
 
-    public static InputEmulator instance;
-
-    public InputEmulator() {
-        instance = this;
-    }
-
     public BaseElement getDraggedElement() {
         return draggedElement;
     }
@@ -271,6 +265,15 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
     public void mouseEntered(MouseEvent e) {
         updateModifier(e);
         tryEnableMovement();
+        /*getCurrentElement().addMouseListener(new MouseAdapter() {
+            
+        });*/
+        /*JPopupMenu popupMenu = new JPopupMenu();
+        popupMenu.add(new ElementMiniToolBar());
+        if(getCurrentElement() != null instanceof ExtendedElement) {
+            popupMenu.show((JPanel)getCurrentElement().asComp(), 0, 0);
+            System.out.println("Print!");
+        }*/
     }
 
     @Override
@@ -303,7 +306,11 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        // not used
+        /* Causing problems for elements that do not need an animation
+            if(getCurrentElement() != MainDisplayPanel.instance.getCurrentSlideImage().getSlide()) {
+            MainDisplayPanel.instance.setCurrentSelectedElement(getCurrentElement());
+            MenuBarTabs.instance.setSelectedIndex(3);
+        }*/
     }
 
     @Override

@@ -109,9 +109,9 @@ public abstract class ToolBar extends JToolBar {
         JButton copyOfButton = makeToolbarButton(lastUsed.getButtonType(), recents);
 
         // If there are anymore action listeners added to the original button also add them to it's copy
-        for(ActionListener listener : lastUsed.getActionListeners()) {
-            copyOfButton.addActionListener(listener);
-        }
+        // for(ActionListener listener : lastUsed.getActionListeners()) {
+        //     copyOfButton.addActionListener(listener);
+        // }
 
         // Check if the capacity has not been reached but if so remove the oldest button
         if (recents.getComponentCount() >= CAPACITY) {

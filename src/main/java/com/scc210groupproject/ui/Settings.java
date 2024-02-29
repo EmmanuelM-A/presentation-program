@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+// import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
@@ -95,16 +95,16 @@ public class Settings extends JFrame {
         displayNewSlides.setSelected(true);
         settingsWindowJPanel.add(displayNewSlides);
 
-        JLabel accessibility = new JLabel("Accessibility");
-        //settingsWindowJPanel.add(accessibility);
+        // JLabel accessibility = new JLabel("Accessibility");
+        // settingsWindowJPanel.add(accessibility);
 
-        JLabel readText = new JLabel("Read text on hover");
+        // JLabel readText = new JLabel("Read text on hover");
 
-        JLabel highlightText = new JLabel("Highlight text on hover");
+        // JLabel highlightText = new JLabel("Highlight text on hover");
 
-        JLabel contrastingColours = new JLabel("Set the colour scheme to contrasting colours");
+        // JLabel contrastingColours = new JLabel("Set the colour scheme to contrasting colours");
 
-        JLabel defaultSettings = new JLabel("Default Settings");
+        // JLabel defaultSettings = new JLabel("Default Settings");
 
 
         return settingsWindowJPanel;

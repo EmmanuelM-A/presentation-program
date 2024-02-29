@@ -11,7 +11,7 @@ import javax.swing.*;
  * @author madukaag
  * */
 public class ShareToolBar extends ToolBar {
-    private JButton export, importFile, share, format, help;
+    private JButton export, importFile, share, format;
 
     public ShareToolBar(JPanel recentsPanel) {
         this.setRollover(true);
@@ -24,8 +24,6 @@ public class ShareToolBar extends ToolBar {
 
         share = makeToolbarButton(GeneralButtons.SHARE, recentsPanel);
 
-        help = makeToolbarButton(GeneralButtons.HELP,  recentsPanel);
-
         this.add(export);
         this.add(importFile);
         this.add(share);
@@ -33,10 +31,6 @@ public class ShareToolBar extends ToolBar {
         separator(this);
 
         this.add(format);
-
-        separator(this);
-
-        this.add(help);
 
         this.setName("Share");
         this.setFloatable(false);

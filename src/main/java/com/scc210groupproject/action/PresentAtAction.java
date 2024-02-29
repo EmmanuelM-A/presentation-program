@@ -4,12 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.scc210groupproject.ui.SlideManager;
-import com.scc210groupproject.ui.presentations.PresentationMode;
+import com.scc210groupproject.ui.presentations.PresentationManager;
 
 public class PresentAtAction implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent discard){
-        new PresentationMode(SlideManager.slideManager.getCurrentSlideIndex());
+        PresentationManager.instance.managePresentationMode(SlideManager.slideManager.getCurrentSlideIndex());
     }
 }

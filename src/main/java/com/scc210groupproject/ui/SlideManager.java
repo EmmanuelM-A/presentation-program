@@ -306,11 +306,13 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
             GeneralButtons.PRESENT.getIcon(), 20, 20));
         this.present.setToolTipText("Present");
         this.present.addActionListener(new PresentAction());
+        this.present.setMnemonic(KeyEvent.VK_P);
 
         this.presentAt = new JButton(GeneralButtons.resizeIcon(
             GeneralButtons.PRESENT_AT.getIcon(), 20, 20));
         this.presentAt.setToolTipText("Present From");
         this.presentAt.addActionListener(new PresentAtAction());
+        this.presentAt.setMnemonic(KeyEvent.VK_C);
 
         //this.noSlides = new JLabel("Slides: ");
 
@@ -349,8 +351,6 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
             // Decrement values
             this.currentSlideIndex--;
 
-            //System.out.println("Previous Slide: " + this.currentSlide);
-
             // Get the previous slide if there is one
             SlideImage prevSlide = getPrevSlide(currentSlide);
 
@@ -360,10 +360,10 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
                 highlightSlide(prevSlide);
                 return true;
             } else {
-                System.out.println("PROBLEM - PREV SLIDE IS NULL!");
+                //System.out.println("PROBLEM - PREV SLIDE IS NULL!");
             }
         } else {
-            System.out.println("First slide reached!");
+            //System.out.println("First slide reached!");
         }
         return false;
     }
@@ -381,8 +381,6 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
             // Increment values
             this.currentSlideIndex++;
 
-            //System.out.println("Next Slide: " + this.currentSlide);
-
             // Get the next slide
             SlideImage nextSlide = getNextSlide(currentSlide);
 
@@ -392,10 +390,10 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
                 highlightSlide(nextSlide);
                 return true;
             } else {
-                System.out.println("PROBLEM - NEXT SLIDE IS NULL!");
+                //System.out.println("PROBLEM - NEXT SLIDE IS NULL!");
             }
         } else {
-            System.out.println("Last slide reached!");
+            //System.out.println("Last slide reached!");
         }
         return false;
     }
@@ -697,7 +695,7 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
         this.viewSliderPanel.revalidate();
         this.viewSliderPanel.repaint();
 
-        if(index  == 0) {
+        if(index == 0) {
             displaySlide(this.slideImages.get(0), MainDisplayPanel.instance);
             highlightSlide(this.slidesViewer.get(0));
         } else if (index == this.slidesViewer.size()){
@@ -705,9 +703,9 @@ public class SlideManager implements IChangePresentationListener, ICreateSlideLi
             highlightSlide(this.slidesViewer.get(this.slidesViewer.size() - 1));
         } else {
             if (showNextSlide()) {
-                System.out.println("Slide " + (this.currentSlideIndex) + " deleted - Now displaying next slide!");
+                //System.out.println("Slide " + (this.currentSlideIndex) + " deleted - Now displaying next slide!");
             } else if(showPrevSlide()) {
-                System.out.println("Slide " + (this.currentSlideIndex + 2) + " deleted - Now displaying previous slide!");
+                //System.out.println("Slide " + (this.currentSlideIndex + 2) + " deleted - Now displaying previous slide!");
             }
         }
 

@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 
 import com.scc210groupproject.readwrite.FileDeserializer.Reader;
 import com.scc210groupproject.readwrite.FileSerializer.Writer;
+import com.scc210groupproject.ui.presentations.PresentationActions;
+import com.scc210groupproject.ui.presentations.transistions.Transition;
 
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
@@ -15,6 +17,8 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author wonge1
@@ -24,6 +28,33 @@ import java.io.IOException;
 public class Slide extends BaseElement
 {
     private JPanel panel;
+
+    /**
+     * Represent the current transition applied to this slide
+     */
+    private Transition transition;
+
+    /**
+     * Get the transition that has been applied to this slide
+     * @return Transition
+     */
+    public Transition getTransition() {
+        return this.transition;
+    }
+
+    /**
+     * Sets the slide transition to a new value
+     * @param newTransition The new transition for this slide 
+     */
+    public void setTransition(Transition newTransition) {
+        this.transition = newTransition;
+    }
+
+    private List<PresentationActions> actions;
+
+    public List<PresentationActions> getActions() {
+        return this.actions;
+    }
 
     public Slide(Dimension dimension) {
         this();
@@ -35,6 +66,8 @@ public class Slide extends BaseElement
         panel = new JPanel();
         panel.setEnabled(true);
         panel.setLayout(null);
+        actions = new LinkedList<>();
+        transition = null;
     }
 
     public void setDimension(Dimension dimension) {

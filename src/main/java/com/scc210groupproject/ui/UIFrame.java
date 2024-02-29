@@ -7,6 +7,8 @@ import com.scc210groupproject.structure.liveness.UpdateManager;
 import com.scc210groupproject.ui.contextMenu.ContextMenuPanel;
 import com.scc210groupproject.ui.helper.ColourPalette;
 import com.scc210groupproject.ui.menuBarTabs.MenuBarTabs;
+import com.scc210groupproject.ui.presentations.PresentationManager;
+import com.scc210groupproject.ui.presentations.PresentationMode;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,11 +19,6 @@ public class UIFrame extends JFrame implements IUpdateProvider
 
     public UpdateManager manager = new UpdateManager(this);
 
-    /*
-     * Gets the dimensions of the screen the program is run on. Allows for the program dimensions
-     * to be set to the size of the screen no matter the computer.
-     * */
-    private final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 
     public UIFrame()
     {
@@ -36,7 +33,7 @@ public class UIFrame extends JFrame implements IUpdateProvider
         this.setLayout(new GridBagLayout());
 
         // this is for windows os where there is a tendency to create any java frame below the minimum size 
-        this.setMinimumSize(new Dimension(1100, 800));
+        //this.setMinimumSize(new Dimension(1100, 800));
 
         UIFrame self = this;
         this.addUpdateListener(new IUpdateListener() {
@@ -75,7 +72,7 @@ public class UIFrame extends JFrame implements IUpdateProvider
         gbc.gridy = 1;
         gbc.gridwidth = 1;
         gbc.gridheight = 1;
-        gbc.weightx = 0.2;
+        gbc.weightx = 0.30;
         gbc.weighty = 0.79;
         gbc.insets = new Insets(gap, 0, gap, gap);
         this.add(contextMenuPanel, gbc);
@@ -97,6 +94,12 @@ public class UIFrame extends JFrame implements IUpdateProvider
         this.add(SlideManager.slideManager.createPresentationSlider(), gbc);
 
         new ShapesPopup();
+
+        PresentationMode.instance = new PresentationMode();
+
+        PresentationManager.instance = new PresentationManager(PresentationMode.instance.getFrame());
+
+        //MainDisplayPanel presentationDisplay = new MainDisplayPanel(0, 0);
 
         setVisible(true);
 
