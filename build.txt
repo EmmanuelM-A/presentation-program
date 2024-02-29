@@ -1,3 +1,16 @@
-With java and maven installed (supporting jdk17)
+have java and maven installed (supporting jdk17)
+
 compile the project by command line run:
 mvn clean package
+
+resulting jar files is found in repo-dir/target folder
+USE SixtyTwo-jar-with-dependencies.jar
+do NOT use SixtyTwo.jar
+
+run SixtyTwo-jar-with-dependencies.jar by giving it permission to execute as a program
+run by right click on SixtyTwo-jar-with-dependencies.jar and "Open with Other Application"
+choose "OpenJDK Java <17 or above> Runtime"
+
+checkout the manual.pdf in the manual folder
+
+tested on lab machine in SAT B70
