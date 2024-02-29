@@ -1,2 +1,3 @@
-To compile the project by command line run:
+With java and maven installed (supporting jdk17)
+compile the project by command line run:
 mvn clean package
