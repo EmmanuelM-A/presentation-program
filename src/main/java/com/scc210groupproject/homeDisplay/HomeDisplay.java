@@ -7,15 +7,16 @@ import javax.swing.border.Border;
 
 //Set to jdialogue to make act as splash 
 
-public class HomeDisplay extends JFrame{
+public class HomeDisplay extends JFrame {
 
   public static HomeDisplay instance;
 
   private ThemeDisplayPanel themeDisplayPanel;
   private TemplateDisplayPanel templateDisplayPanel;
   private HomeScreenToolbar homeBar;
-  public HomeDisplay(){
-    //add instance of tollbarPane to home screen
+
+  public HomeDisplay() {
+    // add instance of tollbarPane to home screen
     this.setLayout(new GridLayout(3, 1));
 
     homeBar = new HomeScreenToolbar();
@@ -23,13 +24,12 @@ public class HomeDisplay extends JFrame{
     templateDisplayPanel = new TemplateDisplayPanel();
     Border templateBorder = BorderFactory.createTitledBorder("Template Presets");
     Border themeBorder = BorderFactory.createTitledBorder("Theme Presets");
-    
+
     themeDisplayPanel.setBorder(templateBorder);
     templateDisplayPanel.setBorder(themeBorder);
-    
+
     themeDisplayPanel.setBackground(UIManager.getColor("Main.Dim"));
     templateDisplayPanel.setBackground(UIManager.getColor("Main.Dim"));
-
 
     this.add(homeBar);
     this.add(templateDisplayPanel);
@@ -38,7 +38,7 @@ public class HomeDisplay extends JFrame{
     this.setTitle("Presentation Program Homescreen ");
     this.setMinimumSize(new Dimension(1000, 700));
     this.setLocationRelativeTo(null);
-    
+
     this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     this.setResizable(true);
     this.setLocationRelativeTo(null);
@@ -46,5 +46,5 @@ public class HomeDisplay extends JFrame{
 
     instance = this;
   }
-    
+
 }

@@ -6,11 +6,12 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class HomeContentPanel extends JPanel{
-    private JPanel mainPanel,buttonPanel;
+public class HomeContentPanel extends JPanel {
+    private JPanel mainPanel, buttonPanel;
     private JButton presetDirectoryButton;
-    public HomeContentPanel(){    
-    
+
+    public HomeContentPanel() {
+
         mainPanel = new JPanel();
         buttonPanel = new JPanel();
         presetDirectoryButton = new JButton("Change Theme Directory");

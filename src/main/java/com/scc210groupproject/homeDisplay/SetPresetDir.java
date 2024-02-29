@@ -1,4 +1,5 @@
 package com.scc210groupproject.homeDisplay;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -19,8 +20,8 @@ public class SetPresetDir implements ActionListener {
 
         JFileChooser chooser = new JFileChooser();
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        
-        //set valid files to be viewable
+
+        // set valid files to be viewable
         chooser.setFileFilter(compressedFilter);
         int result = chooser.showSaveDialog(fileWindow);
 

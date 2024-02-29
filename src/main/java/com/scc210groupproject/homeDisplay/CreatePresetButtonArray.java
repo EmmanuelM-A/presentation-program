@@ -11,7 +11,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.FileSystem;
-import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,18 +19,14 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+
 import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-
-import org.jcodec.scale.AWTUtil;
 
 import com.scc210groupproject.App;
 import com.scc210groupproject.PresentationApp;
@@ -70,7 +65,8 @@ public class CreatePresetButtonArray {
                 if (!path.toString().endsWith(".pcomp"))
                     continue;
 
-                File presentationFile = inJar ? new File(App.class.getResource(path.toString()).getFile()) : path.toFile();
+                File presentationFile = inJar ? new File(App.class.getResource(path.toString()).getFile())
+                        : path.toFile();
                 String fileName = presentationFile.getName();
                 JButton button = new JButton(fileName.replace(".pcomp", ""));
                 String tmpfn = fileName.replace(".pcomp", ".png");
@@ -126,10 +122,9 @@ public class CreatePresetButtonArray {
                                         FileOutputStream out = new FileOutputStream(target);
                                         out.write(App.class.getResourceAsStream(path.toString()).readAllBytes());
                                         out.close();
-                                    }
-                                    else
+                                    } else
                                         target = presentationFile;
-                                    
+
                                     Presentation result;
                                     try (FileInputStream fileStream = new FileInputStream(target)) {
                                         try (GZIPInputStream compressedStream = new GZIPInputStream(fileStream)) {
