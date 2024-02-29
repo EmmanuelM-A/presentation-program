@@ -39,12 +39,6 @@ public class InputEmulator implements MouseListener, MouseMotionListener, MouseW
     private Point offset = new Point();
     private double scale = 1f;
 
-    public static InputEmulator instance;
-
-    public InputEmulator() {
-        instance = this;
-    }
-
     public BaseElement getDraggedElement() {
         return draggedElement;
     }

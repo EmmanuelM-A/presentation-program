@@ -76,7 +76,6 @@ public class PresentationDisplayPanel extends JPanel implements IUpdateSlideList
         super.getActionMap().put("delete", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                InputEmulator emulator = InputEmulator.instance;
                 if (emulator == null)
                     return;
                 
