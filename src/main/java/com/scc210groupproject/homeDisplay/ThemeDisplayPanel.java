@@ -24,7 +24,7 @@ import javax.swing.JScrollPane;
 
             themeButtons = CreatePresetButtonArray.createJButtonArray(presetDirectory);
             
-            setThemesDir = new JButton("Change Theme  Directory ");
+            setThemesDir = new JButton("Change Theme Directory ");
             setThemesDir.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -32,7 +32,7 @@ import javax.swing.JScrollPane;
                 }
             });
             
-            themeButtonPanel.add(setThemesDir);
+            //themeButtonPanel.add(setThemesDir);
             this.add(themeButtonPanel,BorderLayout.NORTH);
 
             for (JButton jButton: themeButtons) {

@@ -37,7 +37,7 @@ public class TemplateDisplayPanel extends HomeContentPanel{
             }
         });
         
-        templateButtonPanel.add(setThemesDir);
+        //templateButtonPanel.add(setThemesDir);
 
         this.add(templateButtonPanel,BorderLayout.NORTH);
 
