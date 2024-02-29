@@ -1,0 +1,2 @@
+To compile the project by command line run:
+mvn clean package
