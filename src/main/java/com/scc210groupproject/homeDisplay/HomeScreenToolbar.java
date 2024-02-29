@@ -3,6 +3,7 @@ package com.scc210groupproject.homeDisplay;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -31,52 +32,54 @@ public class HomeScreenToolbar extends ToolBar  {
     private JLabel homeTitle ;
     public HomeScreenToolbar(){
 
-        homeTitle = new JLabel("Presentation Program HomeScreen");
+        this.setLayout(new BorderLayout());
+
+        homeTitle = new JLabel("Presentation Program Homescreen", SwingConstants.CENTER);
       
-        ImageIcon loadIcon = new ImageIcon(App.class.getResource("/images/open-presentation.png"));
-        loadFile = new JButton("Load Presentation ");
-        loadFile.setIcon(new ImageIcon(loadIcon.getImage().getScaledInstance(32, 32, 1)));
-        loadFile.setVerticalTextPosition(SwingConstants.BOTTOM);
-        loadFile.setHorizontalTextPosition(SwingConstants.CENTER);
-        loadFile.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        // ImageIcon loadIcon = new ImageIcon(App.class.getResource("/images/open-presentation.png"));
+        // loadFile = new JButton("Load Presentation ");
+        // loadFile.setIcon(new ImageIcon(loadIcon.getImage().getScaledInstance(32, 32, 1)));
+        // loadFile.setVerticalTextPosition(SwingConstants.BOTTOM);
+        // loadFile.setHorizontalTextPosition(SwingConstants.CENTER);
+        // loadFile.addActionListener(new ActionListener() {
+        //     public void actionPerformed(ActionEvent e) {
 
-            // Launch the App window in a new thread
+        //     // Launch the App window in a new thread
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {                
-                            FileFilter compressedFilter = new FileNameExtensionFilter("Compressed Presentation File", ".pcomp");
-                            JWindow fileWindow = new JWindow();
-                            JFileChooser c = new JFileChooser();
-                            c.setFileFilter(compressedFilter);
-                            c.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                            int result = c.showSaveDialog(fileWindow);
-                            if (result != JFileChooser.APPROVE_OPTION)
-                            return;
-                            String path = c.getSelectedFile().getAbsolutePath();
+        //         new Thread(new Runnable() {
+        //             @Override
+        //             public void run() {
+        //                 try {                
+        //                     FileFilter compressedFilter = new FileNameExtensionFilter("Compressed Presentation File", ".pcomp");
+        //                     JWindow fileWindow = new JWindow();
+        //                     JFileChooser c = new JFileChooser();
+        //                     c.setFileFilter(compressedFilter);
+        //                     c.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        //                     int result = c.showSaveDialog(fileWindow);
+        //                     if (result != JFileChooser.APPROVE_OPTION)
+        //                     return;
+        //                     String path = c.getSelectedFile().getAbsolutePath();
                         
-                            if (result != JFileChooser.APPROVE_OPTION)
-                            return;
+        //                     if (result != JFileChooser.APPROVE_OPTION)
+        //                     return;
                             
-                                try {
-                                    FileDeserializer.readFromPath(path);
-                                } catch (IOException | ClassNotFoundException e) {
-                                    return;}                   
-                                PresentationApp.main(new String[]{});
+        //                         try {
+        //                             FileDeserializer.readFromPath(path);
+        //                         } catch (IOException | ClassNotFoundException e) {
+        //                             return;}                   
+        //                         PresentationApp.main(new String[]{});
                                 
-                            FileDeserializer.readFromPath(path);
+        //                     FileDeserializer.readFromPath(path);
 
-                            Thread.currentThread().interrupt();
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                }).start();
-            }
-        });                         
-        this.add(loadFile);
+        //                     Thread.currentThread().interrupt();
+        //                 } catch (Exception ex) {
+        //                     ex.printStackTrace();
+        //                 }
+        //             }
+        //         }).start();
+        //     }
+        // });                         
+        // this.add(loadFile);
 
 
         
@@ -87,15 +90,15 @@ public class HomeScreenToolbar extends ToolBar  {
         blankFile.setHorizontalTextPosition(SwingConstants.CENTER);       
         blankFile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-        // Launch the App window in a new thread
+            // Launch the App window in a new thread
        
-      
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
                             PresentationApp.main(new String[]{});
-                            Thread.currentThread().interrupt();
+                            
+                            HomeDisplay.instance.dispose();
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -103,12 +106,12 @@ public class HomeScreenToolbar extends ToolBar  {
                 }).start();
             }
         });                         
-        this.add(blankFile);
+        this.add(blankFile, BorderLayout.SOUTH);
 
         homeTitle.setPreferredSize(new Dimension(20,20));
 
         homeTitle.setFont(new Font("Tahoma", Font.BOLD, 25));
-        this.add(homeTitle);
+        this.add(homeTitle, BorderLayout.CENTER);
     }    
 }
 

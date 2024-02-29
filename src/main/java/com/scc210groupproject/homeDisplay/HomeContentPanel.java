@@ -15,7 +15,6 @@ public class HomeContentPanel extends JPanel{
         buttonPanel = new JPanel();
         presetDirectoryButton = new JButton("Change Theme Directory");
 
-
         this.add(mainPanel);
         this.add(buttonPanel);
         this.add(presetDirectoryButton);

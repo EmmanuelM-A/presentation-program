@@ -1,6 +1,7 @@
 package com.scc210groupproject.homeDisplay;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,18 +9,21 @@ import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
     public class ThemeDisplayPanel extends HomeContentPanel{
 
-        private String presetDirectory = "/resources/presets/themes";
+        private String presetDirectory = "/presets/themes";
         private JButton[] themeButtons; 
         private JButton setThemesDir;
         private JPanel  themeButtonPanel,mainPanel;
         public ThemeDisplayPanel(){
+            this.setLayout(new BorderLayout());
             themeButtonPanel = new JPanel();
             mainPanel = new JPanel();
-            this.add(mainPanel,BorderLayout.SOUTH);
-    
+
+            themeButtons = CreatePresetButtonArray.createJButtonArray(presetDirectory);
+            
             setThemesDir = new JButton("Change Theme  Directory ");
             setThemesDir.addActionListener(new ActionListener() {
                 @Override
@@ -30,6 +34,15 @@ import javax.swing.JPanel;
             
             themeButtonPanel.add(setThemesDir);
             this.add(themeButtonPanel,BorderLayout.NORTH);
+
+            for (JButton jButton: themeButtons) {
+                mainPanel.add(jButton);
+            }
+            
+            JScrollPane scroll = new JScrollPane(mainPanel);
+            scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            
+            this.add(scroll, BorderLayout.CENTER);
         }
 
         /**

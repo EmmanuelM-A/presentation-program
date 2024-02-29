@@ -10,7 +10,6 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.scc210groupproject.homeDisplay.HomeDisplay;
-import com.scc210groupproject.ui.UIFrame;
 
 /**
  * This where the program is run

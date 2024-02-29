@@ -9,6 +9,8 @@ import javax.swing.border.Border;
 
 public class HomeDisplay extends JFrame{
 
+  public static HomeDisplay instance;
+
   private ThemeDisplayPanel themeDisplayPanel;
   private TemplateDisplayPanel templateDisplayPanel;
   private HomeScreenToolbar homeBar;
@@ -19,23 +21,19 @@ public class HomeDisplay extends JFrame{
     homeBar = new HomeScreenToolbar();
     themeDisplayPanel = new ThemeDisplayPanel();
     templateDisplayPanel = new TemplateDisplayPanel();
-    JScrollPane templateScroll = new JScrollPane(templateDisplayPanel);
-    JScrollPane themeScroll    = new JScrollPane(themeDisplayPanel);
     Border templateBorder = BorderFactory.createTitledBorder("Template Presets");
     Border themeBorder = BorderFactory.createTitledBorder("Theme Presets");
     
-    templateScroll.setBorder(templateBorder);
-    themeScroll.setBorder(themeBorder);
+    themeDisplayPanel.setBorder(templateBorder);
+    templateDisplayPanel.setBorder(themeBorder);
     
     themeDisplayPanel.setBackground(UIManager.getColor("Main.Dim"));
     templateDisplayPanel.setBackground(UIManager.getColor("Main.Dim"));
 
-    themeScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-    templateScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
     this.add(homeBar);
-    this.add(templateScroll);
-    this.add(themeScroll);
+    this.add(templateDisplayPanel);
+    this.add(themeDisplayPanel);
 
     this.setTitle("Presentation Program Homescreen ");
     this.setMinimumSize(new Dimension(1000, 700));
@@ -45,6 +43,8 @@ public class HomeDisplay extends JFrame{
     this.setResizable(true);
     this.setLocationRelativeTo(null);
     this.setVisible(true);
+
+    instance = this;
   }
     
 }

@@ -1,6 +1,10 @@
 package com.scc210groupproject.homeDisplay.homeAction;
 
+import javax.swing.SwingUtilities;
+
 import com.scc210groupproject.PresentationApp;
+import com.scc210groupproject.homeDisplay.HomeDisplay;
+import com.scc210groupproject.ui.UIFrame;
 
 /**
  * method to run open in new thread launched when hoescreen button pressed
@@ -15,8 +19,15 @@ public class RunInMain {
         @Override
         public void run() {
             try {
-                
-                PresentationApp.main(new String[]{});
+                SwingUtilities.invokeAndWait(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        new UIFrame();
+                    }
+            
+                });
+                //PresentationApp.main(new String[]{});
 
                 //call open to run in main for new thread launch
                 

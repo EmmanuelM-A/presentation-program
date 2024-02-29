@@ -1,6 +1,8 @@
 package com.scc210groupproject.homeDisplay;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,18 +12,20 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 public class TemplateDisplayPanel extends HomeContentPanel{
     
-    private String presetDirectory = "resources/presets/";
+    private String presetDirectory = "/presets/templates";
     private JButton[] templateButtons; 
     private JButton setThemesDir;
 
     private JPanel  templateButtonPanel,mainPanel;
     public TemplateDisplayPanel(){
+        this.setLayout(new BorderLayout());
+
         templateButtonPanel = new JPanel();
         mainPanel = new JPanel();
-        this.add(mainPanel,BorderLayout.SOUTH);
         
         templateButtons = CreatePresetButtonArray.createJButtonArray(presetDirectory);
 
@@ -37,7 +41,16 @@ public class TemplateDisplayPanel extends HomeContentPanel{
 
         this.add(templateButtonPanel,BorderLayout.NORTH);
 
-    }
+        for (JButton jButton: templateButtons) {
+            mainPanel.add(jButton);
+        }
+
+        
+    JScrollPane scroll = new JScrollPane(mainPanel);
+    scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+    this.add(scroll, BorderLayout.CENTER);
+}
 
     /**
      * @param contentPanel Panel to update 
